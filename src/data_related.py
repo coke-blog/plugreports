@@ -20,6 +20,7 @@ RELATED_OVERRIDES = {
   "isotodesnitazene":{"related": ["etonitazene", "fentanyl", "topics:nitazenes-new-opioids"]},
   "ghb":             {"related": ["gbl", "quit:ghb"]},
   "flubromazolam":   {"related": ["alprazolam", "clonazolam", "news:counterfeit-xanax-update"]},
+  "weed":            {"related": ["4f-adb", "5f-adbica", "nm2201", "topics:talk-to-your-kid"]},
  },
  "busts": {
   "bust-texas-cabbage-meth":          {"related": ["speed", "topics:drug-busts-this-week", "news:high-dose-ecstasy-warning"]},

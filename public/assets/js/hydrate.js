@@ -5,10 +5,11 @@
   var seg = location.pathname.split('/').filter(Boolean);
   if (seg.length === 0) { renderHome(); return; }
   var type = seg[0] || '';
-  if (!/^(drugs|busts|news|topics|quit|hotlines|pharmacies|rehabs|sentencing)$/.test(type)) return;
-  fetch('/api/public/content?type=' + type).then(function (r) { return r.json(); }).then(function (d) {
+  if (!/^(drugs|busts|news|topics|quit|hotlines|pharmacies|rehabs|sentencing|categories)$/.test(type)) return;
+  fetch('/api/public/content?type=' + (type === 'categories' ? 'drugs' : type)).then(function (r) { return r.json(); }).then(function (d) {
     var items = (d.items || []).filter(function (x) { return x; });
     if (!items.length) return;
+    if (type === 'categories') return renderCategory(items, seg);
     if (type === 'hotlines') return renderHotlines(items);
     if (type === 'sentencing') return renderSentencing(items);
     if (seg.length === 1 || (type === 'sentencing')) return renderIndex(items, type);
@@ -182,6 +183,17 @@
       if (/Website/.test(b.textContent) && it.website) v.innerHTML = '<a href="' + esc(it.website) + '">' + esc(it.website) + '</a>';
       if (/Contact/.test(b.textContent) && it.phone) v.textContent = it.phone;
     });
+  }
+
+  function renderCategory(items, seg) {
+    var grid = document.querySelector('.cards'); if (!grid) return;
+    var mine = items.filter(function (x) { return x.category === seg[1]; });
+    if (!mine.length) return;
+    grid.innerHTML = mine.map(function (d) {
+      return '<a class="card" href="/drugs/' + d.slug + '/"><div class="meta"><span class="chip">' +
+        esc((d.schedule || '').split('(')[0].trim().slice(0, 24)) + '</span></div><h3>' + esc(d.name) +
+        '</h3><p>' + esc(d.appearance || '') + '</p><div class="foot">Effects &amp; risks &rarr;</div></a>';
+    }).join('');
   }
 
   /* ---------------- directory-style pages ---------------- */

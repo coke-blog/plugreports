@@ -940,3 +940,15 @@ dict(slug="xylazine", name="Xylazine (Tranq)", aliases=["Tranq", "Tranq dope", "
  legalStatus="Veterinary Rx-only; human use illegal; possession varies — often charged by drug weight when mixed",
  lastUpdated="2026-09-12", sources=["NIDA","CDC","DEA"]),
 ]
+
+DRUGS += [
+dict(slug="weed", name="Cannabis (Weed)", aliases=["Weed", "Marijuana", "Pot", "Bud", "Grass", "Mary Jane", "Ganja", "Hash", "THC"],
+ category="cannabinoids", schedule="Schedule I (US federal) — legal or decriminalized in many states & countries",
+ appearance="Dried green/brown flower buds; hash/resin; oils & wax (concentrates); edibles; vape cartridges",
+ effects=["Relaxation, euphoria ('high')", "Altered senses, time perception", "Increased appetite ('munchies')"],
+ risks=["Anxiety, panic attacks, paranoia — especially high-THC strains and concentrates", "Impaired memory, coordination and driving ability for hours", "Dependence with daily heavy use (~10–30% of users); withdrawal: irritability, insomnia", "High-potency concentrates linked to psychosis episodes in vulnerable users", "Illegal-market flower is sometimes contaminated with mold, pesticides, or sprayed synthetics ('spiked weed')"],
+ overdoseSigns=["No known fatal overdose — cannabis alone doesn't stop breathing", "Severe panic attack, paranoia, racing heart", "Cannabinoid hyperemesis: uncontrollable vomiting (relieved by hot showers)", "Fainting or extreme sedation when mixed with alcohol/other drugs"],
+ streetPrice="~$10–$20 per gram flower (US); far cheaper where legal; varies enormously",
+ legalStatus="Varies wildly: legal (Canada, Uruguay, many US states), decriminalized, or illegal — always check local law. Natural cannabis is NOT the same as synthetic cannabinoids ('Spice'), which are far more dangerous.",
+ lastUpdated="2026-09-14", sources=["NIDA","EMCDDA","CDC"]),
+]

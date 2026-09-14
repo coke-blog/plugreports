@@ -35,7 +35,7 @@ const CATS=["opioids","stimulants","benzodiazepines","sedatives","depressants","
 const SEO=[{k:'seoTitle',l:'SEO title (optional — overrides auto-generated)',t:'text'},{k:'seoDesc',l:'SEO description (optional)',t:'textarea'}];
 const SCHEMAS={
  drugs:[{k:'name',l:'Drug name',t:'text',req:1,ph:'Fentanyl'},{k:'slug',l:'Slug (URL)',t:'text',auto:1,hint:'auto-generated from name if empty'},
-  {k:'category',l:'Category',t:'select',opts:CATS},{k:'schedule',l:'Schedule / class',t:'text',ph:'Schedule I (US)'},
+  {k:'category',l:'Category',t:'text',ph:'cannabinoids — one of: '+CATS.join(', ')},{k:'schedule',l:'Schedule / class',t:'text',ph:'Schedule I (US)'},
   {k:'aliases',l:'Street names',t:'csv',ph:'Dope, H, Smack'},{k:'appearance',l:'Appearance',t:'textarea',ph:'White/off-white powder…'},
   {k:'effects',l:'Effects',t:'list',hint:'one per line'},{k:'risks',l:'Risks',t:'list',hint:'one per line'},
   {k:'overdoseSigns',l:'Overdose signs',t:'list',hint:'one per line'},{k:'streetPrice',l:'Street price',t:'text',ph:'~$20–$40 per pill'},

@@ -9,7 +9,7 @@
     benzodiazepines:['Benzodiazepines','#7c3aed'], sedatives:['Sedatives & Hypnotics','#0f766e'],
     depressants:['GHB / GBL','#1d4ed8'], dissociatives:['Dissociatives','#0891b2'],
     empathogens:['Empathogens','#be185d'], psychedelics:['Psychedelics','#4d7c0f'],
-    cannabinoids:['Synthetic Cannabinoids','#57534e'], performance:['Performance & Grey-Market Pharma','#b45309'],
+    cannabinoids:['Cannabinoids','#57534e'], performance:['Performance & Grey-Market Pharma','#b45309'],
     hazardous:['Hazardous Substances','#111827']};
   function esc(s) { var d = document.createElement('div'); d.textContent = s == null ? '' : s; return d.innerHTML; }
   function chip(t, cls) { return '<span class="chip ' + (cls || '') + '">' + esc(t) + '</span>'; }
