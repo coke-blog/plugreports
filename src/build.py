@@ -232,7 +232,7 @@ def build_index(es=False):
 
 <section class="sec" id="library"><div class="wrap">
 <div class="sec-head"><div><span class="kicker amber">Drug Library</span>
-<h2><span class="h-num">01</span>Tap a <span class="grad">substance</span></h2><p>Glass tiles, two rows — scroll sideways. Every profile: effects, risks, overdose signs, street price, legal status, sources.</p></div>
+<h2>Tap a <span class="grad">substance</span></h2><p>Glass tiles, two rows — scroll sideways. Every profile: effects, risks, overdose signs, street price, legal status, sources.</p></div>
 <div class="searchbar" style="min-width:280px;flex:1;max-width:420px"><input id="libsearch" type="search" placeholder="Search name, street alias, category…" aria-label="Search drugs"></div></div>
 <div id="searchresults" hidden></div>
 <div class="pill-nav print-hide">{catpills}</div>
@@ -241,7 +241,7 @@ def build_index(es=False):
 </div></section>
 
 <section class="sec" style="background:#f9fafb"><div class="wrap" data-tabs>
-<div class="sec-head"><div><span class="kicker">Updates</span><h2><span class="h-num">02</span>News, busts & <span class="grad">guides</span></h2></div></div>
+<div class="sec-head"><div><span class="kicker">Updates</span><h2>News, busts & <span class="grad">guides</span></h2></div></div>
 <div class="tabs print-hide">
 <button class="tab active" data-tab="news">Drug News</button>
 <button class="tab" data-tab="busts">Busts & Seizures</button>
@@ -252,24 +252,20 @@ def build_index(es=False):
 </div></section>
 
 <section class="sec"><div class="wrap">
-<div class="sec-head"><div><span class="kicker amber">Help</span><h2><span class="h-num">03</span>Hotlines by <span class="grad">region</span></h2><p>Verified numbers across the USA, Canada, Europe, Australia and Africa.</p></div><a class="btn btn-red" href="/hotlines/">Full hotline directory</a></div>
+<div class="sec-head"><div><span class="kicker amber">Help</span><h2>Hotlines by <span class="grad">region</span></h2><p>Verified numbers across the USA, Canada, Europe, Australia and Africa.</p></div><a class="btn btn-red" href="/hotlines/">Full hotline directory</a></div>
 <div class="hl-grid">{''.join(f'<div class="hl-card"><h3>{esc(r)}</h3><div class="num">{esc(v[0][0])}</div><div class="who">{esc(v[0][1])}</div><a class="call-btn" href="tel:{v[0][3]}">Call now</a></div>' for r,v in list(HOTLINES.items())[:4])}
 </div></div></section>
 
 <section class="sec" style="background:linear-gradient(180deg,#fff, #fffdf5)"><div class="wrap">
 <div class="sec-head"><div><span class="kicker green">Verified directories</span>
-<h2><span class="h-num">04</span>Safe <span class="grad">sources</span></h2>
+<h2>Safe <span class="grad">sources</span></h2>
 <p>Counterfeit pills kill thousands every year. These directories are checked against official registries before anything is listed.</p></div></div>
-<div class="src-grid">
-<a class="src-card phar" href="/pharmacies/"><span class="ic" style="background:#3b82f6">Rx</span>
-<h3>Verified online pharmacies</h3><p>NABP- and PharmacyChecker-accredited sellers only — plus how to spot counterfeit pill mills before they spot you.</p>
-<span class="src-go">Browse directory &rarr;</span></a>
-<a class="src-card reha" href="/rehabs/"><span class="ic" style="background:#16a34a">+</span>
-<h3>Rehab centers &amp; free programs</h3><p>Hazelden Betty Ford, Priory, Narcotics Anonymous, SMART Recovery — verified help across all five regions.</p>
-<span class="src-go">Browse directory &rarr;</span></a>
-<a class="src-card hot" href="/hotlines/"><span class="ic" style="background:#dc2626">&#128222;</span>
-<h3>Full hotline directory</h3><p>Every verified overdose and crisis number across the USA, Canada, Europe, Australia and Africa.</p>
-<span class="src-go">Browse directory &rarr;</span></a>
+<div class="src-cta">
+<div>
+<h3>Most &ldquo;online pharmacies&rdquo; are counterfeit pill mills.</h3>
+<p>The DEA&rsquo;s own testing shows most fake pills contain fentanyl or meth &mdash; and one wrong pill can kill. We list only sellers verified against official NABP and PharmacyChecker registries, so you never have to guess which site is real.</p>
+</div>
+<a class="btn-xlb" href="/pharmacies/">Browse verified pharmacies &rarr;</a>
 </div></div></section>"""
     if es:
         from data_es import ES_HOME as ESH

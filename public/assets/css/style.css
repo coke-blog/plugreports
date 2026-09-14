@@ -260,3 +260,11 @@ a.src-card.hot{border-left-color:var(--red)}
 .src-card h3{font-size:18px}
 .src-card p{color:var(--muted);font-size:14px}
 .src-go{margin-top:auto;font-weight:800;font-size:14px;color:var(--amber-700)}
+
+/* ---------- safe sources CTA banner ---------- */
+.src-cta{display:flex;align-items:center;gap:28px;background:linear-gradient(120deg,#fff7ed,#fef2f2);border:1px solid var(--amber-line);border-radius:20px;padding:32px 36px;flex-wrap:wrap;box-shadow:var(--shadow)}
+.src-cta h3{font-size:clamp(19px,2.4vw,24px);margin-bottom:6px}
+.src-cta p{color:#7c2d12;max-width:62ch;font-size:15px}
+.btn-xlb{display:inline-flex;align-items:center;gap:10px;background:linear-gradient(92deg,#f59e0b,#dc2626);color:#fff;font-weight:800;font-size:17px;padding:17px 32px;border-radius:14px;box-shadow:0 8px 22px rgba(220,38,38,.32);margin-left:auto;white-space:nowrap;transition:.15s}
+.btn-xlb:hover{transform:translateY(-2px);text-decoration:none;filter:brightness(1.06)}
+@media(max-width:760px){.btn-xlb{margin-left:0}}
