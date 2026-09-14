@@ -372,7 +372,6 @@ def build_drugs(es=False):
 <a href="/topics/fentanyl-numbers/"><span class="mini" style="background:#b45309">&#128218;</span><span>Fentanyl: the numbers</span></a>
 <a href="/quit/"><span class="mini" style="background:#16a34a">&#8987;</span><span>Quitting — day by day</span></a>
 {f'<a href="/drugs/{qslug}/"><span class="mini" style="background:#d97706">{esc(qname[0])}</span><span>About {esc(qname)}</span></a>' if qslug else ''}
-{''.join(f'<a href="/{resolve_slug(r)}/">{rel_card(r)}</a>' for r in (v.get("related") or []))}
 <a href="/hotlines/"><span class="mini" style="background:#dc2626">&#9742;</span><span>Hotlines</span></a></div></div>
 </div>"""
         if es:
@@ -613,7 +612,7 @@ def build_directory(name, items, singular, title, desc, thumb):
 <div class="callout green" style="margin-top:18px"><b>In crisis right now?</b>Skip the directory — call your emergency number or a <a href="/hotlines/">hotline</a> first.</div>
 <div class="related print-hide"><h2>You may also want to know about</h2><div class="rel-grid">
 {f'<a href="/drugs/{qslug}/"><span class="mini" style="background:#d97706">{esc(qname[0])}</span><span>About {esc(qname)}</span></a>' if qslug else ''}
-{''.join(f'<a href="/{resolve_slug(r)}/">{rel_card(r)}</a>' for r in (v.get("related") or []))}
+{''.join(f'<a href="/{resolve_slug(r)}/">{rel_card(r)}</a>' for r in (it.get("related") or []))}
 <a href="/hotlines/"><span class="mini" style="background:#dc2626">&#9742;</span><span>Hotlines</span></a>
 <a href="/quit/"><span class="mini" style="background:#16a34a">&#8987;</span><span>Quitting — day by day</span></a>
 <a href="/rehabs/"><span class="mini" style="background:#16a34a">&#10010;</span><span>All rehab centers</span></a>

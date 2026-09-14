@@ -29,7 +29,7 @@
         '<div class="byline"><span>' + esc(it.date || '') + '</span></div>' +
         (it.desc || it.summary ? '<p class="lede">' + esc(it.desc || it.summary) + '</p>' : '') +
         MD.render(it.markdown) + '<div class="related"><h2>Drugs mentioned &amp; help</h2><div class="rel-grid">' +
-      ((it.drugsInvolved || []).map(function (d) { return '<a href="/drugs/' + d + '/"><span class="mini" style="background:#d97706">' + esc((d[0] || '?').toUpperCase()) + '</span><span>' + esc(d.replace(/-/g, ' ')) + '</span></a>'; }).join('')) +
+      ((it.related || []).map(relChip).join('')) + ((it.drugsInvolved || []).map(function (d) { return '<a href="/drugs/' + d + '/"><span class="mini" style="background:#d97706">' + esc((d[0] || '?').toUpperCase()) + '</span><span>' + esc(d.replace(/-/g, ' ')) + '</span></a>'; }).join('')) +
       '<a href="/hotlines/"><span class="mini" style="background:#dc2626">&#128222;</span><span>Hotlines — help now</span></a></div></div>'; '</article>';
       window.scrollTo(0, 0); return;
     }
@@ -61,8 +61,15 @@
       fact('Street price', it.streetPrice) + fact('Legal status', it.legalStatus) +
       fact('Last updated', it.lastUpdated) + fact('Sources', (it.sources || []).join(', ')) + '</div></div>' +
       '<div class="related"><h2>You may also want to know about</h2><div class="rel-grid">' +
+      ((it.related || []).map(relChip).join('')) +
       '<a href="/hotlines/"><span class="mini" style="background:#dc2626">&#9742;</span><span>Hotlines</span></a>' +
       '<a href="/quit/"><span class="mini" style="background:#16a34a">&#8987;</span><span>Quitting — day by day</span></a></div></div>';
+  }
+  function relChip(entry) {
+    var p = String(entry).split(':');
+    var href = '/' + (p.length > 1 ? p[0] + '/' + p[1] : 'drugs/' + entry) + '/';
+    var lbl = (p.length > 1 ? p[1] : entry).replace(/-/g, ' ');
+    return '<a href="' + href + '"><span class="mini" style="background:#d97706">' + esc((lbl[0] || '?').toUpperCase()) + '</span><span>' + esc(lbl) + '</span></a>';
   }
   function fact(k, v) { return '<div class="fact"><b>' + esc(k) + '</b><span>' + esc(v || '—') + '</span></div>'; }
 
@@ -78,7 +85,7 @@
       '<p>' + esc(it.summary) + '</p>' +
       (it.sourceUrl ? '<p><b>Source:</b> <a href="' + esc(it.sourceUrl) + '" rel="nofollow noopener">' + esc(it.sourceUrl) + '</a></p>' : '') +
       '<div class="related"><h2>Drugs mentioned &amp; help</h2><div class="rel-grid">' +
-      ((it.drugsInvolved || []).map(function (d) { return '<a href="/drugs/' + d + '/"><span class="mini" style="background:#d97706">' + esc((d[0] || '?').toUpperCase()) + '</span><span>' + esc(d.replace(/-/g, ' ')) + '</span></a>'; }).join('')) +
+      ((it.related || []).map(relChip).join('')) + ((it.drugsInvolved || []).map(function (d) { return '<a href="/drugs/' + d + '/"><span class="mini" style="background:#d97706">' + esc((d[0] || '?').toUpperCase()) + '</span><span>' + esc(d.replace(/-/g, ' ')) + '</span></a>'; }).join('')) +
       '<a href="/hotlines/"><span class="mini" style="background:#dc2626">&#128222;</span><span>Hotlines — help now</span></a></div></div>';
       '<div class="callout amber"><b>Why busts matter for safety</b>Major seizures destabilize local supply — potency swings for weeks afterwards.</div>';
   }
@@ -89,7 +96,7 @@
       '<p class="lede">' + esc(it.summary) + '</p>' +
       (it.body || []).map(function (p) { return '<p>' + esc(p) + '</p>'; }).join('') +
       '<div class="related"><h2>Drugs mentioned &amp; help</h2><div class="rel-grid">' +
-      ((it.drugsInvolved || []).map(function (d) { return '<a href="/drugs/' + d + '/"><span class="mini" style="background:#d97706">' + esc((d[0] || '?').toUpperCase()) + '</span><span>' + esc(d.replace(/-/g, ' ')) + '</span></a>'; }).join('')) +
+      ((it.related || []).map(relChip).join('')) + ((it.drugsInvolved || []).map(function (d) { return '<a href="/drugs/' + d + '/"><span class="mini" style="background:#d97706">' + esc((d[0] || '?').toUpperCase()) + '</span><span>' + esc(d.replace(/-/g, ' ')) + '</span></a>'; }).join('')) +
       '<a href="/hotlines/"><span class="mini" style="background:#dc2626">&#128222;</span><span>Hotlines — help now</span></a></div></div>';
   }
 
