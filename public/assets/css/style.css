@@ -243,3 +243,20 @@ footer a:hover{color:#fbbf24;text-decoration:none}
 .divider{height:1px;background:var(--line);margin:34px 0}
 .print-hide{}
 @media print{.nav,.crisis,footer,.print-hide{display:none}}
+
+/* ---------- home section header upgrade ---------- */
+.sec-head h2{font-family:var(--font-ed);font-size:clamp(30px,4.4vw,48px);letter-spacing:-.02em;line-height:1.08}
+.sec-head h2 .grad{background:linear-gradient(92deg,#f59e0b 10%,#ea580c 55%,#dc2626);-webkit-background-clip:text;background-clip:text;color:transparent}
+.h-num{display:inline-grid;place-items:center;width:46px;height:46px;border-radius:13px;background:var(--amber-soft);border:1px solid var(--amber-line);color:var(--amber-700);font-family:var(--font-ui);font-size:14px;font-weight:800;letter-spacing:.04em;vertical-align:middle;margin-right:14px}
+.sec-head p{font-size:16px}
+/* ---------- safe sources strip ---------- */
+.src-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}
+a.src-card{display:flex;flex-direction:column;gap:8px;background:#fff;border:1px solid var(--line);border-left:5px solid var(--green);border-radius:16px;padding:22px;box-shadow:var(--shadow);transition:.18s;color:var(--ink)}
+a.src-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg);text-decoration:none;border-left-color:var(--amber)}
+a.src-card.phar{border-left-color:#3b82f6}
+a.src-card.reha{border-left-color:var(--green)}
+a.src-card.hot{border-left-color:var(--red)}
+.src-card .ic{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font-size:20px;font-weight:800;color:#fff}
+.src-card h3{font-size:18px}
+.src-card p{color:var(--muted);font-size:14px}
+.src-go{margin-top:auto;font-weight:800;font-size:14px;color:var(--amber-700)}
