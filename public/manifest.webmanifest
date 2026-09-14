@@ -1,0 +1,10 @@
+{
+ "name":"plugreports — Street Drug Information Library",
+ "short_name":"plugreports",
+ "description":"Harm-reduction library: street drug profiles, news, busts, hotlines, verified pharmacies and rehab centers.",
+ "start_url":"/",
+ "display":"standalone",
+ "background_color":"#ffffff",
+ "theme_color":"#f59e0b",
+ "icons":[{"src":"/assets/img/logo.svg","sizes":"any","type":"image/svg+xml","purpose":"any"}]
+}

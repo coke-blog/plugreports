@@ -1,0 +1,80 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow"><title>plugreports admin</title>
+<style>
+body{font-family:system-ui,sans-serif;background:#f6f7f9;color:#101828;margin:0}
+header{background:#101828;color:#fff;padding:12px 20px;display:flex;gap:16px;align-items:center}
+header b{color:#fbbf24}.wrap{display:flex;min-height:calc(100vh - 50px)}
+nav{width:190px;background:#fff;border-right:1px solid #e4e7ec;padding:14px}
+nav button{display:block;width:100%;text-align:left;padding:9px 12px;border:0;background:none;border-radius:8px;font-weight:600;cursor:pointer}
+nav button.on{background:#fffbeb;color:#b45309}main{flex:1;padding:22px;overflow:auto}
+table{width:100%;border-collapse:collapse;background:#fff;font-size:13px}td,th{border:1px solid #e4e7ec;padding:7px 9px;text-align:left}
+textarea{width:100%;height:320px;font-family:ui-monospace,monospace;font-size:12.5px;border:1px solid #e4e7ec;border-radius:10px;padding:12px}
+input,select{padding:9px 11px;border:1px solid #e4e7ec;border-radius:9px;font-family:inherit;margin:3px 4px 3px 0}
+.btn{background:#dc2626;color:#fff;border:0;border-radius:9px;padding:9px 16px;font-weight:700;cursor:pointer;margin:4px 6px 4px 0}
+.btn.g{background:#16a34a}.btn.x{background:#667085}.msg{padding:10px 14px;border-radius:9px;margin:8px 0}
+.ok{background:#f0fdf4;color:#15803d}.err{background:#fef2f2;color:#b91c1c}
+#gate{max-width:380px;margin:14vh auto;background:#fff;padding:34px;border-radius:16px;text-align:center;box-shadow:0 8px 30px rgba(0,0,0,.12)}
+</style></head><body>
+<header><b>plugreports</b> admin <span style="margin-left:auto;font-size:12px">content management · SEO · suggestions</span></header>
+<div id="gate"><h2>Admin PIN</h2><p style="color:#667085;font-size:13px">Default: <code>plug2026!</code> — change it in Settings immediately.</p>
+<input id="pin" type="password" placeholder="PIN" style="width:90%"><br><button class="btn" onclick="login()">Unlock</button>
+<div id="gatemsg"></div></div>
+<div class="wrap" id="app" hidden>
+<nav id="tabs"></nav><main><div id="msg"></div><div id="body"></div></main></div>
+<script>
+const TYPES=["drugs","busts","news","topics","quit","hotlines","pharmacies","rehabs","sentencing"];
+let token=sessionStorage.getItem('pr-token'),cur='drugs';
+async function api(p,opt={}){opt.headers=Object.assign({'Content-Type':'application/json',Authorization:'Bearer '+token},opt.headers);
+ const r=await fetch('/api/'+p,opt);if(r.status===401){logout()}return r.json()}
+function logout(){sessionStorage.removeItem('pr-token');location.reload()}
+async function login(){const r=await fetch('/api/admin/login',{method:'POST',headers:{'Content-Type':'application/json'},
+ body:JSON.stringify({pin:document.getElementById('pin').value})});const j=await r.json();
+ if(j.ok){token=j.token;sessionStorage.setItem('pr-token',token);boot()}else document.getElementById('gatemsg').innerHTML='<div class="msg err">Wrong PIN</div>'}
+function msg(t,ok=1){document.getElementById('msg').innerHTML='<div class="msg '+(ok?'ok':'err')+'">'+t+'</div>'}
+function boot(){document.getElementById('gate').hidden=true;document.getElementById('app').hidden=false;
+ document.getElementById('tabs').innerHTML=TYPES.concat(['settings','suggestions']).map(t=>
+ `<button class="${t===cur?'on':''}" onclick="cur='${t}';boot()">${t}</button>`).join('');
+ const b=document.getElementById('body');
+ if(cur==='settings')return settings(b);
+ if(cur==='suggestions')return sugg(b);
+ list(b)}
+async function list(b){b.innerHTML='Loading…';const a=await api('admin/content?type='+cur);
+ const items=a.items||[];
+ b.innerHTML=`<h2>${cur} <small>(${items.length})</small></h2>
+ <button class="btn g" onclick="edit('')">+ New ${cur.slice(0,-1)}</button>
+ <table><tr><th style="width:32px"></th><th>slug / key</th><th>title / name</th></tr>${items.map((it,i)=>
+ `<tr><td><button class="btn x" style="padding:3px 9px" onclick="edit(${i})">edit</button></td>
+ <td>${it.slug||it.region||''}</td><td>${(it.title||it.name||'').slice(0,80)}</td></tr>`).join('')}</table>
+ <div id="editor"></div>`;window._items=items}
+async function edit(i){const it=window._items[i]||{};
+ document.getElementById('editor').innerHTML=`<h3>${i===''||i===undefined?'New':'Edit'} ${cur.slice(0,-1)}</h3>
+ <p style="font-size:12px;color:#667085">Edit as JSON. Required keys follow the published schemas (see src/data_*.py).</p>
+ <textarea id="j">${JSON.stringify(it,null,2)}</textarea><br>
+ <button class="btn g" onclick="save('${it.slug||''}')">Save</button>
+ ${it.slug?`<button class="btn" onclick="del('${it.slug}')">Delete</button>`:''}</div>`;
+ document.getElementById('j').scrollIntoView()}
+async function save(slug){let obj;try{obj=JSON.parse(document.getElementById('j').value)}catch(e){return msg('Invalid JSON',0)}
+ if(!obj.slug)obj.slug=(obj.name||obj.title||'item').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+ const r=await api(`admin/content?type=${cur}${slug?'&slug='+slug:''}`,{method:slug?'PUT':'POST',body:JSON.stringify(obj)});
+ msg(r.ok?'Saved.':'Error: '+(r.error||''),r.ok);list(document.getElementById('body'))}
+async function del(slug){if(!confirm('Delete '+slug+'?'))return;
+ const r=await api(`admin/content?type=${cur}&slug=${slug}`,{method:'DELETE'});
+ msg(r.ok?'Deleted.':'Error',r.ok);list(document.getElementById('body'))}
+async function settings(b){const s=(await api('admin/settings')).settings||{};
+ b.innerHTML=`<h2>Settings & SEO sockets</h2><p style="font-size:13px;color:#667085">IDs are served at <code>/api/public/content?type=settings</code> and injected into &lt;head&gt; at build time. Paste your verification IDs from Google Search Console, Bing Webmaster, Microsoft Clarity and GA4.</p>
+ ${['gsc','bing','clarity','ga'].map(k=>`<div><b>${k.toUpperCase()}</b><br><input id="s-${k}" style="width:70%" value="${s[k]||''}" placeholder="verification / measurement ID"></div>`).join('')}
+ <div><b>Crisis banner note</b><br><input id="s-crisisNote" style="width:70%" value="${s.crisisNote||''}"></div>
+ <button class="btn g" onclick="saveSettings()">Save settings</button><hr style="margin:26px 0">
+ <h3>Change admin PIN</h3><input id="p0" type="password" placeholder="current PIN"><input id="p1" type="password" placeholder="new PIN (6+ chars)">
+ <button class="btn" onclick="changePin()">Change PIN</button>`}
+async function saveSettings(){const s={};['gsc','bing','clarity','ga','crisisNote'].forEach(k=>s[k]=document.getElementById('s-'+k).value);
+ const r=await api('admin/settings',{method:'POST',body:JSON.stringify(s)});msg(r.ok?'Settings saved.':'Error',r.ok)}
+async function changePin(){const r=await api('admin/pin',{method:'POST',body:JSON.stringify({current:p0.value,next:p1.value})});
+ msg(r.ok?'PIN changed.':(r.error||'Error'),r.ok)}
+async function sugg(b){const a=await api('admin/suggestions');const items=a.items||[];
+ b.innerHTML=`<h2>Suggestions inbox (${items.length})</h2>`+items.map(s=>
+ `<div style="background:#fff;border:1px solid #e4e7ec;border-radius:10px;padding:12px;margin:8px 0">
+ <b>${s.type}</b> · ${s.name||'anon'} · <span style="color:#98a2b3">${new Date(s.ts).toLocaleString()} · ${s.page||''}</span>
+ <p style="margin:6px 0">${(s.message||'').replace(/</g,'&lt;')}</p><span style="color:#98a2b3">${s.contact||''}</span></div>`).join('')}
+if(token)boot();
+</script></body></html>
