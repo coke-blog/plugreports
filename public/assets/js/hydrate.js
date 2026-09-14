@@ -22,6 +22,12 @@
   }).catch(function () {});
 
   function esc(s) { var d = document.createElement('div'); d.textContent = s == null ? '' : s; return d.innerHTML; }
+  function chipEntry(entry) {
+    var p = String(entry).split(':');
+    var href = '/' + (p.length > 1 ? p[0] + '/' + p[1] : 'drugs/' + entry) + '/';
+    var lbl = (p.length > 1 ? p[1] : entry).replace(/-/g, ' ');
+    return '<a href="' + href + '"><span class="mini" style="background:#d97706">' + esc((lbl[0] || '?').toUpperCase()) + '</span><span>' + esc(lbl) + '</span></a>';
+  }
   function chip(t, cls) { return '<span class="chip ' + (cls || '') + '">' + esc(t) + '</span>'; }
 
   /* ---------------- index pages ---------------- */
@@ -92,12 +98,6 @@
       var badge = document.querySelector('article .kicker');
       if (badge) badge.textContent = it.confirmed ? 'CONFIRMED' : 'PENDING VERIFICATION';
       applyHelpFooter(it);
-    }
-    function chipEntry(entry) {
-      var p = String(entry).split(':');
-      var href = '/' + (p.length > 1 ? p[0] + '/' + p[1] : 'drugs/' + entry) + '/';
-      var lbl = (p.length > 1 ? p[1] : entry).replace(/-/g, ' ');
-      return '<a href="' + href + '"><span class="mini" style="background:#d97706">' + esc((lbl[0] || '?').toUpperCase()) + '</span><span>' + esc(lbl) + '</span></a>';
     }
     function applyHelpFooter(it) {
       var entries = (it.related || []).concat(it.drugsInvolved || []);
