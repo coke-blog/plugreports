@@ -110,7 +110,7 @@ def shell(path, title, desc, body, jsonld=None, canonical=None, extra_head="", o
     navlinks = "".join(
         f'<a href="{u}" class="{"hot" if k=="hotline" else ""}">{t}</a>' for u, t, k in NAV)
     ld = f'<script type="application/ld+json">{json.dumps(jsonld, ensure_ascii=False)}</script>' if jsonld else ""
-    if path.split("/")[0] in ("busts", "news"):
+    if path.split("/")[0] in ("busts", "news", "drugs"):
         ld += '<script src="/assets/js/hydrate.js" defer></script>' 
     return f"""<!DOCTYPE html>
 <html lang="en">

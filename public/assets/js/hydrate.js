@@ -2,11 +2,12 @@
    Static pages remain the SEO base; edited/added items appear instantly. */
 (function () {
   var type = location.pathname.split('/')[1];
-  if (!/^(busts|news)$/.test(type)) return;
+  if (!/^(busts|news|drugs)$/.test(type)) return;
   fetch('/api/public/content?type=' + type).then(function (r) { return r.json(); }).then(function (d) {
     var items = (d.items || []).filter(function (x) { return x && x.slug; });
     if (!items.length) return;
     var seg = location.pathname.split('/').filter(Boolean);
+    if (type === 'drugs') { renderDrug(items.find(function (x) { return x.slug === seg[1]; })); return; }
     if (seg.length === 1) { renderIndex(items, type); }
     else { renderDetail(items.find(function (x) { return x.slug === seg[1]; }), type); }
   }).catch(function () {});
@@ -69,3 +70,11 @@
     if (badge && type === 'busts') badge.textContent = it.confirmed ? 'CONFIRMED' : 'PENDING VERIFICATION';
   }
 })();
+
+  function renderDrug(it) {
+    if (!it) return;
+    var im = document.querySelector('img[loading="lazy"]');
+    if (im && it.image) { im.src = it.image; }
+    var h1 = document.querySelector('h1');
+    if (h1 && it.name) { h1.textContent = it.name; }
+  }
