@@ -165,7 +165,7 @@ async function toggleGallery(k){
 }
 async function gallerySearch(k,q){
   const res=document.getElementById('galres_'+k);
-  const d=await fetch('/api/admin/gallery?q='+encodeURIComponent(q),{headers:{Authorization:'Bearer '+token}}).catch(()=>({ok:false,items:[]}));
+  const d=await fetch('/api/admin/gallery?q='+encodeURIComponent(q),{headers:{Authorization:'Bearer '+token}}).then(r=>r.json()).catch(()=>({ok:false,items:[]}));
   const items=d.items||[];
   res.innerHTML=items.map(it=>'<img class="gal-thumb" src="'+it.url+'" title="'+esc(it.name)+'" onclick="pickImage(\''+k+'\',\''+it.url+'\')">').join('')||'<span style="color:#98a2b3;font-size:12px">No matches — upload a new image instead.</span>';
 }
