@@ -1,38 +1,60 @@
-/* hydrate.js — live-load admin (KV) content over the static HTML for busts & news.
-   Static pages remain the SEO base; edited/added items appear instantly. */
+/* hydrate.js — live-load admin (KV) content over static HTML.
+   Static pages remain the SEO base; admin edits appear instantly. Covers:
+   drugs, busts, news, topics, quit, hotlines, pharmacies, rehabs, sentencing. */
 (function () {
-  var type = location.pathname.split('/')[1];
-  if (!/^(busts|news|drugs)$/.test(type)) return;
+  var seg = location.pathname.split('/').filter(Boolean);
+  var type = seg[0] || '';
+  if (!/^(drugs|busts|news|topics|quit|hotlines|pharmacies|rehabs|sentencing)$/.test(type)) return;
   fetch('/api/public/content?type=' + type).then(function (r) { return r.json(); }).then(function (d) {
-    var items = (d.items || []).filter(function (x) { return x && x.slug; });
+    var items = (d.items || []).filter(function (x) { return x; });
     if (!items.length) return;
-    var seg = location.pathname.split('/').filter(Boolean);
-    if (type === 'drugs') { renderDrug(items.find(function (x) { return x.slug === seg[1]; })); return; }
-    if (seg.length === 1) { renderIndex(items, type); }
-    else { renderDetail(items.find(function (x) { return x.slug === seg[1]; }), type); }
+    if (type === 'hotlines') return renderHotlines(items);
+    if (type === 'sentencing') return renderSentencing(items);
+    if (seg.length === 1 || (type === 'sentencing')) return renderIndex(items, type);
+    var it = items.find(function (x) { return x.slug === seg[1]; });
+    if (!it) return;
+    if (type === 'drugs') return renderDrug(it);
+    if (type === 'busts' || type === 'news') return renderDetail(it, type);
+    if (type === 'topics') return renderTopic(it);
+    if (type === 'quit') return renderQuit(it);
+    if (type === 'pharmacies' || type === 'rehabs') return renderCenter(it);
   }).catch(function () {});
 
   function esc(s) { var d = document.createElement('div'); d.textContent = s == null ? '' : s; return d.innerHTML; }
   function chip(t, cls) { return '<span class="chip ' + (cls || '') + '">' + esc(t) + '</span>'; }
 
+  /* ---------------- index pages ---------------- */
   function renderIndex(items, type) {
     var grid = document.querySelector('.cards'); if (!grid) return;
     grid.innerHTML = items.map(function (it) {
-      if (type === 'busts') {
-        return '<a class="card" href="/busts/' + it.slug + '/"><div class="meta">' +
-          (it.confirmed ? chip('CONFIRMED', 'amber') : chip('PENDING VERIFICATION', 'red')) + chip(it.date || '') + '</div>' +
-          '<h3>' + esc(it.title) + '</h3><p>' + esc(it.summary || '') + '</p>' +
-          '<div class="foot">' + esc(it.location || '') + ' · ' + esc(it.agency || '') + ' &rarr;</div></a>';
-      }
-      return '<a class="card" href="/news/' + it.slug + '/"><div class="meta">' +
+      if (type === 'busts') return '<a class="card" href="/busts/' + it.slug + '/"><div class="meta">' +
+        (it.confirmed ? chip('CONFIRMED', 'amber') : chip('PENDING VERIFICATION', 'red')) + chip(it.date || '') + '</div>' +
+        '<h3>' + esc(it.title) + '</h3><p>' + esc(it.summary || '') + '</p>' +
+        '<div class="foot">' + esc(it.location || '') + ' &middot; ' + esc(it.agency || '') + ' &rarr;</div></a>';
+      if (type === 'news') return '<a class="card" href="/news/' + it.slug + '/"><div class="meta">' +
         '<span class="badge-live">' + esc((it.tag || 'NEWS').toUpperCase()) + '</span>' + chip(it.date || '') + '</div>' +
         '<h3>' + esc(it.title) + '</h3><p>' + esc(it.summary || '') + '</p><div class="foot">Read &rarr;</div></a>';
+      if (type === 'topics') return '<a class="card" href="/topics/' + it.slug + '/"><div class="meta">' +
+        chip('GUIDE', 'red') + chip(it.read || '') + chip(it.date || '') + '</div><h3>' + esc(it.title) + '</h3>' +
+        '<p>' + esc(it.desc || '') + '</p><div class="foot">Read guide &rarr;</div></a>';
+      if (type === 'quit') return '<a class="card" href="/quit/' + it.slug + '/"><div class="meta">' +
+        chip('DAY-BY-DAY', 'green') + chip(it.cat || '') + '</div><h3>Quitting ' + esc(it.name) + '</h3>' +
+        '<p>' + esc((it.danger || '').slice(0, 130)) + '&hellip;</p><div class="foot">Full timeline &rarr;</div></a>';
+      return '';
     }).join('');
   }
 
+  /* ---------------- detail pages ---------------- */
+  function setH1(t) { var h = document.querySelector('h1'); if (h && t) h.textContent = t; }
+
+  function renderDrug(it) {
+    var im = document.querySelector('img[loading="lazy"]');
+    if (im && it.image) im.src = it.image;
+    setH1(it.name);
+  }
+
   function renderDetail(it, type) {
-    if (!it) return;
-    var h1 = document.querySelector('article h1'); if (h1) h1.textContent = it.title || h1.textContent;
+    setH1(it.title);
     var byline = document.querySelector('.byline');
     if (byline) byline.innerHTML =
       (it.date ? '<span>' + esc(it.date) + '</span>' : '') +
@@ -41,8 +63,7 @@
       (it.sources ? '<span>Sources: ' + esc(it.sources.join(', ')) + '</span>' : '');
     var lede = document.querySelector('.lede'); if (lede && it.summary) lede.textContent = it.summary;
     if (type === 'busts') {
-      var rows = document.querySelectorAll('.tbl tbody tr');
-      rows.forEach(function (tr) {
+      document.querySelectorAll('.tbl tbody tr').forEach(function (tr) {
         var th = tr.querySelector('th'), td = tr.querySelector('td');
         if (!th || !td) return;
         var k = th.textContent.trim();
@@ -54,9 +75,11 @@
       var ps = document.querySelectorAll('article p');
       for (var i = 0; i < ps.length; i++) {
         if (ps[i].classList.contains('lede')) continue;
-        if (ps[i].querySelector('b') && /Source:/.test(ps[i].textContent)) continue;
+        if (/Source:/.test(ps[i].textContent)) continue;
         ps[i].textContent = it.summary || ps[i].textContent; break;
       }
+      var badge = document.querySelector('article .kicker');
+      if (badge) badge.textContent = it.confirmed ? 'CONFIRMED' : 'PENDING VERIFICATION';
     }
     if (type === 'news' && Array.isArray(it.body) && it.body.length) {
       var article = document.querySelector('article.article');
@@ -66,15 +89,84 @@
       var rel = article.querySelector('.related');
       if (rel) rel.insertAdjacentHTML('beforebegin', html); else article.insertAdjacentHTML('beforeend', html);
     }
-    var badge = document.querySelector('article .kicker');
-    if (badge && type === 'busts') badge.textContent = it.confirmed ? 'CONFIRMED' : 'PENDING VERIFICATION';
+  }
+
+  function renderBlocks(blocks) {
+    return (blocks || []).map(function (b) {
+      var t = b[0];
+      if (t === 'p') return '<p>' + b[1] + '</p>';
+      if (t === 'h2') return '<h2>' + esc(b[1]) + '</h2>';
+      if (t === 'h3') return '<h3>' + esc(b[1]) + '</h3>';
+      if (t === 'ul') return '<ul>' + b[1].map(function (x) { return '<li>' + x + '</li>'; }).join('') + '</ul>';
+      if (t === 'ol') return '<ol>' + b[1].map(function (x) { return '<li>' + x + '</li>'; }).join('') + '</ol>';
+      if (t === 'quote') return '<blockquote>&ldquo;' + b[1] + '&rdquo;<br><small>&mdash; ' + esc(b[2]) + '</small></blockquote>';
+      if (t === 'callout') return '<div class="callout ' + b[1][0] + '"><b>' + esc(b[1][1]) + '</b>' + b[1][2] + '</div>';
+      if (t === 'stats') return '<div class="stat-grid">' + b[1].map(function (s, i) {
+        return '<div class="stat' + (i === 0 ? ' red' : '') + '"><b>' + esc(s[0]) + '</b><span>' + esc(s[1]) + '</span></div>'; }).join('') + '</div>';
+      if (t === 'table') return '<div class="figure"><table class="tbl"><thead><tr>' +
+        b[1][0].map(function (c) { return '<th>' + esc(c) + '</th>'; }).join('') + '</tr></thead><tbody>' +
+        b[1].slice(1).map(function (r) { return '<tr>' + r.map(function (c) { return '<td>' + c + '</td>'; }).join('') + '</tr>'; }).join('') + '</tbody></table></div>';
+      if (t === 'checklist') return '<ul class="checklist">' + b[1].map(function (x) { return '<li>' + x + '</li>'; }).join('') + '</ul>';
+      if (t === 'timeline') return '<div class="timeline">' + b[1].map(function (x, i) {
+        return '<div class="tl-item' + (i === 1 ? ' red' : '') + '"><h4>' + esc(x[0]) + ' &mdash; ' + esc(x[1]) + '</h4><p>' + esc(x[2]) + '</p></div>'; }).join('') + '</div>';
+      return '';
+    }).join('');
+  }
+
+  function renderTopic(it) {
+    setH1(it.title);
+    var articles = document.querySelectorAll('article.article');
+    var body = articles[articles.length - 1]; if (!body) return;
+    body.innerHTML = renderBlocks(it.blocks) +
+      '<div class="related print-hide"><h2>Edited via admin</h2><p style="font-size:13px;color:#667085">This guide reflects the latest saved version.</p></div>';
+  }
+
+  function renderQuit(it) {
+    setH1('What happens when you quit ' + it.name);
+    var call = document.querySelector('.callout'); 
+    if (call && it.danger) { var b = call.querySelector('b'); call.innerHTML = (b ? '<b>' + b.textContent + '</b>' : '') + esc(it.danger); }
+    var tl = document.querySelector('.timeline');
+    if (tl && Array.isArray(it.days)) tl.innerHTML = it.days.map(function (x, i) {
+      return '<div class="tl-item' + (i === 1 ? ' red' : '') + '"><h4>' + esc(x[0]) + ' &mdash; ' + esc(x[1]) + '</h4><p>' + esc(x[2]) + '</p></div>'; }).join('');
+    var cl = document.querySelector('ul.checklist');
+    if (cl && Array.isArray(it.tips)) cl.innerHTML = it.tips.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('');
+  }
+
+  function renderCenter(it) {
+    setH1(it.name);
+    var ps = document.querySelectorAll('main p');
+    for (var i = 0; i < ps.length; i++) { if (ps[i].textContent.length > 60) { ps[i].textContent = it.desc; break; } }
+    document.querySelectorAll('.fact').forEach(function (f) {
+      var b = f.querySelector('b'), v = f.querySelector('span'); if (!b || !v) return;
+      if (/Website/.test(b.textContent) && it.website) v.innerHTML = '<a href="' + esc(it.website) + '">' + esc(it.website) + '</a>';
+      if (/Contact/.test(b.textContent) && it.phone) v.textContent = it.phone;
+    });
+  }
+
+  /* ---------------- directory-style pages ---------------- */
+  function renderHotlines(items) {
+    document.querySelectorAll('.hl-region').forEach(function (sec) {
+      var k = sec.querySelector('.kicker'); if (!k) return;
+      var it = items.find(function (x) { return x.region === k.textContent.trim(); });
+      var grid = sec.querySelector('.hl-grid'); if (!it || !grid) return;
+      grid.innerHTML = it.items.map(function (h) {
+        return '<div class="hl-card"><h3>' + esc(h[1]) + '</h3><div class="num">' + esc(h[0]) + '</div>' +
+          '<div class="who">' + esc(h[2]) + '</div>' +
+          (h[3] ? '<a class="call-btn" href="tel:' + esc(h[3]) + '">&#128222; Call now</a>' : '<span class="chip" style="margin-top:12px">Text-based service</span>') + '</div>';
+      }).join('');
+    });
+  }
+
+  function renderSentencing(items) {
+    document.querySelectorAll('.legal-doc').forEach(function (doc) {
+      var h = doc.querySelector('h2'); if (!h) return;
+      var it = items.find(function (x) { return x.region === h.textContent.trim(); });
+      if (!it) return;
+      var p = doc.querySelector('p'); if (p && it.summary) p.textContent = it.summary;
+      var tb = doc.querySelector('.tbl tbody'); if (tb && Array.isArray(it.table))
+        tb.innerHTML = it.table.slice(1).map(function (r) {
+          return '<tr>' + r.map(function (c, i) { return (i === 0 ? '<th style="width:45%">' : '<td>') + esc(c) + (i === 0 ? '</th>' : '</td>'); }).join('') + '</tr>';
+        }).join('');
+    });
   }
 })();
-
-  function renderDrug(it) {
-    if (!it) return;
-    var im = document.querySelector('img[loading="lazy"]');
-    if (im && it.image) { im.src = it.image; }
-    var h1 = document.querySelector('h1');
-    if (h1 && it.name) { h1.textContent = it.name; }
-  }
