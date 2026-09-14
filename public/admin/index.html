@@ -24,6 +24,7 @@ input,select{padding:9px 11px;border:1px solid #e4e7ec;border-radius:9px;font-fa
 <script>
 const TYPES=["drugs","busts","news","topics","quit","hotlines","pharmacies","rehabs","sentencing"];
 let token=sessionStorage.getItem('pr-token'),cur='drugs';
+const MEDIA_BASE='https://plugreports.pages.dev';
 async function api(p,opt={}){opt.headers=Object.assign({'Content-Type':'application/json',Authorization:'Bearer '+token},opt.headers);
  const r=await fetch('/api/'+p,opt);if(r.status===401){logout();throw new Error('session expired')}
  const j=await r.json().catch(()=>({ok:false,error:'API error '+r.status}));return j}
@@ -51,6 +52,10 @@ async function list(b){b.innerHTML='Loading…';let a;try{a=await api('admin/con
 async function edit(i){const it=window._items[i]||{};
  document.getElementById('editor').innerHTML=`<h3>${i===''||i===undefined?'New':'Edit'} ${cur.slice(0,-1)}</h3>
  <p style="font-size:12px;color:#667085">Edit as JSON. Required keys follow the published schemas (see src/data_*.py).</p>
+ <div style="margin:10px 0"><input type="file" id="imgfile" accept="image/*" style="display:inline">
+ <button class="btn x" onclick="uploadImage()">&#128247; Upload image</button>
+ <input id="imgurl" placeholder="image URL appears here" style="width:46%" readonly>
+ <button class="btn g" style="padding:6px 12px" onclick="useImage()">Use in profile</button></div>
  <textarea id="j">${JSON.stringify(it,null,2)}</textarea><br>
  <button class="btn g" onclick="save('${it.slug||''}')">Save</button>
  ${it.slug?`<button class="btn" onclick="del('${it.slug}')">Delete</button>`:''}</div>`;
@@ -59,6 +64,14 @@ async function save(slug){let obj;try{obj=JSON.parse(document.getElementById('j'
  if(!obj.slug)obj.slug=(obj.name||obj.title||'item').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
  const r=await api(`admin/content?type=${cur}${slug?'&slug='+slug:''}`,{method:slug?'PUT':'POST',body:JSON.stringify(obj)});
  msg(r.ok?'Saved.':'Error: '+(r.error||''),r.ok);list(document.getElementById('body'))}
+async function uploadImage(){const f=document.getElementById('imgfile').files[0];if(!f)return msg('Pick a file first',0);
+ let slug=(()=>{try{return JSON.parse(document.getElementById('j').value).slug||'misc'}catch(e){return 'misc'}})();
+ const name='drugs/'+slug+'.'+(f.name.split('.').pop().toLowerCase());
+ const r=await fetch('/api/admin/upload?name='+encodeURIComponent(name),{method:'POST',headers:{'Content-Type':f.type,Authorization:'Bearer '+token},body:f});
+ const j=await r.json();if(!j.ok)return msg(j.error||'Upload failed',0);
+ document.getElementById('imgurl').value=j.url;msg('Uploaded: '+j.url);return j.url}
+function useImage(){const u=document.getElementById('imgurl').value;if(!u)return;
+ try{const o=JSON.parse(document.getElementById('j').value);o.image=u;document.getElementById('j').value=JSON.stringify(o,null,2);msg('image field set — Save to apply')}catch(e){msg('Invalid JSON',0)}}
 async function del(slug){if(!confirm('Delete '+slug+'?'))return;
  const r=await api(`admin/content?type=${cur}&slug=${slug}`,{method:'DELETE'});
  msg(r.ok?'Deleted.':'Error',r.ok);list(document.getElementById('body'))}

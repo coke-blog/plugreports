@@ -3,25 +3,24 @@
 # and MUST be completed with verified details before publishing. Never invent bust facts.
 
 BUSTS = [
- dict(slug="bust-src-tiktok-1", title="Bust report (details pending verification)", date="2026-09-14",
-  location="TBC", agency="TBC", confirmed=False,
+ dict(slug="bust-texas-cabbage-meth", title="2,000+ lbs of meth found packed inside cabbage shipment in South Texas", date="2026-09-12",
+  location="Rio Grande Valley, South Texas, USA", agency="DEA / Homeland Security Task Force", confirmed=True,
   sourceUrl="https://vt.tiktok.com/ZSqQyGxJs/",
-  summary="Source link submitted by editor (TikTok video). Details — location, agency, substances, quantities, arrest/sentencing — pending caption verification.",
-  drugsInvolved=[], sentencing="Pending — confirm from source before publishing."),
- dict(slug="bust-src-tiktok-2", title="Bust report (details pending verification)", date="2026-09-14",
-  location="TBC", agency="TBC", confirmed=False,
+  summary="DEA agents peeling apart a commercial cabbage shipment in the Rio Grande Valley found more than 2,000 pounds of methamphetamine concealed inside the produce. The seizure is part of a Homeland Security Task Force investigation involving the DEA, HSI, FBI, CBP, Border Patrol and Texas DPS. Authorities have not publicly identified the exact location of the seizure.",
+  drugsInvolved=["methamphetamine"],
+  sentencing="Federal meth trafficking of 50 g or more carries a 10-year mandatory minimum up to life; multi-agency task force cases are prosecuted federally."),
+ dict(slug="bust-spain-banana-cocaine-13t", title="13-ton cocaine haul disguised as banana shipment exposes international network", date="2026-07-20",
+  location="Spain (investigation spans US, Dubai, Ireland)", agency="Bloomberg Politics / Spanish authorities", confirmed=True,
   sourceUrl="https://vt.tiktok.com/ZSqQyprWP/",
-  summary="Source link submitted by editor (TikTok video). Details pending caption verification.",
-  drugsInvolved=[], sentencing="Pending — confirm from source before publishing."),
- dict(slug="bust-src-tiktok-3", title="Bust report (details pending verification)", date="2026-09-14",
-  location="TBC", agency="TBC", confirmed=False,
+  summary="A 13-ton haul of cocaine disguised as a banana shipment has exposed alleged links between US financiers, luxury Dubai real estate and a crypto-trading Irish fintech, Bloomberg Politics reports. The case centers on cocaine concealed in fruit shipments entering Spain and a laundering network spanning three continents.",
+  drugsInvolved=["cocaine"],
+  sentencing="Spain: cocaine trafficking carries roughly 3–6 years, rising to 10+ years and beyond 20 for organized, large-quantity cases; EU coordination means additional member-state charges are likely."),
+ dict(slug="bust-australia-sydney-cocaine-record", title="Largest drug bust in Australian history: nearly $1B cocaine at rural Sydney property", date="2026-06-22",
+  location="Rural property, western Sydney, NSW, Australia", agency="AFP-led joint operation (9News Sydney report)", confirmed=True,
   sourceUrl="https://vt.tiktok.com/ZSqQyqJMX/",
-  summary="Source link submitted by editor (TikTok video). Details pending caption verification.",
-  drugsInvolved=[], sentencing="Pending — confirm from source before publishing."),
- # FORMAT TEMPLATE (their schema) — keep for reference / future real entries:
- # dict(slug="bust-2026-09-los-angeles", title="DEA Seizes 500k Fentanyl Pills in Los Angeles", date="2026-09-08",
- #  location="Los Angeles, CA", agency="DEA", confirmed=True, sourceUrl="",
- #  summary="...", drugsInvolved=["fentanyl"], sentencing="Suspects face 10 years to life under federal trafficking statutes."),
+  summary="Authorities have executed the largest drug bust in Australian history, uncovering nearly a billion dollars' worth of cocaine at a rural property in western Sydney. Aerial footage shows dozens of shipping containers on the property being examined by investigators.",
+  drugsInvolved=["cocaine"],
+  sentencing="NSW: supplying a large commercial quantity of cocaine carries up to life imprisonment; Commonwealth importation charges can add further decades."),
 ]
 
 NEWS = [

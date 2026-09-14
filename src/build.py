@@ -261,7 +261,8 @@ def build_drugs():
     for d in DRUGS:
         c = CATEGORIES[d["category"]]
         rel = related_drugs(d)
-        img_rel = drug_image(d["slug"])
+        ext_img = (d.get("image") or "").strip()
+        img_rel = ext_img if ext_img.startswith("http") else drug_image(d["slug"])
         relhtml = "".join(f'<a href="/drugs/{r["slug"]}/">{rel_card(r["slug"])}</a>' for r in rel)
         rows = "".join(f'<div class="fact"><b>{k}</b><span>{v}</span></div>' for k, v in [
             ("Also known as", ", ".join(d["aliases"])),
@@ -323,8 +324,8 @@ def build_drugs():
                "audience":{"@type":"Audience","audienceType":"People seeking harm-reduction information"},
                "medicalAudience":{"@type":"MedicalAudience","audienceType":"Patient"}},
               breadcrumb_ld([("Home","/"),(c["name"],f"/categories/{d['category']}/"),(d["name"],"")])]
-        ogimg = img_rel if "drugs/" in img_rel else None
-        w(f"drugs/{d['slug']}/index.html", shell(f"drugs/{d['slug']}/index.html", title, desc, body, jsonld=ld, ogimage=(f"{SITE}/{img_rel}" if ogimg else None)))
+        og = img_rel if img_rel.startswith("http") else (f"{SITE}/{img_rel}" if "drugs/" in img_rel else None)
+        w(f"drugs/{d['slug']}/index.html", shell(f"drugs/{d['slug']}/index.html", title, desc, body, jsonld=ld, ogimage=og))
 
 def build_categories():
     for k, c in CATEGORIES.items():
