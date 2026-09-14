@@ -87,6 +87,11 @@ def help_links(drugs=None, extra=None, related=None):
     return f'<div class="related print-hide"><h2>Drugs mentioned &amp; help</h2><div class="rel-grid">{chips}</div></div>'
 
 def resolve_slug(s):
+    if ":" in s:
+        t, sl = s.split(":", 1)
+        if t in ("drugs","busts","news","topics","quit","categories","hotlines","pharmacies","rehabs","sentencing"):
+            return f"{t}/{sl}"
+        return s
     if s in DRUG_BY_SLUG: return f"drugs/{s}"
     if s in TOPIC_BY_SLUG: return f"topics/{s}"
     if s in NEWS_BY_SLUG: return f"news/{s}"
@@ -94,6 +99,9 @@ def resolve_slug(s):
     return s  # section pages: busts, hotlines, sentencing...
 
 def rel_card(slug):
+    if ":" in slug:
+        sl = slug.split(":", 1)[1]
+        return f'<span class="mini" style="background:#667085">&#8250;</span><span>{esc(sl.replace("-", " ").title())}</span>'
     d = DRUG_BY_SLUG.get(slug)
     if d:
         c = CATEGORIES[d["category"]]
@@ -125,7 +133,11 @@ def shell(path, title, desc, body, jsonld=None, canonical=None, extra_head="", o
     if parts:
         acc, links = [], []
         for p in parts[:-1]:
-            acc.append(p); links.append(f'<a href="/{"/".join(acc)}/">{esc(p.replace("-"," ").title())}</a>')
+            acc.append(p)
+            if os.path.isfile(os.path.join(PUB, *acc, "index.html")):
+                links.append(f'<a href="/{"/".join(acc)}/">{esc(p.replace("-"," ").title())}</a>')
+            else:
+                links.append(f'<span>{esc(p.replace("-"," ").title())}</span>')
         crumbs = ('<div class="wrap"><nav class="crumbs print-hide"><a href="/">Home</a> / '
                   + " / ".join(links) + f' / <span>{esc(title.split("—")[0].strip())}</span></nav></div>')
     langlinks = "".join(
@@ -340,7 +352,7 @@ def build_drugs(es=False):
         rel = [DRUG_BY_SLUG[x] for x in (d.get("related") or []) if x in DRUG_BY_SLUG] or related_drugs(d)
         ext_img = (d.get("image") or "").strip()
         img_rel = ext_img if ext_img.startswith("http") else drug_image(d["slug"])
-        relhtml = "".join(f'<a href="/{("es/" if es else "")}drugs/{r["slug"]}/">{rel_card(r["slug"])}</a>' for r in rel)
+        relhtml = "".join(f'<a href="/{("es/" if es and r["slug"] in ES_DRUGS else "")}drugs/{r["slug"]}/">{rel_card(r["slug"])}</a>' for r in rel)
         rows = "".join(f'<div class="fact"><b>{k}</b><span>{v}</span></div>' for k, v in [
             ("Also known as", ", ".join(d["aliases"])),
             ("Category", f'<span class="cat-dot" style="background:{c["color"]}"></span>{esc(cat_name)}'),
@@ -350,7 +362,7 @@ def build_drugs(es=False):
             ("Legal status", esc(lg)),
             ("Last updated", esc(d["lastUpdated"]))])
         cat_rows = "".join(
-            f'<tr><td><a href="/{("es/" if es else "")}drugs/{x["slug"]}/">{esc(x["name"])}</a></td>'
+            f'<tr><td><a href="/{("es/" if es and x["slug"] in ES_DRUGS else "")}drugs/{x["slug"]}/">{esc(x["name"])}</a></td>'
             f'<td>{esc(x["schedule"].split("(")[0].strip())}</td>'
             f'<td>{"; ".join(esc(e) for e in x["risks"][:2])}</td>'
             f'<td>{esc(x["streetPrice"].split(";")[0].split("(")[0].strip())}</td></tr>'
@@ -724,8 +736,26 @@ def build_meta():
     w("rss.xml", f'<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0"><channel><title>plugreports — Drug News</title><link>{SITE}/news/</link>{items}</channel></rss>')
     w("llms.txt", f"# plugreports\n\n> Harm-reduction library of street drug profiles, busts, hotlines and verified help. USA, Canada, Europe, Australia, Africa.\n\n## Key pages\n- [/hotlines/]({SITE}/hotlines/) Verified overdose & crisis hotlines, 5 regions\n- [/drugs/fentanyl/]({SITE}/drugs/fentanyl/) Fentanyl profile\n" + "".join(f"- [/drugs/{d['slug']}/]({SITE}/drugs/{d['slug']}/) {d['name']} ({CATEGORIES[d['category']]['name']})\n" for d in DRUGS[:40]))
 
+
+def build_indexes():
+    cards = "".join(
+        "<a class=\"card\" href=\"/categories/" + k + "/\"><div class=\"meta\"><span class=\"chip\" style=\"border-color:" + v["color"] + "33;color:" + v["color"] + "\">" + str(sum(1 for d in DRUGS if d["category"] == k)) + " substances</span></div><h3>" + esc(v["name"]) + "</h3><p>" + esc(v["tagline"]) + "</p><div class=\"foot\">Browse category &rarr;</div></a>"
+        for k, v in CATEGORIES.items())
+    w("categories/index.html", shell("categories/index.html",
+        "Drug Categories — Opioids, Stimulants, Benzos, Psychedelics & More | plugreports",
+        "Browse all drug categories: opioids, stimulants, benzodiazepines, psychedelics, dissociatives, synthetic cannabinoids and more — harm-reduction profiles for every substance.",
+        "<div class=\"wrap\"><section class=\"sec-head\" style=\"padding-top:30px\"><div><span class=\"kicker amber\">Drug Library</span><h2 style=\"font-family:var(--font-ed);font-size:clamp(28px,4vw,44px)\">All <span style=\"background:linear-gradient(92deg,#f59e0b,#dc2626);-webkit-background-clip:text;background-clip:text;color:transparent\">categories</span></h2><p>" + str(len(CATEGORIES)) + " categories, " + str(len(DRUGS)) + " substances — every profile covers effects, overdose signs, street prices and legal status.</p></div></section><div class=\"cards\">" + cards + "</div></div>"))
+    tiles = "".join(
+        "<a class=\"tile\" href=\"/drugs/" + d["slug"] + "/\"><span class=\"glyph\" style=\"background:" + CATEGORIES[d["category"]]["grad"] + "\">" + esc(d["name"][0]) + "</span><h3>" + esc(d["name"]) + "</h3><span class=\"cat\"><span class=\"cat-dot\" style=\"background:" + CATEGORIES[d["category"]]["color"] + "\"></span>" + esc(CATEGORIES[d["category"]]["name"]) + "</span></a>"
+        for d in sorted(DRUGS, key=lambda x: x["name"]))
+    w("drugs/index.html", shell("drugs/index.html",
+        "All " + str(len(DRUGS)) + " Drugs A-Z — Street Names, Effects, Overdose Signs | plugreports",
+        "Complete A-Z index of " + str(len(DRUGS)) + " street drugs and pharmaceuticals: street names, effects, overdose signs, street prices and legal status.",
+        "<div class=\"wrap\"><section class=\"sec-head\" style=\"padding-top:30px\"><div><span class=\"kicker amber\">A-Z Index</span><h2 style=\"font-family:var(--font-ed);font-size:clamp(28px,4vw,44px)\">All <span style=\"background:linear-gradient(92deg,#f59e0b,#dc2626);-webkit-background-clip:text;background-clip:text;color:transparent\">" + str(len(DRUGS)) + " substances</span>, A to Z</h2><p>Tap any substance for effects, risks, overdose signs and street info.</p></div></section><div class=\"rail\" style=\"grid-template-rows:none;overflow:visible\">" + tiles + "</div></div>"))
+
 def main():
     build_index(); build_categories(); build_drugs(); build_news(); build_busts()
+    build_indexes()
     build_topics(); build_quit(); build_hotlines(); build_sentencing()
     build_directory("pharmacies", PHARMACIES, "verified pharmacy",
         "Verified Online Pharmacies — Accredited & Safe | plugreports",
