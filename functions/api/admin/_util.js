@@ -7,7 +7,7 @@ export async function checkAuth(env, request) {
   const sig = await crypto.subtle.sign('HMAC', key, new TextEncoder().encode('plugreports-admin'));
   const expect = [...new Uint8Array(sig)].map(b => b.toString(16).padStart(2, '0')).join('');
   const token = (request.headers.get('Authorization') || '').replace('Bearer ', '');
-  return token === expect && !!pinHash;
+  return token === expect;
 }
 export const sha256 = async s => [...new Uint8Array(
   await crypto.subtle.digest('SHA-256', new TextEncoder().encode(s)))]

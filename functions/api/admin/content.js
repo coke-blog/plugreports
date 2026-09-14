@@ -4,6 +4,7 @@ async function getList(env, type) { return JSON.parse(await env.CONTENT.get('con
 export async function onRequestGet({request, env}) {
   if (!await checkAuth(env, request)) return Response.json({ok: false}, {status: 401});
   const type = new URL(request.url).searchParams.get('type') || 'drugs';
+  if (!hasKV(env)) return Response.json({ok: true, items: [], note: 'kv-not-bound'});
   return Response.json({ok: true, items: await getList(env, type)});
 }
 export async function onRequestPost({request, env}) {

@@ -25,7 +25,8 @@ input,select{padding:9px 11px;border:1px solid #e4e7ec;border-radius:9px;font-fa
 const TYPES=["drugs","busts","news","topics","quit","hotlines","pharmacies","rehabs","sentencing"];
 let token=sessionStorage.getItem('pr-token'),cur='drugs';
 async function api(p,opt={}){opt.headers=Object.assign({'Content-Type':'application/json',Authorization:'Bearer '+token},opt.headers);
- const r=await fetch('/api/'+p,opt);if(r.status===401){logout()}return r.json()}
+ const r=await fetch('/api/'+p,opt);if(r.status===401){logout();throw new Error('session expired')}
+ const j=await r.json().catch(()=>({ok:false,error:'API error '+r.status}));return j}
 function logout(){sessionStorage.removeItem('pr-token');location.reload()}
 async function login(){const r=await fetch('/api/admin/login',{method:'POST',headers:{'Content-Type':'application/json'},
  body:JSON.stringify({pin:document.getElementById('pin').value})});const j=await r.json();
@@ -38,9 +39,10 @@ function boot(){document.getElementById('gate').hidden=true;document.getElementB
  if(cur==='settings')return settings(b);
  if(cur==='suggestions')return sugg(b);
  list(b)}
-async function list(b){b.innerHTML='Loading…';const a=await api('admin/content?type='+cur);
+async function list(b){b.innerHTML='Loading…';let a;try{a=await api('admin/content?type='+cur)}catch(e){b.innerHTML='<div class="msg err">'+e.message+'</div>';return}
  const items=a.items||[];
- b.innerHTML=`<h2>${cur} <small>(${items.length})</small></h2>
+ const note=a.note?'<div class="msg err"><b>Storage not connected.</b> Add the KV namespace binding (CONTENT) in Cloudflare Pages → Settings → Functions, then reload this page. You can still browse; saves are disabled.</div>':'';
+ b.innerHTML=`${note}<h2>${cur} <small>(${items.length})</small></h2>
  <button class="btn g" onclick="edit('')">+ New ${cur.slice(0,-1)}</button>
  <table><tr><th style="width:32px"></th><th>slug / key</th><th>title / name</th></tr>${items.map((it,i)=>
  `<tr><td><button class="btn x" style="padding:3px 9px" onclick="edit(${i})">edit</button></td>
