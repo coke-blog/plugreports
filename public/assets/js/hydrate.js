@@ -3,6 +3,7 @@
    drugs, busts, news, topics, quit, hotlines, pharmacies, rehabs, sentencing. */
 (function () {
   var seg = location.pathname.split('/').filter(Boolean);
+  if (seg.length === 0) { renderHome(); return; }
   var type = seg[0] || '';
   if (!/^(drugs|busts|news|topics|quit|hotlines|pharmacies|rehabs|sentencing)$/.test(type)) return;
   fetch('/api/public/content?type=' + type).then(function (r) { return r.json(); }).then(function (d) {
@@ -170,3 +171,44 @@
     });
   }
 })();
+
+  /* ---------------- home page ---------------- */
+  var CATCOL = {opioids:'#dc2626', stimulants:'#d97706', benzodiazepines:'#7c3aed', sedatives:'#0f766e',
+    depressants:'#1d4ed8', dissociatives:'#0891b2', empathogens:'#be185d', psychedelics:'#4d7c0f',
+    cannabinoids:'#57534e', performance:'#b45309', hazardous:'#111827'};
+  function renderHome() {
+    Promise.all(['news', 'busts', 'topics', 'drugs'].map(function (t) {
+      return fetch('/api/public/content?type=' + t).then(function (r) { return r.json(); }).catch(function () { return {items: []}; });
+    })).then(function (res) {
+      var news = res[0].items || [], busts = res[1].items || [], topics = res[2].items || [], drugs = res[3].items || [];
+      if (drugs.length) {
+        var rail = document.querySelector('.rail');
+        if (rail) rail.innerHTML = drugs.map(function (d) {
+          var col = CATCOL[d.category] || '#667085';
+          return '<a class="tile" href="/drugs/' + d.slug + '/">' +
+            '<span class="sched">' + esc((d.schedule || '').split('(')[0].trim().slice(0, 16)) + '</span>' +
+            '<span class="glyph" style="background:' + col + '">' + esc((d.name || '?')[0]) + '</span>' +
+            '<h3>' + esc(d.name) + '</h3><span class="cat"><span class="cat-dot" style="background:' + col + '"></span>' + esc(d.category || '') + '</span></a>';
+        }).join('');
+        window.DRUG_INDEX = drugs.map(function (d) {
+          return {n: d.name, a: (d.aliases || []).slice(0, 3).join(', '), c: d.category || '', u: '/drugs/' + d.slug + '/', col: CATCOL[d.category] || '#d97706'};
+        });
+      }
+      function pane(sel, items, cardFn) {
+        var p = document.querySelector('.tab-pane[data-pane="' + sel + '"] .cards');
+        if (p && items.length) p.innerHTML = items.map(cardFn).join('');
+      }
+      pane('news', news, function (it) {
+        return '<a class="card" href="/news/' + it.slug + '/"><div class="meta"><span class="badge-live">' + esc((it.tag || 'NEWS').toUpperCase()) + '</span>' + chip(it.date || '') + '</div><h3>' + esc(it.title) + '</h3><p>' + esc(it.summary || '') + '</p><div class="foot">Read &rarr;</div></a>';
+      });
+      pane('busts', busts, function (it) {
+        return '<a class="card" href="/busts/' + it.slug + '/"><div class="meta">' + (it.confirmed ? chip('CONFIRMED', 'amber') : chip('PENDING VERIFICATION', 'red')) + chip(it.date || '') + '</div><h3>' + esc(it.title) + '</h3><p>' + esc(it.summary || '') + '</p><div class="foot">' + esc(it.location || '') + ' · ' + esc(it.agency || '') + ' &rarr;</div></a>';
+      });
+      pane('topics', topics, function (it) {
+        return '<a class="card" href="/topics/' + it.slug + '/"><div class="meta">' + chip('GUIDE', 'red') + chip(it.read || '') + chip(it.date || '') + '</div><h3>' + esc(it.title) + '</h3><p>' + esc(it.desc || '') + '</p><div class="foot">Read guide &rarr;</div></a>';
+      });
+      var stats = document.querySelectorAll('.hero-stats .st b');
+      if (stats[0] && drugs.length) stats[0].textContent = drugs.length;
+      if (stats[3]) stats[3].textContent = topics.length + 8;
+    }).catch(function () {});
+  }

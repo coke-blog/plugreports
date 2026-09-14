@@ -110,7 +110,7 @@ def shell(path, title, desc, body, jsonld=None, canonical=None, extra_head="", o
     navlinks = "".join(
         f'<a href="{u}" class="{"hot" if k=="hotline" else ""}">{t}</a>' for u, t, k in NAV)
     ld = f'<script type="application/ld+json">{json.dumps(jsonld, ensure_ascii=False)}</script>' if jsonld else ""
-    if path.split("/")[0] in ("busts","news","drugs","topics","quit","hotlines","pharmacies","rehabs","sentencing"):
+    if path.split("/")[0] in ("busts","news","drugs","topics","quit","hotlines","pharmacies","rehabs","sentencing","index.html"):
         ld += '<script src="/assets/js/hydrate.js" defer></script>' 
     return f"""<!DOCTYPE html>
 <html lang="en">
@@ -596,6 +596,9 @@ def main():
         "Verified Rehab Centers & Free Recovery Programs | plugreports",
         "Verified addiction treatment: Hazelden Betty Ford, Priory, Narcotics Anonymous, SMART Recovery — with contacts and links.", "&#10010;")
     build_about(); build_suggest(); build_meta()
+    w("_dynamic.html", shell("_dynamic.html", "plugreports",
+      "Live content", '<div class="wrap" id="dyn" style="padding:44px 20px;min-height:50vh"><p>Loading\u2026</p></div>',
+      extra_head='<script src="/assets/js/render.js" defer></script>', canonical=SITE + "/"))
     print(f"Built {len(DRUGS)} drug pages, {len(CATEGORIES)} categories, {len(TOPICS)} topics, "
           f"{len(QUIT_SPECS)} quit pages, {len(NEWS)} news, {len(BUSTS)} busts into {PUB}")
 
