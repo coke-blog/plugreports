@@ -13,3 +13,6 @@ id = "4bf215d251e940ed9f97ea2811f6ebce"
 # [[r2_buckets]]
 # binding = "MEDIA"
 # bucket_name = "plugreports-media"
+
+[ai]
+binding = "AI"
