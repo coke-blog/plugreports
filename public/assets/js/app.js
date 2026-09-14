@@ -17,7 +17,14 @@ var I18N = {
  fr:{crisis:"Surdose ou urgence ? Appelez maintenant",hotline:"Lignes d'aide",drugs:"Bibliothèque des drogues",news:"Actualités",busts:"Saisies",topics:"Guides",sentencing:"Peines",pharmacies:"Pharmacies",rehabs:"Centres de soins",about:"À propos",search:"Rechercher dans la bibliothèque…",effects:"Effets",risks:"Risques",od:"Signes de surdose",price:"Prix dans la rue",legal:"Statut légal",updated:"Dernière mise à jour",sources:"Sources",related:"Vous voudrez peut-être aussi savoir",call:"Appeler maintenant",ageTitle:"Avant de continuer",ageBody:"Ce site contient des informations éducatives sur les drogues et la réduction des risques. Ce n'est pas un avis médical ou juridique. Vous devez être majeur ou consulter ce site dans l'intention d'aider quelqu'un.",ageYes:"Je comprends — entrer",ageNo:"Quitter",disclaimerShort:"Contenu éducatif de réduction des risques uniquement — pas d'avis médical ou juridique."}
 };
 
-function getLang(){ var l=localStorage.getItem('pr-lang'); if(l && I18N[l]) return l; return 'en'; }
+function getLang(){
+  var l=localStorage.getItem('pr-lang');
+  if(l && I18N[l]) return l;
+  try{ var u=new URLSearchParams(location.search).get('lang'); if(u && I18N[u]) return u; }catch(e){}
+  var n=(navigator.language||navigator.userLanguage||'en').slice(0,2).toLowerCase();
+  if(I18N[n]) return n;
+  return 'en';
+}
 function t(k){ var l=getLang(); return (I18N[l] && I18N[l][k]) || I18N.en[k] || k; }
 function applyI18n(){
   var l=getLang();
