@@ -7,6 +7,15 @@ from data_drugs import DRUGS
 from data_categories import CATEGORIES
 from data_content import (BUSTS, NEWS, HOTLINES, PHARMACIES, REHABS,
                           SENTENCING, SETTINGS, QUIT_SPECS, TOPICS)
+from data_related import RELATED_OVERRIDES
+
+def _apply_overrides():
+    for d in DRUGS: d.update(RELATED_OVERRIDES.get("drugs", {}).get(d["slug"], {}))
+    for b in BUSTS: b.update(RELATED_OVERRIDES.get("busts", {}).get(b["slug"], {}))
+    for n in NEWS: n.update(RELATED_OVERRIDES.get("news", {}).get(n["slug"], {}))
+    for t in TOPICS: t.update(RELATED_OVERRIDES.get("topics", {}).get(t["slug"], {}))
+    for k, v in QUIT_SPECS.items(): v.update(RELATED_OVERRIDES.get("quit", {}).get(k, {}))
+_apply_overrides()
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PUB  = os.path.join(ROOT, "public")
