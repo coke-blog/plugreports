@@ -3,7 +3,7 @@ pages_build_output_dir = "public"
 compatibility_date = "2026-09-14"
 
 [vars]
-MEDIA_PUBLIC_URL = "https://plugreports.pages.dev"
+MEDIA_PUBLIC_URL = "https://plugreports.com"
 
 [[kv_namespaces]]
 binding = "CONTENT"
