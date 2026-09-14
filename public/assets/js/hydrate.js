@@ -52,6 +52,8 @@
     var im = document.querySelector('img[loading="lazy"]');
     if (im && it.image) im.src = it.image;
     setH1(it.name);
+    if (it.seoTitle) document.title = it.seoTitle;
+    if (it.seoDesc) { var m = document.querySelector('meta[name="description"]'); if (m) m.setAttribute('content', it.seoDesc); }
   }
 
   function renderDetail(it, type) {

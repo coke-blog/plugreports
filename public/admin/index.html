@@ -8,12 +8,19 @@ nav{width:190px;background:#fff;border-right:1px solid #e4e7ec;padding:14px}
 nav button{display:block;width:100%;text-align:left;padding:9px 12px;border:0;background:none;border-radius:8px;font-weight:600;cursor:pointer}
 nav button.on{background:#fffbeb;color:#b45309}main{flex:1;padding:22px;overflow:auto}
 table{width:100%;border-collapse:collapse;background:#fff;font-size:13px}td,th{border:1px solid #e4e7ec;padding:7px 9px;text-align:left}
-textarea{width:100%;height:320px;font-family:ui-monospace,monospace;font-size:12.5px;border:1px solid #e4e7ec;border-radius:10px;padding:12px}
-input,select{padding:9px 11px;border:1px solid #e4e7ec;border-radius:9px;font-family:inherit;margin:3px 4px 3px 0}
+input,select,textarea{padding:9px 11px;border:1px solid #d0d5dd;border-radius:9px;font-family:inherit;font-size:14px;margin:3px 4px 3px 0}
+input:focus,select:focus,textarea:focus{outline:2px solid #fcd34d;border-color:#f59e0b}
 .btn{background:#dc2626;color:#fff;border:0;border-radius:9px;padding:9px 16px;font-weight:700;cursor:pointer;margin:4px 6px 4px 0}
-.btn.g{background:#16a34a}.btn.x{background:#667085}.msg{padding:10px 14px;border-radius:9px;margin:8px 0}
-.ok{background:#f0fdf4;color:#15803d}.err{background:#fef2f2;color:#b91c1c}
+.btn.g{background:#16a34a}.btn.x{background:#667085}.btn.a{background:#f59e0b;color:#111}
+.msg{padding:10px 14px;border-radius:9px;margin:8px 0}.ok{background:#f0fdf4;color:#15803d}.err{background:#fef2f2;color:#b91c1c}
 #gate{max-width:380px;margin:14vh auto;background:#fff;padding:34px;border-radius:16px;text-align:center;box-shadow:0 8px 30px rgba(0,0,0,.12)}
+.frow{margin:10px 0}.frow label{display:block;font-weight:700;font-size:12.5px;margin-bottom:3px;color:#344054}
+.frow .hint{font-weight:400;color:#98a2b3;font-size:11.5px}
+.frow input[type=text],.frow textarea,.frow select{width:min(680px,95%)}
+.frow textarea{min-height:70px}.frow textarea.tall{min-height:130px}
+.chk{display:flex;align-items:center;gap:8px;font-weight:700;font-size:13px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:0 18px;max-width:900px}
+#editor{background:#fff;border:1px solid #e4e7ec;border-radius:14px;padding:20px;margin-top:18px}
 </style></head><body>
 <header><b>plugreports</b> admin <span style="margin-left:auto;font-size:12px">content management · SEO · suggestions</span></header>
 <div id="gate"><h2>Admin PIN</h2><p style="color:#667085;font-size:13px">Default: <code>plug2026!</code> — change it in Settings immediately.</p>
@@ -23,11 +30,47 @@ input,select{padding:9px 11px;border:1px solid #e4e7ec;border-radius:9px;font-fa
 <nav id="tabs"></nav><main><div id="msg"></div><div id="body"></div></main></div>
 <script>
 const TYPES=["drugs","busts","news","topics","quit","hotlines","pharmacies","rehabs","sentencing"];
-let token=sessionStorage.getItem('pr-token'),cur='drugs';
-const MEDIA_BASE='https://plugreports.pages.dev';
+const CATS=["opioids","stimulants","benzodiazepines","sedatives","depressants","dissociatives","empathogens","psychedelics","cannabinoids","performance","hazardous"];
+const SEO=[{k:'seoTitle',l:'SEO title (optional — overrides auto-generated)',t:'text'},{k:'seoDesc',l:'SEO description (optional)',t:'textarea'}];
+const SCHEMAS={
+ drugs:[{k:'name',l:'Drug name',t:'text',req:1,ph:'Fentanyl'},{k:'slug',l:'Slug (URL)',t:'text',auto:1,hint:'auto-generated from name if empty'},
+  {k:'category',l:'Category',t:'select',opts:CATS},{k:'schedule',l:'Schedule / class',t:'text',ph:'Schedule I (US)'},
+  {k:'aliases',l:'Street names',t:'csv',ph:'Dope, H, Smack'},{k:'appearance',l:'Appearance',t:'textarea',ph:'White/off-white powder…'},
+  {k:'effects',l:'Effects',t:'list',hint:'one per line'},{k:'risks',l:'Risks',t:'list',hint:'one per line'},
+  {k:'overdoseSigns',l:'Overdose signs',t:'list',hint:'one per line'},{k:'streetPrice',l:'Street price',t:'text',ph:'~$20–$40 per pill'},
+  {k:'legalStatus',l:'Legal status',t:'textarea'},{k:'image',l:'Image',t:'image'},
+  {k:'sources',l:'Sources',t:'csv',ph:'NIDA, DEA, EMCDDA'},{k:'lastUpdated',l:'Last updated',t:'text',ph:'2026-09-14'}].concat(SEO),
+ busts:[{k:'title',l:'Headline',t:'text',req:1},{k:'slug',l:'Slug',t:'text',auto:1},{k:'date',l:'Date',t:'text',ph:'2026-09-14'},
+  {k:'location',l:'Location',t:'text',ph:'Los Angeles, CA'},{k:'agency',l:'Agency',t:'text',ph:'DEA'},
+  {k:'confirmed',l:'Verified against source',t:'checkbox'},{k:'sourceUrl',l:'Source URL',t:'text',ph:'https://…'},
+  {k:'summary',l:'Summary',t:'textarea',cls:'tall'},{k:'drugsInvolved',l:'Drugs involved (slugs)',t:'csv',ph:'fentanyl, cocaine'},
+  {k:'sentencing',l:'Sentencing exposure',t:'textarea'}].concat(SEO),
+ news:[{k:'title',l:'Headline',t:'text',req:1},{k:'slug',l:'Slug',t:'text',auto:1},{k:'date',l:'Date',t:'text'},
+  {k:'tag',l:'Tag',t:'text',ph:'Alert / Trend / Adulterant'},{k:'summary',l:'Summary',t:'textarea',cls:'tall'},
+  {k:'body',l:'Body paragraphs',t:'paras',hint:'blank line between paragraphs'},{k:'sources',l:'Sources',t:'csv'},
+  {k:'drugsInvolved',l:'Drugs involved (slugs)',t:'csv'}].concat(SEO),
+ topics:[{k:'title',l:'Guide title',t:'text',req:1},{k:'slug',l:'Slug',t:'text',auto:1},{k:'date',l:'Date',t:'text'},
+  {k:'read',l:'Read time',t:'text',ph:'6 min'},{k:'desc',l:'Description / meta',t:'textarea'},
+  {k:'blocks',l:'Content blocks (JSON — advanced)',t:'json',cls:'tall'}].concat(SEO),
+ quit:[{k:'name',l:'Substance name',t:'text',req:1},{k:'slug',l:'Slug',t:'text',auto:1},{k:'cat',l:'Category label',t:'text',ph:'Opioid'},
+  {k:'danger',l:'Safety warning',t:'textarea',cls:'tall'},{k:'days',l:'Timeline (JSON)',t:'json',cls:'tall'},
+  {k:'tips',l:'Tips',t:'list',hint:'one per line'}].concat(SEO),
+ hotlines:[{k:'region',l:'Region name',t:'text',req:1,ph:'USA'},{k:'slug',l:'Slug',t:'text',auto:1},
+  {k:'items',l:'Entries',t:'lines4',hint:'one per line: number | name | description | tel (tel optional)'}],
+ pharmacies:[{k:'name',l:'Name',t:'text',req:1},{k:'slug',l:'Slug',t:'text',auto:1},{k:'region',l:'Region',t:'text'},
+  {k:'desc',l:'Description',t:'textarea',cls:'tall'},{k:'phone',l:'Phone',t:'text'},{k:'website',l:'Website',t:'text'},
+  {k:'verified',l:'Verified',t:'checkbox'}].concat(SEO),
+ rehabs:[{k:'name',l:'Name',t:'text',req:1},{k:'slug',l:'Slug',t:'text',auto:1},{k:'region',l:'Region',t:'text'},
+  {k:'desc',l:'Description',t:'textarea',cls:'tall'},{k:'phone',l:'Phone',t:'text'},{k:'website',l:'Website',t:'text'},
+  {k:'verified',l:'Verified',t:'checkbox'}].concat(SEO),
+ sentencing:[{k:'region',l:'Region',t:'text',req:1},{k:'slug',l:'Slug',t:'text',auto:1},
+  {k:'summary',l:'Summary',t:'textarea',cls:'tall'},
+  {k:'table',l:'Table rows',t:'table',hint:'one per line: Cell | Cell (first line = header)'}].concat(SEO),
+};
+let token=sessionStorage.getItem('pr-token'),cur='drugs',jsonMode=false;
 async function api(p,opt={}){opt.headers=Object.assign({'Content-Type':'application/json',Authorization:'Bearer '+token},opt.headers);
  const r=await fetch('/api/'+p,opt);if(r.status===401){logout();throw new Error('session expired')}
- const j=await r.json().catch(()=>({ok:false,error:'API error '+r.status}));return j}
+ return r.json().catch(()=>({ok:false,error:'API error '+r.status}))}
 function logout(){sessionStorage.removeItem('pr-token');location.reload()}
 async function login(){const r=await fetch('/api/admin/login',{method:'POST',headers:{'Content-Type':'application/json'},
  body:JSON.stringify({pin:document.getElementById('pin').value})});const j=await r.json();
@@ -42,43 +85,72 @@ function boot(){document.getElementById('gate').hidden=true;document.getElementB
  list(b)}
 async function list(b){b.innerHTML='Loading…';let a;try{a=await api('admin/content?type='+cur)}catch(e){b.innerHTML='<div class="msg err">'+e.message+'</div>';return}
  const items=a.items||[];
- const note=a.note?'<div class="msg err"><b>Storage not connected.</b> Add the KV namespace binding (CONTENT) in Cloudflare Pages → Settings → Functions, then reload this page. You can still browse; saves are disabled.</div>':'';
+ const note=a.note?'<div class="msg err"><b>Storage not connected.</b> Add the KV namespace binding (CONTENT) in Cloudflare Pages → Settings → Bindings, then reload. Saves are disabled until then.</div>':'';
  b.innerHTML=`${note}<h2>${cur} <small>(${items.length})</small></h2>
- <button class="btn g" onclick="edit('')">+ New ${cur.slice(0,-1)}</button>
+ <button class="btn g" onclick="editForm('')">+ New ${cur.slice(0,-1)}</button>
  <table><tr><th style="width:32px"></th><th>slug / key</th><th>title / name</th></tr>${items.map((it,i)=>
- `<tr><td><button class="btn x" style="padding:3px 9px" onclick="edit(${i})">edit</button></td>
+ `<tr><td><button class="btn x" style="padding:3px 9px" onclick="editForm(${i})">edit</button></td>
  <td>${it.slug||it.region||''}</td><td>${(it.title||it.name||'').slice(0,80)}</td></tr>`).join('')}</table>
  <div id="editor"></div>`;window._items=items}
-async function edit(i){const it=window._items[i]||{};
+function slugify(s){return s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')}
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;')}
+function renderField(f,it){const v=it[f.k];let h='';
+ if(f.t==='checkbox')h=`<input type="checkbox" id="f_${f.k}" ${v?'checked':''}>`;
+ else if(f.t==='select')h=`<select id="f_${f.k}">${f.opts.map(o=>`<option ${o===v?'selected':''}>${o}</option>`).join('')}</select>`;
+ else if(f.t==='textarea'||f.t==='json'||f.t==='list'||f.t==='paras'||f.t==='lines4'||f.t==='table'){
+   let val=v;
+   if(Array.isArray(v))val=f.t==='table'?v.map(r=>r.join(' | ')).join('\n'):f.t==='lines4'?v.map(r=>r.slice(0,4).join(' | ')).join('\n'):v.join(f.t==='paras'?'\n\n':'\n');
+   if(f.t==='json'&&v!==undefined)val=JSON.stringify(v,null,2);
+   h=`<textarea id="f_${f.k}" class="${f.cls||''}" placeholder="${f.ph||''}">${esc(val==null?'':val)}</textarea>`;}
+ else if(f.t==='image')h=`<input type="text" id="f_${f.k}" value="${esc(v||'')}" placeholder="upload or paste image URL" style="width:55%">
+   <input type="file" id="f_${f.k}_file" accept="image/*" style="display:inline;width:auto">
+   <button class="btn x" onclick="uploadField('${f.k}')">Upload</button>`;
+ else if(f.t==='csv')h=`<input type="text" id="f_${f.k}" value="${esc(Array.isArray(v)?v.join(', '):(v||''))}" placeholder="${f.ph||''}">`;
+ else h=`<input type="text" id="f_${f.k}" value="${esc(v==null?'':v)}" placeholder="${f.ph||''}">`;
+ return `<div class="frow"><label>${f.l}${f.req?' *':''} ${f.hint?`<span class="hint">— ${f.hint}</span>`:''}</label>${h}</div>`}
+async function editForm(i){jsonMode=false;window._editIdx=(i==='')?null:i;const it=window._items[i]||{};
+ const sch=SCHEMAS[cur]||[];
  document.getElementById('editor').innerHTML=`<h3>${i===''||i===undefined?'New':'Edit'} ${cur.slice(0,-1)}</h3>
- <p style="font-size:12px;color:#667085">Edit as JSON. Required keys follow the published schemas (see src/data_*.py).</p>
- <div style="margin:10px 0"><input type="file" id="imgfile" accept="image/*" style="display:inline">
- <button class="btn x" onclick="uploadImage()">&#128247; Upload image</button>
- <input id="imgurl" placeholder="image URL appears here" style="width:46%" readonly>
- <button class="btn g" style="padding:6px 12px" onclick="useImage()">Use in profile</button></div>
- <textarea id="j">${JSON.stringify(it,null,2)}</textarea><br>
- <button class="btn g" onclick="save('${it.slug||''}')">Save</button>
- ${it.slug?`<button class="btn" onclick="del('${it.slug}')">Delete</button>`:''}</div>`;
- document.getElementById('j').scrollIntoView()}
-async function save(slug){let obj;try{obj=JSON.parse(document.getElementById('j').value)}catch(e){return msg('Invalid JSON',0)}
- if(!obj.slug)obj.slug=(obj.name||obj.title||'item').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
- const r=await api(`admin/content?type=${cur}${slug?'&slug='+slug:''}`,{method:slug?'PUT':'POST',body:JSON.stringify(obj)});
- msg(r.ok?'Saved.':'Error: '+(r.error||''),r.ok);list(document.getElementById('body'))}
-async function uploadImage(){const f=document.getElementById('imgfile').files[0];if(!f)return msg('Pick a file first',0);
- let slug=(()=>{try{return JSON.parse(document.getElementById('j').value).slug||'misc'}catch(e){return 'misc'}})();
+ <div style="margin-bottom:8px"><button class="btn a" style="padding:5px 12px" onclick="toggleJson()">Advanced: edit as JSON</button></div>
+ <div id="formview">${sch.map(f=>renderField(f,it)).join('')}</div>
+ <div id="jsonview" hidden><textarea id="j" style="width:100%;height:340px;font-family:ui-monospace,monospace;font-size:12.5px">${esc(JSON.stringify(it,null,2))}</textarea></div>
+ <button class="btn g" onclick="saveForm('${it.slug||''}')">Save</button>
+ ${it.slug?`<button class="btn" onclick="del('${it.slug}')">Delete</button>`:''}`}
+function toggleJson(){jsonMode=!jsonMode;document.getElementById('formview').hidden=jsonMode;document.getElementById('jsonview').hidden=!jsonMode;
+ if(jsonMode){try{document.getElementById('j').value=JSON.stringify(collectForm(),null,2)}catch(e){}}}
+function val(k){const el=document.getElementById('f_'+k);return el?el.value:undefined}
+function collectForm(){const sch=SCHEMAS[cur]||[];const o={};
+ sch.forEach(f=>{const el=document.getElementById('f_'+f.k);if(!el)return;let v;
+  if(f.t==='checkbox')v=el.checked;
+  else if(f.t==='csv')v=el.value.split(',').map(x=>x.trim()).filter(Boolean);
+  else if(f.t==='list')v=el.value.split('\n').map(x=>x.trim()).filter(Boolean);
+  else if(f.t==='paras')v=el.value.split(/\n\s*\n/).map(x=>x.trim()).filter(Boolean);
+  else if(f.t==='lines4')v=el.value.split('\n').map(l=>l.split('|').map(x=>x.trim()).filter((x,ci,a)=>ci<4)).filter(a=>a.length&&a[0]);
+  else if(f.t==='table')v=el.value.split('\n').filter(l=>l.trim()).map(l=>l.split('|').map(x=>x.trim()));
+  else if(f.t==='json'){try{v=el.value.trim()?JSON.parse(el.value):undefined}catch(e){throw new Error('Invalid JSON in '+f.l)}}
+  else v=el.value.trim();
+  if(v!==undefined&&v!==''&&v!==false)o[f.k]=v;else if(f.t==='checkbox'&&!v)o[f.k]=false;});
+ if(!o.slug)o.slug=slugify(o.name||o.title||o.region||'item');
+ return o}
+async function uploadField(k){const f=document.getElementById('f_'+k+'_file').files[0];if(!f)return msg('Pick a file first',0);
+ const slug=val('slug')||slugify(val('name')||val('title')||'misc');
  const name='drugs/'+slug+'.'+(f.name.split('.').pop().toLowerCase());
  const r=await fetch('/api/admin/upload?name='+encodeURIComponent(name),{method:'POST',headers:{'Content-Type':f.type,Authorization:'Bearer '+token},body:f});
  const j=await r.json();if(!j.ok)return msg(j.error||'Upload failed',0);
- document.getElementById('imgurl').value=j.url;msg('Uploaded: '+j.url);return j.url}
-function useImage(){const u=document.getElementById('imgurl').value;if(!u)return;
- try{const o=JSON.parse(document.getElementById('j').value);o.image=u;document.getElementById('j').value=JSON.stringify(o,null,2);msg('image field set — Save to apply')}catch(e){msg('Invalid JSON',0)}}
+ document.getElementById('f_'+k).value=j.url;msg('Uploaded: '+j.url)}
+async function saveForm(slug){let obj;
+ if(jsonMode){try{obj=JSON.parse(document.getElementById('j').value)}catch(e){return msg('Invalid JSON',0)}}
+ else{try{obj=collectForm()}catch(e){return msg(e.message,0)}}
+ if(!obj.slug)obj.slug=slugify(obj.name||obj.title||'item');
+ const r=await api(`admin/content?type=${cur}${slug?'&slug='+slug:''}`,{method:slug?'PUT':'POST',body:JSON.stringify(obj)});
+ msg(r.ok?'Saved.':'Error: '+(r.error||''),r.ok);list(document.getElementById('body'))}
 async function del(slug){if(!confirm('Delete '+slug+'?'))return;
  const r=await api(`admin/content?type=${cur}&slug=${slug}`,{method:'DELETE'});
  msg(r.ok?'Deleted.':'Error',r.ok);list(document.getElementById('body'))}
 async function settings(b){const s=(await api('admin/settings')).settings||{};
- b.innerHTML=`<h2>Settings & SEO sockets</h2><p style="font-size:13px;color:#667085">IDs are served at <code>/api/public/content?type=settings</code> and injected into &lt;head&gt; at build time. Paste your verification IDs from Google Search Console, Bing Webmaster, Microsoft Clarity and GA4.</p>
- ${['gsc','bing','clarity','ga'].map(k=>`<div><b>${k.toUpperCase()}</b><br><input id="s-${k}" style="width:70%" value="${s[k]||''}" placeholder="verification / measurement ID"></div>`).join('')}
- <div><b>Crisis banner note</b><br><input id="s-crisisNote" style="width:70%" value="${s.crisisNote||''}"></div>
+ b.innerHTML=`<h2>Settings & SEO sockets</h2><p style="font-size:13px;color:#667085">Paste verification / tracking IDs. They inject site-wide within seconds — no rebuild needed.</p>
+ ${['gsc','bing','clarity','ga'].map(k=>`<div class="frow"><label>${k.toUpperCase()}</label><input id="s-${k}" style="width:60%" value="${esc(s[k]||'')}" placeholder="verification / measurement ID"></div>`).join('')}
+ <div class="frow"><label>Crisis banner note</label><input id="s-crisisNote" style="width:60%" value="${esc(s.crisisNote||'')}"></div>
  <button class="btn g" onclick="saveSettings()">Save settings</button><hr style="margin:26px 0">
  <h3>Change admin PIN</h3><input id="p0" type="password" placeholder="current PIN"><input id="p1" type="password" placeholder="new PIN (6+ chars)">
  <button class="btn" onclick="changePin()">Change PIN</button>`}
@@ -89,7 +161,7 @@ async function changePin(){const r=await api('admin/pin',{method:'POST',body:JSO
 async function sugg(b){const a=await api('admin/suggestions');const items=a.items||[];
  b.innerHTML=`<h2>Suggestions inbox (${items.length})</h2>`+items.map(s=>
  `<div style="background:#fff;border:1px solid #e4e7ec;border-radius:10px;padding:12px;margin:8px 0">
- <b>${s.type}</b> · ${s.name||'anon'} · <span style="color:#98a2b3">${new Date(s.ts).toLocaleString()} · ${s.page||''}</span>
- <p style="margin:6px 0">${(s.message||'').replace(/</g,'&lt;')}</p><span style="color:#98a2b3">${s.contact||''}</span></div>`).join('')}
+ <b>${esc(s.type)}</b> · ${esc(s.name||'anon')} · <span style="color:#98a2b3">${new Date(s.ts).toLocaleString()} · ${esc(s.page||'')}</span>
+ <p style="margin:6px 0">${esc(s.message||'')}</p><span style="color:#98a2b3">${esc(s.contact||'')}</span></div>`).join('')}
 if(token)boot();
 </script></body></html>

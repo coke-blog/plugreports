@@ -19,7 +19,9 @@
     var it = (d.items || []).find(function (x) { return x.slug === slug; });
     var box = document.getElementById('dyn');
     if (!it) { box.innerHTML = '<h1>Not found</h1><p>This item may have been removed. <a href="/">Back to home</a>.</p>'; return; }
-    document.title = (it.name || it.title) + ' | plugreports';
+    document.title = (it.seoTitle || (it.name || it.title) + ' | plugreports');
+    var md = it.seoDesc || it.summary || it.desc;
+    if (md) { var m = document.querySelector('meta[name="description"]'); if (m) m.setAttribute('content', md); }
     var html = '';
     if (type === 'drugs') html = drugPage(it);
     else if (type === 'busts') html = bustPage(it);

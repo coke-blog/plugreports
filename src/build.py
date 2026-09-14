@@ -355,8 +355,8 @@ def build_drugs(es=False):
             out = f"es/drugs/{d['slug']}/index.html"
             w(out, shell(out, title, desc, body, lang="es", canonical=f"{SITE}/es/drugs/{d['slug']}/", en_url=f"{SITE}/drugs/{d['slug']}/"))
         else:
-            title = f"{d['name']}: Effects, Risks, Overdose Signs, Street Price & Legal Status | plugreports"
-            desc = f"{d['name']} ({', '.join(d['aliases'][:3])}) — {cat_name}. Effects: {'; '.join(d['effects'][:2])}. Risks: {'; '.join(d['risks'][:2])}. Overdose signs, street price and legal status, updated {d['lastUpdated']}."
+            title = d.get("seoTitle") or f"{d['name']}: Effects, Risks, Overdose Signs, Street Price & Legal Status | plugreports"
+            desc = d.get("seoDesc") or f"{d['name']} ({', '.join(d['aliases'][:3])}) — {cat_name}. Effects: {'; '.join(d['effects'][:2])}. Risks: {'; '.join(d['risks'][:2])}. Overdose signs, street price and legal status, updated {d['lastUpdated']}."
             ld = [{"@context":"https://schema.org","@type":"MedicalWebPage",
                    "name":title,"url":f"{SITE}/drugs/{d['slug']}/","lastReviewed":d["lastUpdated"],
                    "about":{"@type":"Drug","name":d["name"],"alternateName":d["aliases"],
