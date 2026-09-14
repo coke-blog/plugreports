@@ -72,6 +72,7 @@
       (it.agency ? '<span>Agency: ' + esc(it.agency) + '</span>' : '') +
       (it.sources ? '<span>Sources: ' + esc(it.sources.join(', ')) + '</span>' : '');
     var lede = document.querySelector('.lede'); if (lede && it.summary) lede.textContent = it.summary;
+    applyHelpFooter(it);
     if (type === 'busts') {
       document.querySelectorAll('.tbl tbody tr').forEach(function (tr) {
         var th = tr.querySelector('th'), td = tr.querySelector('td');
