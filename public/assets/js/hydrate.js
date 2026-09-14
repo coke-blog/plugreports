@@ -177,10 +177,19 @@
     depressants:'#1d4ed8', dissociatives:'#0891b2', empathogens:'#be185d', psychedelics:'#4d7c0f',
     cannabinoids:'#57534e', performance:'#b45309', hazardous:'#111827'};
   function renderHome() {
-    Promise.all(['news', 'busts', 'topics', 'drugs'].map(function (t) {
+    Promise.all(['news', 'busts', 'topics', 'quit', 'hotlines', 'drugs'].map(function (t) {
       return fetch('/api/public/content?type=' + t).then(function (r) { return r.json(); }).catch(function () { return {items: []}; });
     })).then(function (res) {
-      var news = res[0].items || [], busts = res[1].items || [], topics = res[2].items || [], drugs = res[3].items || [];
+      var news = res[0].items || [], busts = res[1].items || [], topics = res[2].items || [],
+          quit = res[3].items || [], hotlines = res[4].items || [], drugs = res[5].items || [];
+      var hlCount = hotlines.reduce(function (n, r) { return n + ((r.items || []).length); }, 0);
+      var regions = hotlines.filter(function (r) { return r.region; }).length;
+      var kick = document.querySelector('.hero .kicker');
+      if (kick) kick.textContent = 'Harm-reduction library · ' + drugs.length + ' substances · ' + regions + ' regions';
+      var stats = document.querySelectorAll('.hero-stats .st b');
+      if (stats[0] && drugs.length) stats[0].textContent = drugs.length;
+      if (stats[2] && hlCount) stats[2].textContent = hlCount + '+';
+      if (stats[3]) stats[3].textContent = topics.length + quit.length;
       if (drugs.length) {
         var rail = document.querySelector('.rail');
         if (rail) rail.innerHTML = drugs.map(function (d) {
@@ -207,8 +216,5 @@
       pane('topics', topics, function (it) {
         return '<a class="card" href="/topics/' + it.slug + '/"><div class="meta">' + chip('GUIDE', 'red') + chip(it.read || '') + chip(it.date || '') + '</div><h3>' + esc(it.title) + '</h3><p>' + esc(it.desc || '') + '</p><div class="foot">Read guide &rarr;</div></a>';
       });
-      var stats = document.querySelectorAll('.hero-stats .st b');
-      if (stats[0] && drugs.length) stats[0].textContent = drugs.length;
-      if (stats[3]) stats[3].textContent = topics.length + 8;
     }).catch(function () {});
   }

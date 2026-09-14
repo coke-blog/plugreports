@@ -596,6 +596,9 @@ def main():
         "Verified Rehab Centers & Free Recovery Programs | plugreports",
         "Verified addiction treatment: Hazelden Betty Ford, Priory, Narcotics Anonymous, SMART Recovery — with contacts and links.", "&#10010;")
     build_about(); build_suggest(); build_meta()
+    manifest = {"drugs":[d["slug"] for d in DRUGS], "news":[n["slug"] for n in NEWS],
+                "busts":[b["slug"] for b in BUSTS], "topics":[t["slug"] for t in TOPICS]}
+    w("_static.json", json.dumps(manifest))
     w("_dynamic.html", shell("_dynamic.html", "plugreports",
       "Live content", '<div class="wrap" id="dyn" style="padding:44px 20px;min-height:50vh"><p>Loading\u2026</p></div>',
       extra_head='<script src="/assets/js/render.js" defer></script>', canonical=SITE + "/"))
