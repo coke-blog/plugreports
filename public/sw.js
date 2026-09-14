@@ -1,4 +1,4 @@
-const C='pr-v1';
+const C='pr-v2';
 self.addEventListener('install',e=>{self.skipWaiting();e.waitUntil(caches.open(C).then(c=>c.addAll(['/','/assets/css/style.css','/assets/js/app.js','/assets/img/logo.svg','/manifest.webmanifest'])))});
 self.addEventListener('activate',e=>{e.waitUntil(clients.claim())});
 self.addEventListener('fetch',e=>{
