@@ -8,6 +8,7 @@ from data_categories import CATEGORIES
 from data_content import (BUSTS, NEWS, HOTLINES, PHARMACIES, REHABS,
                           SENTENCING, SETTINGS, QUIT_SPECS, TOPICS)
 from data_related import RELATED_OVERRIDES
+from data_sources import AGENCY_LINKS, DEEP_LINKS, QUOTES
 
 def _apply_overrides():
     for d in DRUGS: d.update(RELATED_OVERRIDES.get("drugs", {}).get(d["slug"], {}))
@@ -156,6 +157,7 @@ def shell(path, title, desc, body, jsonld=None, canonical=None, extra_head="", o
 <meta property="og:image" content="{ogimage or (SITE + "/assets/img/logo.svg")}">
 <meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#f59e0b">
+<meta name="robots" content="max-image-preview:large">
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="icon" href="/assets/img/logo.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -188,7 +190,8 @@ def shell(path, title, desc, body, jsonld=None, canonical=None, extra_head="", o
 <div><h4>Help</h4><a href="/hotlines/">Hotlines</a><a href="/rehabs/">Rehab centers</a><a href="/pharmacies/">Verified pharmacies</a><a href="/quit/">Quitting, day by day</a><a href="/sentencing/">Sentencing explained</a></div>
 <div><h4>Updates</h4><a href="/news/">Drug news</a><a href="/busts/">Busts & seizures</a><a href="/topics/">Guides</a><a href="/suggest/">Suggest a correction</a><a href="/rss.xml">RSS feed</a><a href="/about/">About & editorial policy</a></div>
 </div>
-<div class="disclaimer"><b>DISCLAIMER.</b> plugreports.com is an independent harm-reduction information project. Content is compiled from public sources (NIDA, DEA, EMCDDA, WHO, CDC and peer-reviewed literature) for education and overdose prevention. It is <b>not medical advice, not legal advice, and not encouragement to use any substance</b>. Street prices, legal statuses and availability vary by region and change quickly — verify locally. If you or someone else may be overdosing, call your local emergency number immediately. If you are in crisis, contact a helpline on our <a href="/hotlines/" style="display:inline;color:#fbbf24">Hotlines</a> page. {esc(SETTINGS["crisisNote"])}</div>
+<div class="disclaimer"><b>DISCLAIMER.</b> plugreports.com is an independent harm-reduction information project. Content is compiled from public sources (NIDA, DEA, EMCDDA, WHO, CDC and peer-reviewed literature) for education and overdose prevention. It is <b>not medical advice, not legal advice, and not encouragement to use any substance</b>. Street prices, legal statuses and availability vary by region and change quickly — verify locally. If you or someone else may be overdosing, call your local emergency number immediately.
+<div style="margin-top:10px">Primary data sources: <a href="https://nida.nih.gov" style="display:inline;color:#fbbf24" rel="noopener">NIDA</a> · <a href="https://www.dea.gov" style="display:inline;color:#fbbf24" rel="noopener">DEA</a> · <a href="https://www.cdc.gov" style="display:inline;color:#fbbf24" rel="noopener">CDC</a> · <a href="https://www.euda.europa.eu" style="display:inline;color:#fbbf24" rel="noopener">EMCDDA/EUDA</a> · <a href="https://www.who.int" style="display:inline;color:#fbbf24" rel="noopener">WHO</a> · <a href="https://www.samhsa.gov" style="display:inline;color:#fbbf24" rel="noopener">SAMHSA</a></div> If you are in crisis, contact a helpline on our <a href="/hotlines/" style="display:inline;color:#fbbf24">Hotlines</a> page. {esc(SETTINGS["crisisNote"])}</div>
 <div class="f-bottom"><span>&copy; {TODAY[:4]} plugreports.com — harm reduction saves lives.</span><span>Built for fast, clear, life-saving information.</span></div>
 </div></footer>
 <div class="gate" id="agegate" hidden><div class="gate-card">
@@ -240,6 +243,11 @@ def build_index(es=False):
 <div class="st"><b>11</b><span>categories</span></div>
 <div class="st"><b>20+</b><span>verified hotlines</span></div>
 <div class="st"><b>{len(TOPICS)+len(QUIT_SPECS)}</b><span>guides & timelines</span></div></div></div></section>
+
+<section class="quotes"><div class="wrap"><div class="quote-grid">
+<blockquote class="qcard">&ldquo;The only safe medications are ones prescribed by a trusted medical professional and dispensed by a licensed pharmacist.&rdquo;<cite>&mdash; U.S. Drug Enforcement Administration, &ldquo;One Pill Can Kill&rdquo;</cite></blockquote>
+<blockquote class="qcard">&ldquo;Fentanyl is the deadliest drug threat facing this country.&rdquo;<cite>&mdash; U.S. Drug Enforcement Administration</cite></blockquote>
+</div></div></section>
 
 <section class="sec" id="library"><div class="wrap">
 <div class="sec-head"><div><span class="kicker amber">Drug Library</span>
@@ -301,8 +309,8 @@ def build_index(es=False):
     ld = {"@context":"https://schema.org","@type":"WebSite","name":"plugreports","url":SITE,
           "description":"Harm-reduction library of street drug profiles, news, busts, hotlines and verified help."}
     w("index.html", shell("index.html",
-        "plugreports — Street Drug Information Library: Effects, Risks, Overdose Signs, Hotlines",
-        f"Visual harm-reduction library: {len(DRUGS)} street drug profiles (effects, risks, overdose signs, street prices), drug news, busts, quitting timelines, hotlines and verified rehabs for USA, Canada, Europe, Australia and Africa.",
+        "plugreports — Street Drug Identifier: Effects, Overdose Signs, Street Prices & Hotlines",
+        f"Identify street drugs fast: {len(DRUGS)} plain-English profiles with effects, overdose signs, street prices and legal status — plus drug busts, news, quitting day-by-day timelines, 24/7 hotlines and verified rehabs across the USA, Canada, Europe, Australia and Africa.",
         body, jsonld=ld, es_url=f"{SITE}/es/",
         extra_head=f"<script>window.DRUG_INDEX={json.dumps(idx, ensure_ascii=False)};</script>"))
 
@@ -347,6 +355,27 @@ def build_drugs(es=False):
             f'<td>{"; ".join(esc(e) for e in x["risks"][:2])}</td>'
             f'<td>{esc(x["streetPrice"].split(";")[0].split("(")[0].strip())}</td></tr>'
             for x in [d] + rel[:5])
+        # --- FAQ (visible + FAQPage JSON-LD) ---
+        od_a = "; ".join(od[:3])
+        if d["category"] == "opioids":
+            od_a += " Call emergency services immediately and give naloxone if available — it reverses opioid overdoses."
+        else:
+            od_a += " Call emergency services immediately."
+        faqs = [
+            (f"What does {d['name']} look like?", app_),
+            (f"What are the signs of a {d['name']} overdose?", od_a),
+            ("How addictive is it?", rk[0] + (" Withdrawal can be life-threatening — medical tapering is essential." if d["category"] in ("benzodiazepines", "depressants") else " Dependence can develop with regular use.")),
+        ]
+        faq_html = "".join(f"<details class=\"faq\"><summary>{esc(q)}</summary><p>{esc(a)}</p></details>" for q, a in faqs)
+        # --- sources panel with real outbound authority links ---
+        srcs = list(dict.fromkeys(d.get("sources", [])))
+        links = [f'<a class="chip" href="{AGENCY_LINKS[x]}" target="_blank" rel="noopener">{esc(x)} &#8599;</a>' for x in srcs if x in AGENCY_LINKS]
+        for label, url in DEEP_LINKS.get(d["slug"], []):
+            links.append(f'<a class="chip green" href="{url}" target="_blank" rel="noopener">{esc(label)} &#8599;</a>')
+        sources_html = f"""<div class="panel" style="margin-top:20px"><h2><span class="ic" style="background:#16a34a;color:#fff">&#128279;</span>Sources &amp; further reading</h2>
+<p style="font-size:13.5px;color:var(--muted)">Facts on this page are compiled from these primary sources. External links open in a new tab.</p>
+<div class="tagrow">{''.join(links)}</div></div>"""
+        faq_panel = f"""<div class="panel" style="margin-top:20px"><h2><span class="ic" style="background:{c['color']};color:#fff">?</span>Frequently asked questions</h2>{faq_html}</div>"""
         cmp_head = f"Comparación de categoría — {esc(cat_name)}" if es else f"Category comparison — {esc(cat_name)}"
         body = f"""
 <div class="wrap">
@@ -376,6 +405,9 @@ def build_drugs(es=False):
 <tbody>{cat_rows}</tbody></table>
 <div class="notice-strip">Street prices are regional estimates. Potency and cuts vary constantly.</div></div>
 
+{faq_panel}
+{sources_html}
+
 <div class="related print-hide"><h2>You may also want to know about</h2>
 <div class="rel-grid">{relhtml}
 <a href="/topics/fentanyl-numbers/"><span class="mini" style="background:#b45309">&#128218;</span><span>Fentanyl: the numbers</span></a>
@@ -397,7 +429,9 @@ def build_drugs(es=False):
                             "drugClass":cat_name,"legalStatus":d["legalStatus"]},
                    "audience":{"@type":"Audience","audienceType":"People seeking harm-reduction information"},
                    "medicalAudience":{"@type":"MedicalAudience","audienceType":"Patient"}},
-                  breadcrumb_ld([("Home","/"),(cat_name,f"/categories/{d['category']}/"),(d["name"],"")])]
+                  breadcrumb_ld([("Home","/"),(cat_name,f"/categories/{d['category']}/"),(d["name"],"")]),
+                  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+                      {"@type":"Question","name":q,"acceptedAnswer":{"@type":"Answer","text":a}} for q,a in faqs]}]
             es_url = f"{SITE}/es/drugs/{d['slug']}/" if d["slug"] in ES_DRUGS else None
             og = img_rel if img_rel.startswith("http") else (f"{SITE}/{img_rel}" if "drugs/" in img_rel else None)
             w(f"drugs/{d['slug']}/index.html", shell(f"drugs/{d['slug']}/index.html", title, desc, body, jsonld=ld, ogimage=og, es_url=es_url))
