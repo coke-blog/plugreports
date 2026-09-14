@@ -16,8 +16,23 @@
   function ticks(arr, cls) { return '<ul class="ticks ' + (cls || '') + '">' + (arr || []).map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>'; }
 
   fetch('/api/public/content?type=' + type).then(function (r) { return r.json(); }).then(function (d) {
-    var it = (d.items || []).find(function (x) { return x.slug === slug; });
     var box = document.getElementById('dyn');
+    if (type === 'categories') {
+      var cat = (d.items || []).find(function (x) { return x.slug === slug; });
+      if (!cat) { box.innerHTML = '<h1>Category not found</h1><p><a href="/">Back to home</a>.</p>'; return; }
+      return fetch('/api/public/content?type=drugs').then(function (r) { return r.json(); }).then(function (dd) {
+        var mine = (dd.items || []).filter(function (x) { return x.category === slug; });
+        box.innerHTML = '<section class="cat-hero" style="background:' + (cat.grad || cat.color || '#667085') + '">' +
+          '<span class="kicker" style="background:rgba(255,255,255,.15);color:#fff;border:0">' + mine.length + ' substances</span>' +
+          '<h1>' + esc(cat.name) + '</h1><p>' + esc(cat.tagline || '') + ' ' + esc(cat.blurb || '') + '</p></section>' +
+          '<div class="cards">' + mine.map(function (d) {
+            return '<a class="card" href="/drugs/' + d.slug + '/"><h3>' + esc(d.name) + '</h3><p>' + esc(d.appearance || '') + '</p><div class="foot">Effects &amp; risks &rarr;</div></a>';
+          }).join('') + '</div>';
+        document.title = (cat.name || 'Category') + ' | plugreports';
+        window.scrollTo(0, 0);
+      });
+    }
+    var it = (d.items || []).find(function (x) { return x.slug === slug; });
     if (!it) { box.innerHTML = '<h1>Not found</h1><p>This item may have been removed. <a href="/">Back to home</a>.</p>'; return; }
     document.title = (it.seoTitle || (it.name || it.title) + ' | plugreports');
     var md = it.seoDesc || it.summary || it.desc;

@@ -30,12 +30,16 @@ input:focus,select:focus,textarea:focus{outline:2px solid #fcd34d;border-color:#
 <div class="wrap" id="app" hidden>
 <nav id="tabs"></nav><main><div id="msg"></div><div id="body"></div></main></div>
 <script>
-const TYPES=["drugs","busts","news","topics","quit","hotlines","pharmacies","rehabs","sentencing"];
+const TYPES=["drugs","categories","busts","news","topics","quit","hotlines","pharmacies","rehabs","sentencing"];
+const PALETTE=['#0ea5e9','#8b5cf6','#ec4899','#f43f5e','#14b8a6','#f59e0b','#84cc16','#6366f1','#a855f7','#0d9488','#e11d48','#ca8a04'];
 const CATS=["opioids","stimulants","benzodiazepines","sedatives","depressants","dissociatives","empathogens","psychedelics","cannabinoids","performance","hazardous"];
 const SEO=[{k:'seoTitle',l:'SEO title (optional — overrides auto-generated)',t:'text'},{k:'seoDesc',l:'SEO description (optional)',t:'textarea'}];
 const SCHEMAS={
+ categories:[{k:'name',l:'Category name',t:'text',req:1,ph:'Steroids & PEDs'},{k:'slug',l:'Slug',t:'text',auto:1},
+  {k:'color',l:'Color',t:'select',opts:PALETTE},{k:'grad',l:'Gradient CSS (optional)',t:'text',ph:'linear-gradient(135deg,#1e40af,#3b82f6)'},
+  {k:'tagline',l:'Tagline',t:'text'},{k:'blurb',l:'Description',t:'textarea',cls:'tall'}],
  drugs:[{k:'name',l:'Drug name',t:'text',req:1,ph:'Fentanyl'},{k:'slug',l:'Slug (URL)',t:'text',auto:1,hint:'auto-generated from name if empty'},
-  {k:'category',l:'Category',t:'text',ph:'cannabinoids — one of: '+CATS.join(', ')},{k:'schedule',l:'Schedule / class',t:'text',ph:'Schedule I (US)'},
+  {k:'category',l:'Category',t:'category'},{k:'schedule',l:'Schedule / class',t:'text',ph:'Schedule I (US)'},
   {k:'aliases',l:'Street names',t:'csv',ph:'Dope, H, Smack'},{k:'appearance',l:'Appearance',t:'textarea',ph:'White/off-white powder…'},
   {k:'effects',l:'Effects',t:'list',hint:'one per line'},{k:'risks',l:'Risks',t:'list',hint:'one per line'},
   {k:'overdoseSigns',l:'Overdose signs',t:'list',hint:'one per line'},{k:'streetPrice',l:'Street price',t:'text',ph:'~$20–$40 per pill'},
@@ -117,6 +121,11 @@ function renderField(f,it){const v=it[f.k];let h='';
    <button class="btn a" style="padding:3px 10px;font-size:12px" onclick="mdPreview('${f.k}')">Preview</button></div>
    <textarea id="f_${f.k}" class="tall" style="font-family:ui-monospace,monospace" placeholder="## Heading&#10;&#10;Write **bold**, lists, tables and callouts.">${esc(v==null?'':v)}</textarea>
    <div id="f_${f.k}_prev" class="msg ok" hidden style="max-width:720px"></div>`;}
+ else if(f.t==='category'){
+   h=`<select id="f_category"></select> <button type="button" class="btn g" style="padding:5px 12px" onclick="toggleNewCat()">+ New</button>
+   <span id="catnew" hidden> <input id="f_newcat" placeholder="New category name" style="width:220px">
+   <button type="button" class="btn x" style="padding:5px 12px" onclick="saveNewCat()">Add</button></span>
+   <div class="hint" style="margin-top:3px">Pick an existing category, or + New to create one — it gets its own hub page instantly.</div>`;}
  else if(f.t==='csv')h=`<input type="text" id="f_${f.k}" value="${esc(Array.isArray(v)?v.join(', '):(v||''))}" placeholder="${f.ph||''}">`;
  else h=`<input type="text" id="f_${f.k}" value="${esc(v==null?'':v)}" placeholder="${f.ph||''}">`;
  return `<div class="frow"><label>${f.l}${f.req?' *':''} ${f.hint?`<span class="hint">— ${f.hint}</span>`:''}</label>${h}</div>`}
@@ -127,7 +136,33 @@ async function editForm(i){jsonMode=false;window._editIdx=(i==='')?null:i;const 
  <div id="formview">${sch.map(f=>renderField(f,it)).join('')}</div>
  <div id="jsonview" hidden><textarea id="j" style="width:100%;height:340px;font-family:ui-monospace,monospace;font-size:12.5px">${esc(JSON.stringify(it,null,2))}</textarea></div>
  <button class="btn g" onclick="saveForm('${it.slug||''}')">Save</button>
- ${it.slug?`<button class="btn" onclick="del('${it.slug}')">Delete</button>`:''}`}
+ ${it.slug?`<button class="btn" onclick="del('${it.slug}')">Delete</button>`:''}`;
+ loadCategories(it.category||'');}
+let CAT_LIST=[];
+async function loadCategories(current){
+  const sel=document.getElementById('f_category'); if(!sel)return;
+  const d=await fetch('/api/public/content?type=categories').then(r=>r.json()).catch(()=>({items:[]}));
+  CAT_LIST=d.items||[];
+  const cur=current||'';
+  let html=CAT_LIST.map(c=>'<option value="'+c.slug+'"'+(c.slug===cur?' selected':'')+'>'+esc(c.name)+'</option>').join('');
+  if(cur&&!CAT_LIST.some(c=>c.slug===cur))html='<option value="'+esc(cur)+'" selected>'+esc(cur)+'</option>'+html;
+  if(!cur)html='<option value="" selected>— pick a category —</option>'+html;
+  sel.innerHTML=html;
+}
+function toggleNewCat(){document.getElementById('catnew').hidden=!document.getElementById('catnew').hidden;}
+async function saveNewCat(){
+  const name=document.getElementById('f_newcat').value.trim(); if(!name)return msg('Type a category name',0);
+  const slug=slugify(name);
+  if(CAT_LIST.some(c=>c.slug===slug)){document.getElementById('f_category').value=slug;document.getElementById('catnew').hidden=true;return msg('Already exists — selected it');}
+  const color=PALETTE[CAT_LIST.length%PALETTE.length];
+  const r=await api('admin/content?type=categories',{method:'POST',body:JSON.stringify({name,slug,color,tagline:'',blurb:''})});
+  if(!r.ok)return msg(r.error||'Could not add category',0);
+  CAT_LIST.push({name,slug});
+  const sel=document.getElementById('f_category');
+  sel.innerHTML=CAT_LIST.map(c=>'<option value="'+c.slug+'"'+(c.slug===slug?' selected':'')+'>'+esc(c.name)+'</option>').join('');
+  document.getElementById('catnew').hidden=true;
+  msg('Category "'+name+'" created — hub page live at /categories/'+slug+'/');
+}
 function toggleJson(){jsonMode=!jsonMode;document.getElementById('formview').hidden=jsonMode;document.getElementById('jsonview').hidden=!jsonMode;
  if(jsonMode){try{document.getElementById('j').value=JSON.stringify(collectForm(),null,2)}catch(e){}}}
 function val(k){const el=document.getElementById('f_'+k);return el?el.value:undefined}

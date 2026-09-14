@@ -702,7 +702,8 @@ def main():
     build_drugs(es=True); build_hotlines(es=True); build_index(es=True)
     build_about(); build_suggest(); build_meta()
     manifest = {"drugs":[d["slug"] for d in DRUGS], "news":[n["slug"] for n in NEWS],
-                "busts":[b["slug"] for b in BUSTS], "topics":[t["slug"] for t in TOPICS]}
+                "busts":[b["slug"] for b in BUSTS], "topics":[t["slug"] for t in TOPICS],
+                "categories":[k for k in CATEGORIES]}
     w("_static.json", json.dumps(manifest))
     w("_dynamic.html", shell("_dynamic.html", "plugreports",
       "Live content", '<div class="wrap" id="dyn" style="padding:44px 20px;min-height:50vh"><p>Loading\u2026</p></div>',
