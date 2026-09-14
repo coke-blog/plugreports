@@ -65,6 +65,15 @@ DRUG_BY_SLUG = {d["slug"]: d for d in DRUGS}
 TOPIC_BY_SLUG = {t["slug"]: t for t in TOPICS}
 NEWS_BY_SLUG = {n["slug"]: n for n in NEWS}
 
+def help_links(drugs=None, extra=None):
+    known = {x["slug"] for x in DRUGS}
+    chips = "".join(f'<a href="/drugs/{d}/">{rel_card(d)}</a>' for d in (drugs or []) if d in known)
+    chips += '<a href="/hotlines/"><span class="mini" style="background:#dc2626">&#128222;</span><span>Hotlines — help now</span></a>'
+    chips += '<a href="/quit/"><span class="mini" style="background:#16a34a">&#8987;</span><span>Quitting — day by day</span></a>'
+    for label, href, col in (extra or []):
+        chips += f'<a href="{href}"><span class="mini" style="background:{col}">&#128218;</span><span>{esc(label)}</span></a>'
+    return f'<div class="related print-hide"><h2>Drugs mentioned &amp; help</h2><div class="rel-grid">{chips}</div></div>'
+
 def resolve_slug(s):
     if s in DRUG_BY_SLUG: return f"drugs/{s}"
     if s in TOPIC_BY_SLUG: return f"topics/{s}"
@@ -305,6 +314,7 @@ def drug_image(slug):
 def build_drugs(es=False):
     from data_es import ES_DRUGS, ES_CATS
     for d in DRUGS:
+        qslug = None; qname = ""
         o = ES_DRUGS.get(d["slug"], {}) if es else {}
         if es and not o: continue
         c = CATEGORIES[d["category"]]
@@ -363,6 +373,7 @@ def build_drugs(es=False):
 <div class="rel-grid">{relhtml}
 <a href="/topics/fentanyl-numbers/"><span class="mini" style="background:#b45309">&#128218;</span><span>Fentanyl: the numbers</span></a>
 <a href="/quit/"><span class="mini" style="background:#16a34a">&#8987;</span><span>Quitting — day by day</span></a>
+{f'<a href="/drugs/{qslug}/"><span class="mini" style="background:#d97706">{esc(qname[0])}</span><span>About {esc(qname)}</span></a>' if qslug else ''}
 <a href="/hotlines/"><span class="mini" style="background:#dc2626">&#9742;</span><span>Hotlines</span></a></div></div>
 </div>"""
         if es:
@@ -386,6 +397,7 @@ def build_drugs(es=False):
 
 
 def build_categories():
+    qslug = None; qname = ""
     for k, c in CATEGORIES.items():
         items = [d for d in DRUGS if d["category"] == k]
         cards = "".join(f'''<a class="card" href="/drugs/{d['slug']}/">
@@ -422,7 +434,7 @@ def build_news():
 <span class="kicker">{esc(n['tag'])}</span><h1 style="margin-top:12px">{esc(n['title'])}</h1>
 <div class="byline"><span>{esc(n['date'])}</span><span>Sources: {esc(', '.join(n['sources']))}</span></div>
 <p class="lede" style="font-size:18px">{esc(n['summary'])}</p>{body}
-<div class="related print-hide"><h2>Substances mentioned</h2><div class="rel-grid">{rels}</div></div></article></div>"""
+{help_links(n.get("drugsInvolved", []), [("All drug news", "/news/", "#dc2626")])}</article></div>"""
         ld = {"@context":"https://schema.org","@type":"NewsArticle","headline":n["title"],
               "datePublished":n["date"],"dateModified":n["date"],"author":{"@type":"Organization","name":"plugreports"},
               "publisher":{"@type":"Organization","name":"plugreports"},"mainEntityOfPage":f"{SITE}/news/{n['slug']}/"}
@@ -453,7 +465,7 @@ def build_busts():
 <tr><th>Agency</th><td>{esc(b['agency'])}</td></tr>
 <tr><th>Sentencing exposure</th><td>{esc(b['sentencing'])}</td></tr></tbody></table></div>
 <p>{esc(b['summary'])}</p>{src}
-<div class="related print-hide"><h2>Substances involved</h2><div class="rel-grid">{drugs}</div></div>
+{help_links(b.get("drugsInvolved", []), [("How to read bust news", "/topics/drug-busts-this-week/", "#b45309")])}
 <div class="callout amber"><b>Why busts matter for safety</b>Major seizures destabilize local supply — potency swings for weeks afterwards. See our guide: <a href="/topics/drug-busts-this-week/">how to read bust news</a>.</div>
 </article></div>"""
         w(f"busts/{b['slug']}/index.html", shell(f"busts/{b['slug']}/index.html", f"{b['title']} | plugreports", b["summary"][:155], body))
@@ -467,6 +479,8 @@ def build_topics():
       f'<div class="wrap"><section class="sec-head" style="padding-top:30px"><div><span class="kicker amber">Guides</span><h2>Explainers & deep-dives</h2><p>Written for fast reading: tables, timelines and callouts instead of walls of text.</p></div></div><div class="cards">{cards}</div></div>'))
     for t in TOPICS:
         inner = render_blocks(t["blocks"], resolve_slug)
+        mentioned = t.get("drugsInvolved") or [x for b in t["blocks"] if b[0] == "related" for x in b[1] if x in DRUG_BY_SLUG]
+        inner += help_links(mentioned)
         links = t.get("links", [])
         if links:
             inner += '<div class="related print-hide"><h2>Full day-by-day guides</h2><div class="rel-grid">' + "".join(
@@ -491,6 +505,8 @@ def build_quit():
       "Honest withdrawal timelines: heroin, fentanyl, cocaine, meth, MDMA, Xanax, ketamine, GHB. What's normal, what hurts, when it ends, and when detox must be medical.",
       f'<div class="wrap"><section class="sec-head" style="padding-top:30px"><div><span class="kicker green">Recovery</span><h2>Quitting — day by day</h2><p>Start with the <a href="/topics/what-actually-happens-when-you-quit/">master explainer</a>, then pick your substance.</p></div></div><div class="cards">{cards}</div></div>'))
     for k, v in QUIT_SPECS.items():
+        qslug = k if k in DRUG_BY_SLUG else ("methamphetamine" if k == "meth" else None)
+        qname = DRUG_BY_SLUG[qslug]["name"] if qslug else v["name"]
         tl = "".join(f'<div class="tl-item{" red" if i==1 else ""}"><h4>{esc(when)} — {esc(t_)}</h4><p>{esc(tx)}</p></div>' for i,(when,t_,tx) in enumerate(v["days"]))
         tips = "".join(f"<li>{esc(x)}</li>" for x in v["tips"])
         body = f"""<div class="wrap"><article class="article" style="padding-top:26px">
@@ -505,6 +521,7 @@ def build_quit():
 <div class="callout green"><b>The relapse rule</b>After even a week clean, your tolerance drops dramatically — an old dose can kill. If you slip: treat it like your first time, never use alone, keep naloxone close.</div>
 <div class="related print-hide"><h2>You may also want to know about</h2><div class="rel-grid">
 <a href="/topics/what-actually-happens-when-you-quit/"><span class="mini" style="background:#b45309">&#128218;</span><span>The master quitting explainer</span></a>
+{f'<a href="/drugs/{qslug}/"><span class="mini" style="background:#d97706">{esc(qname[0])}</span><span>About {esc(qname)}</span></a>' if qslug else ''}
 <a href="/hotlines/"><span class="mini" style="background:#dc2626">&#9742;</span><span>Hotlines</span></a>
 <a href="/rehabs/"><span class="mini" style="background:#16a34a">&#10010;</span><span>Verified rehab centers</span></a></div></div>
 </article></div>"""
@@ -514,6 +531,7 @@ def build_quit():
 
 # ------------------------------------------------- help / directory pages ----
 def build_hotlines(es=False):
+    qslug = None; qname = ""
     from data_es import ES_REGIONS, ES_HOTLINES, ES_HOME as ESH
     secs = []
     for region, items in HOTLINES.items():
@@ -540,6 +558,7 @@ def build_hotlines(es=False):
 <p class="lede" style="color:#667085;max-width:64ch">Verified overdose, crisis and treatment helplines across the USA, Canada, Europe, Australia and Africa. Numbers verified against official sources; always re-verify before relying on a listing.</p>
 {''.join(secs)}
 <div class="callout red"><b>Overdose right now?</b>Call your local emergency number FIRST. Then naloxone if you have it. Then rescue breathing. Order matters.</div>
+{help_links(["fentanyl", "xylazine", "heroin", "cocaine"], [("Sentencing explained", "/sentencing/", "#111827")])}
 <div class="callout green"><b>Found an outdated number?</b><a href="/suggest/">Tell us</a> — hotline listings are reviewed monthly.</div>
 </div></div>"""
     faq = {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
@@ -553,6 +572,7 @@ def build_hotlines(es=False):
 
 
 def build_sentencing():
+    qslug = None; qname = ""
     secs = []
     for s in SENTENCING:
         rows = "".join("<tr>" + "".join(f"<td>{c}</td>" for c in row) + "</tr>" for row in s["table"][1:])
@@ -567,12 +587,14 @@ def build_sentencing():
 {''.join(secs)}
 <div class="related print-hide"><h2>Related reading</h2><div class="rel-grid">
 <a href="/topics/sentencing-explained/"><span class="mini" style="background:#b45309">&#128218;</span><span>Full sentencing guide</span></a>
-<a href="/topics/talk-to-your-kid/"><span class="mini" style="background:#16a34a">&#128218;</span><span>Talking to your kids</span></a></div></div>
+<a href="/topics/talk-to-your-kid/"><span class="mini" style="background:#16a34a">&#128218;</span><span>Talking to your kids</span></a>
+<a href="/hotlines/"><span class="mini" style="background:#dc2626">&#9742;</span><span>Hotlines</span></a></div></div>
 </div></div>"""
     w("sentencing/index.html", shell("sentencing/index.html", "Drug Possession Sentences by Country — US, Canada, UK/EU, Australia, Africa | plugreports",
       "Drug sentencing tables: possession and trafficking penalties per region, Good Samaritan laws, mandatory minimums, and what to do if arrested.", body))
 
 def build_directory(name, items, singular, title, desc, thumb):
+    qslug = None; qname = ""
     cards = "".join(f'''<a class="card" href="/{name}/{it['slug']}/">
 <div class="thumb" style="height:110px;background:linear-gradient(135deg,#fef3c7,#fee2e2);display:grid;place-items:center;font-size:34px">{thumb}</div>
 <h3>{esc(it['name'])}</h3><p>{esc(it['desc'][:130])}…</p>
@@ -590,6 +612,7 @@ def build_directory(name, items, singular, title, desc, thumb):
 {f'<div class="fact"><b>Contact</b><span>{esc(it["phone"])}</span></div>' if it.get('phone') else ''}
 <div class="callout green" style="margin-top:18px"><b>In crisis right now?</b>Skip the directory — call your emergency number or a <a href="/hotlines/">hotline</a> first.</div>
 <div class="related print-hide"><h2>You may also want to know about</h2><div class="rel-grid">
+{f'<a href="/drugs/{qslug}/"><span class="mini" style="background:#d97706">{esc(qname[0])}</span><span>About {esc(qname)}</span></a>' if qslug else ''}
 <a href="/hotlines/"><span class="mini" style="background:#dc2626">&#9742;</span><span>Hotlines</span></a>
 <a href="/quit/"><span class="mini" style="background:#16a34a">&#8987;</span><span>Quitting — day by day</span></a>
 <a href="/rehabs/"><span class="mini" style="background:#16a34a">&#10010;</span><span>All rehab centers</span></a>

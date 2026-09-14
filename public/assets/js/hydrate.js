@@ -83,6 +83,16 @@
       }
       var badge = document.querySelector('article .kicker');
       if (badge) badge.textContent = it.confirmed ? 'CONFIRMED' : 'PENDING VERIFICATION';
+      applyHelpFooter(it);
+    }
+    function applyHelpFooter(it) {
+      var drugs = it.drugsInvolved || [];
+      var grid = document.querySelector('article .related .rel-grid');
+      if (!grid) return;
+      grid.innerHTML = drugs.map(function (d) {
+        return '<a href="/drugs/' + d + '/"><span class="mini" style="background:#d97706">' + esc((d[0] || '?').toUpperCase()) + '</span><span>' + esc(d.replace(/-/g, ' ')) + '</span></a>';
+      }).join('') + '<a href="/hotlines/"><span class="mini" style="background:#dc2626">&#128222;</span><span>Hotlines — help now</span></a>' +
+        '<a href="/quit/"><span class="mini" style="background:#16a34a">&#8987;</span><span>Quitting — day by day</span></a>';
     }
     if (type === 'news' && it.markdown) {
       var article2 = document.querySelector('article.article');
@@ -130,7 +140,12 @@
     var articles = document.querySelectorAll('article.article');
     var body = articles[articles.length - 1]; if (!body) return;
     body.innerHTML = (it.markdown ? MD.render(it.markdown) : renderBlocks(it.blocks)) +
-      '<div class="related print-hide"><h2>Edited via admin</h2><p style="font-size:13px;color:#667085">This guide reflects the latest saved version.</p></div>';
+      '<div class="related print-hide"><h2>Drugs mentioned &amp; help</h2><div class="rel-grid">' +
+      ((it.drugsInvolved || []).map(function (d) {
+        return '<a href="/drugs/' + d + '/"><span class="mini" style="background:#d97706">' + esc((d[0] || '?').toUpperCase()) + '</span><span>' + esc(d.replace(/-/g, ' ')) + '</span></a>';
+      }).join('')) +
+      '<a href="/hotlines/"><span class="mini" style="background:#dc2626">&#128222;</span><span>Hotlines — help now</span></a>' +
+      '<a href="/quit/"><span class="mini" style="background:#16a34a">&#8987;</span><span>Quitting — day by day</span></a></div></div>';
   }
 
   function renderQuit(it) {

@@ -28,7 +28,9 @@
         '<h1 style="margin-top:12px">' + esc(it.title) + '</h1>' +
         '<div class="byline"><span>' + esc(it.date || '') + '</span></div>' +
         (it.desc || it.summary ? '<p class="lede">' + esc(it.desc || it.summary) + '</p>' : '') +
-        MD.render(it.markdown) + '</article>';
+        MD.render(it.markdown) + '<div class="related"><h2>Drugs mentioned &amp; help</h2><div class="rel-grid">' +
+      ((it.drugsInvolved || []).map(function (d) { return '<a href="/drugs/' + d + '/"><span class="mini" style="background:#d97706">' + esc((d[0] || '?').toUpperCase()) + '</span><span>' + esc(d.replace(/-/g, ' ')) + '</span></a>'; }).join('')) +
+      '<a href="/hotlines/"><span class="mini" style="background:#dc2626">&#128222;</span><span>Hotlines — help now</span></a></div></div>'; '</article>';
       window.scrollTo(0, 0); return;
     }
     var html = '';
@@ -75,6 +77,9 @@
       '<tr><th>Sentencing exposure</th><td>' + esc(it.sentencing) + '</td></tr></tbody></table></div>' +
       '<p>' + esc(it.summary) + '</p>' +
       (it.sourceUrl ? '<p><b>Source:</b> <a href="' + esc(it.sourceUrl) + '" rel="nofollow noopener">' + esc(it.sourceUrl) + '</a></p>' : '') +
+      '<div class="related"><h2>Drugs mentioned &amp; help</h2><div class="rel-grid">' +
+      ((it.drugsInvolved || []).map(function (d) { return '<a href="/drugs/' + d + '/"><span class="mini" style="background:#d97706">' + esc((d[0] || '?').toUpperCase()) + '</span><span>' + esc(d.replace(/-/g, ' ')) + '</span></a>'; }).join('')) +
+      '<a href="/hotlines/"><span class="mini" style="background:#dc2626">&#128222;</span><span>Hotlines — help now</span></a></div></div>';
       '<div class="callout amber"><b>Why busts matter for safety</b>Major seizures destabilize local supply — potency swings for weeks afterwards.</div>';
   }
 
@@ -83,7 +88,9 @@
       '<div class="byline"><span>' + esc(it.date) + '</span><span>Sources: ' + esc((it.sources || []).join(', ')) + '</span></div>' +
       '<p class="lede">' + esc(it.summary) + '</p>' +
       (it.body || []).map(function (p) { return '<p>' + esc(p) + '</p>'; }).join('') +
-      '<div class="related"><h2>More</h2><div class="rel-grid"><a href="/news/"><span class="mini" style="background:#dc2626">N</span><span>All news</span></a></div></div>';
+      '<div class="related"><h2>Drugs mentioned &amp; help</h2><div class="rel-grid">' +
+      ((it.drugsInvolved || []).map(function (d) { return '<a href="/drugs/' + d + '/"><span class="mini" style="background:#d97706">' + esc((d[0] || '?').toUpperCase()) + '</span><span>' + esc(d.replace(/-/g, ' ')) + '</span></a>'; }).join('')) +
+      '<a href="/hotlines/"><span class="mini" style="background:#dc2626">&#128222;</span><span>Hotlines — help now</span></a></div></div>';
   }
 
   function topicPage(it) {
