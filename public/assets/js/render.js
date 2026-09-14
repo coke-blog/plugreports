@@ -22,6 +22,15 @@
     document.title = (it.seoTitle || (it.name || it.title) + ' | plugreports');
     var md = it.seoDesc || it.summary || it.desc;
     if (md) { var m = document.querySelector('meta[name="description"]'); if (m) m.setAttribute('content', md); }
+    if (it.markdown && (type === 'topics' || type === 'news')) {
+      document.getElementById('dyn').innerHTML = '<article class="article" style="max-width:820px;margin:0 auto;padding-top:26px">' +
+        (type === 'topics' ? '<span class="kicker amber">GUIDE</span>' : '<span class="kicker">' + esc(it.tag || 'NEWS') + '</span>') +
+        '<h1 style="margin-top:12px">' + esc(it.title) + '</h1>' +
+        '<div class="byline"><span>' + esc(it.date || '') + '</span></div>' +
+        (it.desc || it.summary ? '<p class="lede">' + esc(it.desc || it.summary) + '</p>' : '') +
+        MD.render(it.markdown) + '</article>';
+      window.scrollTo(0, 0); return;
+    }
     var html = '';
     if (type === 'drugs') html = drugPage(it);
     else if (type === 'busts') html = bustPage(it);

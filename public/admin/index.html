@@ -1,5 +1,6 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow"><title>plugreports admin</title>
+<script src="/assets/js/markdown.js"></script>
 <style>
 body{font-family:system-ui,sans-serif;background:#f6f7f9;color:#101828;margin:0}
 header{background:#101828;color:#fff;padding:12px 20px;display:flex;gap:16px;align-items:center}
@@ -47,11 +48,11 @@ const SCHEMAS={
   {k:'sentencing',l:'Sentencing exposure',t:'textarea'}].concat(SEO),
  news:[{k:'title',l:'Headline',t:'text',req:1},{k:'slug',l:'Slug',t:'text',auto:1},{k:'date',l:'Date',t:'text'},
   {k:'tag',l:'Tag',t:'text',ph:'Alert / Trend / Adulterant'},{k:'summary',l:'Summary',t:'textarea',cls:'tall'},
-  {k:'body',l:'Body paragraphs',t:'paras',hint:'blank line between paragraphs'},{k:'sources',l:'Sources',t:'csv'},
+  {k:'markdown',l:'Article body (Markdown)',t:'markdown'},{k:'sources',l:'Sources',t:'csv'},
   {k:'drugsInvolved',l:'Drugs involved (slugs)',t:'csv'}].concat(SEO),
  topics:[{k:'title',l:'Guide title',t:'text',req:1},{k:'slug',l:'Slug',t:'text',auto:1},{k:'date',l:'Date',t:'text'},
   {k:'read',l:'Read time',t:'text',ph:'6 min'},{k:'desc',l:'Description / meta',t:'textarea'},
-  {k:'blocks',l:'Content blocks (JSON — advanced)',t:'json',cls:'tall'}].concat(SEO),
+  {k:'markdown',l:'Article body (Markdown — headings, tables, callouts)',t:'markdown',hint:'replaces the old JSON blocks when filled'}].concat(SEO),
  quit:[{k:'name',l:'Substance name',t:'text',req:1},{k:'slug',l:'Slug',t:'text',auto:1},{k:'cat',l:'Category label',t:'text',ph:'Opioid'},
   {k:'danger',l:'Safety warning',t:'textarea',cls:'tall'},{k:'days',l:'Timeline (JSON)',t:'json',cls:'tall'},
   {k:'tips',l:'Tips',t:'list',hint:'one per line'}].concat(SEO),
@@ -105,6 +106,11 @@ function renderField(f,it){const v=it[f.k];let h='';
  else if(f.t==='image')h=`<input type="text" id="f_${f.k}" value="${esc(v||'')}" placeholder="upload or paste image URL" style="width:55%">
    <input type="file" id="f_${f.k}_file" accept="image/*" style="display:inline;width:auto">
    <button class="btn x" onclick="uploadField('${f.k}')">Upload</button>`;
+ else if(f.t==='markdown'){
+   h=`<div style="margin:2px 0 6px">${[['H2','\\n## ',''],['H3','\\n### ',''],['B','**','**'],['I','*','*'],['List','\\n- ',''],['Table','\\n| Col | Col |\\n|---|---|\\n| | |\\n',''],['Quote','\\n> ',''],['Callout','\\n::: warning Title\\n\\n:::',''],['Link','[text](https://)','']].map(b=>'<button class="btn x" style="padding:3px 10px;font-size:12px" onclick="mdTool(\'${f.k}\',\''+b[1]+'\',\''+b[2]+'\')">'+b[0]+'</button>').join('')}
+   <button class="btn a" style="padding:3px 10px;font-size:12px" onclick="mdPreview('${f.k}')">Preview</button></div>
+   <textarea id="f_${f.k}" class="tall" style="font-family:ui-monospace,monospace" placeholder="## Heading&#10;&#10;Write **bold**, lists, tables and callouts.">${esc(v==null?'':v)}</textarea>
+   <div id="f_${f.k}_prev" class="msg ok" hidden style="max-width:720px"></div>`;}
  else if(f.t==='csv')h=`<input type="text" id="f_${f.k}" value="${esc(Array.isArray(v)?v.join(', '):(v||''))}" placeholder="${f.ph||''}">`;
  else h=`<input type="text" id="f_${f.k}" value="${esc(v==null?'':v)}" placeholder="${f.ph||''}">`;
  return `<div class="frow"><label>${f.l}${f.req?' *':''} ${f.hint?`<span class="hint">— ${f.hint}</span>`:''}</label>${h}</div>`}
@@ -128,10 +134,17 @@ function collectForm(){const sch=SCHEMAS[cur]||[];const o={};
   else if(f.t==='lines4')v=el.value.split('\n').map(l=>l.split('|').map(x=>x.trim()).filter((x,ci,a)=>ci<4)).filter(a=>a.length&&a[0]);
   else if(f.t==='table')v=el.value.split('\n').filter(l=>l.trim()).map(l=>l.split('|').map(x=>x.trim()));
   else if(f.t==='json'){try{v=el.value.trim()?JSON.parse(el.value):undefined}catch(e){throw new Error('Invalid JSON in '+f.l)}}
+  else if(f.t==='markdown')v=el.value;
   else v=el.value.trim();
   if(v!==undefined&&v!==''&&v!==false)o[f.k]=v;else if(f.t==='checkbox'&&!v)o[f.k]=false;});
  if(!o.slug)o.slug=slugify(o.name||o.title||o.region||'item');
  return o}
+function mdTool(k,pre,post){var ta=document.getElementById('f_'+k);if(!ta)return;
+ var s=ta.selectionStart,e=ta.selectionEnd,v=ta.value;
+ ta.value=v.slice(0,s)+pre+v.slice(s,e)+(post||'')+v.slice(e);
+ ta.focus();ta.selectionStart=ta.selectionEnd=s+pre.length+v.slice(s,e).length;}
+function mdPreview(k){var ta=document.getElementById('f_'+k),pv=document.getElementById('f_'+k+'_prev');
+ if(!pv)return;pv.hidden=!pv.hidden;if(!pv.hidden)pv.innerHTML=MD.render(ta.value)||'<i>Nothing to preview</i>';}
 async function uploadField(k){const f=document.getElementById('f_'+k+'_file').files[0];if(!f)return msg('Pick a file first',0);
  const slug=val('slug')||slugify(val('name')||val('title')||'misc');
  const name='drugs/'+slug+'.'+(f.name.split('.').pop().toLowerCase());

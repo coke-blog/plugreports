@@ -84,6 +84,15 @@
       var badge = document.querySelector('article .kicker');
       if (badge) badge.textContent = it.confirmed ? 'CONFIRMED' : 'PENDING VERIFICATION';
     }
+    if (type === 'news' && it.markdown) {
+      var article2 = document.querySelector('article.article');
+      var olds2 = article2.querySelectorAll('p:not(.lede)');
+      var html2 = MD.render(it.markdown);
+      olds2.forEach(function (p) { p.remove(); });
+      var rel2 = article2.querySelector('.related');
+      if (rel2) rel2.insertAdjacentHTML('beforebegin', html2); else article2.insertAdjacentHTML('beforeend', html2);
+      return;
+    }
     if (type === 'news' && Array.isArray(it.body) && it.body.length) {
       var article = document.querySelector('article.article');
       var olds = article.querySelectorAll('p:not(.lede)');
@@ -120,7 +129,7 @@
     setH1(it.title);
     var articles = document.querySelectorAll('article.article');
     var body = articles[articles.length - 1]; if (!body) return;
-    body.innerHTML = renderBlocks(it.blocks) +
+    body.innerHTML = (it.markdown ? MD.render(it.markdown) : renderBlocks(it.blocks)) +
       '<div class="related print-hide"><h2>Edited via admin</h2><p style="font-size:13px;color:#667085">This guide reflects the latest saved version.</p></div>';
   }
 
