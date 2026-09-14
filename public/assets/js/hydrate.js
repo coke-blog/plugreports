@@ -54,6 +54,13 @@
     setH1(it.name);
     if (it.seoTitle) document.title = it.seoTitle;
     if (it.seoDesc) { var m = document.querySelector('meta[name="description"]'); if (m) m.setAttribute('content', it.seoDesc); }
+    if (it.related && it.related.length) {
+      var rg = document.querySelector('.related .rel-grid');
+      if (rg) rg.innerHTML = it.related.map(chipEntry).join('') +
+        '<a href="/topics/fentanyl-numbers/"><span class="mini" style="background:#b45309">&#128218;</span><span>Fentanyl: the numbers</span></a>' +
+        '<a href="/quit/"><span class="mini" style="background:#16a34a">&#8987;</span><span>Quitting — day by day</span></a>' +
+        '<a href="/hotlines/"><span class="mini" style="background:#dc2626">&#128222;</span><span>Hotlines</span></a>';
+    }
   }
 
   function renderDetail(it, type) {
@@ -85,13 +92,19 @@
       if (badge) badge.textContent = it.confirmed ? 'CONFIRMED' : 'PENDING VERIFICATION';
       applyHelpFooter(it);
     }
+    function chipEntry(entry) {
+      var p = String(entry).split(':');
+      var href = '/' + (p.length > 1 ? p[0] + '/' + p[1] : 'drugs/' + entry) + '/';
+      var lbl = (p.length > 1 ? p[1] : entry).replace(/-/g, ' ');
+      return '<a href="' + href + '"><span class="mini" style="background:#d97706">' + esc((lbl[0] || '?').toUpperCase()) + '</span><span>' + esc(lbl) + '</span></a>';
+    }
     function applyHelpFooter(it) {
-      var drugs = it.drugsInvolved || [];
+      var entries = (it.related || []).concat(it.drugsInvolved || []);
       var grid = document.querySelector('article .related .rel-grid');
       if (!grid) return;
-      grid.innerHTML = drugs.map(function (d) {
-        return '<a href="/drugs/' + d + '/"><span class="mini" style="background:#d97706">' + esc((d[0] || '?').toUpperCase()) + '</span><span>' + esc(d.replace(/-/g, ' ')) + '</span></a>';
-      }).join('') + '<a href="/hotlines/"><span class="mini" style="background:#dc2626">&#128222;</span><span>Hotlines — help now</span></a>' +
+      if (!entries.length && !grid.innerHTML) return;
+      grid.innerHTML = entries.map(chipEntry).join('') +
+        '<a href="/hotlines/"><span class="mini" style="background:#dc2626">&#128222;</span><span>Hotlines — help now</span></a>' +
         '<a href="/quit/"><span class="mini" style="background:#16a34a">&#8987;</span><span>Quitting — day by day</span></a>';
     }
     if (type === 'news' && it.markdown) {

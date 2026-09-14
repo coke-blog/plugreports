@@ -65,9 +65,11 @@ DRUG_BY_SLUG = {d["slug"]: d for d in DRUGS}
 TOPIC_BY_SLUG = {t["slug"]: t for t in TOPICS}
 NEWS_BY_SLUG = {n["slug"]: n for n in NEWS}
 
-def help_links(drugs=None, extra=None):
+def help_links(drugs=None, extra=None, related=None):
     known = {x["slug"] for x in DRUGS}
     chips = "".join(f'<a href="/drugs/{d}/">{rel_card(d)}</a>' for d in (drugs or []) if d in known)
+    for r in (related or []):
+        chips += f'<a href="/{resolve_slug(r)}/">{rel_card(r)}</a>'
     chips += '<a href="/hotlines/"><span class="mini" style="background:#dc2626">&#128222;</span><span>Hotlines — help now</span></a>'
     chips += '<a href="/quit/"><span class="mini" style="background:#16a34a">&#8987;</span><span>Quitting — day by day</span></a>'
     for label, href, col in (extra or []):
@@ -318,7 +320,7 @@ def build_drugs(es=False):
         fx = o.get("effects", d["effects"]); rk = o.get("risks", d["risks"]); od = o.get("overdoseSigns", d["overdoseSigns"])
         app_ = o.get("appearance", d["appearance"]); pr = o.get("streetPrice", d["streetPrice"])
         lg = o.get("legalStatus", d["legalStatus"]); sch = o.get("schedule", d["schedule"])
-        rel = related_drugs(d)
+        rel = [DRUG_BY_SLUG[x] for x in (d.get("related") or []) if x in DRUG_BY_SLUG] or related_drugs(d)
         ext_img = (d.get("image") or "").strip()
         img_rel = ext_img if ext_img.startswith("http") else drug_image(d["slug"])
         relhtml = "".join(f'<a href="/{("es/" if es else "")}drugs/{r["slug"]}/">{rel_card(r["slug"])}</a>' for r in rel)
@@ -370,6 +372,7 @@ def build_drugs(es=False):
 <a href="/topics/fentanyl-numbers/"><span class="mini" style="background:#b45309">&#128218;</span><span>Fentanyl: the numbers</span></a>
 <a href="/quit/"><span class="mini" style="background:#16a34a">&#8987;</span><span>Quitting — day by day</span></a>
 {f'<a href="/drugs/{qslug}/"><span class="mini" style="background:#d97706">{esc(qname[0])}</span><span>About {esc(qname)}</span></a>' if qslug else ''}
+{''.join(f'<a href="/{resolve_slug(r)}/">{rel_card(r)}</a>' for r in (v.get("related") or []))}
 <a href="/hotlines/"><span class="mini" style="background:#dc2626">&#9742;</span><span>Hotlines</span></a></div></div>
 </div>"""
         if es:
@@ -430,7 +433,7 @@ def build_news():
 <span class="kicker">{esc(n['tag'])}</span><h1 style="margin-top:12px">{esc(n['title'])}</h1>
 <div class="byline"><span>{esc(n['date'])}</span><span>Sources: {esc(', '.join(n['sources']))}</span></div>
 <p class="lede" style="font-size:18px">{esc(n['summary'])}</p>{body}
-{help_links(n.get("drugsInvolved", []), [("All drug news", "/news/", "#dc2626")])}</article></div>"""
+{help_links(n.get("drugsInvolved", []), [("All drug news", "/news/", "#dc2626")], related=n.get("related"))}</article></div>"""
         ld = {"@context":"https://schema.org","@type":"NewsArticle","headline":n["title"],
               "datePublished":n["date"],"dateModified":n["date"],"author":{"@type":"Organization","name":"plugreports"},
               "publisher":{"@type":"Organization","name":"plugreports"},"mainEntityOfPage":f"{SITE}/news/{n['slug']}/"}
@@ -461,7 +464,7 @@ def build_busts():
 <tr><th>Agency</th><td>{esc(b['agency'])}</td></tr>
 <tr><th>Sentencing exposure</th><td>{esc(b['sentencing'])}</td></tr></tbody></table></div>
 <p>{esc(b['summary'])}</p>{src}
-{help_links(b.get("drugsInvolved", []), [("How to read bust news", "/topics/drug-busts-this-week/", "#b45309")])}
+{help_links(b.get("drugsInvolved", []), [("How to read bust news", "/topics/drug-busts-this-week/", "#b45309")], related=b.get("related"))}
 <div class="callout amber"><b>Why busts matter for safety</b>Major seizures destabilize local supply — potency swings for weeks afterwards. See our guide: <a href="/topics/drug-busts-this-week/">how to read bust news</a>.</div>
 </article></div>"""
         w(f"busts/{b['slug']}/index.html", shell(f"busts/{b['slug']}/index.html", f"{b['title']} | plugreports", b["summary"][:155], body))
@@ -476,7 +479,7 @@ def build_topics():
     for t in TOPICS:
         inner = render_blocks(t["blocks"], resolve_slug)
         mentioned = t.get("drugsInvolved") or [x for b in t["blocks"] if b[0] == "related" for x in b[1] if x in DRUG_BY_SLUG]
-        inner += help_links(mentioned)
+        inner += help_links(mentioned, related=t.get("related"))
         links = t.get("links", [])
         if links:
             inner += '<div class="related print-hide"><h2>Full day-by-day guides</h2><div class="rel-grid">' + "".join(
@@ -518,6 +521,7 @@ def build_quit():
 <div class="related print-hide"><h2>You may also want to know about</h2><div class="rel-grid">
 <a href="/topics/what-actually-happens-when-you-quit/"><span class="mini" style="background:#b45309">&#128218;</span><span>The master quitting explainer</span></a>
 {f'<a href="/drugs/{qslug}/"><span class="mini" style="background:#d97706">{esc(qname[0])}</span><span>About {esc(qname)}</span></a>' if qslug else ''}
+{''.join(f'<a href="/{resolve_slug(r)}/">{rel_card(r)}</a>' for r in (v.get("related") or []))}
 <a href="/hotlines/"><span class="mini" style="background:#dc2626">&#9742;</span><span>Hotlines</span></a>
 <a href="/rehabs/"><span class="mini" style="background:#16a34a">&#10010;</span><span>Verified rehab centers</span></a></div></div>
 </article></div>"""
@@ -609,6 +613,7 @@ def build_directory(name, items, singular, title, desc, thumb):
 <div class="callout green" style="margin-top:18px"><b>In crisis right now?</b>Skip the directory — call your emergency number or a <a href="/hotlines/">hotline</a> first.</div>
 <div class="related print-hide"><h2>You may also want to know about</h2><div class="rel-grid">
 {f'<a href="/drugs/{qslug}/"><span class="mini" style="background:#d97706">{esc(qname[0])}</span><span>About {esc(qname)}</span></a>' if qslug else ''}
+{''.join(f'<a href="/{resolve_slug(r)}/">{rel_card(r)}</a>' for r in (v.get("related") or []))}
 <a href="/hotlines/"><span class="mini" style="background:#dc2626">&#9742;</span><span>Hotlines</span></a>
 <a href="/quit/"><span class="mini" style="background:#16a34a">&#8987;</span><span>Quitting — day by day</span></a>
 <a href="/rehabs/"><span class="mini" style="background:#16a34a">&#10010;</span><span>All rehab centers</span></a>
