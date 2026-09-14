@@ -54,6 +54,17 @@
 
   /* ---------------- detail pages ---------------- */
   function setH1(t) { var h = document.querySelector('h1'); if (h && t) h.textContent = t; }
+  function setDetailImage(src) {
+    var img = document.querySelector('article .detail-img');
+    if (!img) {
+      var h1 = document.querySelector('article h1') || document.querySelector('h1');
+      if (!h1) return;
+      img = document.createElement('img');
+      img.className = 'detail-img'; img.loading = 'lazy';
+      h1.parentNode.insertBefore(img, h1.nextSibling);
+    }
+    img.src = src;
+  }
 
   function renderDrug(it) {
     var im = document.querySelector('img[loading="lazy"]');
@@ -79,6 +90,7 @@
       (it.agency ? '<span>Agency: ' + esc(it.agency) + '</span>' : '') +
       (it.sources ? '<span>Sources: ' + esc(it.sources.join(', ')) + '</span>' : '');
     var lede = document.querySelector('.lede'); if (lede && it.summary) lede.textContent = it.summary;
+    if (it.image) setDetailImage(it.image);
     applyHelpFooter(it);
     if (type === 'busts') {
       document.querySelectorAll('.tbl tbody tr').forEach(function (tr) {
@@ -154,6 +166,7 @@
     setH1(it.title);
     var articles = document.querySelectorAll('article.article');
     var body = articles[articles.length - 1]; if (!body) return;
+    if (it.image) setDetailImage(it.image);
     body.innerHTML = (it.markdown ? MD.render(it.markdown) : renderBlocks(it.blocks)) +
       '<div class="related print-hide"><h2>Drugs mentioned &amp; help</h2><div class="rel-grid">' +
       ((it.drugsInvolved || []).map(function (d) {
@@ -165,7 +178,8 @@
 
   function renderQuit(it) {
     setH1('What happens when you quit ' + it.name);
-    var call = document.querySelector('.callout'); 
+    if (it.image) setDetailImage(it.image);
+    var call = document.querySelector('.callout');
     if (call && it.danger) { var b = call.querySelector('b'); call.innerHTML = (b ? '<b>' + b.textContent + '</b>' : '') + esc(it.danger); }
     var tl = document.querySelector('.timeline');
     if (tl && Array.isArray(it.days)) tl.innerHTML = it.days.map(function (x, i) {
@@ -265,13 +279,13 @@
         if (p && items.length) p.innerHTML = items.map(cardFn).join('');
       }
       pane('news', news, function (it) {
-        return '<a class="card" href="/news/' + it.slug + '/"><div class="meta"><span class="badge-live">' + esc((it.tag || 'NEWS').toUpperCase()) + '</span>' + chip(it.date || '') + '</div><h3>' + esc(it.title) + '</h3><p>' + esc(it.summary || '') + '</p><div class="foot">Read &rarr;</div></a>';
+        return '<a class="card" href="/news/' + it.slug + '/">' + (it.image ? '<div class="thumb"><img src="' + esc(it.image) + '" loading="lazy"></div>' : '') + '<div class="meta"><span class="badge-live">' + esc((it.tag || 'NEWS').toUpperCase()) + '</span>' + chip(it.date || '') + '</div><h3>' + esc(it.title) + '</h3><p>' + esc(it.summary || '') + '</p><div class="foot">Read &rarr;</div></a>';
       });
       pane('busts', busts, function (it) {
-        return '<a class="card" href="/busts/' + it.slug + '/"><div class="meta">' + (it.confirmed ? chip('CONFIRMED', 'amber') : chip('PENDING VERIFICATION', 'red')) + chip(it.date || '') + '</div><h3>' + esc(it.title) + '</h3><p>' + esc(it.summary || '') + '</p><div class="foot">' + esc(it.location || '') + ' · ' + esc(it.agency || '') + ' &rarr;</div></a>';
+        return '<a class="card" href="/busts/' + it.slug + '/">' + (it.image ? '<div class="thumb"><img src="' + esc(it.image) + '" loading="lazy"></div>' : '') + '<div class="meta">' + (it.confirmed ? chip('CONFIRMED', 'amber') : chip('PENDING VERIFICATION', 'red')) + chip(it.date || '') + '</div><h3>' + esc(it.title) + '</h3><p>' + esc(it.summary || '') + '</p><div class="foot">' + esc(it.location || '') + ' · ' + esc(it.agency || '') + ' &rarr;</div></a>';
       });
       pane('topics', topics, function (it) {
-        return '<a class="card" href="/topics/' + it.slug + '/"><div class="meta">' + chip('GUIDE', 'red') + chip(it.read || '') + chip(it.date || '') + '</div><h3>' + esc(it.title) + '</h3><p>' + esc(it.desc || '') + '</p><div class="foot">Read guide &rarr;</div></a>';
+        return '<a class="card" href="/topics/' + it.slug + '/">' + (it.image ? '<div class="thumb"><img src="' + esc(it.image) + '" loading="lazy"></div>' : '') + '<div class="meta">' + chip('GUIDE', 'red') + chip(it.read || '') + chip(it.date || '') + '</div><h3>' + esc(it.title) + '</h3><p>' + esc(it.desc || '') + '</p><div class="foot">Read guide &rarr;</div></a>';
       });
     }).catch(function () {});
   }

@@ -232,15 +232,16 @@ def build_index(es=False):
 <span class="glyph" style="background:{c['grad']}">{esc(d['name'][0])}</span>
 <h3>{esc(d['name'])}</h3><span class="cat"><span class="cat-dot" style="background:{c['color']}"></span>{esc(c['name'])}</span></a>''')
     catpills = "".join(f'<a href="/categories/{k}/"><span class="cat-dot" style="background:{v["color"]}"></span>{esc(v["name"])} ({sum(1 for d in DRUGS if d["category"]==k)})</a>' for k,v in CATEGORIES.items())
-    def card(href, chips, h, p, foot):
-        return f'<a class="card" href="{href}"><div class="meta">{chips}</div><h3>{esc(h)}</h3><p>{esc(p)}</p><div class="foot">{foot} &rarr;</div></a>'
-    newscards = "".join(card(f"/news/{n['slug']}/", f'<span class="chip amber">{esc(n["tag"])}</span><span class="chip">{esc(n["date"])}</span>', n["title"], n["summary"], "Read") for n in NEWS)
+    def card(href, chips, h, p, foot, img=None):
+        thumb = f'<div class="thumb"><img src="{esc(img)}" alt="" loading="lazy"></div>' if img else ''
+        return f'<a class="card" href="{href}">{thumb}<div class="meta">{chips}</div><h3>{esc(h)}</h3><p>{esc(p)}</p><div class="foot">{foot} &rarr;</div></a>'
+    newscards = "".join(card(f"/news/{n['slug']}/", f'<span class="chip amber">{esc(n["tag"])}</span><span class="chip">{esc(n["date"])}</span>', n["title"], n["summary"], "Read", n.get("image")) for n in NEWS)
     def bust_chip(b):
         if b.get("confirmed"):
             return f'<span class="chip amber">CONFIRMED</span><span class="chip">{esc(b["date"])}</span>'
         return f'<span class="chip red">PENDING VERIFICATION</span><span class="chip">{esc(b["date"])}</span>'
-    bustcards = "".join(card(f"/busts/{b['slug']}/", bust_chip(b), b["title"], b["summary"], b["location"] + " · " + b["agency"]) for b in BUSTS)
-    topiccards = "".join(card(f"/topics/{t['slug']}/", f'<span class="chip red">GUIDE</span><span class="chip">{esc(t["read"])}</span>', t["title"], t["desc"], "Read guide") for t in TOPICS[:6])
+    bustcards = "".join(card(f"/busts/{b['slug']}/", bust_chip(b), b["title"], b["summary"], b["location"] + " · " + b["agency"], b.get("image")) for b in BUSTS)
+    topiccards = "".join(card(f"/topics/{t['slug']}/", f'<span class="chip red">GUIDE</span><span class="chip">{esc(t["read"])}</span>', t["title"], t["desc"], "Read guide", t.get("image")) for t in TOPICS[:6])
     body = f"""
 <section class="hero"><div class="wrap">
 <span class="kicker">Harm-reduction library · {len(DRUGS)} substances · 5 regions</span>
@@ -486,6 +487,7 @@ def build_news():
         full = f"""<div class="wrap"><article class="article" style="padding-top:26px">
 <span class="kicker">{esc(n['tag'])}</span><h1 style="margin-top:12px">{esc(n['title'])}</h1>
 <div class="byline"><span>{esc(n['date'])}</span><span>Sources: {esc(', '.join(n['sources']))}</span></div>
+{f'<img class="detail-img" src="{esc(n["image"])}" alt="" loading="lazy">' if n.get("image") else ""}
 <p class="lede" style="font-size:18px">{esc(n['summary'])}</p>{body}
 {help_links(n.get("drugsInvolved", []), [("All drug news", "/news/", "#dc2626")], related=n.get("related"))}</article></div>"""
         ld = {"@context":"https://schema.org","@type":"NewsArticle","headline":n["title"],
@@ -512,6 +514,7 @@ def build_busts():
         body = f"""<div class="wrap"><article class="article" style="padding-top:26px">
 <span class="kicker">{flag}</span><h1 style="margin-top:12px">{esc(b['title'])}</h1>
 <div class="byline"><span>{esc(b['date'])}</span><span>{esc(b['location'])}</span><span>Agency: {esc(b['agency'])}</span></div>
+{f'<img class="detail-img" src="{esc(b["image"])}" alt="" loading="lazy">' if b.get("image") else ""}
 <div class="figure"><table class="tbl"><tbody>
 <tr><th style="width:160px">Date</th><td>{esc(b['date'])}</td></tr>
 <tr><th>Location</th><td>{esc(b['location'])}</td></tr>
@@ -542,7 +545,7 @@ def build_topics():
 <span class="kicker amber">GUIDE · {esc(t['read'])} read</span>
 <h1 style="margin-top:12px">{esc(t['title'])}</h1>
 <div class="byline"><span>Updated {esc(t['date'])}</span><span>Reviewed against NIDA / DEA / EMCDDA sources</span>
-<span><a href="/suggest/">Suggest a correction</a></span></div></article>
+<span><a href="/suggest/">Suggest a correction</a></span></div>{f'<img class="detail-img" src="{esc(t["image"])}" alt="" loading="lazy">' if t.get("image") else ""}</article>
 <article class="article">{inner}</article></div>"""
         ld = {"@context":"https://schema.org","@type":"Article","headline":t["title"],
               "datePublished":t["date"],"dateModified":t["date"],
@@ -566,6 +569,7 @@ def build_quit():
 <span class="kicker green">DAY-BY-DAY TIMELINE</span>
 <h1 style="margin-top:12px">What happens when you quit {esc(v['name'])}</h1>
 <div class="byline"><span>Category: {esc(v['cat'])}</span><span>Updated {TODAY}</span></div>
+{f'<img class="detail-img" src="{esc(v.get("image"))}" alt="" loading="lazy">' if v.get("image") else ""}
 <div class="callout {'red' if v['cat'] in ('Benzodiazepine','Depressant') else 'amber'}"><b>Read this first</b>{esc(v['danger'])}</div>
 <h2>The timeline</h2>
 <div class="timeline">{tl}</div>

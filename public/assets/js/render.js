@@ -42,6 +42,8 @@
         (type === 'topics' ? '<span class="kicker amber">GUIDE</span>' : '<span class="kicker">' + esc(it.tag || 'NEWS') + '</span>') +
         '<h1 style="margin-top:12px">' + esc(it.title) + '</h1>' +
         '<div class="byline"><span>' + esc(it.date || '') + '</span></div>' +
+      (it.image ? '<img class="detail-img" src="' + esc(it.image) + '" loading="lazy">' : '') +
+        (it.image ? '<img class="detail-img" src="' + esc(it.image) + '" loading="lazy">' : '') +
         (it.desc || it.summary ? '<p class="lede">' + esc(it.desc || it.summary) + '</p>' : '') +
         MD.render(it.markdown) + '<div class="related"><h2>Drugs mentioned &amp; help</h2><div class="rel-grid">' +
       ((it.related || []).map(relChip).join('')) + ((it.drugsInvolved || []).map(function (d) { return '<a href="/drugs/' + d + '/"><span class="mini" style="background:#d97706">' + esc((d[0] || '?').toUpperCase()) + '</span><span>' + esc(d.replace(/-/g, ' ')) + '</span></a>'; }).join('')) +
@@ -92,6 +94,7 @@
     return '<span class="kicker">' + (it.confirmed ? 'CONFIRMED' : 'PENDING VERIFICATION') + '</span>' +
       '<h1 style="margin-top:12px">' + esc(it.title) + '</h1>' +
       '<div class="byline"><span>' + esc(it.date) + '</span><span>' + esc(it.location) + '</span><span>Agency: ' + esc(it.agency) + '</span></div>' +
+      (it.image ? '<img class="detail-img" src="' + esc(it.image) + '" loading="lazy">' : '') +
       '<div class="figure"><table class="tbl"><tbody>' +
       '<tr><th style="width:160px">Date</th><td>' + esc(it.date) + '</td></tr>' +
       '<tr><th>Location</th><td>' + esc(it.location) + '</td></tr>' +

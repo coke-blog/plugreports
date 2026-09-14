@@ -280,3 +280,10 @@ details.faq summary::before{content:"+";display:inline-grid;place-items:center;w
 details.faq[open] summary::before{content:"–"}
 details.faq p{padding:0 18px 14px 50px;color:var(--muted);font-size:14.5px;margin:0}
 a.chip:hover{border-color:var(--amber);text-decoration:none;color:var(--amber-700)}
+
+/* ---------- detail + card images ---------- */
+.detail-img{width:100%;max-height:340px;object-fit:cover;border-radius:16px;border:1px solid var(--line);box-shadow:var(--shadow);margin:14px 0}
+.card .thumb{height:150px;border-radius:12px;overflow:hidden;margin-bottom:10px}
+.card .thumb img{width:100%;height:100%;object-fit:cover}
+.gal-thumb{width:64px;height:64px;object-fit:cover;border-radius:8px;border:2px solid #e4e7ec;cursor:pointer}
+.gal-thumb:hover{border-color:var(--amber)}
