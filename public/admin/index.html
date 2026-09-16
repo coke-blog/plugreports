@@ -91,7 +91,7 @@ async function login(){const r=await fetch('/api/admin/login',{method:'POST',hea
  body:JSON.stringify({pin:document.getElementById('pin').value})});const j=await r.json();
  if(j.ok){token=j.token;sessionStorage.setItem('pr-token',token);boot()}else document.getElementById('gatemsg').innerHTML='<div class="msg err">Wrong PIN</div>'}
 function msg(t,ok=1){document.getElementById('msg').innerHTML='<div class="msg '+(ok?'ok':'err')+'">'+t+'</div>'}
-function boot(){document.getElementById('gate').hidden=true;document.getElementById('app').hidden=false;
+function boot(){_armIdle();document.getElementById('gate').hidden=true;document.getElementById('app').hidden=false;
  document.getElementById('tabs').innerHTML=TYPES.concat(['settings','suggestions']).map(t=>
  `<button class="${t===cur?'on':''}" onclick="cur='${t}';boot()">${t}</button>`).join('');
  const b=document.getElementById('body');
@@ -238,5 +238,12 @@ async function sugg(b){const a=await api('admin/suggestions');const items=a.item
  `<div style="background:#fff;border:1px solid #e4e7ec;border-radius:10px;padding:12px;margin:8px 0">
  <b>${esc(s.type)}</b> · ${esc(s.name||'anon')} · <span style="color:#98a2b3">${new Date(s.ts).toLocaleString()} · ${esc(s.page||'')}</span>
  <p style="margin:6px 0">${esc(s.message||'')}</p><span style="color:#98a2b3">${esc(s.contact||'')}</span></div>`).join('')}
+const AUTOLOGOUT_MS = 40000;
+let _idleT = null;
+function _armIdle(){
+  clearTimeout(_idleT);
+  _idleT = setTimeout(()=>{ if(sessionStorage.getItem('pr-token')){ logout(); } }, AUTOLOGOUT_MS);
+}
+['mousemove','mousedown','keydown','scroll','touchstart','click'].forEach(e=>document.addEventListener(e,_armIdle,{passive:true}));
 if(token)boot();
 </script></body></html>
