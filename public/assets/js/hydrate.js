@@ -77,6 +77,7 @@
       if (rg) rg.innerHTML = it.related.map(chipEntry).join('') +
         '<a href="/topics/fentanyl-numbers/"><span class="mini" style="background:#b45309">&#128218;</span><span>Fentanyl: the numbers</span></a>' +
         '<a href="/quit/"><span class="mini" style="background:#16a34a">&#8987;</span><span>Quitting — day by day</span></a>' +
+        '<a href="/pharmacies/"><span class="mini" style="background:#3b82f6">Rx</span><span>Verified pharmacies</span></a>' +
         '<a href="/hotlines/"><span class="mini" style="background:#dc2626">&#128222;</span><span>Hotlines</span></a>';
     }
   }
@@ -119,6 +120,7 @@
       if (!entries.length && !grid.innerHTML) return;
       grid.innerHTML = entries.map(chipEntry).join('') +
         '<a href="/hotlines/"><span class="mini" style="background:#dc2626">&#128222;</span><span>Hotlines — help now</span></a>' +
+        '<a href="/pharmacies/"><span class="mini" style="background:#3b82f6">Rx</span><span>Find a verified pharmacy</span></a>' +
         '<a href="/quit/"><span class="mini" style="background:#16a34a">&#8987;</span><span>Quitting — day by day</span></a>';
     }
     if (type === 'news' && it.markdown) {
