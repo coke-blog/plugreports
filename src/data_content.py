@@ -423,7 +423,7 @@ TOPICS += [
 
 TOPICS += [
  dict(slug="cocaine-nasal-spray", tag="Important", title="Cocaine Nasal Spray: what it actually is, and why it's more dangerous than lines", date="2026-09-16", read="7 min",
-  image="https://plugreports.com/media/drugs/cocaine-nasal-spray.jpeg",
+  image="https://plugreports.com/media/drugs/cocaine-nasal-spray.jpg",
   desc="The TikTok trend of 'coke nasal spray' — what pharmacists say is in it, why spraying hits harder and faster than snorting, and why the overdose math changes completely.",
   blocks=[
    ("p","If you've seen <b>cocaine nasal spray</b> on TikTok or in group chats, you're watching a genuine pharmaceutical product collide with recreational use — and the result is a <b>faster, more compulsive, and easier-to-overdose</b> version of an already dangerous drug. This guide breaks down what's actually in these sprays, why they behave differently in your body than lines, and the specific harms most users never hear about."),
@@ -477,7 +477,7 @@ TOPICS += [
    ("related",["cocaine","mdma","topics:cocaine-purity-and-cuts","topics:spot-pressed-pills"])]),
 
  dict(slug="mdma-nasal-spray", tag="Important", title="MDMA Nasal Spray: the 'safer' myth, what's actually in it, and the serotonin danger nobody mentions", date="2026-09-16", read="7 min",
-  image="https://plugreports.com/media/drugs/mdma-nasal-spray.jpeg",
+  image="https://plugreports.com/media/drugs/mdma-nasal-spray.jpg",
   desc="The TikTok trend of spraying MDMA instead of dropping pills — why it's not safer, what cuts ride along, and the serotonin syndrome risk that makes this route uniquely dangerous.",
   blocks=[
    ("p","MDMA nasal spray is being marketed on TikTok as a <b>'cleaner, safer, more precise'</b> way to take ecstasy. The logic sounds appealing: no pill press uncertainty, no waiting an hour, 'just a measured spray.' The reality is almost the opposite: <b>the dose is unknown, the cuts are dissolved in with it, the onset is dangerously fast for a serotonin-heavy drug, and the redose pattern it encourages is the exact mechanism behind MDMA's rare but real deaths.</b>"),

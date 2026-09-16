@@ -152,7 +152,7 @@ def shell(path, title, desc, body, jsonld=None, canonical=None, extra_head="", o
     if SETTINGS.get("clarity"): ld += '<script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","' + esc(SETTINGS["clarity"]) + '")</script>'
     if SETTINGS.get("ga"): ld += '<script async src="https://www.googletagmanager.com/gtag/js?id=' + esc(SETTINGS["ga"]) + '"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date());gtag("config","' + esc(SETTINGS["ga"]) + '")</script>' 
     if path.split("/")[0] in ("busts","news","drugs","topics","quit","hotlines","pharmacies","rehabs","sentencing","index.html"):
-        ld += '<script src="/assets/js/hydrate.js?v=6" defer></script>' 
+        ld += '<script src="/assets/js/hydrate.js?v=7" defer></script>' 
     return f"""<!DOCTYPE html>
 <html lang="{lang}">
 <head>
@@ -215,7 +215,7 @@ def shell(path, title, desc, body, jsonld=None, canonical=None, extra_head="", o
 <p data-i18n="ageBody">This site contains educational information about drugs and harm reduction. It is not medical or legal advice. You must be of legal age or accessing with intent to help yourself or someone else.</p>
 <div class="row"><button class="btn btn-red" data-gate-yes data-i18n="ageYes">I understand — enter</button>
 <a class="btn btn-ghost" href="https://www.google.com" data-i18n="ageNo">Leave</a></div></div></div>
-<script src="/assets/js/app.js?v=6"></script>
+<script src="/assets/js/app.js?v=7"></script>
 </body></html>"""
 
 def breadcrumb_ld(parts):
@@ -790,7 +790,7 @@ def main():
     w("_static.json", json.dumps(manifest))
     w("_dynamic.html", shell("_dynamic.html", "plugreports",
       "Live content", '<div class="wrap" id="dyn" style="padding:44px 20px;min-height:50vh"><p>Loading\u2026</p></div>',
-      extra_head='<script src="/assets/js/render.js?v=6" defer></script>', canonical=SITE + "/"))
+      extra_head='<script src="/assets/js/render.js?v=7" defer></script>', canonical=SITE + "/"))
     print(f"Built {len(DRUGS)} drug pages, {len(CATEGORIES)} categories, {len(TOPICS)} topics, "
           f"{len(QUIT_SPECS)} quit pages, {len(NEWS)} news, {len(BUSTS)} busts into {PUB}")
 
