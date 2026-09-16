@@ -244,6 +244,8 @@ def build_index(es=False):
             return f'<span class="chip amber">CONFIRMED</span><span class="chip">{esc(b["date"])}</span>'
         return f'<span class="chip red">PENDING VERIFICATION</span><span class="chip">{esc(b["date"])}</span>'
     bustcards = "".join(card(f"/busts/{b['slug']}/", bust_chip(b), b["title"], b["summary"], b["location"] + " · " + b["agency"], b.get("image")) for b in BUSTS)
+    important = [t for t in TOPICS if t.get('tag') == 'Important'] or [t for t in TOPICS if 'nasal-spray' in t['slug']]
+    importantcards = "".join(card(f"/topics/{t['slug']}/", f'<span class="chip red">&#9888; IMPORTANT</span><span class="chip">{esc(t.get("read",""))}</span>', t["title"], t["desc"], "Read now", t.get("image")) for t in important)
     topiccards = "".join(card(f"/topics/{t['slug']}/", f'<span class="chip red">GUIDE</span><span class="chip">{esc(t["read"])}</span>', t["title"], t["desc"], "Read guide", t.get("image")) for t in TOPICS[:6])
     body = f"""
 <section class="hero"><div class="wrap">
@@ -280,9 +282,11 @@ def build_index(es=False):
 <div class="tabs print-hide">
 <button class="tab active" data-tab="news">Drug News</button>
 <button class="tab" data-tab="busts">Busts & Seizures</button>
-<button class="tab" data-tab="topics">Guides</button></div>
+<button class="tab" data-tab="topics">Guides</button>
+<button class="tab" data-tab="important">Important</button></div>
 <div class="tab-pane" data-pane="news"><div class="sortrow" data-sort="news">Sort: <button class="spill on" data-order="latest">Latest</button><button class="spill" data-order="trending">Trending</button></div><div class="cards">{newscards}</div><p style="margin-top:16px"><a class="btn btn-ghost" href="/news/">All news &rarr;</a></p></div>
 <div class="tab-pane" data-pane="busts" hidden><div class="sortrow" data-sort="busts">Sort: <button class="spill on" data-order="latest">Latest</button><button class="spill" data-order="trending">Trending</button></div><div class="cards">{bustcards}</div><p style="margin-top:16px"><a class="btn btn-ghost" href="/busts/">All busts &rarr;</a></p></div>
+<div class="tab-pane" data-pane="important" hidden><div class="sortrow" data-sort="important">Sort: <button class="spill on" data-order="latest">Latest</button><button class="spill" data-order="trending">Trending</button></div><div class="cards">{importantcards}</div><p style="margin-top:16px"><a class="btn btn-ghost" href="/topics/">All guides &rarr;</a></p></div>
 <div class="tab-pane" data-pane="topics" hidden><div class="sortrow" data-sort="topics">Sort: <button class="spill on" data-order="latest">Latest</button><button class="spill" data-order="trending">Trending</button></div><div class="cards">{topiccards}</div><p style="margin-top:16px"><a class="btn btn-ghost" href="/topics/">All guides &rarr;</a></p></div>
 </div></section>
 

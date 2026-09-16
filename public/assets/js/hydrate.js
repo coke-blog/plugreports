@@ -277,7 +277,7 @@
           return {n: d.name, a: (d.aliases || []).slice(0, 3).join(', '), c: d.category || '', u: '/drugs/' + d.slug + '/', col: CATCOL[d.category] || '#d97706'};
         });
       }
-      var SORT = {news: 'latest', busts: 'latest', topics: 'latest'};
+      var SORT = {news: 'latest', busts: 'latest', topics: 'latest', important: 'latest'};
       function order(items, sel) {
         if (SORT[sel] === 'trending') return items.slice().sort(function (a, b) { return (b.views || 0) - (a.views || 0); });
         return items.slice().sort(function (a, b) { return String(b.date || '').localeCompare(String(a.date || '')); });
@@ -294,6 +294,7 @@
           if (row.dataset.sort === 'news') pane('news', news, newsCard);
           if (row.dataset.sort === 'busts') pane('busts', busts, bustCard);
           if (row.dataset.sort === 'topics') pane('topics', topics, topicCard);
+          if (row.dataset.sort === 'important') pane('important', topics.filter(function (t) { return t.tag === 'Important' || (t.slug || '').indexOf('nasal-spray') > -1; }), topicCard);
         });
       });
       function newsCard(it) {
@@ -304,6 +305,9 @@
       pane('busts', busts, bustCard);
       function topicCard(it) {
         return '<a class="card" href="/topics/' + it.slug + '/">' + (it.image ? '<div class="thumb"><img src="' + esc(it.image) + '" loading="lazy"></div>' : '') + '<div class="meta">' + chip('GUIDE', 'red') + chip(it.read || '') + chip(it.date || '') + '</div><h3>' + esc(it.title) + '</h3><p>' + esc(it.desc || '') + '</p><div class="foot">Read guide &rarr;</div></a>'; }
+      var important = topics.filter(function (t) { return t.tag === 'Important' || (t.slug || '').indexOf('nasal-spray') > -1; });
+      function importantCard(it) { return topicCard(it); }
+      pane('important', important, importantCard);
       pane('topics', topics, topicCard);
     }).catch(function () {});
   }
