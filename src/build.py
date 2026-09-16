@@ -392,6 +392,12 @@ def build_drugs(es=False):
 <p style="font-size:13.5px;color:var(--muted)">Facts on this page are compiled from these primary sources. External links open in a new tab.</p>
 <div class="tagrow">{''.join(links)}</div></div>"""
         faq_panel = f"""<div class="panel" style="margin-top:20px"><h2><span class="ic" style="background:{c['color']};color:#fff">?</span>Frequently asked questions</h2>{faq_html}</div>"""
+        brands_html = ""
+        if d.get("brands"):
+            bli = "".join(f'<span class="chip">{esc(b)}</span>' for b in d["brands"])
+            brands_html = f"""<div class="panel" style="margin-top:20px"><h2><span class="ic" style="background:#4338ca;color:#fff">Rx</span>Brand names on the grey market</h2>
+<p style="font-size:13.5px;color:var(--muted)">These brands are sold as this compound. Same molecule, different label and supply chain — quality varies enormously between them.</p>
+<div class="tagrow">{bli}</div></div>"""
         cmp_head = f"Comparación de categoría — {esc(cat_name)}" if es else f"Category comparison — {esc(cat_name)}"
         body = f"""
 <div class="wrap">
@@ -421,6 +427,7 @@ def build_drugs(es=False):
 <tbody>{cat_rows}</tbody></table>
 <div class="notice-strip">Street prices are regional estimates. Potency and cuts vary constantly.</div></div>
 
+{brands_html}
 {faq_panel}
 {sources_html}
 

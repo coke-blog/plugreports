@@ -45,3 +45,26 @@ CATEGORIES = {
   blurb="Potassium cyanide and similar substances appear in listings and scams. There is no safe use — this section exists to warn.",
   stat=("mg","doses that kill are measured in milligrams")),
 }
+
+CATEGORIES.update({
+ "steroids": dict(name="Steroids & Anabolics", color="#4338ca", grad="linear-gradient(135deg,#3730a3,#6366f1)",
+  tagline="Testosterone, trenbolone, Dianabol and the gym-pharma grey market — what the labels actually contain.",
+  blurb="Anabolic steroids are the most counterfeited drug class on earth. Underdosed vials, mislabeled esters and contaminated injectables are the norm in grey-market supply — every profile covers the real compound, the risks, and how the brands map.",
+  stat=("~50%","of grey-market steroids tested are underdosed or fake (independent lab analyses)")),
+ "peptides": dict(name="Peptides & Research Chemicals", color="#0d9488", grad="linear-gradient(135deg,#0f766e,#14b8a6)",
+  tagline="BPC-157, TB-500, Melanotan and the 'research use only' pipeline.",
+  blurb="Peptides are sold online as 'research chemicals — not for human use', which means zero quality control, no dosing safety data, and no recourse when a vial is contaminated or mislabeled. Most have never passed a human safety trial.",
+  stat=("0","human safety trials for most grey-market peptides")),
+ "sexual-health": dict(name="Sexual Health & ED Meds", color="#c026d3", grad="linear-gradient(135deg,#a21caf,#d946ef)",
+  tagline="Viagra, Cialis and 40+ generic brands — same molecules, wildly different supply chains.",
+  blurb="Sildenafil, tadalafil and vardenafil are among the most counterfeited medicines in the world. The brand table on each compound page maps the grey-market names (Cenforce, Vidalista, Kamagra) to what's actually inside.",
+  stat=("$ billions","lost yearly to fake ED pills — Interpol's most-faked drug class")),
+ "weight-loss": dict(name="Weight Loss & Metabolic Meds", color="#65a30d", grad="linear-gradient(135deg,#4d7c0f,#84cc16)",
+  tagline="GLP-1 pens, thyroid hormones, clenbuterol and the 'cutting' grey market.",
+  blurb="From counterfeit Ozempic-style pens to clenbuterol and T3 bought as 'research chemicals' — the weight-loss grey market sells powerful metabolic drugs with no medical oversight. Heart rhythm, thyroid collapse and refilled-pen scams are the signature harms.",
+  stat=("100%","of pre-launch grey-market GLP-1 sales are likely counterfeit")),
+ "hair-hormones": dict(name="Hair Loss & Hormone Meds", color="#a16207", grad="linear-gradient(135deg,#854d0e,#eab308)",
+  tagline="Finasteride, dutasteride, HGH and the post-cycle-therapy pharmacy.",
+  blurb="Hair-loss drugs with sexual side effects most sellers won't mention, growth hormone with counterfeit rates near total, and the SERM/AI pharmacy that steroid users depend on — profiles for the compounds behind the brand soup.",
+  stat=("~90%","of online 'HGH' tested in studies was fake or underdosed")),
+})

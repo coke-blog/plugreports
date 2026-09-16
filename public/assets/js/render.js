@@ -77,6 +77,7 @@
       fact('Schedule / class', it.schedule) + fact('Appearance', it.appearance) +
       fact('Street price', it.streetPrice) + fact('Legal status', it.legalStatus) +
       fact('Last updated', it.lastUpdated) + fact('Sources', (it.sources || []).join(', ')) + '</div></div>' +
+      (it.brands && it.brands.length ? '<div class="panel"><h2>Brand names on the grey market</h2><div class="tagrow">' + it.brands.map(function (b) { return '<span class="chip">' + esc(b) + '</span>'; }).join('') + '</div></div>' : '') +
       '<div class="related"><h2>You may also want to know about</h2><div class="rel-grid">' +
       ((it.related || []).map(relChip).join('')) +
       '<a href="/pharmacies/"><span class="mini" style="background:#3b82f6">Rx</span><span>Verified pharmacies</span></a>' +
