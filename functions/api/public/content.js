@@ -7,5 +7,6 @@ export async function onRequestGet({request, env}) {
   }
   const raw = await env.CONTENT.get('content:' + type);
   if (!raw) return Response.json({ok: true, items: []});
-  return Response.json({ok: true, items: JSON.parse(raw)});
+  // public consumers only see published items (admin uses the authenticated API)
+  return Response.json({ok: true, items: JSON.parse(raw).filter(x => !x.unpublished)});
 }
