@@ -79,6 +79,7 @@
       fact('Last updated', it.lastUpdated) + fact('Sources', (it.sources || []).join(', ')) + '</div></div>' +
       '<div class="related"><h2>You may also want to know about</h2><div class="rel-grid">' +
       ((it.related || []).map(relChip).join('')) +
+      '<a href="/pharmacies/"><span class="mini" style="background:#3b82f6">Rx</span><span>Verified pharmacies</span></a>' +
       '<a href="/hotlines/"><span class="mini" style="background:#dc2626">&#9742;</span><span>Hotlines</span></a>' +
       '<a href="/quit/"><span class="mini" style="background:#16a34a">&#8987;</span><span>Quitting — day by day</span></a></div></div>';
   }
