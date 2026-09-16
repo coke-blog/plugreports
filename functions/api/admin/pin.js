@@ -1,4 +1,5 @@
-import {checkAuth, sha256} from './_util.js';
+import {checkAuth, sha256, hasKV} from './_util.js';
+const noKV = () => Response.json({ok:false, error:'Storage not bound'}, {status:503});
 export async function onRequestPost({request, env}) {
   if (!await checkAuth(env, request)) return Response.json({ok: false}, {status: 401});
   if (!hasKV(env)) return noKV();
