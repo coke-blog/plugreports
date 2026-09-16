@@ -7,7 +7,7 @@
   var type = seg[0] || '';
   if (!/^(drugs|busts|news|topics|quit|hotlines|pharmacies|rehabs|sentencing|categories)$/.test(type)) return;
   fetch('/api/public/content?type=' + (type === 'categories' ? 'drugs' : type)).then(function (r) { return r.json(); }).then(function (d) {
-    var items = (d.items || []).filter(function (x) { return x; });
+    var items = (d.items || []).filter(function (x) { return x && !x.unpublished; });
     if (!items.length) return;
     if (type === 'categories') return renderCategory(items, seg);
     if (type === 'hotlines') return renderHotlines(items);

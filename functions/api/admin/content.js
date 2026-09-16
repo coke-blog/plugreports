@@ -33,7 +33,8 @@ export async function onRequestDelete({request, env}) {
   if (!hasKV(env)) return noKV();
   const {searchParams} = new URL(request.url);
   const type = searchParams.get('type'), slug = searchParams.get('slug');
-  const list = (await getList(env, type)).filter(x => x.slug !== slug);
+  // UNPUBLISH instead of wipe: item + fields preserved in KV, hidden from site.
+  const list = (await getList(env, type)).map(x => x.slug === slug ? {...x, unpublished: true} : x);
   await env.CONTENT.put('content:' + type, JSON.stringify(list));
-  return Response.json({ok: true});
+  return Response.json({ok: true, note: 'unpublished - fields preserved'});
 }

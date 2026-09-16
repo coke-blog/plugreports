@@ -15,7 +15,7 @@ BUSTS = [
   summary="A 13-ton haul of cocaine disguised as a banana shipment has exposed alleged links between US financiers, luxury Dubai real estate and a crypto-trading Irish fintech, Bloomberg Politics reports. The case centers on cocaine concealed in fruit shipments entering Spain and a laundering network spanning three continents.",
   drugsInvolved=["cocaine"],
   sentencing="Spain: cocaine trafficking carries roughly 3–6 years, rising to 10+ years and beyond 20 for organized, large-quantity cases; EU coordination means additional member-state charges are likely."),
- dict(slug="bust-australia-sydney-cocaine-record", title="Largest drug bust in Australian history: nearly $1B cocaine at rural Sydney property", date="2026-06-22",
+ dict(slug="bust-australia-sydney-cocaine-record", image="https://plugreports.com/media/drugs/4-fluorococaine.jpeg", title="Largest drug bust in Australian history: nearly $1B cocaine at rural Sydney property", date="2026-06-22",
   location="Rural property, western Sydney, NSW, Australia", agency="AFP-led joint operation (9News Sydney report)", confirmed=True,
   sourceUrl="https://vt.tiktok.com/ZSqQyqJMX/",
   summary="Authorities have executed the largest drug bust in Australian history, uncovering nearly a billion dollars' worth of cocaine at a rural property in western Sydney. Aerial footage shows dozens of shipping containers on the property being examined by investigators.",
@@ -36,13 +36,13 @@ NEWS = [
         "Its hallmark is necrotic skin wounds far from injection sites. Wounds need medical care even when small.",
         "Read: our Xylazine (Tranq) guide and topic page."],
   sources=["NIDA","UK Home Office ACMD"], drugsInvolved=["xylazine","fentanyl"]),
- dict(slug="high-dose-ecstasy-warning", title="High-dose ecstasy pills (250–330 mg) circulating again this festival season", date="2026-08-25", tag="Alert",
+ dict(slug="high-dose-ecstasy-warning", image="https://plugreports.com/media/drugs/xtc-pills.jpeg", title="High-dose ecstasy pills (250–330 mg) circulating again this festival season", date="2026-08-25", tag="Alert",
   summary="Pill-testing services across Europe are flagging pressed pills at 2–3x a typical adult dose. PMA/PMMA copycat pills — slow to kick in, deadly — remain in circulation.",
   body=["A common adult dose is 80–120 mg. Pills above 200 mg significantly raise the risk of severe overheating and serotonin toxicity.",
         "If a pill takes 2+ hours to work, do NOT assume it's weak — it may be PMA/PMMA. Never redose on a slow pill.",
         "See: How to spot pressed pills — real vs fake."],
   sources=["PillReports","EMCDDA","The Loop UK"], drugsInvolved=["mdma"]),
- dict(slug="counterfeit-xanax-update", title="Counterfeit 'Xanax bars' increasingly contain flubromazolam or fentanyl", date="2026-08-18", tag="Alert",
+ dict(slug="counterfeit-xanax-update", image="https://plugreports.com/media/drugs/counterfeit-xanax-update.jpeg", title="Counterfeit 'Xanax bars' increasingly contain flubromazolam or fentanyl", date="2026-08-18", tag="Alert",
   summary="Forensic testing in the US and UK shows counterfeit alprazolam bars frequently contain the ultra-potent RC benzo flubromazolam — active at 0.25 mg — and intermittent fentanyl.",
   body=["Flubromazolam causes multi-day blackouts and dangerous withdrawal after short exposure.",
         "If you take pressed bars: never mix with opioids or alcohol, and tell someone what you took.",
@@ -239,7 +239,7 @@ TOPICS = [
    ("checklist",["Never use alone — call Never Use Alone (US): 1-800-484-3731","Carry naloxone — it reverses the fentanyl half of the mix","Treat every small wound seriously: clean, cover, and get medical care early — tranq wounds do not heal on their own","Tell wound-care and outreach workers you use tranq — they now specialize in this"]),
    ("related",["xylazine","fentanyl","nitazenes-new-opioids"])]),
 
- dict(slug="cocaine-purity-and-cuts", title="What is cocaine actually cut with? Purity explained", date="2026-09-09", read="7 min",
+ dict(slug="cocaine-purity-and-cuts", image="https://plugreports.com/media/drugs/cocaine-purity-and-cuts.jpeg", title="What is cocaine actually cut with? Purity explained", date="2026-09-09", read="7 min",
   desc="From levamisole to phenacetin to fentanyl: what drug-checking shows is really in cocaine, and why 'pure' can be more dangerous, not less. External deep-dive: 247avlplug.com/understanding-cocaine-purity/.",
   blocks=[
    ("p","Retail cocaine purity has climbed in Europe (EMCDDA reports averages near 60–70% in several countries) while US seizures vary widely. But purity is not safety — the most dangerous things in cocaine are often the <b>cuts and adulterants</b>, and occasionally fentanyl itself."),
@@ -256,7 +256,7 @@ TOPICS = [
    ("quote","Cocaine-related deaths in England & Wales hit record levels in recent ONS releases — most involve cocaine plus opioids or alcohol together, not cocaine alone.","ONS / EMCDDA trend reporting"),
    ("related",["cocaine","4-fluorococaine","fentanyl"])]),
 
- dict(slug="fentanyl-numbers", title="Fentanyl: the numbers nobody tells you", date="2026-09-07", read="6 min",
+ dict(slug="fentanyl-numbers", image="https://plugreports.com/media/drugs/fentanyl.webp", title="Fentanyl: the numbers nobody tells you", date="2026-09-07", read="6 min",
   desc="2 milligrams. 5 minutes. One naloxone spray may not be enough. The arithmetic of the deadliest drug supply in history.",
   blocks=[
    ("stats",[("2 mg","potentially fatal dose — a few grains of salt"),("~75,000","US overdose deaths involving fentanyl per year (CDC)"),("10–25x","nitazene potency vs fentanyl — the next wave"),("3–5 min","for fentanyl to reach the brain when smoked")]),
