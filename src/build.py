@@ -411,7 +411,7 @@ def build_drugs(es=False):
 <h1 style="margin-top:10px">{esc(d['name'])}</h1>
 <p class="alias">Street names: <b>{esc(", ".join(d["aliases"]))}</b></p></div></section>
 
-<img src="/{img_rel}" alt="{esc(d['name'])} — {esc(app_)}" style="width:100%;max-height:300px;object-fit:cover;border-radius:18px;border:1px solid var(--line);box-shadow:var(--shadow)" loading="lazy">
+<img class="pimg" src="/{img_rel}" alt="{esc(d['name'])} — {esc(app_)}" style="border-radius:18px;border:1px solid var(--line);box-shadow:var(--shadow);object-fit:cover;max-height:340px" loading="lazy">
 
 <div class="callout red print-hide"><b>Overdose? Act now.</b> Call emergency services — say "unresponsive, not breathing". Give naloxone for opioid-like signs. <a href="/hotlines/">Hotlines</a></div>
 

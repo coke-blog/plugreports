@@ -293,3 +293,12 @@ a.chip:hover{border-color:var(--amber);text-decoration:none;color:var(--amber-70
 .spill{border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 14px;font-weight:700;font-size:12.5px;cursor:pointer;color:var(--muted)}
 .spill.on{background:var(--ink);color:#fff;border-color:var(--ink)}
 .spill:hover:not(.on){border-color:var(--amber);color:var(--amber-700)}
+
+/* ---------- desktop: square drug image floats beside quick facts ---------- */
+@media(min-width:921px){
+  .pimg{float:right;width:340px;margin:0 0 20px 28px}
+  .profile-grid{clear:none}
+}
+@media(max-width:920px){
+  .pimg{width:100%;margin:14px 0}
+}
