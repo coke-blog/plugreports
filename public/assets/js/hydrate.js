@@ -6,6 +6,7 @@
   if (seg.length === 0) { renderHome(); return; }
   var type = seg[0] || '';
   if (!/^(drugs|busts|news|topics|quit|hotlines|pharmacies|rehabs|sentencing|categories)$/.test(type)) return;
+  if (seg.length === 2) { fetch('/api/view', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({type: type, slug: seg[1]})}).catch(function(){}); }
   fetch('/api/public/content?type=' + (type === 'categories' ? 'drugs' : type)).then(function (r) { return r.json(); }).then(function (d) {
     var items = (d.items || []).filter(function (x) { return x && !x.unpublished; });
     if (!items.length) return;
