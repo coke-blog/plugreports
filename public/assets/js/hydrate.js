@@ -276,18 +276,33 @@
           return {n: d.name, a: (d.aliases || []).slice(0, 3).join(', '), c: d.category || '', u: '/drugs/' + d.slug + '/', col: CATCOL[d.category] || '#d97706'};
         });
       }
+      var SORT = {news: 'latest', busts: 'latest', topics: 'latest'};
+      function order(items, sel) {
+        if (SORT[sel] === 'trending') return items.slice().sort(function (a, b) { return (b.views || 0) - (a.views || 0); });
+        return items.slice().sort(function (a, b) { return String(b.date || '').localeCompare(String(a.date || '')); });
+      }
       function pane(sel, items, cardFn) {
         var p = document.querySelector('.tab-pane[data-pane="' + sel + '"] .cards');
-        if (p && items.length) p.innerHTML = items.map(cardFn).join('');
+        if (p && items.length) p.innerHTML = order(items, sel).map(cardFn).join('');
       }
-      pane('news', news, function (it) {
-        return '<a class="card" href="/news/' + it.slug + '/">' + (it.image ? '<div class="thumb"><img src="' + esc(it.image) + '" loading="lazy"></div>' : '') + '<div class="meta"><span class="badge-live">' + esc((it.tag || 'NEWS').toUpperCase()) + '</span>' + chip(it.date || '') + '</div><h3>' + esc(it.title) + '</h3><p>' + esc(it.summary || '') + '</p><div class="foot">Read &rarr;</div></a>';
+      document.querySelectorAll('.sortrow').forEach(function (row) {
+        row.addEventListener('click', function (e) {
+          var b = e.target.closest('.spill'); if (!b) return;
+          SORT[row.dataset.sort] = b.dataset.order;
+          row.querySelectorAll('.spill').forEach(function (x) { x.classList.toggle('on', x === b); });
+          if (row.dataset.sort === 'news') pane('news', news, newsCard);
+          if (row.dataset.sort === 'busts') pane('busts', busts, bustCard);
+          if (row.dataset.sort === 'topics') pane('topics', topics, topicCard);
+        });
       });
-      pane('busts', busts, function (it) {
-        return '<a class="card" href="/busts/' + it.slug + '/">' + (it.image ? '<div class="thumb"><img src="' + esc(it.image) + '" loading="lazy"></div>' : '') + '<div class="meta">' + (it.confirmed ? chip('CONFIRMED', 'amber') : chip('PENDING VERIFICATION', 'red')) + chip(it.date || '') + '</div><h3>' + esc(it.title) + '</h3><p>' + esc(it.summary || '') + '</p><div class="foot">' + esc(it.location || '') + ' · ' + esc(it.agency || '') + ' &rarr;</div></a>';
-      });
-      pane('topics', topics, function (it) {
-        return '<a class="card" href="/topics/' + it.slug + '/">' + (it.image ? '<div class="thumb"><img src="' + esc(it.image) + '" loading="lazy"></div>' : '') + '<div class="meta">' + chip('GUIDE', 'red') + chip(it.read || '') + chip(it.date || '') + '</div><h3>' + esc(it.title) + '</h3><p>' + esc(it.desc || '') + '</p><div class="foot">Read guide &rarr;</div></a>';
-      });
+      function newsCard(it) {
+        return '<a class="card" href="/news/' + it.slug + '/">' + (it.image ? '<div class="thumb"><img src="' + esc(it.image) + '" loading="lazy"></div>' : '') + '<div class="meta"><span class="badge-live">' + esc((it.tag || 'NEWS').toUpperCase()) + '</span>' + chip(it.date || '') + '</div><h3>' + esc(it.title) + '</h3><p>' + esc(it.summary || '') + '</p><div class="foot">Read &rarr;</div></a>'; }
+      pane('news', news, newsCard);
+      function bustCard(it) {
+        return '<a class="card" href="/busts/' + it.slug + '/">' + (it.image ? '<div class="thumb"><img src="' + esc(it.image) + '" loading="lazy"></div>' : '') + '<div class="meta">' + (it.confirmed ? chip('CONFIRMED', 'amber') : chip('PENDING VERIFICATION', 'red')) + chip(it.date || '') + '</div><h3>' + esc(it.title) + '</h3><p>' + esc(it.summary || '') + '</p><div class="foot">' + esc(it.location || '') + ' · ' + esc(it.agency || '') + ' &rarr;</div></a>'; }
+      pane('busts', busts, bustCard);
+      function topicCard(it) {
+        return '<a class="card" href="/topics/' + it.slug + '/">' + (it.image ? '<div class="thumb"><img src="' + esc(it.image) + '" loading="lazy"></div>' : '') + '<div class="meta">' + chip('GUIDE', 'red') + chip(it.read || '') + chip(it.date || '') + '</div><h3>' + esc(it.title) + '</h3><p>' + esc(it.desc || '') + '</p><div class="foot">Read guide &rarr;</div></a>'; }
+      pane('topics', topics, topicCard);
     }).catch(function () {});
   }

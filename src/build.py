@@ -281,9 +281,9 @@ def build_index(es=False):
 <button class="tab active" data-tab="news">Drug News</button>
 <button class="tab" data-tab="busts">Busts & Seizures</button>
 <button class="tab" data-tab="topics">Guides</button></div>
-<div class="tab-pane" data-pane="news"><div class="cards">{newscards}</div><p style="margin-top:16px"><a class="btn btn-ghost" href="/news/">All news &rarr;</a></p></div>
-<div class="tab-pane" data-pane="busts" hidden><div class="cards">{bustcards}</div><p style="margin-top:16px"><a class="btn btn-ghost" href="/busts/">All busts &rarr;</a></p></div>
-<div class="tab-pane" data-pane="topics" hidden><div class="cards">{topiccards}</div><p style="margin-top:16px"><a class="btn btn-ghost" href="/topics/">All guides &rarr;</a></p></div>
+<div class="tab-pane" data-pane="news"><div class="sortrow" data-sort="news">Sort: <button class="spill on" data-order="latest">Latest</button><button class="spill" data-order="trending">Trending</button></div><div class="cards">{newscards}</div><p style="margin-top:16px"><a class="btn btn-ghost" href="/news/">All news &rarr;</a></p></div>
+<div class="tab-pane" data-pane="busts" hidden><div class="sortrow" data-sort="busts">Sort: <button class="spill on" data-order="latest">Latest</button><button class="spill" data-order="trending">Trending</button></div><div class="cards">{bustcards}</div><p style="margin-top:16px"><a class="btn btn-ghost" href="/busts/">All busts &rarr;</a></p></div>
+<div class="tab-pane" data-pane="topics" hidden><div class="sortrow" data-sort="topics">Sort: <button class="spill on" data-order="latest">Latest</button><button class="spill" data-order="trending">Trending</button></div><div class="cards">{topiccards}</div><p style="margin-top:16px"><a class="btn btn-ghost" href="/topics/">All guides &rarr;</a></p></div>
 </div></section>
 
 <section class="sec"><div class="wrap">
