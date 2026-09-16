@@ -1,39 +1,70 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow"><title>plugreports admin</title>
-<script src="/assets/js/markdown.js?v=2"></script>
+<script src="/assets/js/markdown.js"></script>
 <style>
-body{font-family:system-ui,sans-serif;background:#f6f7f9;color:#101828;margin:0}
-header{background:#101828;color:#fff;padding:12px 20px;display:flex;gap:16px;align-items:center}
-header b{color:#fbbf24}.wrap{display:flex;min-height:calc(100vh - 50px)}
-nav{width:190px;background:#fff;border-right:1px solid #e4e7ec;padding:14px}
-nav button{display:block;width:100%;text-align:left;padding:9px 12px;border:0;background:none;border-radius:8px;font-weight:600;cursor:pointer}
-nav button.on{background:#fffbeb;color:#b45309}main{flex:1;padding:22px;overflow:auto}
-table{width:100%;border-collapse:collapse;background:#fff;font-size:13px}td,th{border:1px solid #e4e7ec;padding:7px 9px;text-align:left}
-input,select,textarea{padding:9px 11px;border:1px solid #d0d5dd;border-radius:9px;font-family:inherit;font-size:14px;margin:3px 4px 3px 0}
-input:focus,select:focus,textarea:focus{outline:2px solid #fcd34d;border-color:#f59e0b}
-.btn{background:#dc2626;color:#fff;border:0;border-radius:9px;padding:9px 16px;font-weight:700;cursor:pointer;margin:4px 6px 4px 0}
-.btn.g{background:#16a34a}.btn.x{background:#667085}.btn.a{background:#f59e0b;color:#111}
+:root{--amber:#f59e0b;--red:#dc2626;--green:#16a34a;--ink:#101828;--muted:#667085;--line:#e4e7ec}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,sans-serif;background:#f6f7f9;color:var(--ink);margin:0}
+header{background:#101828;color:#fff;padding:12px 16px;display:flex;gap:12px;align-items:center}
+header b{color:#fbbf24}
+.wrap{display:flex;min-height:calc(100vh - 52px)}
+/* ---- accordion menu ---- */
+nav{width:210px;background:#fff;border-right:1px solid var(--line);padding:10px;flex:none}
+.acc{border:1px solid var(--line);border-radius:12px;margin-bottom:6px;overflow:hidden;background:#fff}
+.acc-head{display:flex;align-items:center;gap:10px;padding:11px 13px;cursor:pointer;user-select:none;font-weight:700;font-size:14px;border:0;background:none;width:100%;text-align:left}
+.acc-head:hover{background:#fffbeb}
+.acc-head .ic{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;font-size:14px;flex:none}
+.acc-head .arrow{margin-left:auto;transition:.2s;color:#98a2b3;font-size:11px}
+.acc.open .arrow{transform:rotate(90deg)}
+.acc.open{border-color:var(--amber)}
+.acc.open .acc-head{background:#fffbeb;color:#b45309}
+.acc-body{display:none;padding:2px 8px 8px 45px}
+.acc.open .acc-body{display:block}
+.acc-body button{display:block;width:100%;text-align:left;padding:7px 10px;border:0;background:none;border-radius:8px;font-weight:600;font-size:13px;cursor:pointer;color:#344054}
+.acc-body button:hover{background:#f2f4f7}
+.acc-body button.on{background:#fffbeb;color:#b45309}
+main{flex:1;padding:18px;overflow:auto;min-width:0}
+h2{font-size:19px;margin-bottom:10px}
+table{width:100%;border-collapse:collapse;background:#fff;font-size:13px}
+td,th{border:1px solid var(--line);padding:7px 9px;text-align:left}
+input,select,textarea{padding:9px 11px;border:1px solid #d0d5dd;border-radius:9px;font-family:inherit;font-size:14px;margin:3px 4px 3px 0;max-width:100%}
+input:focus,select:focus,textarea:focus{outline:2px solid #fcd34d;border-color:var(--amber)}
+.btn{background:var(--red);color:#fff;border:0;border-radius:9px;padding:9px 16px;font-weight:700;cursor:pointer;margin:4px 6px 4px 0;font-size:14px}
+.btn.g{background:var(--green)}.btn.x{background:#667085}.btn.a{background:var(--amber);color:#111}
+.btn.sm{padding:5px 12px;font-size:13px}
 .msg{padding:10px 14px;border-radius:9px;margin:8px 0}.ok{background:#f0fdf4;color:#15803d}.err{background:#fef2f2;color:#b91c1c}
-#gate{max-width:380px;margin:14vh auto;background:#fff;padding:34px;border-radius:16px;text-align:center;box-shadow:0 8px 30px rgba(0,0,0,.12)}
+#gate{max-width:380px;margin:12vh auto;background:#fff;padding:34px;border-radius:16px;text-align:center;box-shadow:0 8px 30px rgba(0,0,0,.12)}
 .frow{margin:10px 0}.frow label{display:block;font-weight:700;font-size:12.5px;margin-bottom:3px;color:#344054}
 .frow .hint{font-weight:400;color:#98a2b3;font-size:11.5px}
-.frow input[type=text],.frow textarea,.frow select{width:min(680px,95%)}
 .frow textarea{min-height:70px}.frow textarea.tall{min-height:130px}
+.frow input[type=text],.frow textarea,.frow select{width:min(680px,100%)}
 .chk{display:flex;align-items:center;gap:8px;font-weight:700;font-size:13px}
-.two{display:grid;grid-template-columns:1fr 1fr;gap:0 18px;max-width:900px}
-#editor{background:#fff;border:1px solid #e4e7ec;border-radius:14px;padding:20px;margin-top:18px}
+.gal-thumb{width:64px;height:64px;object-fit:cover;border-radius:8px;border:2px solid #e4e7ec;cursor:pointer}
+.gal-thumb:hover{border-color:var(--amber)}
+/* ---- editor opens inline under the row ---- */
+.inline-editor{background:#fffbeb;border:1px solid #fcd34d;border-radius:12px;padding:16px;margin:4px 0 14px 0}
+.inline-editor h3{font-size:15px;margin-bottom:6px;color:#92400e}
+#topEditor{position:sticky;top:0;z-index:20;background:#f6f7f9;padding:4px 0 8px}
+@media(max-width:840px){
+  .wrap{flex-direction:column}
+  nav{width:100%;border-right:0;border-bottom:1px solid var(--line)}
+  main{padding:12px}
+  .acc-body{padding-left:45px}
+}
 </style></head><body>
-<header><b>plugreports</b> admin <span style="margin-left:auto;font-size:12px">content management · SEO · suggestions</span></header>
+<header><b>plugreports</b> admin <span style="margin-left:auto;font-size:12px">content · SEO · suggestions</span></header>
 <div id="gate"><h2>Admin PIN</h2><p style="color:#667085;font-size:13px">Default: <code>plug2026!</code> — change it in Settings immediately.</p>
 <input id="pin" type="password" placeholder="PIN" style="width:90%"><br><button class="btn" onclick="login()">Unlock</button>
 <div id="gatemsg"></div></div>
 <div class="wrap" id="app" hidden>
-<nav id="tabs"></nav><main><div id="msg"></div><div id="body"></div></main></div>
+<nav id="tabs"></nav>
+<main><div id="msg"></div><div id="topEditor"></div><div id="body"></div></main></div>
 <script>
 const TYPES=["drugs","categories","busts","news","topics","quit","hotlines","pharmacies","rehabs","sentencing"];
 const PALETTE=['#0ea5e9','#8b5cf6','#ec4899','#f43f5e','#14b8a6','#f59e0b','#84cc16','#6366f1','#a855f7','#0d9488','#e11d48','#ca8a04'];
 const CATS=["opioids","stimulants","benzodiazepines","sedatives","depressants","dissociatives","empathogens","psychedelics","cannabinoids","performance","hazardous"];
 const SEO=[{k:'seoTitle',l:'SEO title (optional — overrides auto-generated)',t:'text'},{k:'seoDesc',l:'SEO description (optional)',t:'textarea'}];
+const REL="{k:'related',l:'Related links (drug slug, or type:slug — topics:x, news:x, quit:x)',t:'csv',ph:'heroin, topics:nitazenes-new-opioids, sentencing'}";
 const SCHEMAS={
  categories:[{k:'name',l:'Category name',t:'text',req:1,ph:'Steroids & PEDs'},{k:'slug',l:'Slug',t:'text',auto:1},
   {k:'color',l:'Color',t:'select',opts:PALETTE},{k:'grad',l:'Gradient CSS (optional)',t:'text',ph:'linear-gradient(135deg,#1e40af,#3b82f6)'},
@@ -41,35 +72,28 @@ const SCHEMAS={
  drugs:[{k:'name',l:'Drug name',t:'text',req:1,ph:'Fentanyl'},{k:'slug',l:'Slug (URL)',t:'text',auto:1,hint:'auto-generated from name if empty'},
   {k:'category',l:'Category',t:'category'},{k:'schedule',l:'Schedule / class',t:'text',ph:'Schedule I (US)'},
   {k:'aliases',l:'Street names',t:'csv',ph:'Dope, H, Smack'},{k:'appearance',l:'Appearance',t:'textarea',ph:'White/off-white powder…'},
+  {k:'image',l:'Featured image',t:'image'},
   {k:'effects',l:'Effects',t:'list',hint:'one per line'},{k:'risks',l:'Risks',t:'list',hint:'one per line'},
   {k:'overdoseSigns',l:'Overdose signs',t:'list',hint:'one per line'},{k:'streetPrice',l:'Street price',t:'text',ph:'~$20–$40 per pill'},
-  {k:'legalStatus',l:'Legal status',t:'textarea'},{k:'image',l:'Image',t:'image'},
-  {k:'sources',l:'Sources',t:'csv',ph:'NIDA, DEA, EMCDDA'},{k:'lastUpdated',l:'Last updated',t:'text',ph:'2026-09-14'},
-  {k:'related',l:'Related links (drug slug, or type:slug — topics:x, news:x, quit:x)',t:'csv',ph:'heroin, topics:nitazenes-new-opioids, sentencing'},].concat(SEO),
- busts:[{k:'title',l:'Headline',t:'text',req:1},{k:'slug',l:'Slug',t:'text',auto:1},{k:'date',l:'Date',t:'text',ph:'2026-09-14'},
-  {k:'location',l:'Location',t:'text',ph:'Los Angeles, CA'},{k:'agency',l:'Agency',t:'text',ph:'DEA'},
-  {k:'image',l:'Featured image',t:'image'},
+  {k:'legalStatus',l:'Legal status',t:'textarea'},{k:'sources',l:'Sources',t:'csv',ph:'NIDA, DEA, EMCDDA'},
+  {k:'brands',l:'Brand names (grey market)',t:'csv',ph:'Cenforce, Fildena…'},
+  {k:'lastUpdated',l:'Last updated',t:'text',ph:'2026-09-16'},REL].concat(SEO),
+ busts:[{k:'title',l:'Headline',t:'text',req:1},{k:'slug',l:'Slug',t:'text',auto:1},{k:'image',l:'Featured image',t:'image'},
+  {k:'date',l:'Date',t:'text',ph:'2026-09-16'},{k:'location',l:'Location',t:'text',ph:'Los Angeles, CA'},{k:'agency',l:'Agency',t:'text',ph:'DEA'},
   {k:'confirmed',l:'Verified against source',t:'checkbox'},{k:'sourceUrl',l:'Source URL',t:'text',ph:'https://…'},
   {k:'summary',l:'Summary',t:'textarea',cls:'tall'},{k:'drugsInvolved',l:'Drugs involved (slugs)',t:'csv',ph:'fentanyl, cocaine'},
-  {k:'sentencing',l:'Sentencing exposure',t:'textarea'},
-  {k:'related',l:'Related links (drug slug, or type:slug — topics:x, news:x, quit:x)',t:'csv',ph:'heroin, topics:nitazenes-new-opioids, sentencing'},].concat(SEO),
- news:[{k:'title',l:'Headline',t:'text',req:1},{k:'slug',l:'Slug',t:'text',auto:1},{k:'date',l:'Date',t:'text'},
-  {k:'image',l:'Featured image',t:'image'},
-  {k:'tag',l:'Tag',t:'text',ph:'Alert / Trend / Adulterant'},{k:'summary',l:'Summary',t:'textarea',cls:'tall'},
+  {k:'sentencing',l:'Sentencing exposure',t:'textarea'},REL].concat(SEO),
+ news:[{k:'title',l:'Headline',t:'text',req:1},{k:'slug',l:'Slug',t:'text',auto:1},{k:'image',l:'Featured image',t:'image'},
+  {k:'date',l:'Date',t:'text'},{k:'tag',l:'Tag',t:'text',ph:'Alert / Trend / Adulterant'},{k:'summary',l:'Summary',t:'textarea',cls:'tall'},
   {k:'markdown',l:'Article body (Markdown)',t:'markdown'},{k:'sources',l:'Sources',t:'csv'},
-  {k:'drugsInvolved',l:'Drugs involved (slugs)',t:'csv'},
-  {k:'related',l:'Related links (drug slug, or type:slug — topics:x, news:x, quit:x)',t:'csv',ph:'heroin, topics:nitazenes-new-opioids, sentencing'},].concat(SEO),
- topics:[{k:'title',l:'Guide title',t:'text',req:1},{k:'slug',l:'Slug',t:'text',auto:1},{k:'date',l:'Date',t:'text'},
-  {k:'image',l:'Featured image',t:'image'},
-  {k:'read',l:'Read time',t:'text',ph:'6 min'},{k:'desc',l:'Description / meta',t:'textarea'},
+  {k:'drugsInvolved',l:'Drugs involved (slugs)',t:'csv'},REL].concat(SEO),
+ topics:[{k:'title',l:'Guide title',t:'text',req:1},{k:'slug',l:'Slug',t:'text',auto:1},{k:'image',l:'Featured image',t:'image'},
+  {k:'date',l:'Date',t:'text'},{k:'read',l:'Read time',t:'text',ph:'6 min'},{k:'desc',l:'Description / meta',t:'textarea'},
   {k:'markdown',l:'Article body (Markdown — headings, tables, callouts)',t:'markdown',hint:'replaces the old JSON blocks when filled'},
-  {k:'drugsInvolved',l:'Drugs mentioned (slugs, comma-separated)',t:'csv',ph:'fentanyl, xylazine'},
-  {k:'related',l:'Related links (drug slug, or type:slug — topics:x, news:x, quit:x)',t:'csv',ph:'heroin, topics:nitazenes-new-opioids, sentencing'},].concat(SEO),
+  {k:'drugsInvolved',l:'Drugs mentioned (slugs, comma-separated)',t:'csv',ph:'fentanyl, xylazine'},REL].concat(SEO),
  quit:[{k:'name',l:'Substance name',t:'text',req:1},{k:'slug',l:'Slug',t:'text',auto:1},{k:'cat',l:'Category label',t:'text',ph:'Opioid'},
-  {k:'image',l:'Featured image',t:'image'},
-  {k:'danger',l:'Safety warning',t:'textarea',cls:'tall'},{k:'days',l:'Timeline (JSON)',t:'json',cls:'tall'},
-  {k:'tips',l:'Tips',t:'list',hint:'one per line'},
-  {k:'related',l:'Related links (drug slug, or type:slug — topics:x, news:x, quit:x)',t:'csv',ph:'heroin, topics:nitazenes-new-opioids, sentencing'},].concat(SEO),
+  {k:'image',l:'Featured image',t:'image'},{k:'danger',l:'Safety warning',t:'textarea',cls:'tall'},
+  {k:'days',l:'Timeline (JSON)',t:'json',cls:'tall'},{k:'tips',l:'Tips',t:'list',hint:'one per line'},REL].concat(SEO),
  hotlines:[{k:'region',l:'Region name',t:'text',req:1,ph:'USA'},{k:'slug',l:'Slug',t:'text',auto:1},
   {k:'items',l:'Entries',t:'lines4',hint:'one per line: number | name | description | tel (tel optional)'}],
  pharmacies:[{k:'name',l:'Name',t:'text',req:1},{k:'slug',l:'Slug',t:'text',auto:1},{k:'region',l:'Region',t:'text'},
@@ -80,9 +104,11 @@ const SCHEMAS={
   {k:'verified',l:'Verified',t:'checkbox'}].concat(SEO),
  sentencing:[{k:'region',l:'Region',t:'text',req:1},{k:'slug',l:'Slug',t:'text',auto:1},
   {k:'summary',l:'Summary',t:'textarea',cls:'tall'},
-  {k:'table',l:'Table rows',t:'table',hint:'one per line: Cell | Cell (first line = header)'}].concat(SEO),
+  {k:'table',l:'Table rows',t:'table',hint:'one per line: Cell | Cell (first line = header)'},REL].concat(SEO),
 };
-let token=sessionStorage.getItem('pr-token'),cur='drugs',jsonMode=false;
+const ICONS={drugs:['💊','#dc2626'],categories:['🗂️','#f59e0b'],busts:['🚨','#b45309'],news:['📰','#dc2626'],topics:['📖','#4338ca'],quit:['⏳','#16a34a'],hotlines:['☎️','#dc2626'],pharmacies:['Rx','#3b82f6'],rehabs:['➕','#16a34a'],sentencing:['⚖️','#111827'],settings:['⚙️','#667085'],suggestions:['📥','#0ea5e9']};
+const ACC=[{label:'Content',items:['drugs','categories','busts','news','topics','quit']},{label:'Directories',items:['hotlines','pharmacies','rehabs']},{label:'Site',items:['sentencing','settings','suggestions']}];
+let token=sessionStorage.getItem('pr-token'),cur='drugs',jsonMode=false,openAcc=0;
 async function api(p,opt={}){opt.headers=Object.assign({'Content-Type':'application/json',Authorization:'Bearer '+token},opt.headers);
  const r=await fetch('/api/'+p,opt);if(r.status===401){logout();throw new Error('session expired')}
  return r.json().catch(()=>({ok:false,error:'API error '+r.status}))}
@@ -91,24 +117,27 @@ async function login(){const r=await fetch('/api/admin/login',{method:'POST',hea
  body:JSON.stringify({pin:document.getElementById('pin').value})});const j=await r.json();
  if(j.ok){token=j.token;sessionStorage.setItem('pr-token',token);boot()}else document.getElementById('gatemsg').innerHTML='<div class="msg err">Wrong PIN</div>'}
 function msg(t,ok=1){document.getElementById('msg').innerHTML='<div class="msg '+(ok?'ok':'err')+'">'+t+'</div>'}
-function boot(){_armIdle();document.getElementById('gate').hidden=true;document.getElementById('app').hidden=false;
- document.getElementById('tabs').innerHTML=TYPES.concat(['settings','suggestions']).map(t=>
- `<button class="${t===cur?'on':''}" onclick="cur='${t}';boot()">${t}</button>`).join('');
- const b=document.getElementById('body');
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;')}
+function boot(){document.getElementById('gate').hidden=true;document.getElementById('app').hidden=false;
+ document.getElementById('tabs').innerHTML=ACC.map((g,gi)=>{const anyOn=g.items.includes(cur)||(g.label==='Site'&&['settings','suggestions'].includes(cur));
+  const open=(gi===openAcc)||anyOn;
+  return '<div class="acc'+(open?' open':'')+'" data-acc="'+gi+'"><button class="acc-head" onclick="toggleAcc('+gi+')"><span class="ic" style="background:'+(ICONS[g.items[0]][1])+'18;color:'+ICONS[g.items[0]][1]+'">'+ICONS[g.items[0]][0]+'</span>'+g.label+'<span class="arrow">▶</span></button><div class="acc-body">'+
+   g.items.map(t=>'<button class="'+(t===cur?'on':'')+'" onclick="cur=\''+t+'\';boot()">'+(ICONS[t]?'<span style="margin-right:6px">'+ICONS[t][0]+'</span>':'')+t+'</button>').join('')+'</div></div>'}).join('');
+ const b=document.getElementById('body');document.getElementById('topEditor').innerHTML='';
  if(cur==='settings')return settings(b);
  if(cur==='suggestions')return sugg(b);
  list(b)}
+function toggleAcc(i){openAcc=(openAcc===i)?-1:i;document.querySelectorAll('.acc').forEach(a=>a.classList.toggle('open',+a.dataset.acc===openAcc))}
 async function list(b){b.innerHTML='Loading…';let a;try{a=await api('admin/content?type='+cur)}catch(e){b.innerHTML='<div class="msg err">'+e.message+'</div>';return}
  const items=a.items||[];
- const note=a.note?'<div class="msg err"><b>Storage not connected.</b> Add the KV namespace binding (CONTENT) in Cloudflare Pages → Settings → Bindings, then reload. Saves are disabled until then.</div>':'';
+ const note=a.note?'<div class="msg err"><b>Storage not connected.</b> Add the KV namespace binding (CONTENT) in Cloudflare Pages → Settings → Bindings.</div>':'';
  b.innerHTML=`${note}<h2>${cur} <small>(${items.length})</small></h2>
- <button class="btn g" onclick="editForm('')">+ New ${cur.slice(0,-1)}</button>
- <table><tr><th style="width:32px"></th><th>slug / key</th><th>title / name</th></tr>${items.map((it,i)=>
- `<tr><td><button class="btn x" style="padding:3px 9px" onclick="editForm(${i})">edit</button></td>
- <td>${it.slug||it.region||''}</td><td>${(it.title||it.name||'').slice(0,80)}</td></tr>`).join('')}</table>
- <div id="editor"></div>`;window._items=items}
+ <button class="btn g sm" onclick="editForm('')">+ New ${cur.slice(0,-1)}</button>
+ <div id="rows"></div>`;
+ window._items=items;
+ document.getElementById('rows').innerHTML='<table><tr><th style="width:70px"></th><th>slug / key</th><th>title / name</th></tr>'+items.map((it,i)=>
+ `<tr><td><button class="btn x sm" onclick="editForm(${i},this)">edit</button></td><td>${it.slug||it.region||''}</td><td>${(it.title||it.name||'').slice(0,70)}</td></tr>`).join('')+'</table><div id="rowEditor"></div>'}
 function slugify(s){return s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')}
-function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;')}
 function renderField(f,it){const v=it[f.k];let h='';
  if(f.t==='checkbox')h=`<input type="checkbox" id="f_${f.k}" ${v?'checked':''}>`;
  else if(f.t==='select')h=`<select id="f_${f.k}">${f.opts.map(o=>`<option ${o===v?'selected':''}>${o}</option>`).join('')}</select>`;
@@ -117,74 +146,48 @@ function renderField(f,it){const v=it[f.k];let h='';
    if(Array.isArray(v))val=f.t==='table'?v.map(r=>r.join(' | ')).join('\n'):f.t==='lines4'?v.map(r=>r.slice(0,4).join(' | ')).join('\n'):v.join(f.t==='paras'?'\n\n':'\n');
    if(f.t==='json'&&v!==undefined)val=JSON.stringify(v,null,2);
    h=`<textarea id="f_${f.k}" class="${f.cls||''}" placeholder="${f.ph||''}">${esc(val==null?'':val)}</textarea>`;}
- else if(f.t==='image')h=`<input type="text" id="f_${f.k}" value="${esc(v||'')}" placeholder="upload, pick from gallery, or paste URL" style="width:50%">
-   <input type="file" id="f_${f.k}_file" accept="image/*" style="display:inline;width:auto">
-   <button class="btn x" onclick="uploadField('${f.k}')">Upload</button>
-   <button type="button" class="btn a" onclick="toggleGallery('${f.k}')">&#128247; Gallery</button>
-   <div id="gal_${f.k}" hidden style="margin-top:8px">
-     <input placeholder="Search gallery by slug or title…" oninput="gallerySearch('${f.k}',this.value)" style="width:280px">
-     <div id="galres_${f.k}" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;max-height:230px;overflow:auto"></div>
-   </div>`;
  else if(f.t==='markdown'){
-   h=`<div style="margin:2px 0 6px">${[['H2','\\n## ',''],['H3','\\n### ',''],['B','**','**'],['I','*','*'],['List','\\n- ',''],['Table','\\n| Col | Col |\\n|---|---|\\n| | |\\n',''],['Quote','\\n> ',''],['Callout','\\n::: warning Title\\n\\n:::',''],['Link','[text](https://)','']].map(b=>'<button class="btn x" style="padding:3px 10px;font-size:12px" onclick="mdTool(\'${f.k}\',\''+b[1]+'\',\''+b[2]+'\')">'+b[0]+'</button>').join('')}
+   h=`<div style="margin:2px 0 6px">${[['H2','\n## ',''],['H3','\n### ',''],['B','**','**'],['I','*','*'],['List','\n- ',''],['Table','\n| Col | Col |\n|---|---|\n| | |\n',''],['Quote','\n> ',''],['Callout','\n::: warning Title\n\n:::',''],['Link','[text](https://)','']].map(b=>'<button class="btn x" style="padding:3px 10px;font-size:12px" onclick="mdTool(\''+f.k+'\',\''+b[1]+'\',\''+b[2]+'\')">'+b[0]+'</button>').join('')}
    <button class="btn a" style="padding:3px 10px;font-size:12px" onclick="mdPreview('${f.k}')">Preview</button></div>
    <textarea id="f_${f.k}" class="tall" style="font-family:ui-monospace,monospace" placeholder="## Heading&#10;&#10;Write **bold**, lists, tables and callouts.">${esc(v==null?'':v)}</textarea>
    <div id="f_${f.k}_prev" class="msg ok" hidden style="max-width:720px"></div>`;}
- else if(f.t==='category'){
-   h=`<select id="f_category"></select> <button type="button" class="btn g" style="padding:5px 12px" onclick="toggleNewCat()">+ New</button>
+ else if(f.t==='image')h=`<input type="text" id="f_${f.k}" value="${esc(v||'')}" placeholder="upload, pick from gallery, or paste URL" style="width:min(50%,300px)">
+   <input type="file" id="f_${f.k}_file" accept="image/*" style="display:inline;width:auto">
+   <button class="btn x sm" onclick="uploadField('${f.k}')">Upload</button>
+   <button type="button" class="btn a sm" onclick="toggleGallery('${f.k}')">📷 Gallery</button>
+   <div id="gal_${f.k}" hidden style="margin-top:8px">
+     <input placeholder="Search gallery by slug or title…" oninput="gallerySearch('${f.k}',this.value)" style="width:min(280px,90%)">
+     <div id="galres_${f.k}" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;max-height:230px;overflow:auto"></div>
+   </div>`;
+ else if(f.t==='category')h=`<select id="f_category"></select> <button type="button" class="btn g sm" onclick="toggleNewCat()">+ New</button>
    <span id="catnew" hidden> <input id="f_newcat" placeholder="New category name" style="width:220px">
-   <button type="button" class="btn x" style="padding:5px 12px" onclick="saveNewCat()">Add</button></span>
-   <div class="hint" style="margin-top:3px">Pick an existing category, or + New to create one — it gets its own hub page instantly.</div>`;}
+   <button type="button" class="btn x sm" onclick="saveNewCat()">Add</button></span>
+   <div class="hint" style="margin-top:3px">Pick an existing category, or + New to create one — it gets its own hub page instantly.</div>`;
  else if(f.t==='csv')h=`<input type="text" id="f_${f.k}" value="${esc(Array.isArray(v)?v.join(', '):(v||''))}" placeholder="${f.ph||''}">`;
  else h=`<input type="text" id="f_${f.k}" value="${esc(v==null?'':v)}" placeholder="${f.ph||''}">`;
  return `<div class="frow"><label>${f.l}${f.req?' *':''} ${f.hint?`<span class="hint">— ${f.hint}</span>`:''}</label>${h}</div>`}
-async function editForm(i){jsonMode=false;window._editIdx=(i==='')?null:i;const it=window._items[i]||{};
+async function editForm(i,btn){jsonMode=false;window._editIdx=(i==='')?null:i;const it=window._items[i]||{};
  const sch=SCHEMAS[cur]||[];
- document.getElementById('editor').innerHTML=`<h3>${i===''||i===undefined?'New':'Edit'} ${cur.slice(0,-1)}</h3>
- <div style="margin-bottom:8px"><button class="btn a" style="padding:5px 12px" onclick="toggleJson()">Advanced: edit as JSON</button></div>
+ const html=`<h3>${i===''||i===undefined?'New':'Edit'} ${cur.slice(0,-1)}</h3>
+ <div style="margin-bottom:8px"><button class="btn a sm" onclick="toggleJson()">Advanced: edit as JSON</button></div>
  <div id="formview">${sch.map(f=>renderField(f,it)).join('')}</div>
  <div id="jsonview" hidden><textarea id="j" style="width:100%;height:340px;font-family:ui-monospace,monospace;font-size:12.5px">${esc(JSON.stringify(it,null,2))}</textarea></div>
  <button class="btn g" onclick="saveForm('${it.slug||''}')">Save</button>
  ${it.slug?`<button class="btn" onclick="del('${it.slug}')">Delete</button>`:''}`;
- loadCategories(it.category||'');}
-let CAT_LIST=[];
-async function loadCategories(current){
-  const sel=document.getElementById('f_category'); if(!sel)return;
-  const d=await fetch('/api/public/content?type=categories').then(r=>r.json()).catch(()=>({items:[]}));
-  CAT_LIST=d.items||[];
-  const cur=current||'';
-  let html=CAT_LIST.map(c=>'<option value="'+c.slug+'"'+(c.slug===cur?' selected':'')+'>'+esc(c.name)+'</option>').join('');
-  if(cur&&!CAT_LIST.some(c=>c.slug===cur))html='<option value="'+esc(cur)+'" selected>'+esc(cur)+'</option>'+html;
-  if(!cur)html='<option value="" selected>— pick a category —</option>'+html;
-  sel.innerHTML=html;
-}
-let GAL_CACHE=[];
-async function toggleGallery(k){
-  const box=document.getElementById('gal_'+k); box.hidden=!box.hidden;
-  if(!box.hidden){gallerySearch(k,document.querySelector('#gal_'+k+' input')?.value||'');}
-}
-async function gallerySearch(k,q){
-  const res=document.getElementById('galres_'+k);
-  const d=await fetch('/api/admin/gallery?q='+encodeURIComponent(q),{headers:{Authorization:'Bearer '+token}}).then(r=>r.json()).catch(()=>({ok:false,items:[]}));
-  const items=d.items||[];
-  res.innerHTML=items.map(it=>'<img class="gal-thumb" src="'+it.url+'" title="'+esc(it.name)+'" onclick="pickImage(\''+k+'\',\''+it.url+'\')">').join('')||'<span style="color:#98a2b3;font-size:12px">No matches — upload a new image instead.</span>';
-}
-function pickImage(k,url){document.getElementById('f_'+k).value=url;msg('Image attached: '+url);}
-function toggleNewCat(){document.getElementById('catnew').hidden=!document.getElementById('catnew').hidden;}
-async function saveNewCat(){
-  const name=document.getElementById('f_newcat').value.trim(); if(!name)return msg('Type a category name',0);
-  const slug=slugify(name);
-  if(CAT_LIST.some(c=>c.slug===slug)){document.getElementById('f_category').value=slug;document.getElementById('catnew').hidden=true;return msg('Already exists — selected it');}
-  const color=PALETTE[CAT_LIST.length%PALETTE.length];
-  const r=await api('admin/content?type=categories',{method:'POST',body:JSON.stringify({name,slug,color,tagline:'',blurb:''})});
-  if(!r.ok)return msg(r.error||'Could not add category',0);
-  CAT_LIST.push({name,slug});
-  const sel=document.getElementById('f_category');
-  sel.innerHTML=CAT_LIST.map(c=>'<option value="'+c.slug+'"'+(c.slug===slug?' selected':'')+'>'+esc(c.name)+'</option>').join('');
-  document.getElementById('catnew').hidden=true;
-  msg('Category "'+name+'" created — hub page live at /categories/'+slug+'/');
-}
-function toggleJson(){jsonMode=!jsonMode;document.getElementById('formview').hidden=jsonMode;document.getElementById('jsonview').hidden=!jsonMode;
+ // open directly under the clicked row (or at top for New)
+ if(btn&&btn.closest('tr')){
+   let host=btn.closest('tr');
+   const ed=document.createElement('tr');ed.innerHTML=`<td colspan="3"><div class="inline-editor">${html}</div></td>`;
+   host.parentNode.insertBefore(ed,host.nextSibling);
+   if(window.innerWidth<841)ed.scrollIntoView({behavior:'smooth',block:'start'});
+ }else{
+   document.getElementById('topEditor').innerHTML=`<div class="inline-editor">${html}</div>`;
+   document.getElementById('topEditor').scrollIntoView({behavior:'smooth',block:'start'});
+ }
+ loadCategories(it.category||'')}
+function toggleJson(){jsonMode=!jsonMode;const fv=document.getElementById('formview'),jv=document.getElementById('jsonview');
+ if(!fv){document.querySelectorAll('#formview,#jsonview').forEach(e=>e.hidden=!e.hidden);return}
+ fv.hidden=jsonMode;jv.hidden=!jsonMode;
  if(jsonMode){try{document.getElementById('j').value=JSON.stringify(collectForm(),null,2)}catch(e){}}}
 function val(k){const el=document.getElementById('f_'+k);return el?el.value:undefined}
 function collectForm(){const sch=SCHEMAS[cur]||[];const o={};
@@ -193,39 +196,73 @@ function collectForm(){const sch=SCHEMAS[cur]||[];const o={};
   else if(f.t==='csv')v=el.value.split(',').map(x=>x.trim()).filter(Boolean);
   else if(f.t==='list')v=el.value.split('\n').map(x=>x.trim()).filter(Boolean);
   else if(f.t==='paras')v=el.value.split(/\n\s*\n/).map(x=>x.trim()).filter(Boolean);
-  else if(f.t==='lines4')v=el.value.split('\n').map(l=>l.split('|').map(x=>x.trim()).filter((x,ci,a)=>ci<4)).filter(a=>a.length&&a[0]);
+  else if(f.t==='lines4')v=el.value.split('\n').map(l=>l.split('|').map(x=>x.trim()).filter((x,ci)=>ci<4)).filter(a=>a.length&&a[0]);
   else if(f.t==='table')v=el.value.split('\n').filter(l=>l.trim()).map(l=>l.split('|').map(x=>x.trim()));
   else if(f.t==='json'){try{v=el.value.trim()?JSON.parse(el.value):undefined}catch(e){throw new Error('Invalid JSON in '+f.l)}}
-  else if(f.t==='markdown')v=el.value;
   else v=el.value.trim();
   if(v!==undefined&&v!==''&&v!==false)o[f.k]=v;else if(f.t==='checkbox'&&!v)o[f.k]=false;});
  if(!o.slug)o.slug=slugify(o.name||o.title||o.region||'item');
  return o}
-function mdTool(k,pre,post){var ta=document.getElementById('f_'+k);if(!ta)return;
- var s=ta.selectionStart,e=ta.selectionEnd,v=ta.value;
- ta.value=v.slice(0,s)+pre+v.slice(s,e)+(post||'')+v.slice(e);
- ta.focus();ta.selectionStart=ta.selectionEnd=s+pre.length+v.slice(s,e).length;}
-function mdPreview(k){var ta=document.getElementById('f_'+k),pv=document.getElementById('f_'+k+'_prev');
- if(!pv)return;pv.hidden=!pv.hidden;if(!pv.hidden)pv.innerHTML=MD.render(ta.value)||'<i>Nothing to preview</i>';}
+let CAT_LIST=[];
+async function loadCategories(current){
+ const sel=document.getElementById('f_category');if(!sel)return;
+ const d=await fetch('/api/public/content?type=categories').then(r=>r.json()).catch(()=>({items:[]}));
+ CAT_LIST=d.items||[];
+ const cur=current||'';
+ let html=CAT_LIST.map(c=>'<option value="'+c.slug+'"'+(c.slug===cur?' selected':'')+'>'+esc(c.name)+'</option>').join('');
+ if(cur&&!CAT_LIST.some(c=>c.slug===cur))html='<option value="'+esc(cur)+'" selected>'+esc(cur)+'</option>'+html;
+ if(!cur)html='<option value="" selected>— pick a category —</option>'+html;
+ sel.innerHTML=html}
+function toggleNewCat(){document.getElementById('catnew').hidden=!document.getElementById('catnew').hidden}
+async function saveNewCat(){
+ const name=document.getElementById('f_newcat').value.trim();if(!name)return msg('Type a category name',0);
+ const slug=slugify(name);
+ if(CAT_LIST.some(c=>c.slug===slug)){document.getElementById('f_category').value=slug;document.getElementById('catnew').hidden=true;return msg('Already exists — selected it')}
+ const color=PALETTE[CAT_LIST.length%PALETTE.length];
+ const r=await api('admin/content?type=categories',{method:'POST',body:JSON.stringify({name,slug,color,tagline:'',blurb:''})});
+ if(!r.ok)return msg(r.error||'Could not add category',0);
+ CAT_LIST.push({name,slug});
+ const sel=document.getElementById('f_category');
+ sel.innerHTML=CAT_LIST.map(c=>'<option value="'+c.slug+'"'+(c.slug===slug?' selected':'')+'>'+esc(c.name)+'</option>').join('');
+ document.getElementById('catnew').hidden=true;
+ msg('Category "'+name+'" created — hub page live at /categories/'+slug+'/')}
 async function uploadField(k){const f=document.getElementById('f_'+k+'_file').files[0];if(!f)return msg('Pick a file first',0);
  const slug=val('slug')||slugify(val('name')||val('title')||'misc');
  const name='drugs/'+slug+'.'+(f.name.split('.').pop().toLowerCase());
  const r=await fetch('/api/admin/upload?name='+encodeURIComponent(name),{method:'POST',headers:{'Content-Type':f.type,Authorization:'Bearer '+token},body:f});
  const j=await r.json();if(!j.ok)return msg(j.error||'Upload failed',0);
  document.getElementById('f_'+k).value=j.url;msg('Uploaded: '+j.url)}
+let GAL_CACHE=[];
+async function toggleGallery(k){
+ const box=document.getElementById('gal_'+k);box.hidden=!box.hidden;
+ if(!box.hidden)gallerySearch(k,(document.querySelector('#gal_'+k+' input')||{}).value||'')}
+async function gallerySearch(k,q){
+ const res=document.getElementById('galres_'+k);
+ const d=await fetch('/api/admin/gallery?q='+encodeURIComponent(q),{headers:{Authorization:'Bearer '+token}}).then(r=>r.json()).catch(()=>({ok:false,items:[]}));
+ const items=d.items||[];
+ res.innerHTML=items.map(it=>'<img class="gal-thumb" src="'+it.url+'" title="'+esc(it.name)+'" onclick="pickImage(\''+k+'\',\''+it.url+'\')">').join('')||'<span style="color:#98a2b3;font-size:12px">No matches — upload a new image instead.</span>'}
+function pickImage(k,url){document.getElementById('f_'+k).value=url;msg('Image attached: '+url)}
+function mdTool(k,pre,post){const ta=document.getElementById('f_'+k);if(!ta)return;
+ const s=ta.selectionStart,e=ta.selectionEnd,v=ta.value;
+ ta.value=v.slice(0,s)+pre+v.slice(s,e)+(post||'')+v.slice(e);
+ ta.focus();ta.selectionStart=ta.selectionEnd=s+pre.length+v.slice(s,e).length}
+function mdPreview(k){const ta=document.getElementById('f_'+k),pv=document.getElementById('f_'+k+'_prev');
+ if(!pv)return;pv.hidden=!pv.hidden;if(!pv.hidden)pv.innerHTML=MD.render(ta.value)||'<i>Nothing to preview</i>'}
 async function saveForm(slug){let obj;
  if(jsonMode){try{obj=JSON.parse(document.getElementById('j').value)}catch(e){return msg('Invalid JSON',0)}}
  else{try{obj=collectForm()}catch(e){return msg(e.message,0)}}
  if(!obj.slug)obj.slug=slugify(obj.name||obj.title||'item');
  const r=await api(`admin/content?type=${cur}${slug?'&slug='+slug:''}`,{method:slug?'PUT':'POST',body:JSON.stringify(obj)});
- msg(r.ok?'Saved.':'Error: '+(r.error||''),r.ok);list(document.getElementById('body'))}
-async function del(slug){if(!confirm('Delete '+slug+'?'))return;
+ msg(r.ok?'Saved.':'Error: '+(r.error||''),r.ok);
+ if(r.ok)setTimeout(()=>list(document.getElementById('body')),600)}
+async function del(slug){if(!confirm('Unpublish '+slug+'? (fields preserved — page goes offline)'))return;
  const r=await api(`admin/content?type=${cur}&slug=${slug}`,{method:'DELETE'});
- msg(r.ok?'Deleted.':'Error',r.ok);list(document.getElementById('body'))}
+ msg(r.ok?'Unpublished. (Restorable in KV if needed)':(r.error||'Error'),r.ok);
+ if(r.ok)setTimeout(()=>list(document.getElementById('body')),600)}
 async function settings(b){const s=(await api('admin/settings')).settings||{};
  b.innerHTML=`<h2>Settings & SEO sockets</h2><p style="font-size:13px;color:#667085">Paste verification / tracking IDs. They inject site-wide within seconds — no rebuild needed.</p>
- ${['gsc','bing','clarity','ga'].map(k=>`<div class="frow"><label>${k.toUpperCase()}</label><input id="s-${k}" style="width:60%" value="${esc(s[k]||'')}" placeholder="verification / measurement ID"></div>`).join('')}
- <div class="frow"><label>Crisis banner note</label><input id="s-crisisNote" style="width:60%" value="${esc(s.crisisNote||'')}"></div>
+ ${['gsc','bing','clarity','ga'].map(k=>`<div class="frow"><label>${k.toUpperCase()}</label><input id="s-${k}" style="width:min(60%,420px)" value="${esc(s[k]||'')}" placeholder="verification / measurement ID"></div>`).join('')}
+ <div class="frow"><label>Crisis banner note</label><input id="s-crisisNote" style="width:min(60%,420px)" value="${esc(s.crisisNote||'')}"></div>
  <button class="btn g" onclick="saveSettings()">Save settings</button><hr style="margin:26px 0">
  <h3>Change admin PIN</h3><input id="p0" type="password" placeholder="current PIN"><input id="p1" type="password" placeholder="new PIN (6+ chars)">
  <button class="btn" onclick="changePin()">Change PIN</button>`}
@@ -235,15 +272,12 @@ async function changePin(){const r=await api('admin/pin',{method:'POST',body:JSO
  msg(r.ok?'PIN changed.':(r.error||'Error'),r.ok)}
 async function sugg(b){const a=await api('admin/suggestions');const items=a.items||[];
  b.innerHTML=`<h2>Suggestions inbox (${items.length})</h2>`+items.map(s=>
- `<div style="background:#fff;border:1px solid #e4e7ec;border-radius:10px;padding:12px;margin:8px 0">
+ `<div style="background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px;margin:8px 0">
  <b>${esc(s.type)}</b> · ${esc(s.name||'anon')} · <span style="color:#98a2b3">${new Date(s.ts).toLocaleString()} · ${esc(s.page||'')}</span>
  <p style="margin:6px 0">${esc(s.message||'')}</p><span style="color:#98a2b3">${esc(s.contact||'')}</span></div>`).join('')}
-const AUTOLOGOUT_MS = 40000;
-let _idleT = null;
-function _armIdle(){
-  clearTimeout(_idleT);
-  _idleT = setTimeout(()=>{ if(sessionStorage.getItem('pr-token')){ logout(); } }, AUTOLOGOUT_MS);
-}
+const AUTOLOGOUT_MS=40000;
+let _idleT=null;
+function _armIdle(){clearTimeout(_idleT);_idleT=setTimeout(()=>{if(sessionStorage.getItem('pr-token')){logout()}},AUTOLOGOUT_MS)}
 ['mousemove','mousedown','keydown','scroll','touchstart','click'].forEach(e=>document.addEventListener(e,_armIdle,{passive:true}));
 if(token)boot();
 </script></body></html>
