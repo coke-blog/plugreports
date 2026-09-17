@@ -519,3 +519,214 @@ TOPICS += [
    ("checklist",["<b>Reagent test the powder FIRST</b> (Marquis/Mecke) — a spray made from PMA is a loaded gun","Never redose on a comedown — wait a full 90 minutes minimum, and honestly, don't at all","Dose low: a true 75–100 mg oral is the safety ceiling for most people; sprays make it impossible to know","Cool down proactively — rest in shade, sip electrolyte water (not more than ~500 mL/hour)","Never mix with antidepressants (SSRI/SNRI/MAOI) — serotonin syndrome risk multiplies","Never mix with alcohol — dehydration + overheating + impaired judgment","Have a sober friend who knows what you took — and have naloxone anyway (contamination happens)","If a spray/pill takes 2 hours to work, assume it's PMA — do NOT take more"]),
    ("related",["mdma","xtc-pills","topics:spot-pressed-pills","news:high-dose-ecstasy-warning","quit:mdma"])]),
 ]
+
+TOPICS += [
+ dict(slug="gas-station-drugs", title="Gas Station Drugs: the 'legal highs' sold next to the energy drinks", date="2026-09-17", read="8 min",
+  image="",
+  desc="Tianeptine, kratom, phenibut, Delta-8 — the unregulated 'dietary supplements' at gas stations and vape shops that carry opioid-level addiction and real death tolls.",
+  markdown="""## The new dealer is a gas station
+
+No ID checks beyond the register. No prescription. No dealer. The fastest-growing addiction market in America sits between the energy drinks and the lottery tickets: **tianeptine, kratom, phenibut, Delta-8 and kava** — sold as 'dietary supplements', 'mood enhancers' and 'hemp products'.
+
+The word 'legal' does the marketing. None of these products passed a safety review. Several are actively warned against by the FDA. And at least one behaves like heroin.
+
+## The lineup: what's actually on the shelf
+
+| Product | Sold as | What it really is | The catch |
+|---|---|---|---|
+| **Tianeptine** (ZaZa, Neptune's Fix) | 'Dietary supplement' | An opioid — gas station heroin | Full opioid addiction + withdrawal; FDA links it to coma and death |
+| **Kratom** | 'Botanical supplement' | Plant opioid (mitragynine) | Dependence, seizures, liver damage; contaminated batches |
+| **Phenibut** | 'Nootropic' | GABA drug — Russian prescription anxiolytic | Dependence in 2–3 weeks; withdrawal can include psychosis and seizures |
+| **Delta-8 / HHC / THC-O** | 'Hemp-derived' | Psychoactive cannabinoids | Solvent residues, unknown potency; THC-O is federally Schedule I |
+| **Kava** | 'Relaxation tea' | Liver-toxic sedative | Banned or restricted in several countries for liver injury |
+
+::: danger The tianeptine warning
+The FDA has specifically warned about tianeptine (sold as ZaZa, Tiana, Neptune's Fix) after reports of **addiction, overdoses, and death** — including a 2024 New Jersey cluster where Neptune's Fix was contaminated with synthetic cannabinoids. It produces opioid-type withdrawal: cold sweats, muscle cramps, insomnia, diarrhea. If someone who uses it heavily stops suddenly, they can become violently ill — like heroin withdrawal, next to a highway.
+:::
+
+## Why 'legal' is the whole scam
+
+1. **The supplement loophole.** Anything sold as a 'supplement' skips FDA approval. The burden is on the FDA to prove harm AFTER people get hurt.
+2. **The hemp loophole.** The 2018 Farm Act legalized hemp, and chemists responded by converting CBD into Delta-8, HHC and THC-O — psychoactive drugs that never existed in nature.
+3. **State patchwork.** Tianeptine is banned in a dozen states and legal next door. The same bottle is 'heroin' in Alabama and 'supplement' in Mississippi.
+4. **No testing.** No batch purity checks, no dosing standards, no childproofing. Gas station shelves are the least regulated pharmacy on earth.
+
+## The overdose picture (it's opioid-shaped)
+
+- **Tianeptine & kratom overdoses look like opioid overdoses**: pinpoint pupils, slow breathing, unresponsiveness. **Give naloxone** — it works on opioid receptors.
+- **Phenibut overdose**: extreme sedation, slow breathing — dangerous with alcohol. Naloxone does NOT reverse it; call emergency services.
+- **Kratom seizures** happen even without overdose-level doses.
+
+::: amber What parents should actually do
+- Know the brand names: ZaZa, Tiana, Neptune's Fix, OPMS, Vivazen — these aren't vitamins.
+- The gas station/vape shop habit shift (going daily, money disappearing) is the red flag — not a specific product.
+- If someone is dependent on tianeptine or kratom: stopping cold turkey causes real withdrawal. A doctor can taper safely, and it's nothing to be ashamed of — it's an opioid dependence, acquired at a convenience store.
+:::
+
+## If someone is overdosing right now
+
+1. Call emergency services — say 'possible opioid overdose'
+2. Give **naloxone** if you have it (it works on tianeptine and kratom)
+3. Stay — they can re-sedate
+4. Tell responders exactly what was taken — the bottle helps
+
+Full profiles with effects, risks and street prices for each product are linked below. Know the shelf before someone you love shops it.""",
+  drugsInvolved=["tianeptine","kratom","phenibut","delta-8-thc","kava-kava"],
+  related=["topics:inhalants-youth","tianeptine","kratom","pharmacies","topics:talk-to-your-kid"]),
+
+ dict(slug="inhalants-youth", title="Inhalants: the cheap, legal drugs quietly damaging young brains", date="2026-09-17", read="7 min",
+  image="",
+  desc="Whippets, Galaxy Gas, air duster, glue — the substances most likely to be a young person's first 'drug experience', and the ones most likely to kill them on the first try.",
+  markdown="""## The first drug most kids try
+
+Before weed, before pills, before anything illegal — there are **inhalants**. Whipped cream chargers in the kitchen drawer. Keyboard duster under the desk. Glue in the craft box. They cost pocket money, require no ID, no dealer, and no paraphernalia anyone would recognize.
+
+That accessibility is exactly the danger. Inhalant use peaks at **age 14–15** — younger than any other drug class.
+
+## The three families
+
+| Type | Examples | What it does | Signature harm |
+|---|---|---|---|
+| **Nitrous** | Whippets, Galaxy Gas, balloons | 30–60s euphoria | Destroys vitamin B12 → nerve damage, 'drop foot' |
+| **Aerosols/dusters** | Air duster, Freon, deodorant | 10–30s dissociation | **Sudden Sniffing Death** — heart stops on first use |
+| **Solvents/glue** | Model glue, thinners, petrol | 10–15 min euphoria | Permanent brain damage, oral cancer pathway |
+
+::: danger Sudden Sniffing Death
+Duster gases (difluoroethane) and butane sensitize the heart to adrenaline. A user who gets startled, chased, or even just stands up fast can trigger **instant fatal cardiac arrhythmia**. It has killed first-time users with a single can. There is no warning, no gradual overdose, and naloxone does nothing — it's a heart-stopping event, and CPR rarely saves it.
+:::
+
+## The nitrous wave nobody is watching
+
+Galaxy Gas — flavored, pastel, 640-gram canisters — has turned whippets from a niche rave relic into a **teen social media trend**. The harm is quiet and progressive:
+
+- Nitrous **chemically inactivates vitamin B12**, which your nerves need to work
+- Heavy users develop numb feet and hands, then **wobbly walking, then an inability to walk at all** ('drop foot')
+- Catch it early, quit, and B12 injections can reverse it. Keep using, and nerve damage can be **permanent**
+- Teens are presenting to neurology clinics unable to walk — and doctors initially search for MS or tumors before asking about whippets
+
+::: amber What parents should look for
+- Small silver canisters (not CO2 cartridges — **8g nitrous chargers**), balloons lying around, or large catering canisters in a teenager's room
+- The 'cracker' dispenser tools sold online
+- B12-deficiency symptoms in a healthy teen: tingling hands, leg weakness, unsteady walking — take it seriously and ask the question
+:::
+
+## Solvents: the permanent price
+
+Chronic glue/petrol sniffing dissolves the brain's white matter (myelin). The result is a dementia-like syndrome — tremor, unsteady gait, slurred speech — **in teenagers**, sometimes irreversible. The tell-tale 'huffer's rash' (red rash around the mouth and nose) is an obvious sign.
+
+## If someone collapses while inhaling
+
+1. **Call emergency services immediately** — say 'collapsed, possible inhalant'
+2. Remove them from the gas source; fresh air
+3. If not breathing: start CPR and continue until help arrives
+4. **Do not** give anything by mouth; if they vomit, roll them on their side
+5. A victim of sudden sniffing death can sometimes be revived with **immediate, continuous CPR and a defibrillator** — minutes matter
+
+The gas station and kitchen drawer are the real supply chain. Every product in this family has a full harm-reduction profile below.""",
+  drugsInvolved=["nitrous-oxide","whippets","nangs-galaxy-gas","air-duster","glue-sniffing","gasoline-huffing"],
+  related=["nitrous-oxide","nangs-galaxy-gas","air-duster","topics:gas-station-drugs","topics:talk-to-your-kid"]),
+
+ dict(slug="beauty-injection-dangers", title="Black-Market Filler & Botox: how a beauty appointment can blind you", date="2026-09-17", read="8 min",
+  tag="Important",
+  image="",
+  desc="Vascular occlusion, blindness, pumping-party deaths — the unregulated cosmetic injection industry and the red flags that separate a licensed clinic from a kitchen-table injector.",
+  markdown="""## The prettiest drug problem in the world
+
+An estimated **73% of FDA adverse-event reports for dermal fillers** come from unlicensed or non-medical settings — hotel rooms, homes, 'Botox parties'. A syringe of hyaluronic acid is a medical device. In the wrong hands it becomes a weapon: **it can block an artery, kill skin, or take someone's eyesight in under an hour.**
+
+And the market is getting younger. Lip filler at 17, 'baby Botox' at 22, jawline filler bought with birthday money — normalized by TikTok, supplied by gray-market websites that sell injector kits to anyone with a card.
+
+## The five procedures doing the damage
+
+| Procedure | Sold as | The specific danger |
+|---|---|---|
+| **Lip/cheek filler** | 15-min lunchtime tweak | Vascular occlusion → skin death; **blindness** if filler reaches the eye artery |
+| **Nose (non-surgical rhino)** | Cheaper alternative to surgery | Highest blindness risk zone — dangerous even with licensed injectors |
+| **Black-market silicone shots** | 'Pumping parties', butt shots | Industrial silicone → embolism deaths, cement-like tissue, unremovable |
+| **Counterfeit Botox** | Party injections, 'budget units' | Overdosed toxin → drooping face, swallowing/breathing difficulty |
+| **Tanning injections (Melanotan)** | 'Tan jabs' online | Mole darkening, new nevi, melanoma-monitoring nightmare |
+
+::: danger Blindness from filler is real and documented
+Filler injected into a facial artery can travel backwards into the **ophthalmic artery** and cut off blood to the retina. There are 300+ documented cases of vision loss from dermal filler, most from the nose, forehead, and glabella (between the brows). It can happen to excellent injectors. The difference between a bad outcome and a catastrophe is **one thing: hyaluronidase on hand and someone trained to use it** — which unlicensed injectors never have.
+:::
+
+## The red flags — how to spot an unlicensed injector
+
+1. **No medical prescriber** — legitimate filler requires a licensed prescriber on site (or supervising)
+2. **Price too good** — a $150 'full lip kit' clinic is buying counterfeit stock
+3. **No hyaluronidase in the room** — ask. Watch the face change
+4. **Venue is a home, hotel, or 'party'** — sterility, emergency equipment, and accountability don't exist there
+5. **They can't name the product batch** — legit clinics show you the sealed box and batch number before opening it
+6. **Selling DIY kits online** — a syringe is not a toy; the 'do it at home' marketing targets under-25s specifically
+
+## The pumping-party horror
+
+Black-market **industrial silicone** injected into hips and buttocks at 'pumping parties' has a body count. Unlike dissolvable HA filler, silicone migrates through tissue into lungs and kidneys, causes granulomas that harden like cement, and **cannot be fully removed** — victims undergo years of reconstructive surgery. Multiple unlicensed injectors have been prosecuted for manslaughter and murder after silicone embolism deaths.
+
+::: amber If you or a friend had filler — the warning signs
+- Blanching (white/pale) or lacy-purple skin near the injection site — possible occlusion. This is a **minutes-to-hours emergency**
+- Severe pain during or after injection — not normal
+- Any vision change — partial loss, curtain across vision, blurring — go to an ER immediately and say 'dermal filler vascular occlusion'
+- Hours matter: occlusions treated fast with hyaluronidase save tissue; treated late cost faces and eyes
+:::
+
+## The honest bottom line
+
+Licensed medical aesthetics is a real, generally safe industry. The danger zone is everything around it: the gray market, the parties, the DIY kits, the 18-year-olds injecting themselves from YouTube tutorials. Check the register (in the US: state medical board license lookup; UK: Save Face; AUS: AHPRA), verify the product, and walk away from any kitchen table.
+
+Every substance and procedure in this space has a full profile below — share them with anyone considering their first tweak.""",
+  drugsInvolved=["botox","dermal-fillers","silicone-injections","hyaluronidase","melanotan-2-beauty","lipolysis-injections"],
+  related=["dermal-fillers","botox","silicone-injections","pharmacies","topics:talk-to-your-kid"]),
+
+ dict(slug="nitrous-nerve-damage", title="Whippets & Galaxy Gas: the 'harmless' party drug leaving teens unable to walk", date="2026-09-17", read="6 min",
+  tag="Important",
+  image="",
+  desc="Vitamin B12 destruction, drop foot, wheelchairs — the quiet neurological epidemic behind the flavored-canister trend, and why 'legal' has never meant safe.",
+  markdown="""## It looks like candy. It paralyzes like a disease.
+
+Flavored canisters in pastel colors. 'Whipped cream chargers' that are never near a kitchen. A 30-second giggle that costs the user a vitamin their nerves need to survive.
+
+**Nitrous oxide — whippets, Galaxy Gas, hippy crack — is in the middle of a youth wave.** And a growing number of its heavy young users are showing up at neurology clinics unable to walk.
+
+## The mechanism: how laughing gas cripples nerves
+
+1. Every inhale inactivates **vitamin B12** — the gas oxidizes the cobalt core, permanently disabling the molecule
+2. Your nerves need B12 to build and repair **myelin** — the insulation around nerve fibers
+3. Without it, the longest nerves fail first: **feet, legs, hands**
+4. The result is **myeloneuropathy**: numbness, burning, pins-and-needles, then weakness
+
+::: danger The progressive pattern
+**Weeks of heavy use:** tingling feet and fingertips, wobbly balance.
+**Months:** legs give way on stairs, 'drop foot' (toes drag), falls.
+**Untreated:** wheelchair. Some damage is reversible with B12 injections and total abstinence — but recovery takes months, and **heavy, prolonged use can leave permanent deficits**. Users in their late teens and twenties have needed walking aids for a year or more.
+:::
+
+## Why nobody diagnoses it
+
+A 19-year-old with leg weakness gets scanned for MS, tumors, and Guillain-Barré before anyone asks about party drugs. The tell-tale sign doctors eventually find: **B12 levels can test normal** — the vitamin is present but chemically switched off. Only the neurological picture and an honest history reveal it.
+
+## The Galaxy Gas multiplier
+
+- Large catering canisters (500–640g) cost a fraction of per-charger prices — **heavy daily use became affordable**
+- Dessert flavors and pastel branding are aimed squarely at the under-25 market
+- Sessions involve dozens of balloons in a row — the dose pattern that destroys B12 fastest
+- 'Oxygen deprivation' blackouts mid-session compound the neurological hit
+
+## The other harms on the list
+
+- **Sudden death** — 100% nitrous displaces oxygen; users who pass out with a mask or balloon still attached can suffocate
+- **Frostbite** — direct gas contact freezes lips, tongue, and throat tissue
+- **B12-deficiency anemia** — exhaustion, breathlessness, pale skin
+- **Psychological dependence** — the 60-second escape is highly re-doseable; daily use creeps up fast
+
+## What actual protection looks like
+
+- **Total abstinence** is the only guaranteed protection
+- If use is happening anyway: B12 supplementation helps but does NOT make heavy use safe — the gas destroys B12 faster than any pill can replace it
+- Any tingling, numbness, or leg weakness after use = **stop immediately and see a doctor, saying exactly what you've used** — early treatment with B12 injections reverses most cases
+- Parents: silver chargers, cracked-open canisters, and balloons in a teen's space are worth a calm conversation, not a search-and-destroy
+
+Legal. Cheap. Flavored. Paralyzing. The full picture — including whippets, Galaxy Gas, and poppers — is in the profiles below.""",
+  drugsInvolved=["nitrous-oxide","whippets","nangs-galaxy-gas"],
+  related=["nitrous-oxide","nangs-galaxy-gas","topics:inhalants-youth","topics:talk-to-your-kid","hotlines"]),
+]

@@ -68,3 +68,18 @@ CATEGORIES.update({
   blurb="Hair-loss drugs with sexual side effects most sellers won't mention, growth hormone with counterfeit rates near total, and the SERM/AI pharmacy that steroid users depend on — profiles for the compounds behind the brand soup.",
   stat=("~90%","of online 'HGH' tested in studies was fake or underdosed")),
 })
+
+CATEGORIES.update({
+ "beauty": dict(name="Beauty Industry & Med Spa", color="#db2777", grad="linear-gradient(135deg,#9d174d,#ec4899)",
+  tagline="Botox parties, black-market filler, and the unregulated cosmetic procedures targeting under-25s.",
+  blurb="The beauty industry has a drug problem: unlicensed injectors, counterfeit Botox, illegal filler sold online, and teenagers getting lip filler at kitchen-table parties. These substances and procedures carry real risk — vascular occlusion, blindness, sepsis, and worse.",
+  stat=("73%","of FDA adverse-event reports for dermal fillers are from unlicensed/non-medical settings"),
+ "source_note":"FDA MAUDE database"),
+})
+
+CATEGORIES.update({
+ "tobacco": dict(name="Tobacco & Nicotine", color="#7c2d12", grad="linear-gradient(135deg,#7c2d12,#b45309)",
+  tagline="Cigarettes, vapes, snus, hookah and the nicotine products hooking the next generation.",
+  blurb="Nicotine is the most widely used addictive drug on earth — and the only one still marketed legally to adults everywhere. Most smokers start before 18. Every form carries its own harm profile: combustion cancer, nicotine pouches rewiring adolescent brains, hookah's hour-long smoke sessions.",
+  stat=("8M","deaths per year worldwide from tobacco (WHO)")),
+})
