@@ -740,7 +740,7 @@ def build_sentencing():
 def build_directory(name, items, singular, title, desc, thumb):
     qslug = None; qname = ""
     cards = "".join(f'''<a class="card" href="/{name}/{it['slug']}/">
-<div class="thumb" style="height:110px;background:linear-gradient(135deg,#fef3c7,#fee2e2);display:grid;place-items:center;font-size:34px">{thumb}</div>
+{f'<div class="thumb" style="height:110px;border-radius:12px;overflow:hidden;margin-bottom:10px"><img src="{esc(it["image"])}" alt="" loading="lazy" style="width:100%;height:100%;object-fit:cover"></div>' if it.get("image") else f'<div class="thumb" style="height:110px;background:linear-gradient(135deg,#fef3c7,#fee2e2);display:grid;place-items:center;font-size:34px">{thumb}</div>'}
 <h3>{esc(it['name'])}</h3><p>{esc(it['desc'][:130])}…</p>
 <div class="foot">{esc(it['region'])} &rarr;</div></a>''' for it in items)
     w(f"{name}/index.html", shell(f"{name}/index.html", title, desc,
@@ -750,7 +750,7 @@ def build_directory(name, items, singular, title, desc, thumb):
 <span class="kicker green">{'&#10004; VERIFIED' if it.get('verified') else 'LISTING'}</span>
 <h1 style="font-size:clamp(26px,4vw,38px);margin-top:10px">{esc(it['name'])}</h1>
 <div class="tagrow"><span class="chip amber">{esc(it['region'])}</span></div>
-<div class="thumb" style="height:180px;background:linear-gradient(135deg,#fef3c7,#fee2e2);display:grid;place-items:center;font-size:44px;border-radius:16px;margin:16px 0">{thumb}</div>
+{(f'<img class="detail-img" src="{esc(it["image"])}" alt="" loading="lazy">' if it.get("image") else f'<div class="thumb" style="height:180px;background:linear-gradient(135deg,#fef3c7,#fee2e2);display:grid;place-items:center;font-size:44px;border-radius:16px;margin:16px 0">{thumb}</div>')}
 <p style="font-size:16.5px">{esc(it['desc'])}</p>
 <div class="fact" style="margin-top:18px"><b>Website</b><span><a href="{esc(it['website'])}" rel="noopener">{esc(it['website'])}</a></span></div>
 {f'<div class="fact"><b>Contact</b><span>{esc(it["phone"])}</span></div>' if it.get('phone') else ''}
@@ -893,7 +893,9 @@ def main():
     build_about(); build_suggest(); build_meta()
     manifest = {"drugs":[d["slug"] for d in DRUGS], "news":[n["slug"] for n in NEWS],
                 "busts":[b["slug"] for b in BUSTS], "topics":[t["slug"] for t in TOPICS],
-                "categories":[k for k in CATEGORIES]}
+                "categories":[k for k in CATEGORIES],
+                "pharmacies":[p["slug"] for p in PHARMACIES], "rehabs":[r["slug"] for r in REHABS],
+                "quit":[k for k in QUIT_SPECS]}
     w("_static.json", json.dumps(manifest))
     w("_dynamic.html", shell("_dynamic.html", "plugreports",
       "Live content", '<div class="wrap" id="dyn" style="padding:44px 20px;min-height:50vh"><p>Loading\u2026</p></div>',
