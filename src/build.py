@@ -466,6 +466,7 @@ def build_drugs(es=False):
 
 
 def build_categories():
+    from data_es import ES_DRUGS
     qslug = None; qname = ""
     for k, c in CATEGORIES.items():
         items = [d for d in DRUGS if d["category"] == k]
@@ -485,8 +486,9 @@ def build_categories():
 <a href="/hotlines/"><span class="mini" style="background:#16a34a">&#9742;</span><span>Hotlines</span></a></div></div></div>"""
         title = f"{c['name']} — Effects, Risks & Street Info ({len(items)} drugs) | plugreports"
         desc = f"{c['tagline']} {len(items)} harm-reduction profiles: effects, overdose signs, street prices, legal status."
+        es_hub = f"{SITE}/es/categories/{k}/" if any(d["slug"] in ES_DRUGS for d in DRUGS if d["category"] == k) else None
         w(f"categories/{k}/index.html", shell(f"categories/{k}/index.html", title, desc, body,
-          jsonld=[{"@context":"https://schema.org","@type":"CollectionPage","name":title}, breadcrumb_ld([("Home","/"),(c["name"],"")])]))
+          jsonld=[{"@context":"https://schema.org","@type":"CollectionPage","name":title}, breadcrumb_ld([("Home","/"),(c["name"],"")])], es_url=es_hub))
 
 # ---------------------------------------------------- news / busts/topics ----
 def build_news():
@@ -795,9 +797,14 @@ def build_suggest():
 
 # ------------------------------------------------------------- meta files ----
 def build_meta():
+    from data_es import ES_DRUGS as _ESD
+    ES_DRUG_KEYS = list(_ESD.keys())
     urls = ["", "news/", "busts/", "topics/", "quit/", "hotlines/", "sentencing/",
             "pharmacies/", "rehabs/", "about/", "suggest/", "admin/"]
     urls += [f"categories/{k}/" for k in CATEGORIES]
+    urls += ["es/", "es/hotlines/", "es/categories/"]
+    urls += [f"es/drugs/{sl}/" for sl in ES_DRUG_KEYS]
+    urls += [f"es/categories/{k}/" for k in CATEGORIES if any(d["slug"] in ES_DRUG_KEYS for d in DRUGS if d["category"] == k)]
     urls += [f"drugs/{d['slug']}/" for d in DRUGS]
     urls += [f"news/{n['slug']}/" for n in NEWS]
     urls += [f"busts/{b['slug']}/" for b in BUSTS]
@@ -813,6 +820,37 @@ def build_meta():
     w("rss.xml", f'<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0"><channel><title>plugreports — Drug News</title><link>{SITE}/news/</link>{items}</channel></rss>')
     w("llms.txt", f"# plugreports\n\n> Harm-reduction library of street drug profiles, busts, hotlines and verified help. USA, Canada, Europe, Australia, Africa.\n\n## Key pages\n- [/hotlines/]({SITE}/hotlines/) Verified overdose & crisis hotlines, 5 regions\n- [/drugs/fentanyl/]({SITE}/drugs/fentanyl/) Fentanyl profile\n" + "".join(f"- [/drugs/{d['slug']}/]({SITE}/drugs/{d['slug']}/) {d['name']} ({CATEGORIES[d['category']]['name']})\n" for d in DRUGS[:40]))
 
+
+
+
+def build_categories_es():
+    from data_es import ES_DRUGS, ES_CATS
+    made = []
+    for k, c in CATEGORIES.items():
+        items = [d for d in DRUGS if d["category"] == k and d["slug"] in ES_DRUGS]
+        if not items: continue
+        made.append(k)
+        cat_name = ES_CATS.get(k, c["name"])
+        cards = "".join(
+            "<a class=\"card\" href=\"/es/drugs/" + d["slug"] + "/\"><div class=\"meta\"><span class=\"chip\" style=\"border-color:" + c["color"] + "33;color:" + c["color"] + "\">" + esc((ES_DRUGS[d["slug"]].get("schedule") or d["schedule"]).split("(")[0].strip()[:24]) + "</span></div><h3>" + esc(d["name"]) + "</h3><p>" + esc(ES_DRUGS[d["slug"]].get("appearance", d["appearance"])) + "</p><div class=\"foot\">Efectos y riesgos &rarr;</div></a>"
+            for d in items)
+        body = """<div class="wrap">
+<section class="cat-hero" style="background:@GRAD@"><span class="kicker" style="background:rgba(255,255,255,.15);color:#fff;border:0">@COUNT@ sustancias</span>
+<h1>@NAME@</h1><p>@TAG@</p></div>
+<div class="cards">@CARDS@</div></div>""".replace("@GRAD@", c["grad"]).replace("@COUNT@", str(len(items))).replace("@NAME@", esc(cat_name)).replace("@TAG@", esc(c["tagline"])).replace("@CARDS@", cards)
+        out = f"es/categories/{k}/index.html"
+        w(out, shell(out, f"{cat_name} — efectos, riesgos y signos de sobredosis | plugreports",
+            f"Perfiles de reducción de riesgos sobre {cat_name}: efectos, riesgos, signos de sobredosis y precios.",
+            body, lang="es", canonical=f"{SITE}/es/categories/{k}/", en_url=f"{SITE}/categories/{k}/"))
+    if made:
+        idx = "".join(
+            "<a class=\"card\" href=\"/es/categories/" + k + "/\"><h3>" + esc(ES_CATS.get(k, CATEGORIES[k]["name"])) + "</h3><p>" + esc(CATEGORIES[k]["tagline"]) + "</p><div class=\"foot\">Ver categoría &rarr;</div></a>"
+            for k in made)
+        w("es/categories/index.html", shell("es/categories/index.html",
+            "Categorías de drogas — opioides, estimulantes, benzos y más | plugreports",
+            "Todas las categorías de drogas en plugreports: opioides, estimulantes, benzodiacepinas, cannabinoides y más.",
+            "<div class=\"wrap\"><section class=\"sec-head\" style=\"padding-top:30px\"><div><span class=\"kicker amber\">Biblioteca de drogas</span><h2>Categorías</h2></div></section><div class=\"cards\">" + idx + "</div></div>",
+            lang="es", canonical=f"{SITE}/es/categories/", en_url=f"{SITE}/categories/"))
 
 def build_indexes():
     cards = "".join(
@@ -831,7 +869,7 @@ def build_indexes():
         "<div class=\"wrap\"><section class=\"sec-head\" style=\"padding-top:30px\"><div><span class=\"kicker amber\">A-Z Index</span><h2 style=\"font-family:var(--font-ed);font-size:clamp(28px,4vw,44px)\">All <span style=\"background:linear-gradient(92deg,#f59e0b,#dc2626);-webkit-background-clip:text;background-clip:text;color:transparent\">" + str(len(DRUGS)) + " substances</span>, A to Z</h2><p>Tap any substance for effects, risks, overdose signs and street info.</p></div></section><div class=\"rail\" style=\"grid-template-rows:none;overflow:visible\">" + tiles + "</div></div>"))
 
 def main():
-    build_index(); build_categories(); build_drugs(); build_news(); build_busts()
+    build_index(); build_categories(); build_categories_es(); build_drugs(); build_news(); build_busts()
     build_indexes()
     build_topics(); build_quit(); build_hotlines(); build_sentencing()
     build_directory("pharmacies", PHARMACIES, "verified pharmacy",
