@@ -132,12 +132,12 @@ function toggleAcc(i){openAcc=(openAcc===i)?-1:i;document.querySelectorAll('.acc
 async function list(b){b.innerHTML='Loading…';let a;try{a=await api('admin/content?type='+cur)}catch(e){b.innerHTML='<div class="msg err">'+e.message+'</div>';return}
  const items=a.items||[];
  const note=a.note?'<div class="msg err"><b>Storage not connected.</b> Add the KV namespace binding (CONTENT) in Cloudflare Pages → Settings → Bindings.</div>':'';
- b.innerHTML=`${note}<h2>${cur} <small>(${items.length})</small></h2>
+ b.innerHTML=`${note}<h2>${cur} <small id="lcount">(${items.length})</small></h2>
  <button class="btn g sm" onclick="editForm('')">+ New ${cur.slice(0,-1)}</button>
+ <input id="lsearch" type="search" placeholder="Search by slug, name or title..." oninput="renderRows(this.value)" style="width:min(360px,92%);display:block;margin:10px 0 4px;padding:10px 12px">
  <div id="rows"></div>`;
  window._items=items;
- document.getElementById('rows').innerHTML='<table><tr><th style="width:70px"></th><th>slug / key</th><th>title / name</th></tr>'+items.map((it,i)=>
- `<tr><td><button class="btn x sm" onclick="editForm(${i},this)">edit</button></td><td>${it.slug||it.region||''}</td><td>${(it.title||it.name||'').slice(0,70)}</td></tr>`).join('')+'</table><div id="rowEditor"></div>'}
+ renderRows('');}
 function slugify(s){return s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')}
 function renderField(f,it){const v=it[f.k];let h='';
  if(f.t==='checkbox')h=`<input type="checkbox" id="f_${f.k}" ${v?'checked':''}>`;
@@ -167,7 +167,16 @@ function renderField(f,it){const v=it[f.k];let h='';
  else if(f.t==='csv')h=`<input type="text" id="f_${f.k}" value="${esc(Array.isArray(v)?v.join(', '):(v||''))}" placeholder="${f.ph||''}">`;
  else h=`<input type="text" id="f_${f.k}" value="${esc(v==null?'':v)}" placeholder="${f.ph||''}">`;
  return `<div class="frow"><label>${f.l}${f.req?' *':''} ${f.hint?`<span class="hint">— ${f.hint}</span>`:''}</label>${h}</div>`}
-async function editForm(i,btn){jsonMode=false;window._editIdx=(i==='')?null:i;const it=window._items[i]||{};
+async function renderRows(q){
+ const items=window._items||[];
+ const f=(q||'').toLowerCase().trim();
+ const rows=items.map((it,i)=>({it,i})).filter(o=>!f||String(o.it.slug||'').toLowerCase().includes(f)||String(o.it.name||o.it.title||'').toLowerCase().includes(f));
+ const el=document.getElementById('rows'); if(!el)return;
+ el.innerHTML='<table><tr><th style="width:70px"></th><th>slug / key</th><th>title / name</th></tr>'+rows.map(o=>
+ `<tr><td><button class="btn x sm" onclick="editForm(${o.i},this)">edit</button></td><td>${o.it.slug||o.it.region||''}</td><td>${(o.it.title||o.it.name||'').slice(0,70)}</td></tr>`).join('')+'</table><div id="rowEditor"></div>';
+ const c=document.getElementById('lcount'); if(c)c.textContent='('+rows.length+'/'+items.length+')';
+}
+function editForm(i,btn){jsonMode=false;window._editIdx=(i==='')?null:i;const it=window._items[i]||{};
  const sch=SCHEMAS[cur]||[];
  const html=`<h3>${i===''||i===undefined?'New':'Edit'} ${cur.slice(0,-1)}</h3>
  <div style="margin-bottom:8px"><button class="btn a sm" onclick="toggleJson()">Advanced: edit as JSON</button></div>
