@@ -754,7 +754,7 @@ Legal. Cheap. Flavored. Paralyzing. The full picture — including whippets, Gal
 ]
 
 TOPICS += [
- dict(slug="roxy-vs-oxycodone-vs-percocet", title="Roxicodone vs Oxycodone vs Percocet: what's actually the difference?", date="2026-09-17", read="5 min",
+ dict(slug="roxy-vs-oxycodone-vs-percocet", image="https://plugreports.com/media/drugs/oxycodone-apap.png", title="Roxicodone vs Oxycodone vs Percocet: what's actually the difference?", date="2026-09-17", read="5 min",
   desc="Roxicodone, OxyContin, Percocet, Roxicet — the oxycodone brand soup explained: which contain the same drug, which add paracetamol, and why the difference can be dangerous.",
   markdown="""## The short answer
 
@@ -796,7 +796,7 @@ Full profiles with street prices and overdose protocols for each product are lin
   drugsInvolved=["oxycodone","oxycontin","oxycodone-apap","hydrocodone"],
   related=["oxycodone","oxycontin","oxycodone-apap","topics:spot-pressed-pills","pharmacies"]),
 
- dict(slug="mdma-overdose", title="Can you overdose on MDMA? The signs, the 'lethal dose' myth, and what to do", date="2026-09-17", read="6 min",
+ dict(slug="mdma-overdose", image="https://plugreports.com/media/drugs/xtc-pills.jpeg", title="Can you overdose on MDMA? The signs, the 'lethal dose' myth, and what to do", date="2026-09-17", read="6 min",
   desc="People overdose on MDMA every festival season — usually not from one giant dose but from heat, water imbalance, and stacked doses. The actual danger signs and the response protocol.",
   markdown="""## Yes — and it usually doesn't look like an opioid overdose
 
@@ -843,7 +843,7 @@ The comedown, redose mechanics, and full harm-reduction profile are linked below
   drugsInvolved=["mdma","xtc-pills","molly"],
   related=["mdma","xtc-pills","topics:mdma-nasal-spray","quit:mdma","news:high-dose-ecstasy-warning"]),
 
- dict(slug="pregabalin-safety-faq", title="Pregabalin (Lyrica) safety: overdose, controlled status, and the questions everyone asks", date="2026-09-17", read="5 min",
+ dict(slug="pregabalin-safety-faq", image="https://plugreports.com/media/drugs/pregabalin.jpg", title="Pregabalin (Lyrica) safety: overdose, controlled status, and the questions everyone asks", date="2026-09-17", read="5 min",
   desc="Is Lyrica a narcotic? Can you overdose on pregabalin? Is it a controlled substance? The straight answers to the most-searched pregabalin safety questions.",
   markdown="""## Is pregabalin (Lyrica) a narcotic?
 
@@ -891,7 +891,7 @@ Full profile with street prices and dependence data linked below.""",
   drugsInvolved=["pregabalin"],
   related=["pregabalin","gabapentin" if False else "zopiclone","topics:gas-station-drugs","topics:what-actually-happens-when-you-quit","pharmacies"]),
 
- dict(slug="vyvanse-safety-faq", title="Vyvanse (lisdexamfetamine) safety: overdose signs, abuse questions, and what it does to your liver", date="2026-09-17", read="5 min",
+ dict(slug="vyvanse-safety-faq", image="https://plugreports.com/media/drugs/vyvanse.png", title="Vyvanse (lisdexamfetamine) safety: overdose signs, abuse questions, and what it does to your liver", date="2026-09-17", read="5 min",
   desc="Can you overdose on Vyvanse? Is lisdexamfetamine the same as Adderall? Can you smoke or snort it? The searched questions, answered straight.",
   markdown="""## What is lisdexamfetamine, exactly?
 
