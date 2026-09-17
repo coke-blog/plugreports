@@ -322,7 +322,7 @@ def build_index(es=False):
         body = body.replace('href="/hotlines/"', 'href="/es/hotlines/"').replace('href="/topics/what-actually-happens-when-you-quit/"', 'href="/es/hotlines/"')
         w("es/index.html", shell("es/index.html",
             "plugreports — Biblioteca de información sobre drogas de calle: efectos, riesgos, sobredosis, líneas de ayuda",
-            f"Biblioteca visual de reducción de riesgos: {len(DRUGS)} perfiles de drogas (efectos, riesgos, signos de sobredosis, precios), noticias, incautaciones y líneas de ayuda verificadas.",
+            f"Biblioteca visual de reducción de riesgos: cientos de perfiles de drogas (efectos, riesgos, signos de sobredosis, precios), noticias, incautaciones y líneas de ayuda verificadas.",
             body, lang="es", canonical=f"{SITE}/es/", en_url=f"{SITE}/",
             extra_head=f"<script>window.DRUG_INDEX={json.dumps(idx, ensure_ascii=False)};</script>"))
         return
@@ -330,7 +330,7 @@ def build_index(es=False):
           "description":"Harm-reduction library of street drug profiles, news, busts, hotlines and verified help."}
     w("index.html", shell("index.html",
         "plugreports — Street Drug Identifier: Effects, Overdose Signs, Street Prices & Hotlines",
-        f"Identify street drugs fast: {len(DRUGS)} plain-English profiles with effects, overdose signs, street prices and legal status — plus drug busts, news, quitting day-by-day timelines, 24/7 hotlines and verified rehabs across the USA, Canada, Europe, Australia and Africa.",
+        f"Identify street drugs fast: hundreds of plain-English profiles with effects, overdose signs, street prices and legal status — plus drug busts, news, quitting day-by-day timelines, 24/7 hotlines and verified rehabs across the USA, Canada, Europe, Australia and Africa.",
         body, jsonld=ld, es_url=f"{SITE}/es/",
         extra_head=f"<script>window.DRUG_INDEX={json.dumps(idx, ensure_ascii=False)};</script>"))
 
@@ -826,8 +826,8 @@ def build_indexes():
         "<a class=\"tile\" href=\"/drugs/" + d["slug"] + "/\"><span class=\"glyph\" style=\"background:" + CATEGORIES[d["category"]]["grad"] + "\">" + esc(d["name"][0]) + "</span><h3>" + esc(d["name"]) + "</h3><span class=\"cat\"><span class=\"cat-dot\" style=\"background:" + CATEGORIES[d["category"]]["color"] + "\"></span>" + esc(CATEGORIES[d["category"]]["name"]) + "</span></a>"
         for d in sorted(DRUGS, key=lambda x: x["name"]))
     w("drugs/index.html", shell("drugs/index.html",
-        "All " + str(len(DRUGS)) + " Drugs A-Z — Street Names, Effects, Overdose Signs | plugreports",
-        "Complete A-Z index of " + str(len(DRUGS)) + " street drugs and pharmaceuticals: street names, effects, overdose signs, street prices and legal status.",
+        "Drugs A–Z — All Substances: Street Names, Effects, Overdose Signs | plugreports",
+        "Complete A-Z index of street drugs, pharmaceuticals, and grey-market substances: street names, effects, overdose signs, street prices and legal status.",
         "<div class=\"wrap\"><section class=\"sec-head\" style=\"padding-top:30px\"><div><span class=\"kicker amber\">A-Z Index</span><h2 style=\"font-family:var(--font-ed);font-size:clamp(28px,4vw,44px)\">All <span style=\"background:linear-gradient(92deg,#f59e0b,#dc2626);-webkit-background-clip:text;background-clip:text;color:transparent\">" + str(len(DRUGS)) + " substances</span>, A to Z</h2><p>Tap any substance for effects, risks, overdose signs and street info.</p></div></section><div class=\"rail\" style=\"grid-template-rows:none;overflow:visible\">" + tiles + "</div></div>"))
 
 def main():
