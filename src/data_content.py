@@ -752,3 +752,190 @@ Legal. Cheap. Flavored. Paralyzing. The full picture — including whippets, Gal
   drugsInvolved=["nitrous-oxide","whippets","nangs-galaxy-gas"],
   related=["nitrous-oxide","nangs-galaxy-gas","topics:inhalants-youth","topics:talk-to-your-kid","hotlines"]),
 ]
+
+TOPICS += [
+ dict(slug="roxy-vs-oxycodone-vs-percocet", title="Roxicodone vs Oxycodone vs Percocet: what's actually the difference?", date="2026-09-17", read="5 min",
+  desc="Roxicodone, OxyContin, Percocet, Roxicet — the oxycodone brand soup explained: which contain the same drug, which add paracetamol, and why the difference can be dangerous.",
+  markdown="""## The short answer
+
+**Roxicodone, OxyContin and Percocet all contain the same core drug: oxycodone.** The differences are the release mechanism and the extra ingredients — and one of those extras is the one that quietly destroys livers.
+
+| Brand | Contains | Release | What it means |
+|---|---|---|---|
+| **Roxicodone** | Oxycodone only | Immediate (IR) | Fast onset, ~4–6 h relief; small blue 30 mg 'blues' are the most-counterfeited pill in the US |
+| **Oxycodone** (generic) | Oxycodone only | IR or ER depending on tablet | Same molecule as Roxicodone |
+| **OxyContin** | Oxycodone only | Extended (ER, 12 h) | Long-acting pain relief; crushing it defeats the mechanism and is how most overdoses happen |
+| **Percocet / Roxicet / Endocet** | Oxycodone + **paracetamol (APAP)** | Immediate | Same opioid high + a hidden liver toxin — the dangerous one |
+| **Tylox** | Oxycodone + APAP | Immediate | Older Percocet equivalent |
+
+## Why the APAP combination matters
+
+Percocet-type products add paracetamol (acetaminophen) to the oxycodone. The paracetamol adds **zero** pain relief or high at recreational doses — it exists to deter abuse, because exceeding 4 g/day damages the liver.
+
+That deterrence becomes a trap: someone taking several 'Percocet 325' tablets on top of other paracetamol-containing products (cold remedies, Tylenol) can blow past the safe limit **while chasing only the oxycodone**. Liver failure from APAP is the silent killer in this family — the opioid is what you feel, the paracetamol is what kills you days later.
+
+::: danger The counterfeit's cruel twist
+The DEA's testing has found most counterfeit 'Roxicodone 30s' (blue, 'M30' imprint) contain fentanyl, not oxycodone. A user who thinks they know their dose takes what is actually an unknown fentanyl dose. Naloxone reverses it — but only if someone calls 911. Never use alone: 1-800-484-3731 (US).
+:::
+
+## Is Roxicodone stronger than Percocet?
+
+No — at equal oxycodone doses, the opioid effect is identical. What differs:
+
+- **Roxicodone hits faster** (no waiting, no APAP), which is why it's preferred on the street and diverted harder
+- **Percocet feels 'milder'** only because users typically take lower oxycodone doses per tablet (5–10 mg vs 30 mg)
+
+## Quick safety facts
+
+- All are **Schedule II** — same legal class, same felony exposure
+- All cause the **same dependence and withdrawal** — oxycodone is oxycodone
+- Mixing any of them with **alcohol or benzodiazepines multiplies the respiratory-depression risk**
+- Overdose signs are identical: pinpoint pupils, slow breathing, blue lips — **naloxone works on all of them**
+
+Full profiles with street prices and overdose protocols for each product are linked below.""",
+  drugsInvolved=["oxycodone","oxycontin","oxycodone-apap","hydrocodone"],
+  related=["oxycodone","oxycontin","oxycodone-apap","topics:spot-pressed-pills","pharmacies"]),
+
+ dict(slug="mdma-overdose", title="Can you overdose on MDMA? The signs, the 'lethal dose' myth, and what to do", date="2026-09-17", read="6 min",
+  desc="People overdose on MDMA every festival season — usually not from one giant dose but from heat, water imbalance, and stacked doses. The actual danger signs and the response protocol.",
+  markdown="""## Yes — and it usually doesn't look like an opioid overdose
+
+MDMA deaths are rare relative to use, but they follow a predictable pattern every summer: overheating, water imbalance, and stacked doses. Unlike fentanyl, MDMA rarely just 'stops your breathing' — it **cooks you from the inside** and floods your brain with serotonin.
+
+## The real danger signs
+
+| Sign | What's happening |
+|---|---|
+| **Body temperature climbing past 40°C / 104°F** | The core killer — serotonin-driven hyperthermia |
+| **Confusion, agitation, weird behavior** | Serotonin toxicity — beyond normal MDMA euphoria |
+| **Rigid muscles, jaw clenching that won't stop, shivering** | Classic serotonin syndrome signs |
+| **Vomiting + headache** | Possible hyponatremia (water intoxication) |
+| **Collapse, seizures** | Late stage — emergency |
+
+::: danger The water trap
+MDMA makes you hot, thirsty, and water-retaining (it triggers ADH). Drink *too much* water — several liters — and your blood sodium crashes. The result, hyponatremia, kills festival-goers who did everything 'right' except the water math. **Sip electrolyte drinks, don't chug water. Roughly 500 mL per hour max, more if dancing hard in heat — and eat something salty.**
+:::
+
+## The 'lethal dose' myth
+
+There is no reliable single lethal dose number — it varies wildly by person, temperature, activity, and what's actually in the pill. What the data shows:
+
+- **Deaths cluster at high doses (200 mg+ in a session), hot environments, and redosing**
+- The risk compounds: dose 1 + heat + dose 2 at 2 AM is the classic fatal pattern
+- Pills sold as MDMA sometimes contain **PMA/PMMA** — slower to hit, deadly when redosed. A pill that takes 2+ hours to work is a red flag, not a weak pill
+
+## What to do in an MDMA emergency
+
+1. **Call emergency services** — say 'possible drug overdose, high fever, confused.' Good Samaritan protections apply in most places
+2. **Cool them actively**: shade, strip layers, fan, cool damp cloths on neck/groin/armpits. Heat is what kills
+3. **Sips of electrolyte drink only** — not gulps of water
+4. If seizing: protect the head, nothing in the mouth, time it
+5. **Tell responders it was MDMA** — they can treat serotonin syndrome and hyperthermia, but only if they know
+
+## The prevention rules that actually work
+
+- Test your drugs (reagent kits distinguish MDMA from PMA for ~$20)
+- One dose, then hands off: **never redose on a comedown**
+- Rest and cool down between dances; the danger is heat + duration, not just the pill
+- Tell your friends what you took and when — the person who can call for help at 3 AM is your real safety equipment
+
+The comedown, redose mechanics, and full harm-reduction profile are linked below.""",
+  drugsInvolved=["mdma","xtc-pills","molly"],
+  related=["mdma","xtc-pills","topics:mdma-nasal-spray","quit:mdma","news:high-dose-ecstasy-warning"]),
+
+ dict(slug="pregabalin-safety-faq", title="Pregabalin (Lyrica) safety: overdose, controlled status, and the questions everyone asks", date="2026-09-17", read="5 min",
+  desc="Is Lyrica a narcotic? Can you overdose on pregabalin? Is it a controlled substance? The straight answers to the most-searched pregabalin safety questions.",
+  markdown="""## Is pregabalin (Lyrica) a narcotic?
+
+**No — but it's a controlled drug with opioid-like dangers.** Pregabalin is a gabapentinoid (a calcium-channel modulator), not an opioid. But it produces calm, euphoria at high doses, and physical dependence — and mixing it with opioids **multiplies respiratory depression**. About a third of opioid overdoses now involve a gabapentinoid. UK regulators moved it to Class C in 2019; the US made it Schedule V; prescription-only essentially everywhere.
+
+## Is pregabalin a controlled substance?
+
+| Country | Status |
+|---|---|
+| USA | Schedule V (since 2019) |
+| UK | Class C under the Misuse of Drugs Act 1971 |
+| EU | Prescription-only; abuse monitoring in place |
+| Australia | Schedule 4 |
+
+## Can you overdose on pregabalin?
+
+**Yes — alone it's rarely fatal, but with opioids or benzos it's a genuine killer.**
+
+- **Pregabalin alone at high doses**: extreme sedation, dizziness, slurred speech, confusion. Deaths from pregabalin alone are rare because it doesn't strongly suppress breathing on its own
+- **Pregabalin + opioids (methadone, oxycodone, heroin, tianeptine)**: the combination causes the breathing suppression that kills. This is the documented, rising death pattern — pregabalin is detectable in a large share of gabapentinoid-involved overdoses
+- **Pregabalin + benzos or alcohol**: additive sedation; falls, aspiration, and respiratory depression
+
+::: danger Signs someone took too much
+Extreme drowsiness, unsteady walking, slurred speech, confusion. If they've also taken opioids and breathing slows or they become unresponsive — **call emergency services and give naloxone** (it won't reverse pregabalin, but it reverses the opioid half of the combination, which is usually what's stopping the breathing).
+:::
+
+## What happens if you take too much pregabalin regularly?
+
+- **Dependence within weeks** of daily high-dose use; withdrawal causes insomnia, anxiety, nausea, sweating, and in heavy users seizures
+- Tolerance climbs fast — recreational doses escalate from 300 mg into gram territory
+- It's massively diverted: prison economies run on it, and 'legal high' sellers market it as a benzo alternative
+
+## Pregabalin overdose treatment — what hospitals do
+
+There's no specific antidote. Treatment is supportive: airway and breathing support, IV fluids, monitoring. If opioids are involved, **naloxone is given**. Doctors will also check kidney function — pregabalin is cleared renally, and kidney impairment makes accumulation worse.
+
+## The practical rules
+
+- Never mix with opioids, benzos, or alcohol
+- If prescribed it, take it exactly as prescribed — dependence creeps at supratherapeutic doses
+- If dependent and wanting to stop: taper with a doctor. Stopping abruptly after heavy use can cause seizures
+- If someone is unresponsive and may have mixed it with opioids: naloxone + 911, always
+
+Full profile with street prices and dependence data linked below.""",
+  drugsInvolved=["pregabalin"],
+  related=["pregabalin","gabapentin" if False else "zopiclone","topics:gas-station-drugs","topics:what-actually-happens-when-you-quit","pharmacies"]),
+
+ dict(slug="vyvanse-safety-faq", title="Vyvanse (lisdexamfetamine) safety: overdose signs, abuse questions, and what it does to your liver", date="2026-09-17", read="5 min",
+  desc="Can you overdose on Vyvanse? Is lisdexamfetamine the same as Adderall? Can you smoke or snort it? The searched questions, answered straight.",
+  markdown="""## What is lisdexamfetamine, exactly?
+
+**Vyvanse is a prodrug of dextroamphetamine.** The capsule contains lisdexamfetamine, which does nothing until your body converts it into dextroamphetamine — the same active stimulant as Dexedrine and half of Adderall. That's why it lasts 10–12 hours and why it feels 'smoother': the conversion rate-limits the peak.
+
+## Can you overdose on Vyvanse?
+
+**Yes.** An amphetamine overdose is a cardiac and neurological event, not a quiet shutdown:
+
+| Sign | Why |
+|---|---|
+| Racing, irregular heartbeat, chest pain | Cardiovascular strain — the main killer |
+| Extreme agitation, paranoia, hallucinations | Stimulant psychosis |
+| Overheating, sweating | Amphetamines raise body temperature |
+| Tremors, seizures | CNS toxicity at high doses |
+| Dangerously high blood pressure | Stroke risk |
+
+Single massive doses (far above prescription) are the acute overdose pattern; chronic abuse causes the same damage more slowly. If someone has chest pain or a racing irregular heart after taking it: **emergency services now** — say 'possible stimulant overdose.'
+
+::: amber Can you smoke or snort Vyvanse?
+Snorting or injecting lisdexamfetamine is mostly pointless — it must go through the liver to become active, so insufflation doesn't speed it up much and burns for little gain. That prodrug design is precisely why it was marketed as abuse-deterrent. But 'harder to abuse' is not 'safe': people still take huge oral doses, binge it, and develop dependence. The deterrent bends the route, not the risk.
+:::
+
+## Is Vyvanse the same as Adderall?
+
+No — related but different:
+
+- **Adderall** = mixed amphetamine salts (dextro- + levoamphetamine), starts working in ~30 min, lasts 4–6 h (IR)
+- **Vyvanse** = lisdexamfetamine only, converts to pure dextroamphetamine, ~1–2 h to full effect, lasts 10–12 h
+- Same class, same Schedule II, same cardiovascular and dependence risks — different duration and slightly different feel
+
+## Does Vyvanse damage your liver?
+
+**The liver damage risk is low at prescribed doses** — the drug is converted in red blood cells, not primarily metabolized by liver enzymes. The real liver conversation is different:
+
+- Vyvanse can mildly raise liver enzymes at high doses; clinically significant liver injury is rare
+- It's **not the liver you should worry about — it's the heart**: BP elevation, heart rate, and in people with structural heart defects, real danger
+- Combining with alcohol stresses both the heart and judgment; the combo also masks drunkenness
+
+## Dependence and the crash
+
+Daily use builds tolerance and dependence like any amphetamine. The Vyvanse crash: 1–2 days of exhaustion, low mood, and intense craving after heavy use. Withdrawal itself is miserable but rarely dangerous — the danger is the relapse dose, taken at old tolerance after a break. If you've stopped for a week, your tolerance dropped; an old dose can be a new overdose.
+
+Full profile and the day-by-day stimulant quitting timeline are linked below.""",
+  drugsInvolved=["vyvanse","adderall","dexedrine"],
+  related=["vyvanse","adderall","adderall-xr","dexedrine","quit:meth","topics:talk-to-your-kid"]),
+]
