@@ -73,8 +73,7 @@ CATEGORIES.update({
  "beauty": dict(name="Beauty Industry & Med Spa", color="#db2777", grad="linear-gradient(135deg,#9d174d,#ec4899)",
   tagline="Botox parties, black-market filler, and the unregulated cosmetic procedures targeting under-25s.",
   blurb="The beauty industry has a drug problem: unlicensed injectors, counterfeit Botox, illegal filler sold online, and teenagers getting lip filler at kitchen-table parties. These substances and procedures carry real risk — vascular occlusion, blindness, sepsis, and worse.",
-  stat=("73%","of FDA adverse-event reports for dermal fillers are from unlicensed/non-medical settings"),
- "source_note":"FDA MAUDE database"),
+  stat=("73%","of FDA adverse-event reports for dermal fillers come from unlicensed/non-medical settings")),
 })
 
 CATEGORIES.update({

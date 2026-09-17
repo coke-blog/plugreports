@@ -541,6 +541,60 @@ def build_busts():
 </article></div>"""
         w(f"busts/{b['slug']}/index.html", shell(f"busts/{b['slug']}/index.html", f"{b['title']} | plugreports", b["summary"][:155], body))
 
+
+import html as _html
+import re
+def md_inline(x):
+    x = _html.escape(str(x), quote=False)
+    x = re.sub(r"\*\*([^*]+)\*\*", r"<b>\1</b>", x)
+    x = re.sub(r"\*([^*\n]+)\*", r"<i>\1</i>", x)
+    return x
+
+def md_render(src):
+    lines = str(src or "").split("\n"); out = []; i = 0
+    CAL = {"warning":"amber","danger":"red","red":"red","tip":"green","success":"green","note":"amber"}
+    while i < len(lines):
+        L = lines[i]
+        if L.startswith("### "): out.append(f"<h3>{md_inline(L[4:])}</h3>"); i += 1
+        elif L.startswith("## "): out.append(f"<h2>{md_inline(L[3:])}</h2>"); i += 1
+        elif L.startswith("#### "): out.append(f"<h3>{md_inline(L[5:])}</h3>"); i += 1
+        elif re.match(r"^\s*[-*]\s+", L):
+            items = []
+            while i < len(lines) and re.match(r"^\s*[-*]\s+", lines[i]):
+                items.append(f"<li>{md_inline(re.sub(r'^\\s*[-*]\\s+','',lines[i]))}</li>"); i += 1
+            out.append("<ul>" + "".join(items) + "</ul>")
+        elif re.match(r"^\s*\d+\.\s+", L):
+            items = []
+            while i < len(lines) and re.match(r"^\s*\d+\.\s+", lines[i]):
+                items.append(f"<li>{md_inline(re.sub(r'^\\s*\\d+\\.\\s+','',lines[i]))}</li>"); i += 1
+            out.append("<ol>" + "".join(items) + "</ol>")
+        elif L.strip().startswith("|"):
+            tbl = []
+            while i < len(lines) and lines[i].strip().startswith("|"):
+                tbl.append([c.strip() for c in lines[i].strip().strip("|").split("|")]); i += 1
+            if len(tbl) >= 2:
+                head = tbl[0]; body = tbl[2:] if all(set(r) <= set("-: ") for r in tbl[1]) else tbl[1:]
+                h = "".join(f"<th>{md_inline(c)}</th>" for c in head)
+                b = "".join("<tr>" + "".join(f"<td>{md_inline(c)}</td>" for c in r) + "</tr>" for r in body)
+                out.append(f'<div class="figure"><table class="tbl"><thead><tr>{h}</tr></thead><tbody>{b}</tbody></table></div>')
+        elif L.startswith(":::"):
+            m = re.match(r"^:::\s*(\w*)\s*(.*)$", L)
+            cls = CAL.get((m.group(1) or "note").lower(), "amber")
+            body = []; i += 1
+            while i < len(lines) and not lines[i].startswith(":::"):
+                if lines[i].strip(): body.append(f"<p>{md_inline(lines[i])}</p>")
+                i += 1
+            i += 1
+            out.append(f'<div class="callout {cls}"><b>{md_inline(m.group(2) or "Note")}</b>' + "".join(body) + "</div>")
+        elif L.strip() == "":
+            i += 1
+        else:
+            buf = []
+            while i < len(lines) and lines[i].strip() != "" and not re.match(r"^(#{1,3}\s|[-*]\s|\d+\.\s|>|:::|\|)", lines[i]):
+                buf.append(lines[i]); i += 1
+            out.append(f"<p>{md_inline(' '.join(buf))}</p>")
+    return "\n".join(out)
+
 def build_topics():
     cards = "".join(f'''<a class="card" href="/topics/{t['slug']}/"><div class="meta">
 <span class="chip red">GUIDE</span><span class="chip">{esc(t["read"])}</span><span class="chip">{esc(t["date"])}</span></div>
@@ -549,8 +603,12 @@ def build_topics():
       "Visual explainers: xylazine, fentanyl numbers, pressed pills, nitazenes, krokodil facts, sentencing, talking to your kids, quitting day by day.",
       f'<div class="wrap"><section class="sec-head" style="padding-top:30px"><div><span class="kicker amber">Guides</span><h2>Explainers & deep-dives</h2><p>Written for fast reading: tables, timelines and callouts instead of walls of text.</p></div></div><div class="cards">{cards}</div></div>'))
     for t in TOPICS:
-        inner = render_blocks(t["blocks"], resolve_slug)
-        mentioned = t.get("drugsInvolved") or [x for b in t["blocks"] if b[0] == "related" for x in b[1] if x in DRUG_BY_SLUG]
+        if t.get("markdown"):
+            inner = md_render(t["markdown"])
+            mentioned = t.get("drugsInvolved") or []
+        else:
+            inner = render_blocks(t["blocks"], resolve_slug)
+            mentioned = t.get("drugsInvolved") or [x for b in t["blocks"] if b[0] == "related" for x in b[1] if x in DRUG_BY_SLUG]
         inner += help_links(mentioned, related=t.get("related"))
         links = t.get("links", [])
         if links:
