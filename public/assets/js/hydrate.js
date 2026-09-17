@@ -246,7 +246,7 @@
     depressants:'#1d4ed8', dissociatives:'#0891b2', empathogens:'#be185d', psychedelics:'#4d7c0f',
     cannabinoids:'#57534e', performance:'#b45309', hazardous:'#111827'};
   function renderHome() {
-    Promise.all(['news', 'busts', 'topics', 'quit', 'hotlines', 'drugs', 'categories'].map(function (t) {
+    Promise.all(['news', 'busts', 'topics', 'quit', 'hotlines', 'drugs', 'categories', 'settings'].map(function (t) {
       return fetch('/api/public/content?type=' + t).then(function (r) { return r.json(); }).catch(function () { return {items: []}; });
     })).then(function (res) {
       var news = res[0].items || [], busts = res[1].items || [], topics = res[2].items || [],
@@ -258,14 +258,20 @@
       var regions = hotlines.filter(function (r) { return r.region; }).length;
       var kick = document.querySelector('.hero .kicker');
       if (kick) kick.textContent = 'Harm-reduction library · ' + drugs.length + ' substances · ' + regions + ' regions';
-      var alert = news.filter(function (x) { return x.tag === 'Alert'; }).sort(function (a, b) { return String(b.date || '').localeCompare(String(a.date || '')); })[0] || news[0];
+      var settings = (res[7] && res[7].items && res[7].items[0]) || {};
       var bslot = document.getElementById('breaking');
-      if (bslot && alert) {
+      if (bslot && (settings.breakingEnabled === false || settings.breakingEnabled === 'false')) { bslot.style.display = 'none'; }
+      else if (bslot) {
+        bslot.style.display = '';
+        var pick = settings.breakingSlug ? news.filter(function (x) { return x.slug === settings.breakingSlug; })[0] : null;
+        var alert = pick || news.filter(function (x) { return x.tag === 'Alert'; }).sort(function (a, b) { return String(b.date || '').localeCompare(String(a.date || '')); })[0] || news[0];
+        if (alert) {
         bslot.innerHTML = '<div class="wrap"><span class="b-chip">&#9889; BREAKING</span><div class="b-main">' +
           (alert.image ? '<img src="' + esc(alert.image) + '" alt="">' : '') +
           '<div><span class="b-date">' + esc(alert.date || '') + ' &middot; ' + esc(alert.tag || '') + '</span>' +
           '<h2>' + esc(alert.title) + '</h2><p>' + esc((alert.summary || '').slice(0, 180)) + '&hellip;</p>' +
           '<a class="btn btn-red" href="/news/' + alert.slug + '/">Read the full story &rarr;</a></div></div></div>';
+        }
       }
       var stats = document.querySelectorAll('.hero-stats .st b');
       if (stats[0] && drugs.length) stats[0].textContent = drugs.length;

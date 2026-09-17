@@ -264,10 +264,12 @@ async function settings(b){const s=(await api('admin/settings')).settings||{};
  b.innerHTML=`<h2>Settings & SEO sockets</h2><p style="font-size:13px;color:#667085">Paste verification / tracking IDs. They inject site-wide within seconds — no rebuild needed.</p>
  ${['gsc','bing','clarity','ga'].map(k=>`<div class="frow"><label>${k.toUpperCase()}</label><input id="s-${k}" style="width:min(60%,420px)" value="${esc(s[k]||'')}" placeholder="verification / measurement ID"></div>`).join('')}
  <div class="frow"><label>Crisis banner note</label><input id="s-crisisNote" style="width:min(60%,420px)" value="${esc(s.crisisNote||'')}"></div>
+ <div class="frow chk"><input type="checkbox" id="s-breakingEnabled" ${(s.breakingEnabled===undefined||s.breakingEnabled===true||s.breakingEnabled==='true')?'checked':''}> <label for="s-breakingEnabled">Show BREAKING banner on homepage</label></div>
+ <div class="frow"><label>Breaking story override (news slug — empty = auto: latest Alert)</label><input id="s-breakingSlug" style="width:min(60%,420px)" value="${esc(s.breakingSlug||'')}" placeholder="e.g. sterling-nitrous-driving-case"></div>
  <button class="btn g" onclick="saveSettings()">Save settings</button><hr style="margin:26px 0">
  <h3>Change admin PIN</h3><input id="p0" type="password" placeholder="current PIN"><input id="p1" type="password" placeholder="new PIN (6+ chars)">
  <button class="btn" onclick="changePin()">Change PIN</button>`}
-async function saveSettings(){const s={};['gsc','bing','clarity','ga','crisisNote'].forEach(k=>s[k]=document.getElementById('s-'+k).value);
+async function saveSettings(){const s={};['gsc','bing','clarity','ga','crisisNote','breakingSlug'].forEach(k=>s[k]=document.getElementById('s-'+k).value);s.breakingEnabled=document.getElementById('s-breakingEnabled').checked;
  const r=await api('admin/settings',{method:'POST',body:JSON.stringify(s)});msg(r.ok?'Settings saved.':'Error',r.ok)}
 async function changePin(){const r=await api('admin/pin',{method:'POST',body:JSON.stringify({current:p0.value,next:p1.value})});
  msg(r.ok?'PIN changed.':(r.error||'Error'),r.ok)}
