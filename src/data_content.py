@@ -24,7 +24,7 @@ BUSTS = [
 ]
 
 NEWS = [
-dict(slug="sterling-nitrous-driving-case", title="Raheem Sterling pleads guilty to driving on nitrous oxide before £270k Lamborghini crash", date="2026-09-17", tag="Alert",
+dict(slug="sterling-nitrous-driving-case", image="https://plugreports.com/media/drugs/sterling-nitrous-driving-case.webp", title="Raheem Sterling pleads guilty to driving on nitrous oxide before £270k Lamborghini crash", date="2026-09-17", tag="Alert",
   views=900,
   summary="The former England star admitted dangerous driving, possessing six 670g nitrous canisters and refusing a blood test after witnesses saw him inhaling from balloons at the wheel on the M3. Sentencing is set for November 25 - and it has put nitrous oxide, balloons and driving firmly in the spotlight.",
   body=["Raheem Sterling has pleaded guilty to dangerous driving and drug offences after crashing his £270,000 Lamborghini on the M3 in Hampshire, in a case that has thrown the growing nitrous oxide problem in professional football into harsh daylight.",

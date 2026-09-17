@@ -258,6 +258,15 @@
       var regions = hotlines.filter(function (r) { return r.region; }).length;
       var kick = document.querySelector('.hero .kicker');
       if (kick) kick.textContent = 'Harm-reduction library · ' + drugs.length + ' substances · ' + regions + ' regions';
+      var alert = news.filter(function (x) { return x.tag === 'Alert'; }).sort(function (a, b) { return String(b.date || '').localeCompare(String(a.date || '')); })[0] || news[0];
+      var bslot = document.getElementById('breaking');
+      if (bslot && alert) {
+        bslot.innerHTML = '<div class="wrap"><span class="b-chip">&#9889; BREAKING</span><div class="b-main">' +
+          (alert.image ? '<img src="' + esc(alert.image) + '" alt="">' : '') +
+          '<div><span class="b-date">' + esc(alert.date || '') + ' &middot; ' + esc(alert.tag || '') + '</span>' +
+          '<h2>' + esc(alert.title) + '</h2><p>' + esc((alert.summary || '').slice(0, 180)) + '&hellip;</p>' +
+          '<a class="btn btn-red" href="/news/' + alert.slug + '/">Read the full story &rarr;</a></div></div></div>';
+      }
       var stats = document.querySelectorAll('.hero-stats .st b');
       if (stats[0] && drugs.length) stats[0].textContent = drugs.length;
       if (stats[1] && cats.length) stats[1].textContent = cats.length;

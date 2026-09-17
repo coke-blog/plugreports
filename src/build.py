@@ -247,7 +247,18 @@ def build_index(es=False):
     important = [t for t in TOPICS if t.get('tag') == 'Important'] or [t for t in TOPICS if 'nasal-spray' in t['slug']]
     importantcards = "".join(card(f"/topics/{t['slug']}/", f'<span class="chip red">&#9888; IMPORTANT</span><span class="chip">{esc(t.get("read",""))}</span>', t["title"], t["desc"], "Read now", t.get("image")) for t in important)
     topiccards = "".join(card(f"/topics/{t['slug']}/", f'<span class="chip red">GUIDE</span><span class="chip">{esc(t["read"])}</span>', t["title"], t["desc"], "Read guide", t.get("image")) for t in TOPICS[:6])
+    alert = next((n for n in NEWS if n.get("tag") == "Alert"), NEWS[0] if NEWS else None)
+    breaking = ""
+    if alert:
+        bimg = f'<img src="{esc(alert.get("image") or "/assets/img/og.png")}" alt="" loading="lazy">' if alert.get("image") else ""
+        breaking = f"""<section class="breaking" id="breaking"><div class="wrap">
+<span class="b-chip">&#9889; BREAKING</span>
+<div class="b-main">{bimg}<div><span class="b-date">{esc(alert["date"])} &middot; {esc(alert.get("tag",""))}</span>
+<h2>{esc(alert["title"])}</h2>
+<p>{esc(alert["summary"][:180])}&hellip;</p>
+<a class="btn btn-red" href="/news/{alert["slug"]}/">Read the full story &rarr;</a></div></div></div></section>"""
     body = f"""
+{breaking}
 <section class="hero"><div class="wrap">
 <span class="kicker">Harm-reduction library · {len(DRUGS)} substances · 5 regions</span>
 <h1>Know the drug.<br>Know the <span class="mark">risk</span>.<br>Know the way out.</h1>
@@ -492,7 +503,7 @@ def build_categories():
 
 # ---------------------------------------------------- news / busts/topics ----
 def build_news():
-    idx_cards = "".join(f'''<a class="card" href="/news/{n['slug']}/"><div class="meta">
+    idx_cards = "".join(f'''<a class="card" href="/news/{n['slug']}/">{f'<div class="thumb"><img src="{esc(n["image"])}" alt="" loading="lazy"></div>' if n.get("image") else ''}<div class="meta">
 <span class="badge-live">{esc(n["tag"]).upper()}</span><span class="chip">{esc(n["date"])}</span></div>
 <h3>{esc(n['title'])}</h3><p>{esc(n['summary'])}</p><div class="foot">Read &rarr;</div></a>''' for n in NEWS)
     w("news/index.html", shell("news/index.html", "Drug News & Supply Alerts | plugreports",
