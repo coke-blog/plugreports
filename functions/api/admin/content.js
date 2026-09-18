@@ -12,6 +12,7 @@ export async function onRequestPost({request, env}) {
   if (!hasKV(env)) return noKV();
   const type = new URL(request.url).searchParams.get('type');
   const item = await request.json();
+  if (!item.slug) return Response.json({ok: false, error: 'slug required'}, {status: 400});
   const list = await getList(env, type);
   if (list.some(x => x.slug === item.slug)) return Response.json({ok: false, error: 'slug exists'}, {status: 409});
   list.unshift(item);
