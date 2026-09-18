@@ -3,6 +3,13 @@
 # and MUST be completed with verified details before publishing. Never invent bust facts.
 
 BUSTS = [
+ dict(slug="bust-river-grove-cocaine-339", title="DEA seizes 339.5 lbs of cocaine ($15.2M) and $700K cash in River Grove, Illinois", date="2026-09-18",
+  confirmed=True, views=400, image="https://plugreports.com/media/drugs/bust-river-grove-cocaine.png",
+  location="River Grove, Illinois (Chicago suburbs), USA", agency="DEA Chicago Field Division + ~10 partner agencies",
+  sourceUrl="https://www.cbsnews.com/chicago/news/cocaine-cash-seized-river-grove-drug-bust-dea/",
+  summary="DEA agents seized 339.5 pounds of cocaine with an estimated street value of $15.2 million plus roughly $700,000 in cash from a 'stash house' in River Grove after surveilling the crew for weeks. Two men — Burhan Ozerdinc, 33, and Ahmad Sanducka, 33 — are charged with possession with intent to distribute more than 900 grams and were ordered detained.",
+  sentencing="Federal: possession with intent to distribute 5+ kg of cocaine carries a mandatory minimum of 10 years to life. Both men were ordered held pretrial.",
+  drugsInvolved=["cocaine"]),
  dict(slug="bust-texas-cabbage-meth", title="2,000+ lbs of meth found packed inside cabbage shipment in South Texas", date="2026-09-12",
   location="Rio Grande Valley, South Texas, USA", agency="DEA / Homeland Security Task Force", confirmed=True,
   sourceUrl="https://vt.tiktok.com/ZSqQyGxJs/",
