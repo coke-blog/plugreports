@@ -816,6 +816,12 @@ def build_meta():
     urls += ["es/", "es/hotlines/", "es/categories/"]
     urls += [f"es/drugs/{sl}/" for sl in ES_DRUG_KEYS]
     urls += [f"es/categories/{k}/" for k in CATEGORIES if any(d["slug"] in ES_DRUG_KEYS for d in DRUGS if d["category"] == k)]
+    from data_i18n import LANGS as _LANGS
+    for _L in _LANGS:
+        urls += [f"{_L}/", f"{_L}/hotlines/"]
+        urls += [f"{_L}/drugs/{sl}/" for sl in _LANGS[_L]["drugs"]]
+        _cats = {DRUG_BY_SLUG[sl]["category"] for sl in _LANGS[_L]["drugs"] if sl in DRUG_BY_SLUG}
+        urls += [f"{_L}/categories/{c}/" for c in _cats]
     urls += [f"drugs/{d['slug']}/" for d in DRUGS]
     urls += [f"news/{n['slug']}/" for n in NEWS]
     urls += [f"busts/{b['slug']}/" for b in BUSTS]
@@ -863,6 +869,145 @@ def build_categories_es():
             "<div class=\"wrap\"><section class=\"sec-head\" style=\"padding-top:30px\"><div><span class=\"kicker amber\">Biblioteca de drogas</span><h2>Categorías</h2></div></section><div class=\"cards\">" + idx + "</div></div>",
             lang="es", canonical=f"{SITE}/es/categories/", en_url=f"{SITE}/categories/"))
 
+
+
+LANG_LIST = ("de", "hi", "no", "pl", "fr")
+
+def build_lang_drug_pages(lang):
+    from data_i18n import LANGS
+    pack = LANGS[lang]
+    TR, CATS_T = pack["drugs"], pack["cats"]
+    for slug, o in TR.items():
+        d = DRUG_BY_SLUG[slug]
+        c = CATEGORIES[d["category"]]
+        cat_name = CATS_T.get(d["category"], c["name"])
+        ext_img = (d.get("image") or "").strip()
+        img_rel = ext_img if ext_img.startswith("http") else drug_image(slug)
+        rel = related_drugs(d)
+        relhtml = "".join(f'<a href="/{lang}/drugs/{r["slug"]}/">{rel_card(r["slug"])}</a>' for r in rel[:4] if r["slug"] in TR) or "".join(f'<a href="/drugs/{r["slug"]}/">{rel_card(r["slug"])}</a>' for r in rel[:4])
+        rows = "".join(f'<div class="fact"><b>{k}</b><span>{esc(v)}</span></div>' for k, v in [
+            ("Also known as", ", ".join(d["aliases"])),
+            ("Category", f'<span class="cat-dot" style="background:{c["color"]}"></span>{esc(cat_name)}'),
+            ("Schedule / class", esc(o.get("schedule", d["schedule"]))),
+            ("Appearance", esc(o.get("appearance", d["appearance"]))),
+            ("Street price", esc(o.get("streetPrice", d["streetPrice"]))),
+            ("Legal status", esc(o.get("legalStatus", d["legalStatus"]))),
+            ("Last updated", esc(d["lastUpdated"]))])
+        body = f"""
+<div class="wrap">
+<section class="phead">
+<span class="glyph" style="background:{c['grad']}">{esc(d['name'][0])}</span>
+<div><span class="kicker" style="background:{c['grad']};color:#fff;border:0">{esc(cat_name)}</span>
+<h1 style="margin-top:10px">{esc(d['name'])}</h1>
+<p class="alias">Street names: <b>{esc(", ".join(d["aliases"]))}</b></p></div></section>
+<img class="pimg" src="/{img_rel}" alt="{esc(d['name'])}" style="border-radius:18px;border:1px solid var(--line);box-shadow:var(--shadow);object-fit:cover;max-height:340px" loading="lazy">
+<div class="callout red print-hide"><b>Overdose? Act now.</b> Call emergency services. Give naloxone for opioid-like signs. <a href="/{lang}/hotlines/">Hotlines</a></div>
+<div class="profile-grid">
+<div class="panel"><h2><span class="ic" style="background:{c['color']};color:#fff">&#9889;</span>What it does</h2>
+<ul class="ticks">{''.join(f"<li>{esc(e)}</li>" for e in o["effects"])}</ul>
+<h2 style="margin-top:22px"><span class="ic" style="background:#dc2626;color:#fff">&#9888;</span>Key risks</h2>
+<ul class="ticks red">{''.join(f"<li>{esc(r)}</li>" for r in o["risks"])}</ul>
+<h2 style="margin-top:22px"><span class="ic" style="background:#111827;color:#fff">&#10010;</span>Overdose signs</h2>
+<ul class="ticks red">{''.join(f"<li>{esc(x)}</li>" for x in o["overdoseSigns"])}</ul></div>
+<div class="panel"><h2><span class="ic" style="background:{c['color']};color:#fff">&#128203;</span>Quick facts</h2>{rows}
+<div style="margin-top:14px"><span class="chip green">Sources: {esc(", ".join(d["sources"]))}</span></div></div>
+</div>
+<div class="related print-hide"><h2>You may also want to know about</h2>
+<div class="rel-grid">{relhtml}
+<a href="/hotlines/"><span class="mini" style="background:#dc2626">&#9742;</span><span>Hotlines</span></a></div></div>
+</div>"""
+        title = f"{d['name']}: effects, overdose signs, street price & help | plugreports"
+        out = f"{lang}/drugs/{slug}/index.html"
+        w(out, shell(out, title, f"{d['name']} — {cat_name}. Effects, overdose signs, street price and harm-reduction info.", body,
+                     lang=lang, canonical=f"{SITE}/{lang}/drugs/{slug}/", en_url=f"{SITE}/drugs/{slug}/"))
+
+def build_lang_hotlines(lang):
+    from data_i18n import LANGS
+    pack = LANGS[lang]
+    REG_T, HL = pack["regions"], pack["hotlines"]
+    secs = []
+    for region, items in HL.items():
+        rname = REG_T.get(region, region)
+        cards = "".join(f"""<div class="hl-card"><h3>{esc(it[1])}</h3>
+<div class="num">{esc(it[0])}</div><div class="who">{esc(it[2])}</div>
+{f'<a class="call-btn" href="tel:{it[3]}">&#128222; Call</a>' if it[3] else '<span class="chip" style="margin-top:12px">Text / online</span>'}</div>""" for it in items)
+        secs.append(f'<section class="hl-region"><span class="kicker amber">{esc(rname)}</span><div class="hl-grid">{cards}</div></section>')
+    body = f"""<div class="wrap"><div style="padding-top:26px">
+<span class="kicker">Help directory</span><h1 style="font-size:clamp(28px,4vw,42px);margin-top:10px">Hotlines</h1>
+{''.join(secs)}
+<div class="callout red"><b>Overdose right now?</b>Call your local emergency number FIRST.</div>
+</div></div>"""
+    out = f"{lang}/hotlines/index.html"
+    w(out, shell(out, f"Drug overdose & crisis hotlines | plugreports ({lang})", "Verified overdose and crisis helplines.", body,
+                 lang=lang, canonical=f"{SITE}/{lang}/hotlines/", en_url=f"{SITE}/hotlines/"))
+
+def build_lang_home(lang):
+    from data_i18n import LANGS
+    H = LANGS[lang]["home"]; CT = LANGS[lang]["cats"]
+    rail = "".join(f"""<a class="tile" href="/{lang}/drugs/{sl}/"><span class="glyph" style="background:{CATEGORIES[DRUG_BY_SLUG[sl]['category']]['grad']}">{esc(DRUG_BY_SLUG[sl]['name'][0])}</span><h3>{esc(DRUG_BY_SLUG[sl]['name'])}</h3><span class="cat"><span class="cat-dot" style="background:{CATEGORIES[DRUG_BY_SLUG[sl]['category']]['color']}"></span>{esc(CT.get(DRUG_BY_SLUG[sl]['category'], ''))}</span></a>""" for sl in LANGS[lang]["drugs"])
+    body = f"""
+<section class="hero"><div class="wrap">
+<span class="kicker">{esc(H['kicker'])}</span>
+<h1>{H['h1']}</h1>
+<p class="lede">{esc(H['lede'])}</p>
+<div class="hero-cta"><a class="btn btn-red" href="/{lang}/hotlines/">{esc(H['b1'])}</a><a class="btn btn-amber" href="#library">{esc(H['b2'])}</a></div>
+</div></section>
+<section class="sec" id="library"><div class="wrap">
+<div class="sec-head"><div><h2>{esc(H['b2'])}</h2></div></div>
+<div class="rail">{rail}</div>
+<div class="pill-nav"><a href="/">English →</a><a href="/es/">Español →</a></div>
+</div></section>
+<section class="sec" style="background:#f9fafb"><div class="wrap">
+<div class="sec-head"><div><span class="kicker">{esc(H['hk'])}</span><h2>{esc(H['hh'])}</h2><p>{esc(H['hp'])}</p></div><a class="btn btn-red" href="/{lang}/hotlines/">{esc(H['hb'])}</a></div>
+</div></section>"""
+    out = f"{lang}/index.html"
+    w(out, shell(out, f"plugreports — drug information library ({lang})", esc(H['lede']), body,
+                 lang=lang, canonical=f"{SITE}/{lang}/", en_url=f"{SITE}/"))
+
+def build_lang_categories(lang):
+    from data_i18n import LANGS
+    pack = LANGS[lang]
+    TR, CT = pack["drugs"], pack["cats"]
+    cats = sorted({DRUG_BY_SLUG[sl]["category"] for sl in TR})
+    for k in cats:
+        c = CATEGORIES[k]
+        items = [DRUG_BY_SLUG[sl] for sl in TR if DRUG_BY_SLUG[sl]["category"] == k]
+        cards = "".join(f'<a class="card" href="/{lang}/drugs/{d["slug"]}/"><h3>{esc(d["name"])}</h3><div class="foot">{esc(CT.get(k, c["name"]))} &rarr;</div></a>' for d in items)
+        body = f'<div class="wrap"><section class="cat-hero" style="background:{c["grad"]}"><span class="kicker" style="background:rgba(255,255,255,.15);color:#fff;border:0">{len(items)}</span><h1>{esc(CT.get(k, c["name"]))}</h1><p>{esc(c["tagline"])}</p></section><div class="cards">{cards}</div></div>'
+        out = f"{lang}/categories/{k}/index.html"
+        w(out, shell(out, f"{esc(CT.get(k, c['name']))} | plugreports", esc(c["tagline"]), body,
+                     lang=lang, canonical=f"{SITE}/{lang}/categories/{k}/", en_url=f"{SITE}/categories/{k}/"))
+
+def _inject_alt(path, alts):
+    fp = os.path.join(PUB, path)
+    if not os.path.exists(fp): return
+    s = open(fp, encoding="utf-8").read()
+    tag = "".join(f'<link rel="alternate" hreflang="{ln}" href="{u}">' for ln, u in alts.items())
+    if tag and tag not in s:
+        s = s.replace('<link rel="canonical"', tag + '<link rel="canonical"', 1)
+        open(fp, "w", encoding="utf-8").write(s)
+
+def inject_hreflang():
+    from data_i18n import LANGS as _L
+    from data_es import ES_DRUGS
+    for d in DRUGS:
+        a = {ln: f"{SITE}/{ln}/drugs/{d['slug']}/" for ln, pk in _L.items() if d["slug"] in pk["drugs"]}
+        if d["slug"] in ES_DRUGS: a["es"] = f"{SITE}/es/drugs/{d['slug']}/"
+        if a:
+            _inject_alt(f"drugs/{d['slug']}/index.html", a)
+            for ln in a: _inject_alt(f"{ln}/drugs/{d['slug']}/index.html", a)
+    for k in CATEGORIES:
+        a = {ln: f"{SITE}/{ln}/categories/{k}/" for ln, pk in _L.items() if k in pk["cats"]}
+        if a:
+            _inject_alt(f"categories/{k}/index.html", a)
+            for ln in a: _inject_alt(f"{ln}/categories/{k}/index.html", a)
+    _inject_alt("index.html", {ln: f"{SITE}/{ln}/" for ln in _L})
+    _inject_alt("hotlines/index.html", {ln: f"{SITE}/{ln}/hotlines/" for ln in _L})
+    for ln in _L:
+        _inject_alt(f"{ln}/index.html", {l2: f"{SITE}/{l2}/" for l2 in _L})
+        _inject_alt(f"{ln}/hotlines/index.html", {l2: f"{SITE}/{l2}/hotlines/" for l2 in _L})
+
+
 def build_indexes():
     cards = "".join(
         "<a class=\"card\" href=\"/categories/" + k + "/\"><div class=\"meta\"><span class=\"chip\" style=\"border-color:" + v["color"] + "33;color:" + v["color"] + "\">" + str(sum(1 for d in DRUGS if d["category"] == k)) + " substances</span></div><h3>" + esc(v["name"]) + "</h3><p>" + esc(v["tagline"]) + "</p><div class=\"foot\">Browse category &rarr;</div></a>"
@@ -890,6 +1035,8 @@ def main():
         "Verified Rehab Centers & Free Recovery Programs | plugreports",
         "Verified addiction treatment: Hazelden Betty Ford, Priory, Narcotics Anonymous, SMART Recovery — with contacts and links.", "&#10010;")
     build_drugs(es=True); build_hotlines(es=True); build_index(es=True)
+    for _ln in LANG_LIST:
+        build_lang_drug_pages(_ln); build_lang_hotlines(_ln); build_lang_home(_ln); build_lang_categories(_ln)
     build_about(); build_suggest(); build_meta()
     manifest = {"drugs":[d["slug"] for d in DRUGS], "news":[n["slug"] for n in NEWS],
                 "busts":[b["slug"] for b in BUSTS], "topics":[t["slug"] for t in TOPICS],
@@ -897,6 +1044,7 @@ def main():
                 "pharmacies":[p["slug"] for p in PHARMACIES], "rehabs":[r["slug"] for r in REHABS],
                 "quit":[k for k in QUIT_SPECS]}
     w("_static.json", json.dumps(manifest))
+    inject_hreflang()
     w("_dynamic.html", shell("_dynamic.html", "plugreports",
       "Live content", '<div class="wrap" id="dyn" style="padding:44px 20px;min-height:50vh"><p>Loading\u2026</p></div>',
       extra_head='<script src="/assets/js/render.js?v=7" defer></script>', canonical=SITE + "/"))
