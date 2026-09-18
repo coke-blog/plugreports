@@ -3,7 +3,7 @@
 # and MUST be completed with verified details before publishing. Never invent bust facts.
 
 BUSTS = [
- dict(slug="bust-river-grove-cocaine-339", title="DEA seizes 339.5 lbs of cocaine ($15.2M) and $700K cash in River Grove, Illinois", date="2026-09-18",
+ dict(slug="bust-river-grove-cocaine-339", tag="Alert", country="USA", title="DEA seizes 339.5 lbs of cocaine ($15.2M) and $700K cash in River Grove, Illinois", date="2026-09-18",
   confirmed=True, views=400, image="https://plugreports.com/media/drugs/bust-river-grove-cocaine.png",
   location="River Grove, Illinois (Chicago suburbs), USA", agency="DEA Chicago Field Division + ~10 partner agencies",
   sourceUrl="https://www.cbsnews.com/chicago/news/cocaine-cash-seized-river-grove-drug-bust-dea/",
