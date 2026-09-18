@@ -31,7 +31,7 @@ BUSTS = [
 ]
 
 NEWS = [
-dict(slug="sterling-nitrous-driving-case", image="https://plugreports.com/media/drugs/sterling-nitrous-driving-case.webp", title="Raheem Sterling pleads guilty to driving on nitrous oxide before £270k Lamborghini crash", date="2026-09-17", tag="Alert",
+dict(slug="sterling-nitrous-driving-case", country="United Kingdom", image="https://plugreports.com/media/drugs/sterling-nitrous-driving-case.webp", title="Raheem Sterling pleads guilty to driving on nitrous oxide before £270k Lamborghini crash", date="2026-09-17", tag="Alert",
   views=900,
   summary="The former England star admitted dangerous driving, possessing six 670g nitrous canisters and refusing a blood test after witnesses saw him inhaling from balloons at the wheel on the M3. Sentencing is set for November 25 - and it has put nitrous oxide, balloons and driving firmly in the spotlight.",
   body=["Raheem Sterling has pleaded guilty to dangerous driving and drug offences after crashing his £270,000 Lamborghini on the M3 in Hampshire, in a case that has thrown the growing nitrous oxide problem in professional football into harsh daylight.",
@@ -56,13 +56,13 @@ dict(slug="sterling-nitrous-driving-case", image="https://plugreports.com/media/
         "Its hallmark is necrotic skin wounds far from injection sites. Wounds need medical care even when small.",
         "Read: our Xylazine (Tranq) guide and topic page."],
   sources=["NIDA","UK Home Office ACMD"], drugsInvolved=["xylazine","fentanyl"]),
- dict(slug="high-dose-ecstasy-warning", image="https://plugreports.com/media/drugs/xtc-pills.jpeg", title="High-dose ecstasy pills (250–330 mg) circulating again this festival season", date="2026-08-25", tag="Alert",
+ dict(slug="high-dose-ecstasy-warning", country="Europe", image="https://plugreports.com/media/drugs/xtc-pills.jpeg", title="High-dose ecstasy pills (250–330 mg) circulating again this festival season", date="2026-08-25", tag="Alert",
   summary="Pill-testing services across Europe are flagging pressed pills at 2–3x a typical adult dose. PMA/PMMA copycat pills — slow to kick in, deadly — remain in circulation.",
   body=["A common adult dose is 80–120 mg. Pills above 200 mg significantly raise the risk of severe overheating and serotonin toxicity.",
         "If a pill takes 2+ hours to work, do NOT assume it's weak — it may be PMA/PMMA. Never redose on a slow pill.",
         "See: How to spot pressed pills — real vs fake."],
   sources=["PillReports","EMCDDA","The Loop UK"], drugsInvolved=["mdma"]),
- dict(slug="counterfeit-xanax-update", image="https://plugreports.com/media/drugs/counterfeit-xanax-update.jpeg", title="Counterfeit 'Xanax bars' increasingly contain flubromazolam or fentanyl", date="2026-08-18", tag="Alert",
+ dict(slug="counterfeit-xanax-update", country="United States", image="https://plugreports.com/media/drugs/counterfeit-xanax-update.jpeg", title="Counterfeit 'Xanax bars' increasingly contain flubromazolam or fentanyl", date="2026-08-18", tag="Alert",
   summary="Forensic testing in the US and UK shows counterfeit alprazolam bars frequently contain the ultra-potent RC benzo flubromazolam — active at 0.25 mg — and intermittent fentanyl.",
   body=["Flubromazolam causes multi-day blackouts and dangerous withdrawal after short exposure.",
         "If you take pressed bars: never mix with opioids or alcohol, and tell someone what you took.",
