@@ -264,14 +264,23 @@
       else if (bslot) {
         bslot.style.display = '';
         var pick = settings.breakingSlug ? news.filter(function (x) { return x.slug === settings.breakingSlug; })[0] : null;
-        var alert = pick || news.filter(function (x) { return x.tag === 'Alert'; }).sort(function (a, b) { return String(b.date || '').localeCompare(String(a.date || '')); })[0] || news[0];
-        if (alert) {
-        bslot.innerHTML = '<div class="wrap"><span class="b-chip">&#9889; BREAKING</span><div class="b-main">' +
-          (alert.image ? '<img src="' + esc(alert.image) + '" alt="">' : '') +
-          '<div><span class="b-date">' + esc(alert.date || '') + ' &middot; ' + esc(alert.tag || '') + '</span>' +
-          '<h2>' + esc(alert.title) + '</h2><p>' + esc((alert.summary || '').slice(0, 180)) + '&hellip;</p>' +
-          '<a class="btn btn-red" href="/news/' + alert.slug + '/">Read the full story &rarr;</a></div></div></div>';
-        }
+        var alerts = (pick ? [pick] : news.filter(function (x) { return x.tag === 'Alert'; }).sort(function (a, b) { return String(b.date || '').localeCompare(String(a.date || '')); }).slice(0, 5)) || [];
+        if (!alerts.length) alerts = news.slice(0, 1);
+        var slidesHtml = alerts.map(function (al, i) {
+          return '<div class="b-slide' + (i === 0 ? ' on' : '') + '">' +
+            (al.image ? '<img src="' + esc(al.image) + '" alt="">' : '') +
+            '<div><div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">' +
+            (al.country ? '<span class="b-country">&#127760; ' + esc(al.country) + '</span>' : '') +
+            '<span class="b-date">' + esc(al.date || '') + '</span></div>' +
+            '<h2>' + esc(al.title) + '</h2><p>' + esc((al.summary || '').slice(0, 170)) + '&hellip;</p>' +
+            '<a class="btn btn-red" href="/news/' + al.slug + '/">Read the full story &rarr;</a></div></div>';
+        }).join('');
+        var dotsHtml = alerts.map(function (al, i) { return '<button class="b-dot' + (i === 0 ? ' on' : '') + '" data-i="' + i + '" aria-label="Slide ' + (i + 1) + '"></button>'; }).join('');
+        bslot.innerHTML = '<div class="wrap"><div class="b-top"><span class="b-chip">&#9889; BREAKING</span><div class="b-dots">' + dotsHtml + '</div></div>' +
+          '<div class="b-slides">' + slidesHtml + '</div>' +
+          '<button class="b-arrow b-prev" aria-label="Previous">&#8249;</button>' +
+          '<button class="b-arrow b-next" aria-label="Next">&#8250;</button></div>';
+        initBreaking();
       }
       var stats = document.querySelectorAll('.hero-stats .st b');
       if (stats[0] && drugs.length) stats[0].textContent = drugs.length;
@@ -326,3 +335,23 @@
       pane('topics', topics, topicCard);
     }).catch(function () {});
   }
+
+var _bTimer = null, _bIdx = 0;
+function initBreaking() {
+  var box = document.getElementById('breaking'); if (!box) return;
+  var slides = box.querySelectorAll('.b-slide'); if (!slides.length) return;
+  var dots = box.querySelectorAll('.b-dot');
+  function show(i) {
+    _bIdx = (i + slides.length) % slides.length;
+    slides.forEach(function (sl, j) { sl.classList.toggle('on', j === _bIdx); });
+    dots.forEach(function (d, j) { d.classList.toggle('on', j === _bIdx); });
+  }
+  function auto() { clearInterval(_bTimer); _bTimer = setInterval(function () { show(_bIdx + 1); }, 6000); }
+  box.querySelectorAll('.b-dot').forEach(function (d) { d.onclick = function () { show(+d.getAttribute('data-i')); auto(); }; });
+  var pv = box.querySelector('.b-prev'), nx = box.querySelector('.b-next');
+  if (pv) pv.onclick = function () { show(_bIdx - 1); auto(); };
+  if (nx) nx.onclick = function () { show(_bIdx + 1); auto(); };
+  box.onmouseenter = function () { clearInterval(_bTimer); };
+  box.onmouseleave = auto;
+  show(0); auto();
+}
