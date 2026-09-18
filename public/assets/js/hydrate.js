@@ -230,7 +230,7 @@
   function renderSentencing(items) {
     document.querySelectorAll('.legal-doc').forEach(function (doc) {
       var h = doc.querySelector('h2'); if (!h) return;
-      var it = items.find(function (x) { return x.region === h.textContent.trim(); });
+      var it = items.filter(function (x) { return x.region === h.textContent.trim() && Array.isArray(x.table); })[0] || items.find(function (x) { return x.region === h.textContent.trim(); });
       if (!it) return;
       var p = doc.querySelector('p'); if (p && it.summary) p.textContent = it.summary;
       var tb = doc.querySelector('.tbl tbody'); if (tb && Array.isArray(it.table))
