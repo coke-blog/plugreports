@@ -184,8 +184,8 @@ def shell(path, title, desc, body, jsonld=None, canonical=None, extra_head="", o
 <div class="crisis"><div class="wrap"><span class="pulse"></span>
 <strong data-i18n="crisis">Overdose or emergency? Call now</strong>
 <span class="hide-s"><a href="/hotlines/" data-i18n="hotline">Hotlines</a> ·
-<a href="tel:911">US 911</a> · <a href="tel:112">EU 112</a> ·
-<a href="tel:000">AU 000</a> · <a href="tel:988">988 (US crisis)</a></span>
+<a href="tel:911">US 911</a> · <a href="tel:999">UK 999</a> · <a href="tel:112">EU 112</a> ·
+<a href="tel:000">AU 000</a> · <a href="tel:112">IN 112</a> · <a href="tel:988">988 (US crisis)</a></span>
 <a href="/hotlines/" style="margin-left:auto" data-i18n="hotline">Hotlines</a></div></div>
 <header class="nav"><div class="wrap">
 <a class="logo" href="/"><img src="/assets/img/logo.svg" alt="plugreports logo" width="34" height="34"><span>plug<em>reports</em></span></a>
@@ -884,8 +884,8 @@ def main():
     build_indexes()
     build_topics(); build_quit(); build_hotlines(); build_sentencing()
     build_directory("pharmacies", PHARMACIES, "verified pharmacy",
-        "Verified Online Pharmacies — Accredited & Safe | plugreports",
-        "NABP- and PharmacyChecker-verified online pharmacies. Avoid counterfeit pill mills — verify before you buy medication online.", "&#128138;")
+        "Verified Online Pharmacies — USA, Canada, UK, EU & Worldwide | plugreports",
+        "How to verify a licensed online pharmacy in your country — NABP & PharmacyChecker (US/CA), GPhC (UK), EU safety logo, and how to spot counterfeit pill mills before you buy medication online.", "&#128138;")
     build_directory("rehabs", REHABS, "rehab center",
         "Verified Rehab Centers & Free Recovery Programs | plugreports",
         "Verified addiction treatment: Hazelden Betty Ford, Priory, Narcotics Anonymous, SMART Recovery — with contacts and links.", "&#10010;")

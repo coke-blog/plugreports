@@ -87,6 +87,24 @@ HOTLINES = {
   ("SANCA 011 262 5986","South African National Council on Alcoholism","Treatment referral network across SA provinces.","0112625986"),
   ("1192","NACADA Helpline (Kenya)","Government drug-control helpline, toll-free.","1192"),
   ("Nearest hospital emergency","Across the continent","Where dedicated lines are unavailable, hospital casualty departments and clinics are the fastest route to help.","")],
+ "Europe (more)": [
+  ("08595","RUS-telefonen (Norway)","National drug counselling helpline, free and anonymous.","08595"),
+  ("020-44 00 20","CAN Helpline (Sweden)","Council on Alcohol and Other Drugs — advice and referrals.","020440020"),
+  ("900 16 15 15","Drogas y Alcohol (Spain)","Government drug information line, free and confidential.","900161515"),
+  ("112","EU Emergency","All EU member states.","112")],
+ "New Zealand": [
+  ("111","Emergency","Ambulance, police, fire.","111"),
+  ("0800 787 797","Alcohol Drug Helpline","Free, 24/7 counselling and referral.","0800787797"),
+  ("0800 543 354","Lifeline NZ","24/7 crisis support and suicide prevention.","0800543354")],
+ "Asia (selected)": [
+  ("112","India Emergency","Single national emergency number.","112"),
+  ("91529 87821","iCall (India)","TISS psychosocial helpline — substance use, crisis, mental health (call/WhatsApp).","9152987821"),
+  ("1669","Thailand Ambulance","Free emergency medical transport.","1669"),
+  ("1323","Thailand Mental Health Hotline","Dept. of Mental Health crisis line.","1323")],
+ "Latin America (selected)": [
+  ("188","CVV (Brazil)","Centro de Valorização da Vida — 24/7 crisis support by phone/chat.","188"),
+  ("192","SAMU (Brazil)","Emergency ambulance, free.","192"),
+  ("CAPS AD","Free public addiction treatment (Brazil)","Centros de Atenção Psicossocial — free government addiction clinics in every city.","")],
 }
 
 PHARMACIES = [
@@ -96,6 +114,15 @@ PHARMACIES = [
  dict(slug="pharmacychecker", name="PharmacyChecker Verification", region="USA/Canada/online",
   desc="Independent verification of licensed mail-order pharmacies, with price comparison limited to accredited sellers. Use it to avoid counterfeit ED pills and fake 'Canadian' pharmacies.",
   phone="", website="https://www.pharmacychecker.com", verified=True),
+ dict(slug="napra", name="NAPRA — Canadian Pharmacy Regulators", region="Canada",
+  desc="The National Association of Pharmacy Regulatory Authorities compiles each provincial pharmacy regulator's register. Verify any Canadian online pharmacy against its provincial college before buying.",
+  phone="", website="https://napra.ca", verified=True),
+ dict(slug="gphc-register", name="GPhC Register (UK)", region="UK",
+  desc="The General Pharmaceutical Council's public register lets you confirm any UK pharmacy (online or physical) is licensed — and check the pharmacist-in-charge. The UK requires online pharmacies to display their GPhC registration.",
+  phone="+44 20 3713 8000", website="https://www.pharmacyregulation.org/registers", verified=True),
+ dict(slug="eu-common-logo", name="EU Common Logo (European online pharmacies)", region="EU/EEA",
+  desc="EU law requires legal online pharmacies to display the common safety logo (falsified-medicines directive). Verify it via your national medicines regulator's register — no logo, no legal online pharmacy.",
+  phone="", website="https://health.ec.europa.eu/medicinal-products/falsified-medicines_en", verified=True),
  dict(slug="healthwarehouse", name="HealthWarehouse.com", region="USA",
   desc="NABP-accredited US online pharmacy (VIPPS). A reference example of what a verified online pharmacy looks like: requires prescriptions, licensed pharmacists, US address.",
   phone="(513) 8DEPO-7", website="https://www.healthwarehouse.com", verified=True),
@@ -111,6 +138,12 @@ REHABS = [
  dict(slug="narcotics-anonymous", name="Narcotics Anonymous", region="Worldwide (free)",
   desc="Free, peer-led 12-step fellowship with meetings in 140+ countries. No cost, no insurance, no referral needed — welcome with any drug history.",
   phone="", website="https://www.na.org", verified=True),
+ dict(slug="aa-worldwide", name="Alcoholics Anonymous — Worldwide", region="Worldwide (free)",
+  desc="The original 12-step fellowship with meetings in 180+ countries and dozens of languages — including most of the countries sending you traffic. Free, anonymous, no referral needed.",
+  phone="", website="https://www.aa.org", verified=True),
+ dict(slug="turning-point", name="Turning Point", region="UK & Australia",
+  desc="One of the largest addiction treatment and social-care charities in the UK, also operating in Australia: residential rehab, community programmes, and the national 'Frank' drug information service on behalf of government.",
+  phone="020 7481 7600", website="https://www.turning-point.co.uk", verified=True),
  dict(slug="smart-recovery", name="SMART Recovery", region="Worldwide (free)",
   desc="Evidence-based, self-empowering alternative to 12-step: CBT and motivational tools. Free meetings online and in-person across our focus regions.",
   phone="", website="https://www.smartrecovery.org", verified=True),
@@ -165,6 +198,19 @@ SENTENCING = [
    ["South Africa","Fines / up to 15 yrs (dangerous drugs)"],
    ["Kenya","Fines + up to 10 yrs"],
    ["Nigeria","10 yrs+ (NDLEA Act)"]]),
+ dict(region="Asia (selected)", flag="AS",
+  summary="Asia mixes the world's harshest regimes (Singapore, China, Malaysia, Indonesia — all execution states) with fast-changing laws elsewhere. India's NDPS Act is the subcontinent's framework; Thailand's cannabis status has swung legal-to-illegal within three years. Travelers: many common prescription medicines (codeine, ADHD meds, benzos, even some cold remedies) are controlled or banned at borders.",
+  table=[["Country","Possession (personal)","Trafficking","Documented cases"],
+   ["India","Small quantity (per-drug thresholds): 6 months – 1 yr + fine; below threshold can mean counselling. Commercial quantity: 10–20 yrs + heavy fines (NDPS Act 1985)","20 yrs – life; death possible for repeat large trafficking","High-profile 2020-21 cases (Rhea Chakraborty, Aryan Khan) ended in bail, not conviction — but months in jail before bail; 2024 NDPS amendments streamline prosecutions"],
+   ["Singapore","Long prison + caning (drug consumption is itself an offence)","DEATH PENALTY above set thresholds (e.g., >15 g diamorphine) — presumption laws apply","2023 discretion reforms let some couriers get life + caning instead; executions: 11 in 2022, 5 in 2023, 9 in 2024 — mostly drug cases"],
+   ["Thailand","Post-2025: cannabis flower re-criminalized for recreational use; meth/heroin (Category I): prison terms","Category I trafficking: life – death (Narcotics Act)","Cannabis legalized 2022, re-criminalized 2025 — a warning on how fast laws flip; meth ('yaba') trafficking carries life/death"],
+   ["Malaysia / Indonesia","Long mandatory prison","DEATH PENALTY (Dadah Act 39B; Indonesian narcotics law)","Both execute foreign nationals for trafficking; quantity thresholds low"]]),
+ dict(region="Latin America (selected)", flag="LA",
+  summary="Latin America distinguishes users from traffickers in law more than anywhere — but enforcement is unequal and cartel violence shapes the reality. Personal use is decriminalized (no prison) in Mexico, Brazil, Argentina, Colombia and others, yet thousands sit in pre-trial detention on trafficking charges.",
+  table=[["Country","Possession (personal)","Trafficking","Documented cases"],
+   ["Brazil","Personal use: NOT a crime (2006 law) — warning/treatment; no fixed quantity, judged case-by-case","5–15 yrs prison","Racial and class disparities: favela residents convicted as traffickers for quantities wealthier users walk on"],
+   ["Mexico","Under allowed-table quantities: no criminal sanction (max: 5 g heroin? — per-drug table, e.g., 5 g opium, 0.5 g cocaine, 5 g cannabis)","Federal prison; organized-crime federal prosecutions","Personal-use table since 2009; enforcement at borders still harsh"],
+   ["Colombia","Personal dose: legal possession of a 'minimum dose' (20 g cannabis, 1 g cocaine base...)","8–30 yrs (drug trafficking is an 'exceptional' crime)","Constitutional Court personal-dose rulings; ELN/cartel enforcement zones remain violent"]]),
 ]
 
 SETTINGS = dict(site="plugreports.com", tagline="Know the drug. Know the risk. Know the way out.",
@@ -938,4 +984,174 @@ Daily use builds tolerance and dependence like any amphetamine. The Vyvanse cras
 Full profile and the day-by-day stimulant quitting timeline are linked below.""",
   drugsInvolved=["vyvanse","adderall","dexedrine"],
   related=["vyvanse","adderall","adderall-xr","dexedrine","quit:meth","topics:talk-to-your-kid"]),
+]
+
+TOPICS += [
+ dict(slug="europe-drug-checking", title="Drug checking in Europe: where to test your drugs before you take them", date="2026-09-18", read="6 min",
+  desc="The Netherlands, Austria, Switzerland, Spain and the UK run world-leading drug-checking services — free, anonymous, no questions asked. How each works and how to use them.",
+  markdown="""## The harm-reduction superpower hiding in Europe
+
+While most of the world debates whether drug checking 'encourages use', Europe has quietly built the world's most advanced testing infrastructure — and the results are undeniable: festivals with checking services have measurably fewer hospitalizations, and early-warning networks catch dangerous batches (like PMA masquerading as MDMA) before they kill dozens.
+
+If you're in Europe, **testing is free, anonymous, and legal** in most countries. Here's where:
+
+| Country | Service | How it works |
+|---|---|---|
+| **Netherlands** | DIMS (Jellinek / GGZ) | The world's oldest programme (since 1992). Drop samples at ~30 locations nationwide; results within days; national trend monitoring |
+| **Austria** | CheckIt! | Lab analysis of pills/powders; free, anonymous; strong festival presence |
+| **Switzerland** | DIZ / SAJE | Canton-based testing in Zurich, Bern and others — free and anonymous |
+| **Spain** | Energy Control | Private lab testing (small fee) + festival services; publishes market data |
+| **UK** | The Loop | Nonprofit, festival + city-centre pop-ups (Bristol, Manchester); free results in ~10 min with a 15-min harm-reduction chat |
+| **France** | PsychonautWiki-linked / CAARUD | Testing available via CAARUD centres in major cities |
+| **Germany** | Drug checking varies by state (Berlin, NRW lead) | State-by-state; Berlin offers anonymous testing |
+
+## What testing actually catches
+
+- **PMA/PMMA sold as MDMA** — the slow-onset killers. Testing catches these reliably
+- **Fentanyl in cocaine and benzos** — increasingly detected in EU supplies
+- **Nitazenes in counterfeit oxycodone** — the new wave, 10–25× fentanyl strength
+- **Wrong cathinones** — '4-MMC' that's actually 3-CMC, doses that are 2× the label
+
+::: tip The 15-minute rule
+The Loop's model is the gold standard: you hand over a sample, get lab-accurate results in about 10 minutes, then sit with a trained worker for a 15-minute harm-reduction conversation — no judgment, no police, no data kept. People who use checking services change their behavior: most say they'd take less, warn friends, or not take it at all.
+:::
+
+## Can't get to a service? The fallback layers
+
+1. **Reagent kits** (Marquis, Mecke, Froehde — ~€20 online): distinguish MDMA from PMA, opioids from non-opioids. Not lab-grade, but a solid first filter
+2. **Fentanyl test strips** (~€2 each): dissolve a crumb; one line = fentanyl present. Standard gear in North America, increasingly relevant in Europe
+3. **Pill reports / warning networks**: national early-warning apps and forums aggregate batch alerts — check before a festival
+
+## For travelers
+
+European drug laws remain strict (see our sentencing pages), but **possession of a tiny testing sample is treated differently from possession for use in most of these countries** — the services exist precisely so the state knows what's in the supply. Never carry amounts beyond a test sample, and check local law if unsure.
+
+Full profiles for the substances these services most often test — MDMA, ketamine, 2C-B, cathinones — are linked below.""",
+  drugsInvolved=["mdma","ketamine","2c-b"],
+  related=["topics:spot-pressed-pills","news:nitazenes-spreading-eu","mdma","xtc-pills","sentencing"]),
+
+ dict(slug="thailand-cannabis-reversal", title="Thailand's cannabis reversal: what the 2025 re-criminalization means", date="2026-09-18", read="5 min",
+  desc="Thailand went from jail for a joint to legal cannabis shops in 2022 — then flipped back in 2025. What the current law says, what tourists get wrong, and the penalties that haven't changed.",
+  markdown="""## The fastest policy flip in cannabis history
+
+**2022:** Thailand became the first Asian country to decriminalize cannabis — overnight, dispensaries opened on every corner of Bangkok and Chiang Mai, tourists lit up on Khao San Road, and the country became a global cannabis tourism destination.
+
+**2025:** The government re-criminalized recreational cannabis, moving the plant back toward the narcotics list. Shops that built a business on the 2022 law faced closure; the 'Thailand weed vacation' era ended almost as quickly as it began.
+
+## What the law says now
+
+| Situation | Status |
+|---|---|
+| **Recreational use (smoking flower for fun)** | Moving back to ILLEGAL — re-criminalization framework passed 2025; enforcement resumed against public use and unlicensed sale |
+| **Medical cannabis (prescription, registered products)** | Legal — the prescription pathway remains |
+| **Possession of extracts/oils above 0.2% THC without authorization** | Illegal — concentrates never left the narcotics framework |
+| **Import/export without license** | Illegal — treated as trafficking |
+| **Methamphetamine (yaba), heroin — Category I drugs** | Never decriminalized: trafficking carries LIFE or DEATH |
+
+::: danger What did NOT change
+Everything about Category I narcotics. Thailand's harsh core regime — life imprisonment and the death penalty for trafficking yaba or heroin — was untouched by the cannabis experiment. Tourists caught with MDMA, cocaine, or 'party pills' face the same decades-long sentences they always have. The cannabis flip changed one thing; the rest of Thai drug law remains among Asia's toughest.
+:::
+
+## The tourist traps
+
+1. **Assuming the dispensary era still applies.** Old blog posts and YouTube videos describe a legal landscape that no longer exists — check dates on anything you read
+2. **Vape cartridges.** Cannabis vapes and e-cigarettes with liquid are treated more harshly than flower, and nicotine vaping is restricted
+3. **Prescription medicines at the border.** Codeine, ADHD medication, benzos, and some antidepressants require a permit or doctor's letter — arriving without paperwork has landed travelers in detention
+4. **Buying from strangers.** Undercover operations around tourist areas are routine; the seller walking free while the buyer is arrested is a documented pattern
+
+## What happens if you're arrested
+
+Thai drug process: detention, bail (possible but expensive for foreigners), long pre-trial periods, and sentencing under the Narcotics Act. Embassy help is limited — consular staff can visit and refer lawyers but cannot get you released. The one genuine protection is the same as everywhere: **don't put yourself in the system. Know the current law, which in Thailand now means assume cannabis is illegal again unless a doctor is involved.**
+
+Our Thailand hotline and sentencing entries are linked below — and the cannabis profile covers what changed.""",
+  drugsInvolved=["weed","thc-vapes"],
+  related=["weed","thc-vapes","sentencing","hotlines","topics:europe-drug-checking"]),
+
+ dict(slug="india-drug-law", title="Drug laws in India: the NDPS Act explained (what actually happens if you're caught)", date="2026-09-18", read="7 min",
+  desc="India's Narcotic Drugs and Psychotropic Substances Act — the small vs commercial quantity system, why celebrity cases end in bail, and what an ordinary person should actually expect.",
+  markdown="""## India's zero-tolerance law — with a quantity-based escape hatch
+
+The **NDPS Act (1985)** is one of the world's strictest drug laws: no bail presumptions for trafficking, 10–20 year sentences for commercial quantities, and an entire chapter that applies whether you knew about the drugs or not (the law presumes guilt for certain offences — the accused must prove innocence).
+
+But there's a crucial **three-tier quantity system** that decides everything:
+
+| Tier | Definition | Typical outcome |
+|---|---|---|
+| **Small quantity** | Per-drug thresholds (e.g., 100 g cannabis, 1 g charas/hashish, 0.5 g cocaine, 250 mg MDMA) | 6 months – 1 year + fine; courts increasingly divert to counselling/de-addiction instead of jail |
+| **Intermediate (more than small, less than commercial)** | Between the two thresholds | 10–20 years + fine of ₹1–2 lakh |
+| **Commercial quantity** | e.g., 20 kg cannabis, 250 g charas, 100 g cocaine, 0.5 g* MDMA (*MDMA's commercial threshold is extremely low) | 10–20 years minimum, can extend to 30; repeat/large trafficking: death penalty possible |
+
+## The celebrity paradox
+
+The cases you read about — Rhea Chakraborty (2020, Sushant Singh Rajput case), Aryan Khan (2021, cruise ship raid) — both ended in **bail without conviction**, after weeks-to-months in custody. What those cases actually demonstrate:
+
+- **Arrest and jail come first, bail comes later.** NDPS's Section 37 makes bail genuinely hard — courts must be satisfied the accused is not guilty (a trial-stage finding) before releasing
+- **The process is the punishment.** Even when charges collapse, the months in custody, the media circus, and the legal bills are real
+- **2024 amendments** streamlined some prosecutions and expanded treatment access — the system is slowly softening at the edges
+
+::: danger The thresholds trap
+India's commercial quantities are shockingly low — a few grams of MDMA or charis is 'commercial.' Someone carrying what a European would call a weekend supply can face a 10–20 year mandatory sentence. The law's harshness is not theoretical: over 90% of NDPS prisoners are undertrials, many for small quantities.
+:::
+
+## What actually happens if you're caught
+
+1. **Arrest and seizure** — everything documented; even phone chats get examined
+2. **Bail hearing** — Section 37: the court must find 'reasonable grounds' you're not guilty. First weeks are often spent in custody
+3. **Charge sheet within 60–90 days** — delays beyond this can support bail
+4. **Trial** — years-long; conviction rates for possession cases are lower than for trafficking
+5. **If small quantity:** de-addiction treatment is increasingly ordered instead of prison
+
+## For foreign travelers
+
+- Prescription rules: some medicines legal in the West (strong painkillers, ADHD meds, certain cold remedies with codeine) are controlled — carry prescriptions and check the customs list
+- Goa and Himachal are enforcement hotspots, not safe zones — tourist-season drives are routine
+- The embassy can monitor but not rescue; undertrial periods are long
+
+The subcontinent's quit timelines and the full sentencing table are linked below.""",
+  drugsInvolved=["weed","mdma"],
+  related=["sentencing","hotlines","weed","mdma","topics:what-actually-happens-when-you-quit"]),
+
+ dict(slug="gulf-travel-drug-laws", title="Traveling to the Gulf? The drug laws that catch tourists and expats", date="2026-09-18", read="6 min",
+  desc="UAE, Saudi Arabia, Qatar, Kuwait — prescription medicines that are routine at home can be controlled substances here. What to check before you fly, and what happens if you don't.",
+  markdown="""## The highest-stakes packing decision you'll make
+
+Gulf states run some of the world's strictest drug regimes — and they apply to **what's in your bloodstream, not just your bag**. Kuwait's December 2025 law explicitly criminalizes trace amounts in your body. The UAE has prosecuted travelers for poppy seeds on a bagel, codeine in a carry-on, and melatonin bought at an airport elsewhere.
+
+None of this is exotic risk — it's routine travel confusion with extreme consequences.
+
+## The medicines that get people arrested
+
+| Medicine (legal at home) | Gulf status | The fix |
+|---|---|---|
+| **Codeine** (painkillers, some cough syrups) | Controlled/prescription-required in UAE, Qatar; restricted Saudi | Check the destination's controlled list; carry the prescription; some need prior approval |
+| **ADHD meds (Adderall, Ritalin, Vyvanse)** | Controlled — UAE allows with prior approval; personal import rules vary by country | Apply for approval weeks before travel |
+| **Benzodiazepines (Xanax, Valium, Ativan)** | Prescription-only; some require pre-approval | Doctor's letter + original packaging |
+| **Pregabalin (Lyrica)** | Controlled in UAE and others | Prior approval |
+| **Strong painkillers (oxycodone, tramadol)** | Tightly controlled; tramadol has caused multiple tourist arrests in UAE/Egypt | Avoid unless essential + full paperwork |
+| **Melatonin** | Varies — some Gulf states restrict higher doses | Check current rules; keep pharmacy receipt |
+| **Poppy seeds** | UAE: prosecuted (treated as opiate traces) | Do not carry food containing them |
+
+## What happens if you're stopped
+
+1. **Airport detention** — can last days while tests are processed. Blood and urine are tested; trace presence = possession in Kuwait; 'importation' is presumed if found at the border
+2. **Bail** — possible for residents, rare and expensive for visitors
+3. **Prosecution** — zero-tolerance frameworks; personal-use amounts still bring years in Qatar; trafficking thresholds trigger death-penalty-eligible charges in Saudi, Kuwait, and (newly) Oman
+4. **Your embassy's limits** — visits, lawyer lists, and consular checks. They cannot intervene in the legal process
+
+::: danger The specific trap nobody warns about
+**Transit.** Changing planes in Dubai or Doha with controlled medication in your carry-on can constitute 'importation' even if you never leave the airport. If your itinerary transits the Gulf, check the transit country's rules for everything in your bag — not just your destination's.
+:::
+
+## The pre-flight checklist
+
+1. **Search the destination's controlled-medicines list** — UAE (MOHAP), Qatar (MOPH), Saudi (SFDA) publish them; when in doubt, email the health authority
+2. **Get a doctor's letter** — drug name (generic), dose, quantity, and that it's prescribed to you
+3. **Keep everything in original packaging** with the pharmacy label
+4. **Carry only what you need** — days-of-supply, not months
+5. **Check transit countries separately**
+6. **Never carry anything for anyone else** — Gulf law presumes possession; 'holding for a friend' has the same penalty
+
+Our full Gulf sentencing section — with Saudi Arabia's 2025 execution record, Kuwait's new law, and Oman's September 2026 changes — is linked below. Read it before you fly, not at the airport.""",
+  drugsInvolved=[],
+  related=["sentencing","hotlines","pharmacies","topics:talk-to-your-kid"]),
 ]
