@@ -3283,3 +3283,6 @@ dict(slug="nicotine-replacement", name="Nicotine Replacement (Gum, Patch, Lozeng
  lastUpdated="2026-09-17", sources=["CDC","NICE","WHO"],
  related=["cigarettes","nicotine-vapes","quit:heroin","hotlines"]),
 ]
+
+from data_batch100 import BATCH as _BATCH100
+DRUGS += _BATCH100
