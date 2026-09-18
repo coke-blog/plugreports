@@ -247,16 +247,27 @@ def build_index(es=False):
     important = [t for t in TOPICS if t.get('tag') == 'Important'] or [t for t in TOPICS if 'nasal-spray' in t['slug']]
     importantcards = "".join(card(f"/topics/{t['slug']}/", f'<span class="chip red">&#9888; IMPORTANT</span><span class="chip">{esc(t.get("read",""))}</span>', t["title"], t["desc"], "Read now", t.get("image")) for t in important)
     topiccards = "".join(card(f"/topics/{t['slug']}/", f'<span class="chip red">GUIDE</span><span class="chip">{esc(t["read"])}</span>', t["title"], t["desc"], "Read guide", t.get("image")) for t in TOPICS[:6])
-    alert = next((n for n in NEWS if n.get("tag") == "Alert"), NEWS[0] if NEWS else None)
+    alerts = [n for n in NEWS if n.get("tag") == "Alert"]
+    alerts.sort(key=lambda x: x.get("date",""), reverse=True)
+    alerts = alerts[:5] or NEWS[:1]
     breaking = ""
-    if alert:
-        bimg = f'<img src="{esc(alert.get("image") or "/assets/img/og.png")}" alt="" loading="lazy">' if alert.get("image") else ""
+    if alerts:
+        slides = []
+        for i, al in enumerate(alerts):
+            bimg = f'<img src="{esc(al.get("image") or "/assets/img/og.png")}" alt="" loading="lazy">' if al.get("image") else ""
+            country = al.get("country", "")
+            cchip = f'<span class="b-country">&#127760; {esc(country)}</span>' if country else ""
+            slides.append(f"""<div class="b-slide{' on' if i==0 else ''}">{bimg}<div><div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">{cchip}<span class="b-date">{esc(al["date"])}</span></div>
+<h2>{esc(al["title"])}</h2>
+<p>{esc(al["summary"][:170])}&hellip;</p>
+<a class="btn btn-red" href="/news/{al["slug"]}/">Read the full story &rarr;</a></div></div>""")
+        dots = "".join(f'<button class="b-dot{" on" if i==0 else ""}" data-i="{i}" aria-label="Slide {i+1}"></button>' for i in range(len(slides)))
         breaking = f"""<section class="breaking" id="breaking"><div class="wrap">
-<span class="b-chip">&#9889; BREAKING</span>
-<div class="b-main">{bimg}<div><span class="b-date">{esc(alert["date"])} &middot; {esc(alert.get("tag",""))}</span>
-<h2>{esc(alert["title"])}</h2>
-<p>{esc(alert["summary"][:180])}&hellip;</p>
-<a class="btn btn-red" href="/news/{alert["slug"]}/">Read the full story &rarr;</a></div></div></div></section>"""
+<div class="b-top"><span class="b-chip">&#9889; BREAKING</span><div class="b-dots">{dots}</div></div>
+<div class="b-slides">{''.join(slides)}</div>
+<button class="b-arrow b-prev" aria-label="Previous">&#8249;</button>
+<button class="b-arrow b-next" aria-label="Next">&#8250;</button>
+</div></section>"""
     body = f"""
 {breaking}
 <section class="hero"><div class="wrap">
