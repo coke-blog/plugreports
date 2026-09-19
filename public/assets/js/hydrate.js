@@ -301,7 +301,7 @@ function initBreaking() {
           '<div class="b-slides">' + slidesHtml + '</div>' +
           '<button class="b-arrow b-prev" aria-label="Previous">&#8249;</button>' +
           '<button class="b-arrow b-next" aria-label="Next">&#8250;</button></div>';
-        window._breakingReady = true;
+        if (typeof initBreaking === 'function') initBreaking();
       }
       var stats = document.querySelectorAll('.hero-stats .st b');
       if (stats[0] && drugs.length) stats[0].textContent = drugs.length;
