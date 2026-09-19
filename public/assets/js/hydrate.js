@@ -264,7 +264,8 @@
       else if (bslot) {
         bslot.style.display = '';
         var pick = settings.breakingSlug ? news.filter(function (x) { return x.slug === settings.breakingSlug; })[0] : null;
-        var alerts = (pick ? [pick] : news.filter(function (x) { return x.tag === 'Alert'; }).sort(function (a, b) { return String(b.date || '').localeCompare(String(a.date || '')); }).slice(0, 5)) || [];
+        var pool2 = news.concat(busts || []);
+        var alerts = (pick ? [pick] : pool2.filter(function (x) { return x.tag === 'Alert'; }).sort(function (a, b) { return String(b.date || '').localeCompare(String(a.date || '')); }).slice(0, 5)) || [];
         if (!alerts.length) alerts = news.slice(0, 1);
         var slidesHtml = alerts.map(function (al, i) {
           return '<div class="b-slide' + (i === 0 ? ' on' : '') + '">' +
