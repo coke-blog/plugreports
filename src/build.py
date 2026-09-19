@@ -152,7 +152,9 @@ def shell(path, title, desc, body, jsonld=None, canonical=None, extra_head="", o
     if SETTINGS.get("clarity"): ld += '<script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","' + esc(SETTINGS["clarity"]) + '")</script>'
     if SETTINGS.get("ga"): ld += '<script async src="https://www.googletagmanager.com/gtag/js?id=' + esc(SETTINGS["ga"]) + '"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date());gtag("config","' + esc(SETTINGS["ga"]) + '")</script>' 
     if path.split("/")[0] in ("busts","news","drugs","topics","quit","hotlines","pharmacies","rehabs","sentencing","index.html"):
-        ld += '<script src="/assets/js/hydrate.js?v=8" defer></script>' 
+        ld += '<script src="/assets/js/hydrate.js?v=8" defer></script>'
+        if path == "index.html":
+            ld += '<script src="/assets/js/breaking.js?v=8" defer></script>' 
     return f"""<!DOCTYPE html>
 <html lang="{lang}">
 <head>
