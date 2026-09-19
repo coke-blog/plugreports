@@ -247,7 +247,7 @@ def build_index(es=False):
     important = [t for t in TOPICS if t.get('tag') == 'Important'] or [t for t in TOPICS if 'nasal-spray' in t['slug']]
     importantcards = "".join(card(f"/topics/{t['slug']}/", f'<span class="chip red">&#9888; IMPORTANT</span><span class="chip">{esc(t.get("read",""))}</span>', t["title"], t["desc"], "Read now", t.get("image")) for t in important)
     topiccards = "".join(card(f"/topics/{t['slug']}/", f'<span class="chip red">GUIDE</span><span class="chip">{esc(t["read"])}</span>', t["title"], t["desc"], "Read guide", t.get("image")) for t in TOPICS[:6])
-    alerts = [n for n in NEWS if n.get("tag") == "Alert"]
+    alerts = [dict(n) for n in NEWS if n.get("tag") == "Alert"] + [dict(b) for b in BUSTS if b.get("tag") == "Alert"]
     alerts.sort(key=lambda x: x.get("date",""), reverse=True)
     alerts = alerts[:5] or NEWS[:1]
     breaking = ""
