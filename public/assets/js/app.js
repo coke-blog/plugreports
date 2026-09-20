@@ -96,6 +96,9 @@ function injectSettings(){
     var s=(d.items&&d.items[0])||{};
     function meta(n,c){if(c&&!document.querySelector('meta[name="'+n+'"]')){var m=document.createElement('meta');m.name=n;m.content=c;document.head.appendChild(m)}}
     meta('google-site-verification',s.gsc); meta('msvalidate.01',s.bing);
+    if(s.reddit){var r=document.getElementById('soc-reddit');if(r)r.href=s.reddit;}
+    if(s.quora){var q=document.getElementById('soc-quora');if(q)q.href=s.quora;}
+    if(s.email){var m=document.getElementById('soc-email');if(m)m.href='mailto:'+s.email;var ml=document.getElementById('soc-email-label');if(ml)ml.textContent=s.email;}
     if(s.clarity&&!window.clarity){var t=document.createElement('script');t.async=1;t.src='https://www.clarity.ms/tag/'+s.clarity;document.head.appendChild(t)}
     if(s.ga&&!window.gtag){var g=document.createElement('script');g.async=1;g.src='https://www.googletagmanager.com/gtag/js?id='+s.ga;document.head.appendChild(g);
       window.dataLayer=window.dataLayer||[];window.gtag=function(){dataLayer.push(arguments)};gtag('js',new Date());gtag('config',s.ga)}

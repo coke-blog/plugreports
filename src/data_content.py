@@ -221,6 +221,7 @@ SENTENCING = [
 ]
 
 SETTINGS = dict(site="plugreports.com", tagline="Know the drug. Know the risk. Know the way out.",
+ reddit="https://www.reddit.com/u/plugreports/s/WV01nxBLan", quora="https://plugreports.quora.com/", email="contact@plugreports.com",
  gsc="fpjrQ73pPwkCAm_jYft5fKHfCgei5Eu3zr6KTmTmNtc", bing="", clarity="yiltr1g8h1", ga="",
  crisisNote="If you or someone nearby may be overdosing: call emergency services now, give naloxone if available, stay with the person.")
 
