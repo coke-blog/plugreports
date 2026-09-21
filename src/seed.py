@@ -51,6 +51,10 @@ if __name__ == "__main__":
     from data_content import (BUSTS, NEWS, TOPICS, QUIT_SPECS,
                               HOTLINES, PHARMACIES, REHABS, SENTENCING)
     from data_related import RELATED_OVERRIDES
+    try:
+        from data_mix import MIX
+    except Exception:
+        MIX = []
     for d in DRUGS: d.update(RELATED_OVERRIDES.get("drugs", {}).get(d["slug"], {}))
     for b in BUSTS: b.update(RELATED_OVERRIDES.get("busts", {}).get(b["slug"], {}))
     for n in NEWS: n.update(RELATED_OVERRIDES.get("news", {}).get(n["slug"], {}))
@@ -68,6 +72,8 @@ if __name__ == "__main__":
         "rehabs": REHABS,
         # every sentencing item needs a slug (derive from region when missing)
         "sentencing": [dict(s, slug=s.get("slug") or slugify(s["region"])) for s in SENTENCING],
+        # mix items already match the admin shape (slug,a,b,aSlug,bSlug,level,title,...)
+        "mix": MIX,
     }
     types = sys.argv[1:] or list(seeds.keys())
     for t in types:

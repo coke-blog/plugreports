@@ -22,6 +22,7 @@
     var it = items.find(function (x) { return x.slug === seg[1]; });
     if (!it) return;
     if (type === 'drugs') return renderDrug(it);
+    if (type === 'mix') return renderMix(it);
     if (type === 'busts' || type === 'news') return renderDetail(it, type);
     if (type === 'topics') return renderTopic(it);
     if (type === 'quit') return renderQuit(it);
@@ -93,6 +94,19 @@ function initBreaking() {
       }).join('');
       return;
     }
+    if (type === 'mix') {
+      var LV = {deadly: 'DEADLY COMBINATION', dangerous: 'DANGEROUS COMBINATION', caution: 'USE WITH CAUTION'};
+      ['deadly', 'dangerous', 'caution'].forEach(function (tier) {
+        var tgrid = document.querySelector('[data-tier="' + tier + '"]'); if (!tgrid) return;
+        tgrid.innerHTML = items.filter(function (x) { return (x.level || 'caution') === tier; }).map(function (it) {
+          return '<a class="card" href="/mix/' + it.slug + '/"><div class="meta">' +
+            chip(LV[it.level] || LV.caution, it.level === 'deadly' ? 'red' : it.level === 'dangerous' ? 'amber' : '') + '</div>' +
+            '<h3>' + esc(it.a || '') + ' + ' + esc(it.b || '') + '</h3><p>' + esc((it.summary || '').slice(0, 140)) + '</p>' +
+            '<div class="foot">Why it&rsquo;s dangerous &rarr;</div></a>';
+        }).join('');
+      });
+      return;
+    }
     var grid = document.querySelector('.cards'); if (!grid) return;
     grid.innerHTML = items.map(function (it) {
       if (type === 'busts') return '<a class="card" href="/busts/' + it.slug + '/"><div class="meta">' +
@@ -139,7 +153,19 @@ function initBreaking() {
   }
   function renderDrug(it) {
     var im = document.querySelector('img.pimg');
+    var ph = document.querySelector('.pimg-formula');
     if (im && it.image) im.src = it.image;
+    else if (!im && ph && it.image) {
+      // static page had no photo (formula placeholder) but KV now has one — swap it in
+      var ni = document.createElement('img');
+      ni.className = 'pimg';
+      ni.src = it.image;
+      ni.alt = (it.name || '') + (it.appearance ? ' — ' + it.appearance : '');
+      ni.width = 510; ni.height = 383;
+      ni.setAttribute('style', 'border-radius:18px;border:1px solid var(--line);box-shadow:var(--shadow);object-fit:cover;max-height:340px');
+      ni.loading = 'lazy';
+      ph.parentNode.replaceChild(ni, ph);
+    }
     setH1(it.name);
     if (it.seoTitle) document.title = it.seoTitle;
     if (it.seoDesc) { var m = document.querySelector('meta[name="description"]'); if (m) m.setAttribute('content', it.seoDesc); }
@@ -289,6 +315,28 @@ function initBreaking() {
       return '<div class="tl-item' + (i === 1 ? ' red' : '') + '"><h4>' + esc(x[0]) + ' &mdash; ' + esc(x[1]) + '</h4><p>' + esc(x[2]) + '</p></div>'; }).join('');
     var cl = document.querySelector('ul.checklist');
     if (cl && Array.isArray(it.tips)) cl.innerHTML = it.tips.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('');
+  }
+
+  function renderMix(it) {
+    setH1(it.title);
+    if (it.seoTitle) document.title = it.seoTitle;
+    if (it.seoDesc) { var m = document.querySelector('meta[name="description"]'); if (m) m.setAttribute('content', it.seoDesc); }
+    var q = function (k) { return document.querySelector('[data-mix="' + k + '"]'); };
+    var LV = {deadly: 'DEADLY COMBINATION', dangerous: 'DANGEROUS COMBINATION', caution: 'USE WITH CAUTION'};
+    var badge = q('badge');
+    if (badge && it.level) {
+      badge.textContent = LV[it.level] || String(it.level).toUpperCase();
+      badge.className = 'chip lvl-badge ' + (it.level === 'deadly' ? 'red' : it.level === 'dangerous' ? 'amber' : '');
+    }
+    var s = q('summary'); if (s && it.summary) s.textContent = it.summary;
+    var mech = q('mechanism'); if (mech && it.mechanism) mech.textContent = it.mechanism;
+    var fill = function (k, arr) {
+      var el = q(k);
+      if (el && Array.isArray(arr) && arr.length) el.innerHTML = arr.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('');
+    };
+    fill('effects', it.effects); fill('signs', it.signs); fill('whatToDo', it.whatToDo);
+    var up = q('updated'); if (up && it.lastUpdated) up.textContent = 'Updated ' + it.lastUpdated;
+    var so = q('sources'); if (so && it.sources) so.textContent = 'Sources: ' + it.sources;
   }
 
   function renderCenter(it) {

@@ -555,3 +555,67 @@ Complete machine-readable drug records: [llms-full.txt](https://plugreports.com/
 - [/busts/bust-texas-cabbage-meth/](https://plugreports.com/busts/bust-texas-cabbage-meth/) 2,000+ lbs of meth found packed inside cabbage shipment in South Texas
 - [/busts/bust-spain-banana-cocaine-13t/](https://plugreports.com/busts/bust-spain-banana-cocaine-13t/) 13-ton cocaine haul disguised as banana shipment exposes international network
 - [/busts/bust-australia-sydney-cocaine-record/](https://plugreports.com/busts/bust-australia-sydney-cocaine-record/) Largest drug bust in Australian history: nearly $1B cocaine at rural Sydney property
+
+## Mixing dangers
+- [/mix/](https://plugreports.com/mix/) Hub — 61 drug-combination guides ranked by danger
+- [/mix/opioids-benzodiazepines/](https://plugreports.com/mix/opioids-benzodiazepines/) Opioids + Benzodiazepines — deadly
+- [/mix/opioids-alcohol/](https://plugreports.com/mix/opioids-alcohol/) Opioids + Alcohol — deadly
+- [/mix/opioids-gabapentinoids/](https://plugreports.com/mix/opioids-gabapentinoids/) Opioids + Gabapentinoids (pregabalin/gabapentin) — deadly
+- [/mix/opioids-xylazine/](https://plugreports.com/mix/opioids-xylazine/) Opioids (fentanyl) + Xylazine — deadly
+- [/mix/heroin-cocaine-speedball/](https://plugreports.com/mix/heroin-cocaine-speedball/) Heroin + Cocaine — deadly
+- [/mix/fentanyl-stimulants/](https://plugreports.com/mix/fentanyl-stimulants/) Fentanyl + Stimulants — deadly
+- [/mix/ghb-alcohol/](https://plugreports.com/mix/ghb-alcohol/) GHB/GBL + Alcohol — deadly
+- [/mix/ghb-opioids/](https://plugreports.com/mix/ghb-opioids/) GHB/GBL + Opioids — deadly
+- [/mix/ghb-benzodiazepines/](https://plugreports.com/mix/ghb-benzodiazepines/) GHB/GBL + Benzodiazepines — deadly
+- [/mix/ghb-ketamine/](https://plugreports.com/mix/ghb-ketamine/) GHB/GBL + Ketamine — deadly
+- [/mix/poppers-ed-drugs/](https://plugreports.com/mix/poppers-ed-drugs/) Poppers (alkyl nitrites) + ED drugs (sildenafil/tadalafil) — deadly
+- [/mix/tramadol-ssris/](https://plugreports.com/mix/tramadol-ssris/) Tramadol + SSRIs — deadly
+- [/mix/maois-ssris/](https://plugreports.com/mix/maois-ssris/) MAOIs + SSRIs — deadly
+- [/mix/maois-opioids/](https://plugreports.com/mix/maois-opioids/) MAOIs + Opioids (tramadol/meperidine) — deadly
+- [/mix/maois-mdma/](https://plugreports.com/mix/maois-mdma/) MAOIs + MDMA — deadly
+- [/mix/maois-dxm/](https://plugreports.com/mix/maois-dxm/) MAOIs + DXM — deadly
+- [/mix/ayahuasca-ssris/](https://plugreports.com/mix/ayahuasca-ssris/) Ayahuasca + SSRIs — deadly
+- [/mix/ibogaine-opioids/](https://plugreports.com/mix/ibogaine-opioids/) Ibogaine + Opioids — deadly
+- [/mix/alcohol-benzodiazepines/](https://plugreports.com/mix/alcohol-benzodiazepines/) Alcohol + Benzodiazepines — deadly
+- [/mix/alcohol-z-drugs/](https://plugreports.com/mix/alcohol-z-drugs/) Alcohol + Z-drugs (zolpidem/zopiclone) — deadly
+- [/mix/dxm-ssris/](https://plugreports.com/mix/dxm-ssris/) DXM + SSRIs — deadly
+- [/mix/dxm-maois/](https://plugreports.com/mix/dxm-maois/) DXM + MAOIs — deadly
+- [/mix/kratom-opioids/](https://plugreports.com/mix/kratom-opioids/) Kratom / 7-OH + Opioids — deadly
+- [/mix/tianeptine-opioids/](https://plugreports.com/mix/tianeptine-opioids/) Tianeptine + Opioids — deadly
+- [/mix/barbiturates-alcohol/](https://plugreports.com/mix/barbiturates-alcohol/) Barbiturates + Alcohol — deadly
+- [/mix/nitrous-depressants/](https://plugreports.com/mix/nitrous-depressants/) Nitrous oxide + Depressants (alcohol etc.) — deadly
+- [/mix/cocaine-alcohol/](https://plugreports.com/mix/cocaine-alcohol/) Cocaine + Alcohol — dangerous
+- [/mix/cocaine-ketamine/](https://plugreports.com/mix/cocaine-ketamine/) Cocaine + Ketamine — dangerous
+- [/mix/cocaine-fentanyl/](https://plugreports.com/mix/cocaine-fentanyl/) Cocaine + Fentanyl — dangerous
+- [/mix/methamphetamine-opioids/](https://plugreports.com/mix/methamphetamine-opioids/) Methamphetamine + Opioids — dangerous
+- [/mix/amphetamines-alcohol/](https://plugreports.com/mix/amphetamines-alcohol/) Amphetamines + Alcohol — dangerous
+- [/mix/methamphetamine-alcohol/](https://plugreports.com/mix/methamphetamine-alcohol/) Methamphetamine + Alcohol — dangerous
+- [/mix/mdma-alcohol/](https://plugreports.com/mix/mdma-alcohol/) MDMA + Alcohol — dangerous
+- [/mix/mdma-stimulants/](https://plugreports.com/mix/mdma-stimulants/) MDMA + Stimulants — dangerous
+- [/mix/mdma-ssris/](https://plugreports.com/mix/mdma-ssris/) MDMA + SSRIs — dangerous
+- [/mix/ketamine-alcohol/](https://plugreports.com/mix/ketamine-alcohol/) Ketamine + Alcohol — dangerous
+- [/mix/ketamine-benzodiazepines/](https://plugreports.com/mix/ketamine-benzodiazepines/) Ketamine + Benzodiazepines — dangerous
+- [/mix/phenibut-alcohol/](https://plugreports.com/mix/phenibut-alcohol/) Phenibut + Alcohol — dangerous
+- [/mix/phenibut-benzodiazepines/](https://plugreports.com/mix/phenibut-benzodiazepines/) Phenibut + Benzodiazepines — dangerous
+- [/mix/benzodiazepines-z-drugs/](https://plugreports.com/mix/benzodiazepines-z-drugs/) Benzodiazepines + Z-drugs — dangerous
+- [/mix/dph-alcohol/](https://plugreports.com/mix/dph-alcohol/) Diphenhydramine (DPH) + Alcohol — dangerous
+- [/mix/dph-dxm/](https://plugreports.com/mix/dph-dxm/) Diphenhydramine (DPH) + DXM — dangerous
+- [/mix/kanna-ssris/](https://plugreports.com/mix/kanna-ssris/) Kanna + SSRIs — dangerous
+- [/mix/bupropion-alcohol/](https://plugreports.com/mix/bupropion-alcohol/) Bupropion + Alcohol — dangerous
+- [/mix/caffeine-cocaine/](https://plugreports.com/mix/caffeine-cocaine/) Energy drinks / high caffeine + Cocaine — dangerous
+- [/mix/cannabis-alcohol/](https://plugreports.com/mix/cannabis-alcohol/) Cannabis + Alcohol — dangerous
+- [/mix/muscle-relaxants-opioids/](https://plugreports.com/mix/muscle-relaxants-opioids/) Muscle relaxants + Opioids — dangerous
+- [/mix/nitazenes-depressants/](https://plugreports.com/mix/nitazenes-depressants/) Nitazenes + Any CNS depressant — dangerous
+- [/mix/cocaine-benzodiazepines/](https://plugreports.com/mix/cocaine-benzodiazepines/) Cocaine + Benzodiazepines — dangerous
+- [/mix/dxm-alcohol/](https://plugreports.com/mix/dxm-alcohol/) DXM + Alcohol — dangerous
+- [/mix/tramadol-alcohol/](https://plugreports.com/mix/tramadol-alcohol/) Tramadol + Alcohol — dangerous
+- [/mix/cannabis-hallucinogens/](https://plugreports.com/mix/cannabis-hallucinogens/) Cannabis + Hallucinogens — caution
+- [/mix/lsd-cannabis/](https://plugreports.com/mix/lsd-cannabis/) LSD + Cannabis — caution
+- [/mix/lsd-tramadol/](https://plugreports.com/mix/lsd-tramadol/) LSD + Tramadol — caution
+- [/mix/psychedelics-lithium/](https://plugreports.com/mix/psychedelics-lithium/) Psychedelics + Lithium — caution
+- [/mix/psychedelics-stimulants/](https://plugreports.com/mix/psychedelics-stimulants/) Psychedelics + Stimulants — caution
+- [/mix/cannabis-nicotine/](https://plugreports.com/mix/cannabis-nicotine/) Cannabis + Nicotine — caution
+- [/mix/caffeine-pre-workout/](https://plugreports.com/mix/caffeine-pre-workout/) Caffeine + Pre-workout stimulants — caution
+- [/mix/ssris-alcohol/](https://plugreports.com/mix/ssris-alcohol/) SSRIs + Alcohol — caution
+- [/mix/kratom-stimulants/](https://plugreports.com/mix/kratom-stimulants/) Kratom + Stimulants/caffeine — caution
+- [/mix/modafinil-alcohol/](https://plugreports.com/mix/modafinil-alcohol/) Modafinil + Alcohol — caution

@@ -10,6 +10,14 @@ from data_content import (BUSTS, NEWS, HOTLINES, PHARMACIES, REHABS,
                           SENTENCING, SETTINGS, QUIT_SPECS, TOPICS)
 from data_related import RELATED_OVERRIDES
 from data_sources import AGENCY_LINKS, DEEP_LINKS, QUOTES
+try:
+    from data_formulas import FORMULAS
+except Exception:
+    FORMULAS = {}
+try:
+    from data_mix import MIX
+except Exception:
+    MIX = []
 
 def _apply_overrides():
     for d in DRUGS: d.update(RELATED_OVERRIDES.get("drugs", {}).get(d["slug"], {}))
@@ -143,7 +151,7 @@ def rel_card(slug):
 NAV = [
  ("/", "Home", "home"), ("/categories/opioids/", "Drug Library", "drugs"),
  ("/news/", "News", "news"), ("/busts/", "Busts", "busts"), ("/topics/", "Guides", "topics"),
- ("/quit/", "Quitting", "quit"), ("/hotlines/", "Hotlines", "hotline"),
+ ("/quit/", "Quitting", "quit"), ("/mix/", "Mixing", "mix"), ("/hotlines/", "Hotlines", "hotline"),
  ("/sentencing/", "Sentencing", "sentencing"), ("/pharmacies/", "Pharmacies", "pharmacies"),
  ("/rehabs/", "Rehabs", "rehabs"), ("/about/", "About", "about"),
 ]
@@ -209,10 +217,10 @@ def shell(path, title, desc, body, jsonld=None, canonical=None, extra_head="", o
     if SETTINGS.get("bing"): ld += f'<meta name="msvalidate.01" content="{esc(SETTINGS["bing"])}">'
     if SETTINGS.get("clarity"): ld += '<script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","' + esc(SETTINGS["clarity"]) + '")</script>'
     if SETTINGS.get("ga"): ld += '<script async src="https://www.googletagmanager.com/gtag/js?id=' + esc(SETTINGS["ga"]) + '"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date());gtag("config","' + esc(SETTINGS["ga"]) + '")</script>' 
-    if path.split("/")[0] in ("busts","news","drugs","topics","quit","hotlines","pharmacies","rehabs","sentencing","index.html"):
-        ld += '<script src="/assets/js/hydrate.js?v=9" defer></script>'
+    if path.split("/")[0] in ("busts","news","drugs","topics","quit","mix","hotlines","pharmacies","rehabs","sentencing","index.html"):
+        ld += '<script src="/assets/js/hydrate.js?v=10" defer></script>'
         if path == "index.html":
-            ld += '<script src="/assets/js/breaking.js?v=9" defer></script>'
+            ld += '<script src="/assets/js/breaking.js?v=10" defer></script>'
     return f"""<!DOCTYPE html>
 <html lang="{lang}">
 <head>
@@ -261,7 +269,7 @@ def shell(path, title, desc, body, jsonld=None, canonical=None, extra_head="", o
 <button data-lang="en">EN</button><button data-lang="es">ES</button><button data-lang="zh">中文</button>
 <button data-lang="hi">हिन्दी</button><button data-lang="ar">عربي</button><button data-lang="pt">PT</button>
 <button data-lang="ru">RU</button><button data-lang="ja">日本語</button><button data-lang="de">DE</button><button data-lang="fr">FR</button></div></div>
-<div><h4>Library</h4><a href="/categories/opioids/">Opioids</a><a href="/categories/stimulants/">Stimulants</a><a href="/categories/benzodiazepines/">Benzodiazepines</a><a href="/categories/psychedelics/">Psychedelics</a><a href="/categories/empathogens/">Empathogens</a><a href="/categories/cannabinoids/">Synthetic cannabinoids</a></div>
+<div><h4>Library</h4><a href="/categories/opioids/">Opioids</a><a href="/categories/stimulants/">Stimulants</a><a href="/categories/benzodiazepines/">Benzodiazepines</a><a href="/categories/psychedelics/">Psychedelics</a><a href="/categories/empathogens/">Empathogens</a><a href="/categories/cannabinoids/">Synthetic cannabinoids</a><a href="/mix/">Mixing dangers</a></div>
 <div><h4>Help</h4><a href="/hotlines/">Hotlines</a><a href="/rehabs/">Rehab centers</a><a href="/pharmacies/">Verified pharmacies</a><a href="/quit/">Quitting, day by day</a><a href="/sentencing/">Sentencing explained</a></div>
 <div><h4>Updates</h4><a href="/news/">Drug news</a><a href="/busts/">Busts & seizures</a><a href="/topics/">Guides</a><a href="/suggest/">Suggest a correction</a><a href="/rss.xml">RSS feed</a><a href="/about/">About & editorial policy</a></div>
 </div>
@@ -280,7 +288,7 @@ def shell(path, title, desc, body, jsonld=None, canonical=None, extra_head="", o
 <p data-i18n="ageBody">This site contains educational information about drugs and harm reduction. It is not medical or legal advice. You must be of legal age or accessing with intent to help yourself or someone else.</p>
 <div class="row"><button class="btn btn-red" data-gate-yes data-i18n="ageYes">I understand — enter</button>
 <a class="btn btn-ghost" href="https://www.google.com" data-i18n="ageNo">Leave</a></div></div></div>
-<script src="/assets/js/app.js?v=9"></script>
+<script src="/assets/js/app.js?v=10"></script>
 </body></html>"""
 
 def breadcrumb_ld(parts):
@@ -434,6 +442,25 @@ def drug_image(slug):
             return rel
     return "assets/img/drug-placeholder.svg"
 
+def drug_placeholder_panel(d, c):
+    """CSS-only placeholder shown until a verified photo exists: molecular
+    formula from FORMULAS, falling back to the drug's first letter tile."""
+    f = FORMULAS.get(d["slug"], "")
+    inner = (f'<span class="pf-formula">{esc(f)}</span>' if f else
+             f'<span class="pf-letter" style="background:{c["grad"]}">{esc(d["name"][0])}</span>')
+    return (f'<div class="pimg pimg-formula" role="img" aria-label="{esc(d["name"])} — verified photo coming soon">'
+            f'{inner}<span class="pf-caption">Verified photo coming soon</span></div>')
+
+def pimg_html(d, c, app_):
+    """Real photo when one is set, otherwise the formula placeholder panel."""
+    ext_img = (d.get("image") or "").strip()
+    img_rel = ext_img if ext_img.startswith("http") else drug_image(d["slug"])
+    if img_rel == "assets/img/drug-placeholder.svg":
+        return drug_placeholder_panel(d, c), img_rel
+    img_src = img_rel if img_rel.startswith("http") else "/" + img_rel  # never prefix "/" onto absolute URLs
+    return (f'<img class="pimg" src="{img_src}" alt="{esc(d["name"])} — {esc(app_)}" width="510" height="383" '
+            f'style="border-radius:18px;border:1px solid var(--line);box-shadow:var(--shadow);object-fit:cover;max-height:340px" loading="lazy">'), img_rel
+
 def build_drugs(es=False):
     from data_es import ES_DRUGS, ES_CATS
     for d in DRUGS:
@@ -445,9 +472,7 @@ def build_drugs(es=False):
         fx = o.get("effects", d["effects"]); rk = o.get("risks", d["risks"]); od = o.get("overdoseSigns", d["overdoseSigns"])
         app_ = o.get("appearance", d["appearance"]); pr = o.get("streetPrice", d["streetPrice"])
         lg = o.get("legalStatus", d["legalStatus"]); sch = o.get("schedule", d["schedule"])
-        ext_img = (d.get("image") or "").strip()
-        img_rel = ext_img if ext_img.startswith("http") else drug_image(d["slug"])
-        img_src = img_rel if img_rel.startswith("http") else "/" + img_rel  # never prefix "/" onto absolute URLs
+        pimg, img_rel = pimg_html(d, c, app_)
         rel = related_drugs(d)
         rel_entries = d.get("related") or []
         if rel_entries:
@@ -503,25 +528,28 @@ def build_drugs(es=False):
         cmp_head = f"Comparación de categoría — {esc(cat_name)}" if es else f"Category comparison — {esc(cat_name)}"
         body = f"""
 <div class="wrap">
+<div class="ptop">
+<div class="ptop-main">
 <section class="phead">
 <span class="glyph" style="background:{c['grad']}">{esc(d['name'][0])}</span>
 <div><span class="kicker" style="background:{c['grad']};color:#fff;border:0">{esc(cat_name)}</span>
 <h1 style="margin-top:10px">{esc(d['name'])}</h1>
 <p class="alias">Street names: <b>{esc(", ".join(d["aliases"]))}</b></p></div></section>
 
-<img class="pimg" src="{img_src}" alt="{esc(d['name'])} — {esc(app_)}" width="510" height="383" style="border-radius:18px;border:1px solid var(--line);box-shadow:var(--shadow);object-fit:cover;max-height:340px" loading="lazy">
-
 <div class="callout red print-hide"><b>Overdose? Act now.</b> Call emergency services — say "unresponsive, not breathing". Give naloxone for opioid-like signs. <a href="/hotlines/">Hotlines</a></div>
 
-<div class="profile-grid">
 <div class="panel"><h2><span class="ic" style="background:{c['color']};color:#fff">&#9889;</span>What it does</h2>
 <ul class="ticks">{''.join(f"<li>{esc(e)}</li>" for e in fx)}</ul>
 <h2 style="margin-top:22px"><span class="ic" style="background:#dc2626;color:#fff">&#9888;</span>Key risks</h2>
 <ul class="ticks red">{''.join(f"<li>{esc(r)}</li>" for r in rk)}</ul>
 <h2 style="margin-top:22px"><span class="ic" style="background:#111827;color:#fff">&#10010;</span>Overdose signs</h2>
 <ul class="ticks red">{''.join(f"<li>{esc(o_)}</li>" for o_ in od)}</ul></div>
+</div>
+<aside class="ptop-rail">
+{pimg}
 <div class="panel"><h2><span class="ic" style="background:{c['color']};color:#fff">&#128203;</span>Quick facts</h2>{rows}
 <div style="margin-top:14px"><span class="chip green">Sources: {esc(", ".join(d["sources"]))}</span></div></div>
+</aside>
 </div>
 
 <div class="panel"><h2>{cmp_head}</h2>
@@ -769,6 +797,96 @@ def build_quit():
               "about":{"@type":"Drug","name":v["name"]},"audience":{"@type":"Audience","audienceType":"People quitting drugs or supporting someone who is"}}
         w(f"quit/{k}/index.html", shell(f"quit/{k}/index.html", title, desc, body, jsonld=ld))
 
+# ------------------------------------------------- mixing (combinations) ----
+MIX_LEVELS = {  # level -> (badge label, chip class, callout class)
+    "deadly":    ("DEADLY COMBINATION", "red", "red"),
+    "dangerous": ("DANGEROUS COMBINATION", "amber", "amber"),
+    "caution":   ("USE WITH CAUTION", "", "gray"),
+}
+
+def build_mix():
+    if not MIX: return  # stub data — no mix pages until content lands
+    def lvl(m): return MIX_LEVELS.get(m.get("level"), MIX_LEVELS["caution"])
+    def card(m):
+        label, chipcls, _ = lvl(m)
+        return (f'<a class="card" href="/mix/{m["slug"]}/"><div class="meta">'
+                f'<span class="chip {chipcls}">{label}</span></div>'
+                f'<h3>{esc(m["a"])} + {esc(m["b"])}</h3><p>{esc(clip(m["summary"], 140))}</p>'
+                f'<div class="foot">Why it&rsquo;s dangerous &rarr;</div></a>')
+    TIER_TXT = {
+        "deadly":    ("Deadly combinations", "These pairs stop breathing and kill fast — if you're mixing or thinking about it, read this tier first."),
+        "dangerous": ("Dangerous combinations", "Serious risk of overdose, seizures, heart problems or blackouts."),
+        "caution":   ("Use with caution", "Lower immediate risk, but still unpredictable — dose, timing and health all change the outcome."),
+    }
+    secs = []
+    for tier in ("deadly", "dangerous", "caution"):
+        items = [m for m in MIX if m.get("level") == tier]
+        if not items: continue
+        h, sub = TIER_TXT[tier]
+        secs.append(f'<section style="margin-top:32px"><h2 style="font-size:22px">{h}</h2>'
+                    f'<p style="color:var(--muted);font-size:14.5px;margin:6px 0 14px">{sub}</p>'
+                    f'<div class="cards" data-tier="{tier}">{"".join(card(m) for m in items)}</div></section>')
+    hub = ('<div class="wrap"><section class="sec-head" style="padding-top:30px"><div>'
+           '<span class="kicker">Mixing dangers</span><h2>Mixing drugs &mdash; what actually happens</h2>'
+           f'<p>Most fatal overdoses involve more than one substance. These {len(MIX)} plain-language guides explain why specific combinations are dangerous, '
+           'what the mix does to your body, the warning signs of trouble, and exactly what to do.</p></div></section>'
+           '<div class="callout red"><b>If you&rsquo;re mixing or thinking about it, read the deadly tier first.</b>'
+           'Those combinations kill quickly — often before help can arrive. If someone is unresponsive or breathing slowly, '
+           'call emergency services now, then give naloxone if opioids might be involved. <a href="/hotlines/">Hotlines</a></div>'
+           + "".join(secs) + '</div>')
+    itemlist = {"@context":"https://schema.org","@type":"ItemList","name":"Mixing dangers",
+                "numberOfItems":len(MIX),
+                "itemListElement":[{"@type":"ListItem","position":i+1,"name":m["title"],"url":f"{SITE}/mix/{m['slug']}/"} for i,m in enumerate(MIX)]}
+    w("mix/index.html", shell("mix/index.html",
+        "Mixing Drugs — Dangerous Combinations, Signs & What To Do | plugreports",
+        clip(f"{len(MIX)} drug-combination guides ranked by danger: why each mix is risky, warning signs and what to do in an emergency. Read the deadly tier first."),
+        hub, jsonld=[{"@context":"https://schema.org","@type":"CollectionPage","name":"Mixing dangers"}, itemlist,
+                     breadcrumb_ld([("Home","/"),("Mixing","/mix/")])]))
+    for m in MIX:
+        label, chipcls, calcls = lvl(m)
+        cross = ""
+        xlinks = [DRUG_BY_SLUG[s] for s in (m.get("aSlug"), m.get("bSlug")) if s and s in DRUG_BY_SLUG]
+        if xlinks:
+            chips = "".join(f'<a href="/drugs/{x["slug"]}/">{rel_card(x["slug"])}</a>' for x in xlinks)
+            cross = f'<div class="related print-hide"><h2>Full substance profiles</h2><div class="rel-grid">{chips}</div></div>'
+        same = [x for x in MIX if x is not m and x.get("level") == m.get("level")][:4]
+        relchips = ('<a href="/mix/"><span class="mini" style="background:#dc2626">&#9888;</span><span>All mixing dangers</span></a>'
+                    + "".join(f'<a href="/mix/{x["slug"]}/"><span class="mini" style="background:#667085">&#9851;</span><span>{esc(x["a"])} + {esc(x["b"])}</span></a>' for x in same))
+        faqs = [
+            (f"Can you mix {m['a']} and {m['b']}?", m["summary"]),
+            (f"What are the warning signs of mixing {m['a']} and {m['b']}?",
+             "; ".join(m.get("signs", [])[:3]) or m["summary"]),
+            (f"What should you do if someone has mixed {m['a']} and {m['b']}?",
+             " ".join(m.get("whatToDo", [])[:2]) or "Call emergency services immediately."),
+        ]
+        body = f"""<div class="wrap"><article class="article" style="padding-top:26px">
+<span class="chip {chipcls} lvl-badge" data-mix="badge" style="font-size:12px;padding:6px 14px">{label}</span>
+<h1 style="margin-top:12px">{esc(m['title'])}</h1>
+<div class="byline"><span data-mix="updated">Updated {esc(m.get('lastUpdated', TODAY))}</span><span data-mix="sources">Sources: {esc(m.get('sources', ''))}</span></div>
+<div class="callout {calcls}"><b>{esc(m['a'])} + {esc(m['b'])}: the short answer</b><span data-mix="summary">{esc(m['summary'])}</span></div>
+<h2>Why it&rsquo;s dangerous</h2>
+<p data-mix="mechanism">{esc(m['mechanism'])}</p>
+<h2>What happens</h2>
+<ul class="ticks" data-mix="effects">{''.join(f"<li>{esc(e)}</li>" for e in m.get("effects", []))}</ul>
+<h2>Warning signs</h2>
+<ul class="ticks red" data-mix="signs">{''.join(f"<li>{esc(s)}</li>" for s in m.get("signs", []))}</ul>
+<h2>What to do</h2>
+<ul class="checklist" data-mix="whatToDo">{''.join(f"<li>{esc(x)}</li>" for x in m.get("whatToDo", []))}</ul>
+{cross}
+<div class="related print-hide"><h2>More mixing dangers</h2><div class="rel-grid">{relchips}</div></div>
+</article></div>"""
+        title = m.get("seoTitle") or clip(f"{m['title']} — dangers, signs & what to do | plugreports", 60)
+        desc = m.get("seoDesc") or clip(m["summary"])
+        ld = [{"@context":"https://schema.org","@type":"MedicalWebPage",
+               "name":title,"url":f"{SITE}/mix/{m['slug']}/","lastReviewed":m.get("lastUpdated", TODAY),
+               "reviewedBy":{"@type":"Organization","name":"plugreports editorial","url":SITE + "/about/"},
+               "about":{"@type":"Drug","name":f"{m['a']} + {m['b']}"},
+               "audience":{"@type":"Audience","audienceType":"People seeking harm-reduction information"}},
+              {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+                  {"@type":"Question","name":q,"acceptedAnswer":{"@type":"Answer","text":a}} for q,a in faqs]},
+              breadcrumb_ld([("Home","/"),("Mixing","/mix/"),(m["title"],f"/mix/{m['slug']}/")])]
+        w(f"mix/{m['slug']}/index.html", shell(f"mix/{m['slug']}/index.html", title, desc, body, jsonld=ld))
+
 # ------------------------------------------------- help / directory pages ----
 def build_hotlines(es=False):
     qslug = None; qname = ""
@@ -933,6 +1051,9 @@ def build_meta():
     urls += [(f"busts/{b['slug']}/", b.get("date", B)) for b in BUSTS if not b.get("noindex")]
     urls += [(f"topics/{t['slug']}/", t.get("date", B)) for t in TOPICS]
     urls += [(f"quit/{k}/", B) for k in QUIT_SPECS]
+    if MIX:
+        urls += [("mix/", B)]
+        urls += [(f"mix/{m['slug']}/", m.get("lastUpdated", B)) for m in MIX]
     urls += [(f"pharmacies/{p['slug']}/", B) for p in PHARMACIES]
     urls += [(f"rehabs/{r['slug']}/", B) for r in REHABS]
     sm = "\n".join(f'<url><loc>{SITE}/{u}</loc><lastmod>{lm}</lastmod></url>' for u, lm in urls)
@@ -986,6 +1107,10 @@ def build_meta():
     L += ["", "## Busts & seizures"]
     for b in BUSTS:
         if not b.get("noindex"): L.append(f"- [/busts/{b['slug']}/]({SITE}/busts/{b['slug']}/) {b['title']}")
+    if MIX:
+        L += ["", "## Mixing dangers"]
+        L.append(f"- [/mix/]({SITE}/mix/) Hub — {len(MIX)} drug-combination guides ranked by danger")
+        for m in MIX: L.append(f"- [/mix/{m['slug']}/]({SITE}/mix/{m['slug']}/) {m['a']} + {m['b']} — {m.get('level', 'caution')}")
     w("llms.txt", "\n".join(L) + "\n")
     # ---- llms-full.txt: complete compact drug records (GEO flagship artifact) ----
     F = ["# plugreports — full drug records",
@@ -1055,9 +1180,7 @@ def build_lang_drug_pages(lang):
         d = DRUG_BY_SLUG[slug]
         c = CATEGORIES[d["category"]]
         cat_name = CATS_T.get(d["category"], c["name"])
-        ext_img = (d.get("image") or "").strip()
-        img_rel = ext_img if ext_img.startswith("http") else drug_image(slug)
-        img_src = img_rel if img_rel.startswith("http") else "/" + img_rel  # never prefix "/" onto absolute URLs
+        pimg, _img_rel = pimg_html(d, c, o.get("appearance", d["appearance"]))
         rel = related_drugs(d)
         relhtml = "".join(f'<a href="/{lang}/drugs/{r["slug"]}/">{rel_card(r["slug"])}</a>' for r in rel[:4] if r["slug"] in TR) or "".join(f'<a href="/drugs/{r["slug"]}/">{rel_card(r["slug"])}</a>' for r in rel[:4])
         rows = "".join(f'<div class="fact"><b>{k}</b><span>{v}</span></div>' for k, v in [
@@ -1070,22 +1193,26 @@ def build_lang_drug_pages(lang):
             ("Last updated", esc(d["lastUpdated"]))])
         body = f"""
 <div class="wrap">
+<div class="ptop">
+<div class="ptop-main">
 <section class="phead">
 <span class="glyph" style="background:{c['grad']}">{esc(d['name'][0])}</span>
 <div><span class="kicker" style="background:{c['grad']};color:#fff;border:0">{esc(cat_name)}</span>
 <h1 style="margin-top:10px">{esc(d['name'])}</h1>
 <p class="alias">Street names: <b>{esc(", ".join(d["aliases"]))}</b></p></div></section>
-<img class="pimg" src="{img_src}" alt="{esc(d['name'])}" width="510" height="383" style="border-radius:18px;border:1px solid var(--line);box-shadow:var(--shadow);object-fit:cover;max-height:340px" loading="lazy">
 <div class="callout red print-hide"><b>Overdose? Act now.</b> Call emergency services. Give naloxone for opioid-like signs. <a href="/{lang}/hotlines/">Hotlines</a></div>
-<div class="profile-grid">
 <div class="panel"><h2><span class="ic" style="background:{c['color']};color:#fff">&#9889;</span>What it does</h2>
 <ul class="ticks">{''.join(f"<li>{esc(e)}</li>" for e in o["effects"])}</ul>
 <h2 style="margin-top:22px"><span class="ic" style="background:#dc2626;color:#fff">&#9888;</span>Key risks</h2>
 <ul class="ticks red">{''.join(f"<li>{esc(r)}</li>" for r in o["risks"])}</ul>
 <h2 style="margin-top:22px"><span class="ic" style="background:#111827;color:#fff">&#10010;</span>Overdose signs</h2>
 <ul class="ticks red">{''.join(f"<li>{esc(x)}</li>" for x in o["overdoseSigns"])}</ul></div>
+</div>
+<aside class="ptop-rail">
+{pimg}
 <div class="panel"><h2><span class="ic" style="background:{c['color']};color:#fff">&#128203;</span>Quick facts</h2>{rows}
 <div style="margin-top:14px"><span class="chip green">Sources: {esc(", ".join(d["sources"]))}</span></div></div>
+</aside>
 </div>
 <div class="related print-hide"><h2>You may also want to know about</h2>
 <div class="rel-grid">{relhtml}
@@ -1177,7 +1304,7 @@ def build_indexes():
 def main():
     build_index(); build_categories(); build_categories_es(); build_drugs(); build_news(); build_busts()
     build_indexes()
-    build_topics(); build_quit(); build_hotlines(); build_sentencing()
+    build_topics(); build_quit(); build_mix(); build_hotlines(); build_sentencing()
     build_directory("pharmacies", PHARMACIES, "verified pharmacy",
         "Verified Online Pharmacies — USA, Canada, UK, EU & Worldwide | plugreports",
         "How to verify a licensed online pharmacy in your country — NABP & PharmacyChecker (US/CA), GPhC (UK), EU safety logo, and how to spot counterfeit pill mills before you buy medication online.", "&#128138;")
@@ -1192,13 +1319,13 @@ def main():
                 "busts":[b["slug"] for b in BUSTS], "topics":[t["slug"] for t in TOPICS],
                 "categories":[k for k in CATEGORIES],
                 "pharmacies":[p["slug"] for p in PHARMACIES], "rehabs":[r["slug"] for r in REHABS],
-                "quit":[k for k in QUIT_SPECS]}
+                "quit":[k for k in QUIT_SPECS], "mix":[m["slug"] for m in MIX]}
     w("_static.json", json.dumps(manifest))
     w("_dynamic.html", shell("_dynamic.html", "plugreports",
       "Live content", '<div class="wrap" id="dyn" style="padding:44px 20px;min-height:50vh"><p>Loading\u2026</p></div>',
-      extra_head='<script src="/assets/js/render.js?v=9" defer></script>', canonical=SITE + "/"))
+      extra_head='<script src="/assets/js/render.js?v=10" defer></script>', canonical=SITE + "/"))
     print(f"Built {len(DRUGS)} drug pages, {len(CATEGORIES)} categories, {len(TOPICS)} topics, "
-          f"{len(QUIT_SPECS)} quit pages, {len(NEWS)} news, {len(BUSTS)} busts into {PUB}")
+          f"{len(QUIT_SPECS)} quit pages, {len(NEWS)} news, {len(BUSTS)} busts, {len(MIX)} mix pages into {PUB}")
 
 if __name__ == "__main__":
     main()

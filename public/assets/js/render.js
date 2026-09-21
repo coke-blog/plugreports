@@ -174,6 +174,30 @@
       '<a href="/pharmacies/"><span class="mini" style="background:#3b82f6">Rx</span><span>Verified pharmacies</span></a></div></div></div>';
   }
 
+  function mixPage(it) {
+    var LV = {deadly: ['DEADLY COMBINATION', 'red', 'red'], dangerous: ['DANGEROUS COMBINATION', 'amber', 'amber'], caution: ['USE WITH CAUTION', '', 'gray']};
+    var lv = LV[it.level] || LV.caution;
+    function xlinks(sl) {
+      if (!sl) return '';
+      return '<a href="/drugs/' + esc(sl) + '/"><span class="mini" style="background:#d97706">' + esc((sl[0] || '?').toUpperCase()) + '</span><span>' + esc(sl.replace(/-/g, ' ')) + '</span></a>';
+    }
+    var cross = (it.aSlug || it.bSlug) ?
+      '<div class="related print-hide"><h2>Full substance profiles</h2><div class="rel-grid">' + xlinks(it.aSlug) + xlinks(it.bSlug) + '</div></div>' : '';
+    return '<article class="article" style="padding-top:26px">' +
+      '<span class="chip lvl-badge ' + lv[1] + '" style="font-size:12px;padding:6px 14px">' + lv[0] + '</span>' +
+      '<h1 style="margin-top:12px">' + esc(it.title || ((it.a || '') + ' + ' + (it.b || ''))) + '</h1>' +
+      '<div class="byline"><span>Updated ' + esc(it.lastUpdated || '') + '</span><span>Sources: ' + esc(it.sources || '') + '</span></div>' +
+      (it.summary ? '<div class="callout ' + lv[2] + '"><b>' + esc(it.a || '') + ' + ' + esc(it.b || '') + ': the short answer</b>' + esc(it.summary) + '</div>' : '') +
+      (it.mechanism ? '<h2>Why it&rsquo;s dangerous</h2><p>' + esc(it.mechanism) + '</p>' : '') +
+      (it.effects && it.effects.length ? '<h2>What happens</h2>' + ticks(it.effects) : '') +
+      (it.signs && it.signs.length ? '<h2>Warning signs</h2>' + ticks(it.signs, 'red') : '') +
+      (it.whatToDo && it.whatToDo.length ? '<h2>What to do</h2><ul class="checklist">' + it.whatToDo.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>' : '') +
+      cross +
+      '<div class="related print-hide"><h2>More mixing dangers</h2><div class="rel-grid">' +
+      '<a href="/mix/"><span class="mini" style="background:#dc2626">&#9888;</span><span>All mixing dangers</span></a>' +
+      '<a href="/hotlines/"><span class="mini" style="background:#dc2626">&#9742;</span><span>Hotlines</span></a></div></div></article>';
+  }
+
   function quitPage(it) {
     return '<article class="article" style="padding-top:26px">' +
       '<span class="kicker green">DAY-BY-DAY TIMELINE</span>' +

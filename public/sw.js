@@ -1,5 +1,5 @@
-const C='pr-v9';
-self.addEventListener('install',e=>{self.skipWaiting();e.waitUntil(caches.open(C).then(c=>c.addAll(['/','/assets/css/style.css','/assets/js/app.js?v=9','/assets/img/logo.svg','/manifest.webmanifest'])))});
+const C='pr-v10';
+self.addEventListener('install',e=>{self.skipWaiting();e.waitUntil(caches.open(C).then(c=>c.addAll(['/','/assets/css/style.css','/assets/js/app.js?v=10','/assets/img/logo.svg','/manifest.webmanifest'])))});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==C).map(k=>caches.delete(k)))).then(()=>clients.claim()))});
 self.addEventListener('fetch',e=>{
  if(e.request.method!=='GET'||!e.request.url.startsWith(self.location.origin))return;

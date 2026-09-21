@@ -129,6 +129,7 @@ ul.ticks.green li::before{background:var(--green)}
 .callout.red{background:var(--red-soft);border-color:var(--red-line);color:#7f1d1d}
 .callout.amber{background:var(--amber-soft);border-color:var(--amber-line);color:#78350f}
 .callout.green{background:var(--green-soft);border-color:#bbf7d0;color:#14532d}
+.callout.gray{background:#f9fafb;border-color:var(--line);color:#344054}
 .callout b{display:block;margin-bottom:4px;font-size:15px}
 .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin:18px 0}
 .stat{background:var(--amber-soft);border:1px solid var(--amber-line);border-radius:14px;padding:16px;text-align:center}
@@ -294,14 +295,37 @@ a.chip:hover{border-color:var(--amber);text-decoration:none;color:var(--amber-70
 .spill.on{background:var(--ink);color:#fff;border-color:var(--ink)}
 .spill:hover:not(.on){border-color:var(--amber);color:var(--amber-700)}
 
-/* ---------- desktop: square drug image floats beside quick facts ---------- */
-@media(min-width:921px){
-  .pimg{float:right;width:340px;margin:0 0 20px 28px}
-  .profile-grid{clear:none}
-}
-@media(max-width:920px){
-  .pimg{width:100%;margin:14px 0}
-}
+/* ---------- profile top zone: image contained beside quick facts ---------- */
+.ptop{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(280px,.85fr);gap:20px;margin:22px 0;align-items:start}
+.ptop-main{min-width:0}
+.ptop-rail{display:flex;flex-direction:column;gap:20px;min-width:0}
+.ptop .pimg{width:100%;margin:0}
+.ptop .panel{margin:0}
+@media(max-width:920px){.ptop{grid-template-columns:1fr}}
+
+/* ---------- molecular-formula image placeholder ---------- */
+.pimg-formula{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;
+  aspect-ratio:510/383;max-height:340px;width:100%;overflow:hidden;
+  border-radius:18px;border:1px solid var(--line);box-shadow:var(--shadow);
+  background:
+    radial-gradient(150px 150px at 84% 16%,rgba(245,158,11,.13),transparent 70%),
+    radial-gradient(120px 120px at 14% 82%,rgba(180,83,9,.10),transparent 70%),
+    linear-gradient(150deg,#faf8f3,#f2eee6)}
+.pimg-formula::before{content:"";position:absolute;inset:0;opacity:.55;pointer-events:none;
+  background-image:
+    radial-gradient(circle at 22% 26%,#d8cfbe 3px,transparent 3.6px),
+    radial-gradient(circle at 34% 38%,#e2dac9 2.4px,transparent 3px),
+    radial-gradient(circle at 78% 68%,#d8cfbe 3px,transparent 3.6px),
+    radial-gradient(circle at 66% 80%,#e2dac9 2.4px,transparent 3px),
+    radial-gradient(circle at 82% 30%,#e2dac9 2.4px,transparent 3px),
+    linear-gradient(52deg,transparent 49.6%,#e2dac9 49.6%,#e2dac9 50.4%,transparent 50.4%)}
+.pimg-formula::after{content:"";position:absolute;top:14px;right:14px;width:34px;height:34px;opacity:.6;pointer-events:none;
+  border:2px solid #d8cfbe;border-top-color:transparent;border-left-color:transparent;border-radius:50%;transform:rotate(-20deg)}
+.pf-formula{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:clamp(22px,3.2vw,34px);
+  font-weight:700;color:var(--ink);letter-spacing:.02em;position:relative;z-index:1;text-align:center;padding:0 16px}
+.pf-letter{width:76px;height:76px;border-radius:20px;display:grid;place-items:center;font-size:30px;font-weight:800;color:#fff;
+  position:relative;z-index:1;box-shadow:var(--shadow)}
+.pf-caption{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);position:relative;z-index:1}
 
 
 /* ---------- breaking news banner ---------- */
@@ -317,7 +341,13 @@ a.chip:hover{border-color:var(--amber);text-decoration:none;color:var(--amber-70
 /* ---------- breaking carousel ---------- */
 .breaking .b-slides{position:relative}
 .b-slide{display:none;animation:bin .5s ease}
-.b-slide.on{display:block}
+.b-slide.on{display:grid;grid-template-columns:300px 1fr;gap:22px;align-items:center}
+.b-slide>img{width:100%;height:140px;object-fit:cover;border-radius:12px;border:1px solid var(--line)}
+.b-slide>div:only-child{grid-column:1/-1}
+@media(max-width:640px){
+  .b-slide.on{grid-template-columns:1fr}
+  .b-slide>img{height:110px}
+}
 @keyframes bin{from{opacity:0;transform:translateX(24px)}to{opacity:1;transform:none}}
 .b-top{display:flex;align-items:center;gap:14px;margin-bottom:4px}
 .b-country{display:inline-block;background:#fff;border:1px solid var(--red-line);color:var(--red-700);font-size:12px;font-weight:800;padding:4px 10px;border-radius:6px;letter-spacing:.04em}
