@@ -28,6 +28,23 @@ BUSTS = [
   summary="Authorities have executed the largest drug bust in Australian history, uncovering nearly a billion dollars' worth of cocaine at a rural property in western Sydney. Aerial footage shows dozens of shipping containers on the property being examined by investigators.",
   drugsInvolved=["cocaine"],
   sentencing="NSW: supplying a large commercial quantity of cocaine carries up to life imprisonment; Commonwealth importation charges can add further decades."),
+
+ # --- Thin source-link stubs: noindex,follow + excluded from sitemap until verified ---
+ dict(slug="bust-src-tiktok-1", title="Bust report (details pending verification)", date="2026-09-14",
+  location="TBC", agency="TBC", confirmed=False, noindex=True,
+  sourceUrl="https://vt.tiktok.com/ZSqQyGxJs/",
+  summary="Source link submitted by editor (TikTok video). Details — location, agency, substances, quantities, arrest/sentencing — pending caption verification.",
+  drugsInvolved=[], sentencing="Pending — confirm from source before publishing."),
+ dict(slug="bust-src-tiktok-2", title="Bust report (details pending verification)", date="2026-09-14",
+  location="TBC", agency="TBC", confirmed=False, noindex=True,
+  sourceUrl="https://vt.tiktok.com/ZSqQyprWP/",
+  summary="Source link submitted by editor (TikTok video). Details pending caption verification.",
+  drugsInvolved=[], sentencing="Pending — confirm from source before publishing."),
+ dict(slug="bust-src-tiktok-3", title="Bust report (details pending verification)", date="2026-09-14",
+  location="TBC", agency="TBC", confirmed=False, noindex=True,
+  sourceUrl="https://vt.tiktok.com/ZSqQyqJMX/",
+  summary="Source link submitted by editor (TikTok video). Details pending caption verification.",
+  drugsInvolved=[], sentencing="Pending — confirm from source before publishing."),
 ]
 
 NEWS = [

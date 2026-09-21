@@ -1,0 +1,15 @@
+# Cloudflare Pages headers — plugreports.com
+# Default: HTML pages are revalidated quickly (content updates deploy often).
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Cache-Control: public, max-age=300
+
+# Static assets: filenames are NOT content-hashed, so cap at 1 week (not immutable-year).
+/assets/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Cache-Control: public, max-age=604800
+
+# /media/* is served by a Pages Function (functions/media/[[path]].js) which sets
+# its own caching headers — intentionally left to the function.

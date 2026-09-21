@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """plugreports.com static site generator.
 Reads src/data_*.py and emits the full SEO-hardened site into public/."""
-import html, json, os, sys
+import datetime, html, json, os, sys
+from email.utils import format_datetime
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from data_drugs import DRUGS
 from data_categories import CATEGORIES
@@ -21,9 +22,19 @@ _apply_overrides()
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PUB  = os.path.join(ROOT, "public")
 SITE = "https://plugreports.com"
-TODAY = "2026-09-14"
+TODAY = datetime.date.today().isoformat()  # actual build date — used for sitemap/lastmod fallback
+LANG_LIST = ("de", "hi", "no", "pl", "fr")
 
 def esc(s): return html.escape(str(s), quote=True)
+def clip(s, n=155):
+    """Trim a meta description to <=n chars at a word boundary."""
+    s = " ".join(str(s or "").split())
+    if len(s) <= n: return s
+    return s[:n-1].rsplit(" ", 1)[0].rstrip(" ,;:.—-") + "…"
+def rfc822(iso):
+    try: dt = datetime.datetime.strptime(str(iso)[:10], "%Y-%m-%d").replace(hour=12, tzinfo=datetime.timezone.utc)
+    except Exception: dt = datetime.datetime.now(datetime.timezone.utc)
+    return format_datetime(dt)
 def w(path, content):
     fp = os.path.join(PUB, path)
     os.makedirs(os.path.dirname(fp), exist_ok=True)
@@ -137,11 +148,48 @@ NAV = [
  ("/rehabs/", "Rehabs", "rehabs"), ("/about/", "About", "about"),
 ]
 
-def shell(path, title, desc, body, jsonld=None, canonical=None, extra_head="", ogimage=None, lang="en", es_url=None, en_url=None):
+def _alt_set(en_url, **locales):
+    """Build an hreflang set: en + any locale URLs that really exist + x-default -> EN."""
+    a = {"en": en_url}
+    a.update({k: v for k, v in locales.items() if v})
+    a["x-default"] = en_url
+    return a
+
+def home_alts():  return _alt_set(f"{SITE}/", es=f"{SITE}/es/", **{ln: f"{SITE}/{ln}/" for ln in LANG_LIST})
+def hotline_alts(): return _alt_set(f"{SITE}/hotlines/", es=f"{SITE}/es/hotlines/", **{ln: f"{SITE}/{ln}/hotlines/" for ln in LANG_LIST})
+
+def drug_alts(slug):
+    from data_es import ES_DRUGS
+    from data_i18n import LANGS
+    loc = {}
+    if slug in ES_DRUGS: loc["es"] = f"{SITE}/es/drugs/{slug}/"
+    for ln in LANG_LIST:
+        if slug in LANGS[ln]["drugs"]: loc[ln] = f"{SITE}/{ln}/drugs/{slug}/"
+    return _alt_set(f"{SITE}/drugs/{slug}/", **loc)
+
+def cat_alts(k):
+    from data_es import ES_DRUGS
+    from data_i18n import LANGS
+    loc = {}
+    if any(d["slug"] in ES_DRUGS for d in DRUGS if d["category"] == k):
+        loc["es"] = f"{SITE}/es/categories/{k}/"
+    for ln in LANG_LIST:
+        if any(DRUG_BY_SLUG[sl]["category"] == k for sl in LANGS[ln]["drugs"] if sl in DRUG_BY_SLUG):
+            loc[ln] = f"{SITE}/{ln}/categories/{k}/"
+    return _alt_set(f"{SITE}/categories/{k}/", **loc)
+
+ORG_LD = {"@context":"https://schema.org","@type":"Organization","name":"plugreports",
+          "url":"https://plugreports.com",
+          "logo":{"@type":"ImageObject","url":"https://plugreports.com/assets/img/logo.svg"},
+          "sameAs":[u for u in (SETTINGS.get("reddit"), SETTINGS.get("quora")) if u]}
+PUBLISHER_LD = {"@type":"Organization","name":"plugreports",
+                "logo":{"@type":"ImageObject","url":SITE + "/assets/img/logo.svg"}}
+
+def shell(path, title, desc, body, jsonld=None, canonical=None, extra_head="", ogimage=None, lang="en", alts=None, ogtype="website", robots=None):
     canon = canonical or (SITE + ("/" if path == "index.html" else "/" + path.replace("index.html", "")))
-    alt = ""
-    if es_url: alt += f'<link rel="alternate" hreflang="es" href="{es_url}">'
-    if lang == "es" and en_url: alt += f'<link rel="alternate" hreflang="en" href="{en_url}">'
+    alts = dict(alts) if alts else {"en": canon, "x-default": canon}
+    alts.setdefault("x-default", alts.get("en", canon))
+    alt = "".join(f'<link rel="alternate" hreflang="{l}" href="{u}">' for l, u in alts.items())
     crumbs = ""
     parts = [p for p in path.split("/") if p and p != "index.html"]
     if parts:
@@ -154,9 +202,6 @@ def shell(path, title, desc, body, jsonld=None, canonical=None, extra_head="", o
                 links.append(f'<span>{esc(p.replace("-"," ").title())}</span>')
         crumbs = ('<div class="wrap"><nav class="crumbs print-hide"><a href="/">Home</a> / '
                   + " / ".join(links) + f' / <span>{esc(title.split("—")[0].strip())}</span></nav></div>')
-    langlinks = "".join(
-        f'<link rel="alternate" hreflang="{l}" href="{canon}?lang={l}">' for l in
-        ["en","es","zh","hi","ar","pt","ru","ja","de","fr"])
     navlinks = "".join(
         f'<a href="{u}" class="{"hot" if k=="hotline" else ""}">{t}</a>' for u, t, k in NAV)
     ld = f'<script type="application/ld+json">{json.dumps(jsonld, ensure_ascii=False)}</script>' if jsonld else ""
@@ -165,9 +210,9 @@ def shell(path, title, desc, body, jsonld=None, canonical=None, extra_head="", o
     if SETTINGS.get("clarity"): ld += '<script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","' + esc(SETTINGS["clarity"]) + '")</script>'
     if SETTINGS.get("ga"): ld += '<script async src="https://www.googletagmanager.com/gtag/js?id=' + esc(SETTINGS["ga"]) + '"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date());gtag("config","' + esc(SETTINGS["ga"]) + '")</script>' 
     if path.split("/")[0] in ("busts","news","drugs","topics","quit","hotlines","pharmacies","rehabs","sentencing","index.html"):
-        ld += '<script src="/assets/js/hydrate.js?v=8" defer></script>'
+        ld += '<script src="/assets/js/hydrate.js?v=9" defer></script>'
         if path == "index.html":
-            ld += '<script src="/assets/js/breaking.js?v=8" defer></script>' 
+            ld += '<script src="/assets/js/breaking.js?v=9" defer></script>'
     return f"""<!DOCTYPE html>
 <html lang="{lang}">
 <head>
@@ -176,8 +221,8 @@ def shell(path, title, desc, body, jsonld=None, canonical=None, extra_head="", o
 <title>{esc(title)}</title>
 <meta name="description" content="{esc(desc)}">
 <link rel="canonical" href="{canon}">
-{langlinks}{alt}<link rel="alternate" hreflang="x-default" href="{canon}">
-<meta property="og:type" content="website">
+{alt}
+<meta property="og:type" content="{ogtype}">
 <meta property="og:site_name" content="plugreports">
 <meta property="og:title" content="{esc(title)}">
 <meta property="og:description" content="{esc(desc)}">
@@ -187,7 +232,7 @@ def shell(path, title, desc, body, jsonld=None, canonical=None, extra_head="", o
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#f59e0b">
-<meta name="robots" content="max-image-preview:large">
+<meta name="robots" content="{robots or 'max-image-preview:large'}">
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="icon" href="/assets/img/logo.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -235,7 +280,7 @@ def shell(path, title, desc, body, jsonld=None, canonical=None, extra_head="", o
 <p data-i18n="ageBody">This site contains educational information about drugs and harm reduction. It is not medical or legal advice. You must be of legal age or accessing with intent to help yourself or someone else.</p>
 <div class="row"><button class="btn btn-red" data-gate-yes data-i18n="ageYes">I understand — enter</button>
 <a class="btn btn-ghost" href="https://www.google.com" data-i18n="ageNo">Leave</a></div></div></div>
-<script src="/assets/js/app.js?v=8"></script>
+<script src="/assets/js/app.js?v=9"></script>
 </body></html>"""
 
 def breadcrumb_ld(parts):
@@ -364,16 +409,17 @@ def build_index(es=False):
         body = body.replace('href="/hotlines/"', 'href="/es/hotlines/"').replace('href="/topics/what-actually-happens-when-you-quit/"', 'href="/es/hotlines/"')
         w("es/index.html", shell("es/index.html",
             "plugreports — Biblioteca de información sobre drogas de calle: efectos, riesgos, sobredosis, líneas de ayuda",
-            f"Biblioteca visual de reducción de riesgos: cientos de perfiles de drogas (efectos, riesgos, signos de sobredosis, precios), noticias, incautaciones y líneas de ayuda verificadas.",
-            body, lang="es", canonical=f"{SITE}/es/", en_url=f"{SITE}/",
+            clip("Biblioteca visual de reducción de riesgos: cientos de perfiles de drogas (efectos, riesgos, signos de sobredosis, precios), noticias, incautaciones y líneas de ayuda verificadas."),
+            body, lang="es", canonical=f"{SITE}/es/", alts=home_alts(),
             extra_head=f"<script>window.DRUG_INDEX={json.dumps(idx, ensure_ascii=False)};</script>"))
         return
-    ld = {"@context":"https://schema.org","@type":"WebSite","name":"plugreports","url":SITE,
-          "description":"Harm-reduction library of street drug profiles, news, busts, hotlines and verified help."}
+    ld = [{"@context":"https://schema.org","@type":"WebSite","name":"plugreports","url":SITE,
+           "description":"Harm-reduction library of street drug profiles, news, busts, hotlines and verified help."},
+          ORG_LD]
     w("index.html", shell("index.html",
         "plugreports — Street Drug Identifier: Effects, Overdose Signs, Street Prices & Hotlines",
-        f"Identify street drugs fast: hundreds of plain-English profiles with effects, overdose signs, street prices and legal status — plus drug busts, news, quitting day-by-day timelines, 24/7 hotlines and verified rehabs across the USA, Canada, Europe, Australia and Africa.",
-        body, jsonld=ld, es_url=f"{SITE}/es/",
+        clip(f"Identify street drugs fast: {len(DRUGS)} plain-English profiles with effects, overdose signs, street prices and legal status — plus drug news, busts, quitting timelines and 24/7 hotlines."),
+        body, jsonld=ld, alts=home_alts(),
         extra_head=f"<script>window.DRUG_INDEX={json.dumps(idx, ensure_ascii=False)};</script>"))
 
 # ------------------------------------------------------------- drug pages ----
@@ -401,6 +447,7 @@ def build_drugs(es=False):
         lg = o.get("legalStatus", d["legalStatus"]); sch = o.get("schedule", d["schedule"])
         ext_img = (d.get("image") or "").strip()
         img_rel = ext_img if ext_img.startswith("http") else drug_image(d["slug"])
+        img_src = img_rel if img_rel.startswith("http") else "/" + img_rel  # never prefix "/" onto absolute URLs
         rel = related_drugs(d)
         rel_entries = d.get("related") or []
         if rel_entries:
@@ -462,7 +509,7 @@ def build_drugs(es=False):
 <h1 style="margin-top:10px">{esc(d['name'])}</h1>
 <p class="alias">Street names: <b>{esc(", ".join(d["aliases"]))}</b></p></div></section>
 
-<img class="pimg" src="/{img_rel}" alt="{esc(d['name'])} — {esc(app_)}" style="border-radius:18px;border:1px solid var(--line);box-shadow:var(--shadow);object-fit:cover;max-height:340px" loading="lazy">
+<img class="pimg" src="{img_src}" alt="{esc(d['name'])} — {esc(app_)}" width="510" height="383" style="border-radius:18px;border:1px solid var(--line);box-shadow:var(--shadow);object-fit:cover;max-height:340px" loading="lazy">
 
 <div class="callout red print-hide"><b>Overdose? Act now.</b> Call emergency services — say "unresponsive, not breathing". Give naloxone for opioid-like signs. <a href="/hotlines/">Hotlines</a></div>
 
@@ -491,24 +538,24 @@ def build_drugs(es=False):
 </div>"""
         if es:
             title = f"{d['name']}: efectos, riesgos, signos de sobredosis y precio | plugreports"
-            desc = f"{d['name']} ({', '.join(d['aliases'][:3])}) — {cat_name}. Efectos: {'; '.join(fx[:2])}. Riesgos: {'; '.join(rk[:2])}. Información de reducción de riesgos actualizada {d['lastUpdated']}."
+            desc = clip(f"{d['name']} ({', '.join(d['aliases'][:3])}) — {cat_name}. Efectos: {'; '.join(fx[:2])}. Riesgos: {'; '.join(rk[:2])}. Actualizado {d['lastUpdated']}.")
             out = f"es/drugs/{d['slug']}/index.html"
-            w(out, shell(out, title, desc, body, lang="es", canonical=f"{SITE}/es/drugs/{d['slug']}/", en_url=f"{SITE}/drugs/{d['slug']}/"))
+            w(out, shell(out, title, desc, body, lang="es", canonical=f"{SITE}/es/drugs/{d['slug']}/", alts=drug_alts(d["slug"])))
         else:
-            title = d.get("seoTitle") or f"{d['name']}: Effects, Risks, Overdose Signs, Street Price & Legal Status | plugreports"
-            desc = d.get("seoDesc") or f"{d['name']} ({', '.join(d['aliases'][:3])}) — {cat_name}. Effects: {'; '.join(d['effects'][:2])}. Risks: {'; '.join(d['risks'][:2])}. Overdose signs, street price and legal status, updated {d['lastUpdated']}."
+            title = d.get("seoTitle") or f"{d['name']}: Effects, Risks & Overdose Signs | plugreports"
+            desc = d.get("seoDesc") or clip(f"{d['name']} ({', '.join(d['aliases'][:3])}) — {cat_name}. Effects: {'; '.join(d['effects'][:2])}. Risks: {'; '.join(d['risks'][:2])}. Overdose signs, street price & legal status.")
             ld = [{"@context":"https://schema.org","@type":"MedicalWebPage",
                    "name":title,"url":f"{SITE}/drugs/{d['slug']}/","lastReviewed":d["lastUpdated"],
+                   "reviewedBy":{"@type":"Organization","name":"plugreports editorial","url":SITE + "/about/"},
                    "about":{"@type":"Drug","name":d["name"],"alternateName":d["aliases"],
                             "drugClass":cat_name,"legalStatus":d["legalStatus"]},
                    "audience":{"@type":"Audience","audienceType":"People seeking harm-reduction information"},
                    "medicalAudience":{"@type":"MedicalAudience","audienceType":"Patient"}},
-                  breadcrumb_ld([("Home","/"),(cat_name,f"/categories/{d['category']}/"),(d["name"],"")]),
+                  breadcrumb_ld([("Home","/"),(cat_name,f"/categories/{d['category']}/"),(d["name"],f"/drugs/{d['slug']}/")]),
                   {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
                       {"@type":"Question","name":q,"acceptedAnswer":{"@type":"Answer","text":a}} for q,a in faqs]}]
-            es_url = f"{SITE}/es/drugs/{d['slug']}/" if d["slug"] in ES_DRUGS else None
             og = img_rel if img_rel.startswith("http") else (f"{SITE}/{img_rel}" if "drugs/" in img_rel else None)
-            w(f"drugs/{d['slug']}/index.html", shell(f"drugs/{d['slug']}/index.html", title, desc, body, jsonld=ld, ogimage=og, es_url=es_url))
+            w(f"drugs/{d['slug']}/index.html", shell(f"drugs/{d['slug']}/index.html", title, desc, body, jsonld=ld, ogimage=og, alts=drug_alts(d["slug"])))
 
 
 def build_categories():
@@ -530,11 +577,14 @@ def build_categories():
 <a href="/topics/what-is-xylazine/"><span class="mini" style="background:#b45309">&#128218;</span><span>Xylazine (Tranq) explainer</span></a>
 <a href="/topics/fentanyl-numbers/"><span class="mini" style="background:#dc2626">&#128218;</span><span>Fentanyl: the numbers</span></a>
 <a href="/hotlines/"><span class="mini" style="background:#16a34a">&#9742;</span><span>Hotlines</span></a></div></div></div>"""
-        title = f"{c['name']} — Effects, Risks & Street Info ({len(items)} drugs) | plugreports"
-        desc = f"{c['tagline']} {len(items)} harm-reduction profiles: effects, overdose signs, street prices, legal status."
-        es_hub = f"{SITE}/es/categories/{k}/" if any(d["slug"] in ES_DRUGS for d in DRUGS if d["category"] == k) else None
+        title = f"{c['name']} — Effects, Risks & Street Prices | plugreports"
+        desc = clip(f"{c['tagline']} {len(items)} harm-reduction profiles: effects, overdose signs, street prices, legal status.")
+        itemlist = {"@context":"https://schema.org","@type":"ItemList","name":f"{c['name']} — drug profiles",
+                    "numberOfItems":len(items),
+                    "itemListElement":[{"@type":"ListItem","position":i+1,"name":x["name"],"url":f"{SITE}/drugs/{x['slug']}/"} for i,x in enumerate(items)]}
         w(f"categories/{k}/index.html", shell(f"categories/{k}/index.html", title, desc, body,
-          jsonld=[{"@context":"https://schema.org","@type":"CollectionPage","name":title}, breadcrumb_ld([("Home","/"),(c["name"],"")])], es_url=es_hub))
+          jsonld=[{"@context":"https://schema.org","@type":"CollectionPage","name":title}, itemlist,
+                  breadcrumb_ld([("Home","/"),(c["name"],f"/categories/{k}/")])], alts=cat_alts(k)))
 
 # ---------------------------------------------------- news / busts/topics ----
 def build_news():
@@ -542,7 +592,7 @@ def build_news():
 <span class="badge-live">{esc(n["tag"]).upper()}</span><span class="chip">{esc(n["date"])}</span></div>
 <h3>{esc(n['title'])}</h3><p>{esc(n['summary'])}</p><div class="foot">Read &rarr;</div></a>''' for n in NEWS)
     w("news/index.html", shell("news/index.html", "Drug News & Supply Alerts | plugreports",
-      "Drug news, adulterant alerts and supply trends: nitazenes, xylazine, high-dose pills, counterfeit pharmaceuticals — with sources.",
+      clip("Drug news, adulterant alerts and supply trends: nitazenes, xylazine, high-dose pills, counterfeit pharmaceuticals — with sources."),
       f'<div class="wrap"><section class="sec-head" style="padding-top:30px"><div><span class="kicker">Newsroom</span><h2>Drug news & alerts</h2><p>Sourced from NIDA, DEA, EMCDDA, ONS and drug-checking services. Subscribe via <a href="/rss.xml">RSS</a>.</p></div></div><div class="cards">{idx_cards}</div></div>'))
     for n in NEWS:
         body = "".join(f"<p>{p}</p>" for p in n["body"])
@@ -554,9 +604,10 @@ def build_news():
 <p class="lede" style="font-size:18px">{esc(n['summary'])}</p>{body}
 {help_links(n.get("drugsInvolved", []), [("All drug news", "/news/", "#dc2626")], related=n.get("related"))}</article></div>"""
         ld = {"@context":"https://schema.org","@type":"NewsArticle","headline":n["title"],
+              "image":n.get("image") or f"{SITE}/assets/img/og.png",
               "datePublished":n["date"],"dateModified":n["date"],"author":{"@type":"Organization","name":"plugreports"},
-              "publisher":{"@type":"Organization","name":"plugreports"},"mainEntityOfPage":f"{SITE}/news/{n['slug']}/"}
-        w(f"news/{n['slug']}/index.html", shell(f"news/{n['slug']}/index.html", f"{n['title']} | plugreports", n["summary"], full, jsonld=ld))
+              "publisher":PUBLISHER_LD,"mainEntityOfPage":f"{SITE}/news/{n['slug']}/"}
+        w(f"news/{n['slug']}/index.html", shell(f"news/{n['slug']}/index.html", f"{n['title']} | plugreports", clip(n["summary"]), full, jsonld=ld, ogtype="article"))
 
 def build_busts():
     cards = "".join(f'''<a class="card" href="/busts/{b['slug']}/"><div class="meta">
@@ -564,7 +615,7 @@ def build_busts():
 <span class="chip">{esc(b["date"])}</span></div><h3>{esc(b['title'])}</h3><p>{esc(b['summary'])}</p>
 <div class="foot">{esc(b["location"])} · {esc(b["agency"])} &rarr;</div></a>''' for b in BUSTS)
     w("busts/index.html", shell("busts/index.html", "Drug Busts & Seizures Tracker | plugreports",
-      "Recent drug busts and seizures worldwide: location, agency, substances, quantities and sentencing exposure. Pending items are marked until editor-verified.",
+      clip("Recent drug busts and seizures worldwide: location, agency, substances, quantities and sentencing exposure. Pending items are marked until editor-verified."),
       f'''<div class="wrap"><section class="sec-head" style="padding-top:30px"><div>
 <span class="kicker">Enforcement tracker</span><h2>Busts & seizures</h2>
 <p>Each report lists agency, location, substances involved and potential sentencing. Items marked <b>pending verification</b> are awaiting editor confirmation from source material — we never publish unverified seizure claims as fact.</p></div></div>
@@ -587,7 +638,12 @@ def build_busts():
 {help_links(b.get("drugsInvolved", []), [("How to read bust news", "/topics/drug-busts-this-week/", "#b45309")], related=b.get("related"))}
 <div class="callout amber"><b>Why busts matter for safety</b>Major seizures destabilize local supply — potency swings for weeks afterwards. See our guide: <a href="/topics/drug-busts-this-week/">how to read bust news</a>.</div>
 </article></div>"""
-        w(f"busts/{b['slug']}/index.html", shell(f"busts/{b['slug']}/index.html", f"{b['title']} | plugreports", b["summary"][:155], body))
+        ld = {"@context":"https://schema.org","@type":"NewsArticle","headline":b["title"],
+              "image":b.get("image") or f"{SITE}/assets/img/og.png",
+              "datePublished":b["date"],"dateModified":b["date"],"author":{"@type":"Organization","name":"plugreports"},
+              "publisher":PUBLISHER_LD,"mainEntityOfPage":f"{SITE}/busts/{b['slug']}/"}
+        robots = "noindex,follow" if b.get("noindex") else None
+        w(f"busts/{b['slug']}/index.html", shell(f"busts/{b['slug']}/index.html", f"{b['title']} | plugreports", clip(b["summary"]), body, jsonld=ld, ogtype="article", robots=robots))
 
 
 import html as _html
@@ -648,7 +704,7 @@ def build_topics():
 <span class="chip red">GUIDE</span><span class="chip">{esc(t["read"])}</span><span class="chip">{esc(t["date"])}</span></div>
 <h3>{esc(t['title'])}</h3><p>{esc(t['desc'])}</p><div class="foot">Read guide &rarr;</div></a>''' for t in TOPICS)
     w("topics/index.html", shell("topics/index.html", "Drug Guides & Explainers | plugreports",
-      "Visual explainers: xylazine, fentanyl numbers, pressed pills, nitazenes, krokodil facts, sentencing, talking to your kids, quitting day by day.",
+      clip("Visual explainers: xylazine, fentanyl numbers, pressed pills, nitazenes, krokodil facts, sentencing, talking to your kids, quitting day by day."),
       f'<div class="wrap"><section class="sec-head" style="padding-top:30px"><div><span class="kicker amber">Guides</span><h2>Explainers & deep-dives</h2><p>Written for fast reading: tables, timelines and callouts instead of walls of text.</p></div></div><div class="cards">{cards}</div></div>'))
     for t in TOPICS:
         if t.get("markdown"):
@@ -669,17 +725,18 @@ def build_topics():
 <span><a href="/suggest/">Suggest a correction</a></span></div>{f'<img class="detail-img" src="{esc(t["image"])}" alt="" loading="lazy">' if t.get("image") else ""}</article>
 <article class="article">{inner}</article></div>"""
         ld = {"@context":"https://schema.org","@type":"Article","headline":t["title"],
+              "image":t.get("image") or f"{SITE}/assets/img/og.png",
               "datePublished":t["date"],"dateModified":t["date"],
               "author":{"@type":"Organization","name":"plugreports"},
-              "publisher":{"@type":"Organization","name":"plugreports"},"mainEntityOfPage":f"{SITE}/topics/{t['slug']}/"}
-        w(f"topics/{t['slug']}/index.html", shell(f"topics/{t['slug']}/index.html", f"{t['title']} | plugreports", t["desc"][:155], body, jsonld=ld))
+              "publisher":PUBLISHER_LD,"mainEntityOfPage":f"{SITE}/topics/{t['slug']}/"}
+        w(f"topics/{t['slug']}/index.html", shell(f"topics/{t['slug']}/index.html", f"{t['title']} | plugreports", clip(t["desc"]), body, jsonld=ld, ogtype="article"))
 
 def build_quit():
     cards = "".join(f'''<a class="card" href="/quit/{k}/"><div class="meta">
 <span class="chip green">DAY-BY-DAY</span><span class="chip">{esc(v["cat"])}</span></div>
 <h3>Quitting {esc(v['name'])}</h3><p>{esc(v['danger'][:120])}…</p><div class="foot">Full timeline &rarr;</div></a>''' for k, v in QUIT_SPECS.items())
     w("quit/index.html", shell("quit/index.html", "What Happens When You Quit Drugs — Day-by-Day Timelines | plugreports",
-      "Honest withdrawal timelines: heroin, fentanyl, cocaine, meth, MDMA, Xanax, ketamine, GHB. What's normal, what hurts, when it ends, and when detox must be medical.",
+      clip("Honest withdrawal timelines: heroin, fentanyl, cocaine, meth, MDMA, Xanax, ketamine, GHB. What's normal, what hurts, when it ends, and when detox must be medical."),
       f'<div class="wrap"><section class="sec-head" style="padding-top:30px"><div><span class="kicker green">Recovery</span><h2>Quitting — day by day</h2><p>Start with the <a href="/topics/what-actually-happens-when-you-quit/">master explainer</a>, then pick your substance.</p></div></div><div class="cards">{cards}</div></div>'))
     for k, v in QUIT_SPECS.items():
         qslug = k if k in DRUG_BY_SLUG else ("methamphetamine" if k == "meth" else None)
@@ -704,9 +761,13 @@ def build_quit():
 <a href="/hotlines/"><span class="mini" style="background:#dc2626">&#9742;</span><span>Hotlines</span></a>
 <a href="/rehabs/"><span class="mini" style="background:#16a34a">&#10010;</span><span>Verified rehab centers</span></a></div></div>
 </article></div>"""
-        title = f"What Happens When You Quit {v['name']} — Day-by-Day Withdrawal Timeline | plugreports"
-        desc = f"Quitting {v['name']} ({v['cat']}): day-by-day withdrawal timeline, peak symptoms, how long it lasts, and when medical detox is essential."
-        w(f"quit/{k}/index.html", shell(f"quit/{k}/index.html", title, desc, body))
+        title = f"Quitting {v['name']}: Day-by-Day Withdrawal Timeline | plugreports"
+        desc = clip(f"Quitting {v['name']} ({v['cat']}): day-by-day withdrawal timeline, peak symptoms, how long it lasts, and when medical detox is essential.")
+        ld = {"@context":"https://schema.org","@type":"MedicalWebPage",
+              "name":title,"url":f"{SITE}/quit/{k}/","lastReviewed":TODAY,
+              "reviewedBy":{"@type":"Organization","name":"plugreports editorial","url":SITE + "/about/"},
+              "about":{"@type":"Drug","name":v["name"]},"audience":{"@type":"Audience","audienceType":"People quitting drugs or supporting someone who is"}}
+        w(f"quit/{k}/index.html", shell(f"quit/{k}/index.html", title, desc, body, jsonld=ld))
 
 # ------------------------------------------------- help / directory pages ----
 def build_hotlines(es=False):
@@ -730,7 +791,7 @@ def build_hotlines(es=False):
         w("es/hotlines/index.html", shell("es/hotlines/index.html",
           "Líneas de ayuda para sobredosis y adicción — EE. UU., Canadá, Europa, Australia, África | plugreports",
           "Números verificados 24/7: emergencias, ayuda en sobredosis, crisis (988/112), referencias de tratamiento para las cinco regiones.",
-          body, lang="es", canonical=f"{SITE}/es/hotlines/", en_url=f"{SITE}/hotlines/"))
+          body, lang="es", canonical=f"{SITE}/es/hotlines/", alts=hotline_alts()))
         return
     body = f"""<div class="wrap"><div style="padding-top:26px">
 <span class="kicker">Help directory</span><h1 style="font-size:clamp(28px,4vw,42px);margin-top:10px">Hotlines — help anywhere</h1>
@@ -746,8 +807,8 @@ def build_hotlines(es=False):
         {"@type":"Question","name":"Is there a 24/7 drug helpline?",
          "acceptedAnswer":{"@type":"Answer","text":"Yes — SAMHSA's National Helpline (1-800-662-4357) is free, confidential and open 24/7 in the US."}}]}
     w("hotlines/index.html", shell("hotlines/index.html", "Drug Overdose & Addiction Hotlines — USA, Canada, Europe, Australia, Africa | plugreports",
-      "Verified 24/7 hotlines: emergency numbers, overdose help, suicide crisis (988/112), treatment referral (SAMHSA, FRANK, Lifeline) for all five regions.",
-      body, jsonld=faq, es_url=f"{SITE}/es/hotlines/"))
+      clip("Verified 24/7 hotlines: emergency numbers, overdose help, suicide crisis (988/112), treatment referral (SAMHSA, FRANK, Lifeline) for all five regions."),
+      body, jsonld=faq, alts=hotline_alts()))
 
 
 def build_sentencing():
@@ -770,7 +831,7 @@ def build_sentencing():
 <a href="/hotlines/"><span class="mini" style="background:#dc2626">&#9742;</span><span>Hotlines</span></a></div></div>
 </div></div>"""
     w("sentencing/index.html", shell("sentencing/index.html", "Drug Possession Sentences by Country — US, Canada, UK/EU, Australia, Africa | plugreports",
-      "Drug sentencing tables: possession and trafficking penalties per region, Good Samaritan laws, mandatory minimums, and what to do if arrested.", body))
+      clip("Drug sentencing tables: possession and trafficking penalties per region, Good Samaritan laws, mandatory minimums, and what to do if arrested."), body))
 
 def build_directory(name, items, singular, title, desc, thumb):
     qslug = None; qname = ""
@@ -778,8 +839,11 @@ def build_directory(name, items, singular, title, desc, thumb):
 {f'<div class="thumb" style="height:110px;border-radius:12px;overflow:hidden;margin-bottom:10px"><img src="{esc(it["image"])}" alt="" loading="lazy" style="width:100%;height:100%;object-fit:cover"></div>' if it.get("image") else f'<div class="thumb" style="height:110px;background:linear-gradient(135deg,#fef3c7,#fee2e2);display:grid;place-items:center;font-size:34px">{thumb}</div>'}
 <h3>{esc(it['name'])}</h3><p>{esc(it['desc'][:130])}…</p>
 <div class="foot">{esc(it['region'])} &rarr;</div></a>''' for it in items)
-    w(f"{name}/index.html", shell(f"{name}/index.html", title, desc,
-      f'<div class="wrap"><section class="sec-head" style="padding-top:30px"><div><span class="kicker green">Verified directory</span><h2>{esc(title.split("|")[0].strip())}</h2><p>Every listing is checked against official accreditation/registries before publishing. <a href="/suggest/">Recommend a facility</a>.</p></div></div><div class="dir-grid">{cards}</div></div>'))
+    itemlist = {"@context":"https://schema.org","@type":"ItemList","name":title.split("|")[0].strip(),
+                "numberOfItems":len(items),
+                "itemListElement":[{"@type":"ListItem","position":i+1,"name":it["name"],"url":f"{SITE}/{name}/{it['slug']}/"} for i,it in enumerate(items)]}
+    w(f"{name}/index.html", shell(f"{name}/index.html", title, clip(desc),
+      f'<div class="wrap"><section class="sec-head" style="padding-top:30px"><div><span class="kicker green">Verified directory</span><h2>{esc(title.split("|")[0].strip())}</h2><p>Every listing is checked against official accreditation/registries before publishing. <a href="/suggest/">Recommend a facility</a>.</p></div></div><div class="dir-grid">{cards}</div></div>', jsonld=itemlist))
     for it in items:
         body = f"""<div class="wrap"><div style="max-width:760px;padding:26px 0">
 <span class="kicker green">{'&#10004; VERIFIED' if it.get('verified') else 'LISTING'}</span>
@@ -798,7 +862,12 @@ def build_directory(name, items, singular, title, desc, thumb):
 <a href="/rehabs/"><span class="mini" style="background:#16a34a">&#10010;</span><span>All rehab centers</span></a>
 <a href="/pharmacies/"><span class="mini" style="background:#3b82f6">Rx</span><span>Verified pharmacies</span></a></div></div>
 </div></div>"""
-        w(f"{name}/{it['slug']}/index.html", shell(f"{name}/{it['slug']}/index.html", f"{it['name']} — {singular} in {it['region']} | plugreports", it["desc"][:155], body))
+        biz = {"@context":"https://schema.org","@type":"MedicalBusiness","name":it["name"],
+               "url":f"{SITE}/{name}/{it['slug']}/","description":clip(it["desc"], 300),
+               "areaServed":it["region"]}
+        if it.get("website"): biz["sameAs"] = it["website"]
+        if it.get("phone"): biz["telephone"] = it["phone"]
+        w(f"{name}/{it['slug']}/index.html", shell(f"{name}/{it['slug']}/index.html", f"{it['name']} — {singular} in {it['region']} | plugreports", clip(it["desc"]), body, jsonld=biz))
 
 def build_about():
     body = """<div class="wrap"><div style="max-width:780px;padding:26px 0">
@@ -822,7 +891,7 @@ def build_about():
 <div class="callout red" style="margin-top:22px"><b>Crisis?</b><a href="/hotlines/">Go to hotlines</a> — or call your local emergency number now.</div>
 </div></div>"""
     w("about/index.html", shell("about/index.html", "About plugreports — Harm-Reduction Mission & Editorial Policy",
-      "plugreports is an independent harm-reduction library: visual drug profiles, verified hotlines and rehabs, sourced busts and news for USA, Canada, Europe, Australia and Africa.", body))
+      clip("plugreports is an independent harm-reduction library: visual drug profiles, verified hotlines and rehabs, sourced busts and news for USA, Canada, Europe, Australia and Africa."), body))
 
 def build_suggest():
     body = """<div class="wrap"><div style="max-width:640px;padding:26px 0">
@@ -845,32 +914,101 @@ def build_suggest():
 def build_meta():
     from data_es import ES_DRUGS as _ESD
     ES_DRUG_KEYS = list(_ESD.keys())
-    urls = ["", "news/", "busts/", "topics/", "quit/", "hotlines/", "sentencing/",
-            "pharmacies/", "rehabs/", "about/", "suggest/", "admin/"]
-    urls += [f"categories/{k}/" for k in CATEGORIES]
-    urls += ["es/", "es/hotlines/", "es/categories/"]
-    urls += [f"es/drugs/{sl}/" for sl in ES_DRUG_KEYS]
-    urls += [f"es/categories/{k}/" for k in CATEGORIES if any(d["slug"] in ES_DRUG_KEYS for d in DRUGS if d["category"] == k)]
+    B = TODAY  # build date — lastmod fallback when an item has no date of its own
+    urls = [("", B), ("news/", B), ("busts/", B), ("topics/", B), ("quit/", B),
+            ("hotlines/", B), ("sentencing/", B), ("pharmacies/", B), ("rehabs/", B),
+            ("about/", B), ("suggest/", B), ("drugs/", B), ("categories/", B)]
+    urls += [(f"categories/{k}/", B) for k in CATEGORIES]
+    urls += [("es/", B), ("es/hotlines/", B), ("es/categories/", B)]
+    urls += [(f"es/drugs/{sl}/", DRUG_BY_SLUG[sl].get("lastUpdated", B)) for sl in ES_DRUG_KEYS if sl in DRUG_BY_SLUG]
+    urls += [(f"es/categories/{k}/", B) for k in CATEGORIES if any(d["slug"] in ES_DRUG_KEYS for d in DRUGS if d["category"] == k)]
     from data_i18n import LANGS as _LANGS
     for _L in _LANGS:
-        urls += [f"{_L}/", f"{_L}/hotlines/"]
-        urls += [f"{_L}/drugs/{sl}/" for sl in _LANGS[_L]["drugs"]]
+        urls += [(f"{_L}/", B), (f"{_L}/hotlines/", B)]
+        urls += [(f"{_L}/drugs/{sl}/", DRUG_BY_SLUG[sl].get("lastUpdated", B)) for sl in _LANGS[_L]["drugs"] if sl in DRUG_BY_SLUG]
         _cats = {DRUG_BY_SLUG[sl]["category"] for sl in _LANGS[_L]["drugs"] if sl in DRUG_BY_SLUG}
-        urls += [f"{_L}/categories/{c}/" for c in _cats]
-    urls += [f"drugs/{d['slug']}/" for d in DRUGS]
-    urls += [f"news/{n['slug']}/" for n in NEWS]
-    urls += [f"busts/{b['slug']}/" for b in BUSTS]
-    urls += [f"topics/{t['slug']}/" for t in TOPICS]
-    urls += [f"quit/{k}/" for k in QUIT_SPECS]
-    urls += [f"pharmacies/{p['slug']}/" for p in PHARMACIES]
-    urls += [f"rehabs/{r['slug']}/" for r in REHABS]
-    today = TODAY
-    sm = "\n".join(f'<url><loc>{SITE}/{u}</loc><lastmod>{today}</lastmod></url>' for u in urls)
+        urls += [(f"{_L}/categories/{c}/", B) for c in _cats]
+    urls += [(f"drugs/{d['slug']}/", d.get("lastUpdated", B)) for d in DRUGS]
+    urls += [(f"news/{n['slug']}/", n.get("date", B)) for n in NEWS]
+    urls += [(f"busts/{b['slug']}/", b.get("date", B)) for b in BUSTS if not b.get("noindex")]
+    urls += [(f"topics/{t['slug']}/", t.get("date", B)) for t in TOPICS]
+    urls += [(f"quit/{k}/", B) for k in QUIT_SPECS]
+    urls += [(f"pharmacies/{p['slug']}/", B) for p in PHARMACIES]
+    urls += [(f"rehabs/{r['slug']}/", B) for r in REHABS]
+    sm = "\n".join(f'<url><loc>{SITE}/{u}</loc><lastmod>{lm}</lastmod></url>' for u, lm in urls)
     w("sitemap.xml", f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{sm}\n</urlset>')
-    w("robots.txt", f"User-agent: *\nAllow: /\nDisallow: /admin/\nSitemap: {SITE}/sitemap.xml")
-    items = "".join(f"<item><title>{esc(n['title'])}</title><link>{SITE}/news/{n['slug']}/</link><description>{esc(n['summary'])}</description><pubDate>{n['date']}</pubDate></item>" for n in NEWS)
-    w("rss.xml", f'<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0"><channel><title>plugreports — Drug News</title><link>{SITE}/news/</link>{items}</channel></rss>')
-    w("llms.txt", f"# plugreports\n\n> Harm-reduction library of street drug profiles, busts, hotlines and verified help. USA, Canada, Europe, Australia, Africa.\n\n## Key pages\n- [/hotlines/]({SITE}/hotlines/) Verified overdose & crisis hotlines, 5 regions\n- [/drugs/fentanyl/]({SITE}/drugs/fentanyl/) Fentanyl profile\n" + "".join(f"- [/drugs/{d['slug']}/]({SITE}/drugs/{d['slug']}/) {d['name']} ({CATEGORIES[d['category']]['name']})\n" for d in DRUGS[:40]))
+    w("robots.txt",
+      "# plugreports.com crawler policy\n"
+      "# AI/LLM crawlers are intentionally ALLOWED: this is a public harm-reduction dataset\n"
+      "# and we want it cited. Machine-readable mirrors: /llms.txt (index) and /llms-full.txt\n"
+      "# (complete drug records). Only the admin UI is disallowed.\n"
+      f"User-agent: *\nAllow: /\nDisallow: /admin/\nSitemap: {SITE}/sitemap.xml\n")
+    items = "".join(f"<item><title>{esc(n['title'])}</title><link>{SITE}/news/{n['slug']}/</link><guid>{SITE}/news/{n['slug']}/</guid><description>{esc(clip(n['summary'], 300))}</description><pubDate>{rfc822(n['date'])}</pubDate></item>" for n in NEWS)
+    w("rss.xml", f'<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>plugreports — Drug News</title><link>{SITE}/news/</link><description>Drug news, adulterant alerts and supply trends from plugreports.com — sourced from NIDA, DEA, EMCDDA, ONS and drug-checking services.</description><language>en</language><atom:link href="{SITE}/rss.xml" rel="self" type="application/rss+xml"/>{items}</channel></rss>')
+    # ---- llms.txt: full-coverage index for LLM crawlers ----
+    L = ["# plugreports", "",
+         "> Harm-reduction library of street drug profiles, busts, hotlines and verified help. USA, Canada, Europe, Australia, Africa.",
+         "",
+         f"Complete machine-readable drug records: [llms-full.txt]({SITE}/llms-full.txt)", "",
+         "## Key pages",
+         f"- [/hotlines/]({SITE}/hotlines/) Verified overdose & crisis hotlines, {len(HOTLINES)} regions",
+         f"- [/drugs/]({SITE}/drugs/) A-Z index of all {len(DRUGS)} substance profiles",
+         f"- [/categories/]({SITE}/categories/) Browse by category",
+         f"- [/news/]({SITE}/news/) Drug news & alerts",
+         f"- [/busts/]({SITE}/busts/) Busts & seizures tracker",
+         f"- [/topics/]({SITE}/topics/) Guides & explainers",
+         f"- [/quit/]({SITE}/quit/) Quitting, day by day",
+         f"- [/sentencing/]({SITE}/sentencing/) Drug sentencing by region",
+         f"- [/pharmacies/]({SITE}/pharmacies/) Verified online pharmacies",
+         f"- [/rehabs/]({SITE}/rehabs/) Verified rehab centers",
+         f"- [/about/]({SITE}/about/) Mission & editorial policy", ""]
+    L.append(f"## Drug library ({len(DRUGS)} profiles)")
+    for k, c in CATEGORIES.items():
+        items_k = [d for d in DRUGS if d["category"] == k]
+        if not items_k: continue
+        L.append(f"### {c['name']}")
+        for d in items_k:
+            L.append(f"- [/drugs/{d['slug']}/]({SITE}/drugs/{d['slug']}/) {d['name']} — aka {', '.join(d['aliases'][:3])}")
+    L += ["", "## Guides & explainers"]
+    for t in TOPICS: L.append(f"- [/topics/{t['slug']}/]({SITE}/topics/{t['slug']}/) {t['title']}")
+    L += ["", "## Quitting, day by day"]
+    for k, v in QUIT_SPECS.items(): L.append(f"- [/quit/{k}/]({SITE}/quit/{k}/) Quitting {v['name']} — day-by-day withdrawal timeline")
+    L += ["", "## Hotlines by region"]
+    for region, its in HOTLINES.items(): L.append(f"- [/hotlines/]({SITE}/hotlines/) {region} — e.g. {its[0][1]} ({its[0][0]})")
+    L += ["", "## Verified pharmacies"]
+    for p in PHARMACIES: L.append(f"- [/pharmacies/{p['slug']}/]({SITE}/pharmacies/{p['slug']}/) {p['name']} ({p['region']})")
+    L += ["", "## Verified rehabs & recovery programs"]
+    for r in REHABS: L.append(f"- [/rehabs/{r['slug']}/]({SITE}/rehabs/{r['slug']}/) {r['name']} ({r['region']})")
+    L += ["", "## Sentencing by region"]
+    for st in SENTENCING: L.append(f"- [/sentencing/]({SITE}/sentencing/) {st['region']}")
+    L += ["", "## News"]
+    for n in NEWS: L.append(f"- [/news/{n['slug']}/]({SITE}/news/{n['slug']}/) {n['title']}")
+    L += ["", "## Busts & seizures"]
+    for b in BUSTS:
+        if not b.get("noindex"): L.append(f"- [/busts/{b['slug']}/]({SITE}/busts/{b['slug']}/) {b['title']}")
+    w("llms.txt", "\n".join(L) + "\n")
+    # ---- llms-full.txt: complete compact drug records (GEO flagship artifact) ----
+    F = ["# plugreports — full drug records",
+         f"> {len(DRUGS)} harm-reduction profiles, compiled from NIDA, DEA, EMCDDA, WHO and peer-reviewed literature. "
+         "Street prices are regional estimates that change quickly. Educational information only — not medical advice. "
+         f"Canonical pages: {SITE}/drugs/<slug>/", ""]
+    for d in DRUGS:
+        c = CATEGORIES[d["category"]]
+        F.append(f"## {d['name']}")
+        F.append(f"- url: {SITE}/drugs/{d['slug']}/")
+        F.append(f"- aliases: {', '.join(d['aliases'])}")
+        F.append(f"- category: {c['name']}")
+        F.append(f"- schedule: {d['schedule']}")
+        F.append(f"- appearance: {d['appearance']}")
+        F.append(f"- effects: {'; '.join(d['effects'])}")
+        F.append(f"- risks: {'; '.join(d['risks'])}")
+        F.append(f"- overdoseSigns: {'; '.join(d['overdoseSigns'])}")
+        F.append(f"- streetPrice: {d['streetPrice']}")
+        F.append(f"- legalStatus: {d['legalStatus']}")
+        F.append(f"- lastUpdated: {d['lastUpdated']}")
+        F.append(f"- sources: {', '.join(d['sources'])}")
+        F.append("")
+    w("llms-full.txt", "\n".join(F))
 
 
 
@@ -893,7 +1031,7 @@ def build_categories_es():
         out = f"es/categories/{k}/index.html"
         w(out, shell(out, f"{cat_name} — efectos, riesgos y signos de sobredosis | plugreports",
             f"Perfiles de reducción de riesgos sobre {cat_name}: efectos, riesgos, signos de sobredosis y precios.",
-            body, lang="es", canonical=f"{SITE}/es/categories/{k}/", en_url=f"{SITE}/categories/{k}/"))
+            body, lang="es", canonical=f"{SITE}/es/categories/{k}/", alts=cat_alts(k)))
     if made:
         idx = "".join(
             "<a class=\"card\" href=\"/es/categories/" + k + "/\"><h3>" + esc(ES_CATS.get(k, CATEGORIES[k]["name"])) + "</h3><p>" + esc(CATEGORIES[k]["tagline"]) + "</p><div class=\"foot\">Ver categoría &rarr;</div></a>"
@@ -902,7 +1040,8 @@ def build_categories_es():
             "Categorías de drogas — opioides, estimulantes, benzos y más | plugreports",
             "Todas las categorías de drogas en plugreports: opioides, estimulantes, benzodiacepinas, cannabinoides y más.",
             "<div class=\"wrap\"><section class=\"sec-head\" style=\"padding-top:30px\"><div><span class=\"kicker amber\">Biblioteca de drogas</span><h2>Categorías</h2></div></section><div class=\"cards\">" + idx + "</div></div>",
-            lang="es", canonical=f"{SITE}/es/categories/", en_url=f"{SITE}/categories/"))
+            lang="es", canonical=f"{SITE}/es/categories/",
+            alts=_alt_set(f"{SITE}/categories/", es=f"{SITE}/es/categories/")))
 
 
 
@@ -918,10 +1057,11 @@ def build_lang_drug_pages(lang):
         cat_name = CATS_T.get(d["category"], c["name"])
         ext_img = (d.get("image") or "").strip()
         img_rel = ext_img if ext_img.startswith("http") else drug_image(slug)
+        img_src = img_rel if img_rel.startswith("http") else "/" + img_rel  # never prefix "/" onto absolute URLs
         rel = related_drugs(d)
         relhtml = "".join(f'<a href="/{lang}/drugs/{r["slug"]}/">{rel_card(r["slug"])}</a>' for r in rel[:4] if r["slug"] in TR) or "".join(f'<a href="/drugs/{r["slug"]}/">{rel_card(r["slug"])}</a>' for r in rel[:4])
-        rows = "".join(f'<div class="fact"><b>{k}</b><span>{esc(v)}</span></div>' for k, v in [
-            ("Also known as", ", ".join(d["aliases"])),
+        rows = "".join(f'<div class="fact"><b>{k}</b><span>{v}</span></div>' for k, v in [
+            ("Also known as", esc(", ".join(d["aliases"]))),
             ("Category", f'<span class="cat-dot" style="background:{c["color"]}"></span>{esc(cat_name)}'),
             ("Schedule / class", esc(o.get("schedule", d["schedule"]))),
             ("Appearance", esc(o.get("appearance", d["appearance"]))),
@@ -935,7 +1075,7 @@ def build_lang_drug_pages(lang):
 <div><span class="kicker" style="background:{c['grad']};color:#fff;border:0">{esc(cat_name)}</span>
 <h1 style="margin-top:10px">{esc(d['name'])}</h1>
 <p class="alias">Street names: <b>{esc(", ".join(d["aliases"]))}</b></p></div></section>
-<img class="pimg" src="/{img_rel}" alt="{esc(d['name'])}" style="border-radius:18px;border:1px solid var(--line);box-shadow:var(--shadow);object-fit:cover;max-height:340px" loading="lazy">
+<img class="pimg" src="{img_src}" alt="{esc(d['name'])}" width="510" height="383" style="border-radius:18px;border:1px solid var(--line);box-shadow:var(--shadow);object-fit:cover;max-height:340px" loading="lazy">
 <div class="callout red print-hide"><b>Overdose? Act now.</b> Call emergency services. Give naloxone for opioid-like signs. <a href="/{lang}/hotlines/">Hotlines</a></div>
 <div class="profile-grid">
 <div class="panel"><h2><span class="ic" style="background:{c['color']};color:#fff">&#9889;</span>What it does</h2>
@@ -954,7 +1094,7 @@ def build_lang_drug_pages(lang):
         title = f"{d['name']}: effects, overdose signs, street price & help | plugreports"
         out = f"{lang}/drugs/{slug}/index.html"
         w(out, shell(out, title, f"{d['name']} — {cat_name}. Effects, overdose signs, street price and harm-reduction info.", body,
-                     lang=lang, canonical=f"{SITE}/{lang}/drugs/{slug}/", en_url=f"{SITE}/drugs/{slug}/"))
+                     lang=lang, canonical=f"{SITE}/{lang}/drugs/{slug}/", alts=drug_alts(slug)))
 
 def build_lang_hotlines(lang):
     from data_i18n import LANGS
@@ -974,7 +1114,7 @@ def build_lang_hotlines(lang):
 </div></div>"""
     out = f"{lang}/hotlines/index.html"
     w(out, shell(out, f"Drug overdose & crisis hotlines | plugreports ({lang})", "Verified overdose and crisis helplines.", body,
-                 lang=lang, canonical=f"{SITE}/{lang}/hotlines/", en_url=f"{SITE}/hotlines/"))
+                 lang=lang, canonical=f"{SITE}/{lang}/hotlines/", alts=hotline_alts()))
 
 def build_lang_home(lang):
     from data_i18n import LANGS
@@ -996,8 +1136,8 @@ def build_lang_home(lang):
 <div class="sec-head"><div><span class="kicker">{esc(H['hk'])}</span><h2>{esc(H['hh'])}</h2><p>{esc(H['hp'])}</p></div><a class="btn btn-red" href="/{lang}/hotlines/">{esc(H['hb'])}</a></div>
 </div></section>"""
     out = f"{lang}/index.html"
-    w(out, shell(out, f"plugreports — drug information library ({lang})", esc(H['lede']), body,
-                 lang=lang, canonical=f"{SITE}/{lang}/", en_url=f"{SITE}/"))
+    w(out, shell(out, f"plugreports — drug information library ({lang})", clip(H['lede']), body,
+                 lang=lang, canonical=f"{SITE}/{lang}/", alts=home_alts()))
 
 def build_lang_categories(lang):
     from data_i18n import LANGS
@@ -1010,54 +1150,29 @@ def build_lang_categories(lang):
         cards = "".join(f'<a class="card" href="/{lang}/drugs/{d["slug"]}/"><h3>{esc(d["name"])}</h3><div class="foot">{esc(CT.get(k, c["name"]))} &rarr;</div></a>' for d in items)
         body = f'<div class="wrap"><section class="cat-hero" style="background:{c["grad"]}"><span class="kicker" style="background:rgba(255,255,255,.15);color:#fff;border:0">{len(items)}</span><h1>{esc(CT.get(k, c["name"]))}</h1><p>{esc(c["tagline"])}</p></section><div class="cards">{cards}</div></div>'
         out = f"{lang}/categories/{k}/index.html"
-        w(out, shell(out, f"{esc(CT.get(k, c['name']))} | plugreports", esc(c["tagline"]), body,
-                     lang=lang, canonical=f"{SITE}/{lang}/categories/{k}/", en_url=f"{SITE}/categories/{k}/"))
-
-def _inject_alt(path, alts):
-    fp = os.path.join(PUB, path)
-    if not os.path.exists(fp): return
-    s = open(fp, encoding="utf-8").read()
-    tag = "".join(f'<link rel="alternate" hreflang="{ln}" href="{u}">' for ln, u in alts.items())
-    if tag and tag not in s:
-        s = s.replace('<link rel="canonical"', tag + '<link rel="canonical"', 1)
-        open(fp, "w", encoding="utf-8").write(s)
-
-def inject_hreflang():
-    from data_i18n import LANGS as _L
-    from data_es import ES_DRUGS
-    for d in DRUGS:
-        a = {ln: f"{SITE}/{ln}/drugs/{d['slug']}/" for ln, pk in _L.items() if d["slug"] in pk["drugs"]}
-        if d["slug"] in ES_DRUGS: a["es"] = f"{SITE}/es/drugs/{d['slug']}/"
-        if a:
-            _inject_alt(f"drugs/{d['slug']}/index.html", a)
-            for ln in a: _inject_alt(f"{ln}/drugs/{d['slug']}/index.html", a)
-    for k in CATEGORIES:
-        a = {ln: f"{SITE}/{ln}/categories/{k}/" for ln, pk in _L.items() if k in pk["cats"]}
-        if a:
-            _inject_alt(f"categories/{k}/index.html", a)
-            for ln in a: _inject_alt(f"{ln}/categories/{k}/index.html", a)
-    _inject_alt("index.html", {ln: f"{SITE}/{ln}/" for ln in _L})
-    _inject_alt("hotlines/index.html", {ln: f"{SITE}/{ln}/hotlines/" for ln in _L})
-    for ln in _L:
-        _inject_alt(f"{ln}/index.html", {l2: f"{SITE}/{l2}/" for l2 in _L})
-        _inject_alt(f"{ln}/hotlines/index.html", {l2: f"{SITE}/{l2}/hotlines/" for l2 in _L})
-
+        w(out, shell(out, f"{CT.get(k, c['name'])} | plugreports", clip(c["tagline"]), body,
+                     lang=lang, canonical=f"{SITE}/{lang}/categories/{k}/", alts=cat_alts(k)))
 
 def build_indexes():
     cards = "".join(
         "<a class=\"card\" href=\"/categories/" + k + "/\"><div class=\"meta\"><span class=\"chip\" style=\"border-color:" + v["color"] + "33;color:" + v["color"] + "\">" + str(sum(1 for d in DRUGS if d["category"] == k)) + " substances</span></div><h3>" + esc(v["name"]) + "</h3><p>" + esc(v["tagline"]) + "</p><div class=\"foot\">Browse category &rarr;</div></a>"
         for k, v in CATEGORIES.items())
+    catidx_body = "<div class=\"wrap\"><section class=\"sec-head\" style=\"padding-top:30px\"><div><span class=\"kicker amber\">Drug Library</span><h2 style=\"font-family:var(--font-ed);font-size:clamp(28px,4vw,44px)\">All <span style=\"background:linear-gradient(92deg,#f59e0b,#dc2626);-webkit-background-clip:text;background-clip:text;color:transparent\">categories</span></h2><p>" + str(len(CATEGORIES)) + " categories, " + str(len(DRUGS)) + " substances — every profile covers effects, overdose signs, street prices and legal status.</p></div></section><div class=\"cards\">" + cards + "</div></div>"
     w("categories/index.html", shell("categories/index.html",
         "Drug Categories — Opioids, Stimulants, Benzos, Psychedelics & More | plugreports",
-        "Browse all drug categories: opioids, stimulants, benzodiazepines, psychedelics, dissociatives, synthetic cannabinoids and more — harm-reduction profiles for every substance.",
-        "<div class=\"wrap\"><section class=\"sec-head\" style=\"padding-top:30px\"><div><span class=\"kicker amber\">Drug Library</span><h2 style=\"font-family:var(--font-ed);font-size:clamp(28px,4vw,44px)\">All <span style=\"background:linear-gradient(92deg,#f59e0b,#dc2626);-webkit-background-clip:text;background-clip:text;color:transparent\">categories</span></h2><p>" + str(len(CATEGORIES)) + " categories, " + str(len(DRUGS)) + " substances — every profile covers effects, overdose signs, street prices and legal status.</p></div></section><div class=\"cards\">" + cards + "</div></div>"))
+        clip("Browse all drug categories: opioids, stimulants, benzodiazepines, psychedelics, dissociatives, synthetic cannabinoids and more — harm-reduction profiles for every substance."),
+        catidx_body, alts=_alt_set(f"{SITE}/categories/", es=f"{SITE}/es/categories/")))
     tiles = "".join(
         "<a class=\"tile\" href=\"/drugs/" + d["slug"] + "/\"><span class=\"glyph\" style=\"background:" + CATEGORIES[d["category"]]["grad"] + "\">" + esc(d["name"][0]) + "</span><h3>" + esc(d["name"]) + "</h3><span class=\"cat\"><span class=\"cat-dot\" style=\"background:" + CATEGORIES[d["category"]]["color"] + "\"></span>" + esc(CATEGORIES[d["category"]]["name"]) + "</span></a>"
         for d in sorted(DRUGS, key=lambda x: x["name"]))
+    az = sorted(DRUGS, key=lambda x: x["name"])
+    az_ld = {"@context":"https://schema.org","@type":"ItemList","name":"All substances, A to Z",
+             "numberOfItems":len(az),
+             "itemListElement":[{"@type":"ListItem","position":i+1,"name":x["name"],"url":f"{SITE}/drugs/{x['slug']}/"} for i,x in enumerate(az)]}
     w("drugs/index.html", shell("drugs/index.html",
         "Drugs A–Z — All Substances: Street Names, Effects, Overdose Signs | plugreports",
-        "Complete A-Z index of street drugs, pharmaceuticals, and grey-market substances: street names, effects, overdose signs, street prices and legal status.",
-        "<div class=\"wrap\"><section class=\"sec-head\" style=\"padding-top:30px\"><div><span class=\"kicker amber\">A-Z Index</span><h2 style=\"font-family:var(--font-ed);font-size:clamp(28px,4vw,44px)\">All <span style=\"background:linear-gradient(92deg,#f59e0b,#dc2626);-webkit-background-clip:text;background-clip:text;color:transparent\">" + str(len(DRUGS)) + " substances</span>, A to Z</h2><p>Tap any substance for effects, risks, overdose signs and street info.</p></div></section><div class=\"rail\" style=\"grid-template-rows:none;overflow:visible\">" + tiles + "</div></div>"))
+        clip("Complete A-Z index of street drugs, pharmaceuticals, and grey-market substances: street names, effects, overdose signs, street prices and legal status."),
+        "<div class=\"wrap\"><section class=\"sec-head\" style=\"padding-top:30px\"><div><span class=\"kicker amber\">A-Z Index</span><h2 style=\"font-family:var(--font-ed);font-size:clamp(28px,4vw,44px)\">All <span style=\"background:linear-gradient(92deg,#f59e0b,#dc2626);-webkit-background-clip:text;background-clip:text;color:transparent\">" + str(len(DRUGS)) + " substances</span>, A to Z</h2><p>Tap any substance for effects, risks, overdose signs and street info.</p></div></section><div class=\"rail\" style=\"grid-template-rows:none;overflow:visible\">" + tiles + "</div></div>", jsonld=az_ld))
 
 def main():
     build_index(); build_categories(); build_categories_es(); build_drugs(); build_news(); build_busts()
@@ -1079,10 +1194,9 @@ def main():
                 "pharmacies":[p["slug"] for p in PHARMACIES], "rehabs":[r["slug"] for r in REHABS],
                 "quit":[k for k in QUIT_SPECS]}
     w("_static.json", json.dumps(manifest))
-    inject_hreflang()
     w("_dynamic.html", shell("_dynamic.html", "plugreports",
       "Live content", '<div class="wrap" id="dyn" style="padding:44px 20px;min-height:50vh"><p>Loading\u2026</p></div>',
-      extra_head='<script src="/assets/js/render.js?v=8" defer></script>', canonical=SITE + "/"))
+      extra_head='<script src="/assets/js/render.js?v=9" defer></script>', canonical=SITE + "/"))
     print(f"Built {len(DRUGS)} drug pages, {len(CATEGORIES)} categories, {len(TOPICS)} topics, "
           f"{len(QUIT_SPECS)} quit pages, {len(NEWS)} news, {len(BUSTS)} busts into {PUB}")
 

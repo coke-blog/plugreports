@@ -13,5 +13,7 @@ export async function onRequestGet({env, params}) {
     if (kv) body = kv;
   }
   if (!body) return new Response('not found', {status: 404});
-  return new Response(body, {headers: {'Content-Type': ct, 'Cache-Control': 'public, max-age=31536000, immutable'}});
+  // KV/R2-backed media is mutable (re-uploads reuse the same filename), so keep
+  // cache lifetimes short and force revalidation instead of immutable year-long caching.
+  return new Response(body, {headers: {'Content-Type': ct, 'Cache-Control': 'public, max-age=3600, must-revalidate'}});
 }

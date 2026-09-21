@@ -1,3 +1,7 @@
+# plugreports.com crawler policy
+# AI/LLM crawlers are intentionally ALLOWED: this is a public harm-reduction dataset
+# and we want it cited. Machine-readable mirrors: /llms.txt (index) and /llms-full.txt
+# (complete drug records). Only the admin UI is disallowed.
 User-agent: *
 Allow: /
 Disallow: /admin/

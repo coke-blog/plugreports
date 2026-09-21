@@ -8,9 +8,14 @@
   if (!/^(drugs|busts|news|topics|quit|hotlines|pharmacies|rehabs|sentencing|categories)$/.test(type)) return;
   if (seg.length === 2) { fetch('/api/view', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({type: type, slug: seg[1]})}).catch(function(){}); }
   fetch('/api/public/content?type=' + (type === 'categories' ? 'drugs' : type)).then(function (r) { return r.json(); }).then(function (d) {
-    var items = (d.items || []).filter(function (x) { return x && !x.unpublished; });
-    if (!items.length) return;
+    var all = (d.items || []);
+    if (seg.length === 2 && type !== 'categories') {
+      var hit = all.find(function (x) { return x && x.slug === seg[1]; });
+      if (hit && hit.unpublished) return renderGone();
+    }
+    var items = all.filter(function (x) { return x && !x.unpublished; });
     if (type === 'categories') return renderCategory(items, seg);
+    if (!items.length) return;
     if (type === 'hotlines') return renderHotlines(items);
     if (type === 'sentencing') return renderSentencing(items);
     if (seg.length === 1 || (type === 'sentencing')) return renderIndex(items, type);
@@ -24,6 +29,22 @@
   }).catch(function () {});
 
   function esc(s) { var d = document.createElement('div'); d.textContent = s == null ? '' : s; return d.innerHTML; }
+  function mdRender(x) {
+    if (typeof MD !== 'undefined' && MD && MD.render) return MD.render(x);
+    return String(x || '').split(/\n{2,}/).map(function (p) { return '<p>' + esc(p).replace(/\n/g, '<br>') + '</p>'; }).join('');
+  }
+  function renderGone() {
+    var m = document.querySelector('main'); if (!m) return;
+    m.innerHTML = '<div class="wrap"><div class="panel" style="max-width:620px;margin:48px auto;padding:34px;text-align:center">' +
+      '<span class="kicker" style="background:#dc2626;color:#fff;border:0">410 &mdash; GONE</span>' +
+      '<h1 style="margin-top:12px">This page has been taken offline</h1>' +
+      '<p>This content was unpublished by the editors and is no longer available. ' +
+      'Browse the <a href="/categories/opioids/">drug library</a> or go <a href="/">back to home</a>.</p></div></div>';
+    document.title = 'Page offline | plugreports';
+    var rob = document.querySelector('meta[name="robots"]');
+    if (!rob) { rob = document.createElement('meta'); rob.name = 'robots'; document.head.appendChild(rob); }
+    rob.setAttribute('content', 'noindex');
+  }
   function chipEntry(entry) {
     var e2 = String(entry);
     var pipe = e2.split('|');
@@ -61,6 +82,17 @@ function initBreaking() {
 
   /* ---------------- index pages ---------------- */
   function renderIndex(items, type) {
+    if (type === 'pharmacies' || type === 'rehabs') {
+      var dir = document.querySelector('.dir-grid'); if (!dir) return;
+      dir.innerHTML = items.map(function (it) {
+        return '<a class="card" href="/' + type + '/' + it.slug + '/">' +
+          '<div class="thumb" style="height:110px;background:linear-gradient(135deg,#fef3c7,#fee2e2);display:grid;place-items:center;font-size:34px">' +
+          (type === 'pharmacies' ? '&#128138;' : '&#10010;') + '</div>' +
+          '<h3>' + esc(it.name) + '</h3><p>' + esc((it.desc || '').slice(0, 120)) + '&hellip;</p>' +
+          '<div class="foot">' + esc(it.region || '') + ' &rarr;</div></a>';
+      }).join('');
+      return;
+    }
     var grid = document.querySelector('.cards'); if (!grid) return;
     grid.innerHTML = items.map(function (it) {
       if (type === 'busts') return '<a class="card" href="/busts/' + it.slug + '/"><div class="meta">' +
@@ -94,12 +126,53 @@ function initBreaking() {
     img.src = src;
   }
 
+  function setTicksAfter(panel, re, arr) {
+    if (!panel || !Array.isArray(arr) || !arr.length) return;
+    var hs = panel.querySelectorAll('h2');
+    for (var i = 0; i < hs.length; i++) {
+      if (!re.test(hs[i].textContent)) continue;
+      var ul = hs[i].nextElementSibling;
+      while (ul && ul.tagName !== 'UL') ul = ul.nextElementSibling;
+      if (ul) ul.innerHTML = arr.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('');
+      return;
+    }
+  }
   function renderDrug(it) {
-    var im = document.querySelector('img[loading="lazy"]');
+    var im = document.querySelector('img.pimg');
     if (im && it.image) im.src = it.image;
     setH1(it.name);
     if (it.seoTitle) document.title = it.seoTitle;
     if (it.seoDesc) { var m = document.querySelector('meta[name="description"]'); if (m) m.setAttribute('content', it.seoDesc); }
+    var al = document.querySelector('.phead .alias b') || document.querySelector('.alias b');
+    if (al && Array.isArray(it.aliases) && it.aliases.length) al.textContent = it.aliases.join(', ');
+    var panels = document.querySelectorAll('.profile-grid .panel');
+    setTicksAfter(panels[0], /What it does/i, it.effects);
+    setTicksAfter(panels[0], /Key risks/i, it.risks);
+    setTicksAfter(panels[0], /Overdose signs/i, it.overdoseSigns);
+    var fp = panels[1];
+    if (fp) {
+      fp.querySelectorAll('.fact').forEach(function (f) {
+        var b = f.querySelector('b'), v = f.querySelector('span'); if (!b || !v) return;
+        var k = b.textContent.trim();
+        if (k === 'Also known as' && Array.isArray(it.aliases) && it.aliases.length) v.textContent = it.aliases.join(', ');
+        if (k === 'Schedule / class' && it.schedule) v.textContent = it.schedule;
+        if (k === 'Appearance' && it.appearance) v.textContent = it.appearance;
+        if (k === 'Street price' && it.streetPrice) v.textContent = it.streetPrice;
+        if (k === 'Legal status' && it.legalStatus) v.textContent = it.legalStatus;
+        if (k === 'Last updated' && it.lastUpdated) v.textContent = it.lastUpdated;
+      });
+      if (Array.isArray(it.sources) && it.sources.length) {
+        var sc = fp.querySelector('.chip.green');
+        if (sc) sc.textContent = 'Sources: ' + it.sources.join(', ');
+      }
+    }
+    if (Array.isArray(it.brands) && it.brands.length) {
+      var bh = null;
+      document.querySelectorAll('h2').forEach(function (h) { if (!bh && /Brand names/i.test(h.textContent)) bh = h; });
+      var bp = bh && bh.closest('.panel');
+      var tr = bp && bp.querySelector('.tagrow');
+      if (tr) tr.innerHTML = it.brands.map(function (b) { return '<span class="chip">' + esc(b) + '</span>'; }).join('');
+    }
     if (it.related && it.related.length) {
       var rg = document.querySelector('.related .rel-grid');
       if (rg) rg.innerHTML = it.related.map(chipEntry).join('') + (it.relatedNoDefaults ? '' :
@@ -154,7 +227,7 @@ function initBreaking() {
     if (type === 'news' && it.markdown) {
       var article2 = document.querySelector('article.article');
       var olds2 = article2.querySelectorAll('p:not(.lede)');
-      var html2 = MD.render(it.markdown);
+      var html2 = mdRender(it.markdown);
       olds2.forEach(function (p) { p.remove(); });
       var rel2 = article2.querySelector('.related');
       if (rel2) rel2.insertAdjacentHTML('beforebegin', html2); else article2.insertAdjacentHTML('beforeend', html2);
@@ -197,7 +270,7 @@ function initBreaking() {
     var articles = document.querySelectorAll('article.article');
     var body = articles[articles.length - 1]; if (!body) return;
     if (it.image) setDetailImage(it.image);
-    body.innerHTML = (it.markdown ? MD.render(it.markdown) : renderBlocks(it.blocks)) +
+    body.innerHTML = (it.markdown ? mdRender(it.markdown) : renderBlocks(it.blocks)) +
       '<div class="related print-hide"><h2>Drugs mentioned &amp; help</h2><div class="rel-grid">' +
       ((it.drugsInvolved || []).map(function (d) {
         return '<a href="/drugs/' + d + '/"><span class="mini" style="background:#d97706">' + esc((d[0] || '?').toUpperCase()) + '</span><span>' + esc(d.replace(/-/g, ' ')) + '</span></a>';
@@ -230,40 +303,96 @@ function initBreaking() {
   }
 
   function renderCategory(items, seg) {
-    var grid = document.querySelector('.cards'); if (!grid) return;
-    var mine = items.filter(function (x) { return x.category === seg[1]; });
-    if (!mine.length) return;
-    grid.innerHTML = mine.map(function (d) {
-      return '<a class="card" href="/drugs/' + d.slug + '/"><div class="meta"><span class="chip">' +
-        esc((d.schedule || '').split('(')[0].trim().slice(0, 24)) + '</span></div><h3>' + esc(d.name) +
-        '</h3><p>' + esc(d.appearance || '') + '</p><div class="foot">Effects &amp; risks &rarr;</div></a>';
-    }).join('');
+    var apply = function (cat) {
+      if (cat && cat.unpublished) return renderGone();
+      if (cat) {
+        var hero = document.querySelector('.cat-hero');
+        if (hero) {
+          if (cat.grad || cat.color) hero.style.background = cat.grad || cat.color;
+          var h1 = hero.querySelector('h1'); if (h1 && cat.name) h1.textContent = cat.name;
+          var p = hero.querySelector('p');
+          var txt = ((cat.tagline || '') + ' ' + (cat.blurb || '')).trim();
+          if (p && txt) p.textContent = txt;
+        }
+        if (cat.name) document.title = cat.name + ' | plugreports';
+      }
+      var grid = document.querySelector('.cards'); if (!grid) return;
+      var mine = items.filter(function (x) { return x.category === seg[1]; });
+      if (!mine.length) return;
+      grid.innerHTML = mine.map(function (d) {
+        return '<a class="card" href="/drugs/' + d.slug + '/"><div class="meta"><span class="chip">' +
+          esc((d.schedule || '').split('(')[0].trim().slice(0, 24)) + '</span></div><h3>' + esc(d.name) +
+          '</h3><p>' + esc(d.appearance || '') + '</p><div class="foot">Effects &amp; risks &rarr;</div></a>';
+      }).join('');
+    };
+    if (!seg[1]) return apply(null);
+    fetch('/api/public/content?type=categories').then(function (r) { return r.json(); }).then(function (cd) {
+      apply((cd.items || []).find(function (x) { return x && x.slug === seg[1]; }) || null);
+    }).catch(function () { apply(null); });
   }
 
   /* ---------------- directory-style pages ---------------- */
+  function insertSection(host, html) {
+    if (!host) return;
+    var rel = null;
+    for (var i = 0; i < host.children.length; i++) {
+      if (host.children[i].classList && host.children[i].classList.contains('related')) { rel = host.children[i]; break; }
+    }
+    if (rel) rel.insertAdjacentHTML('beforebegin', html); else host.insertAdjacentHTML('beforeend', html);
+  }
+  function hlCards(list) {
+    return (list || []).map(function (h) {
+      return '<div class="hl-card"><h3>' + esc(h[1]) + '</h3><div class="num">' + esc(h[0]) + '</div>' +
+        '<div class="who">' + esc(h[2]) + '</div>' +
+        (h[3] ? '<a class="call-btn" href="tel:' + esc(h[3]) + '">&#128222; Call now</a>' : '<span class="chip" style="margin-top:12px">Text-based service</span>') + '</div>';
+    }).join('');
+  }
   function renderHotlines(items) {
-    document.querySelectorAll('.hl-region').forEach(function (sec) {
+    var seen = {};
+    var secs = document.querySelectorAll('.hl-region');
+    secs.forEach(function (sec) {
       var k = sec.querySelector('.kicker'); if (!k) return;
       var it = items.find(function (x) { return x.region === k.textContent.trim(); });
-      var grid = sec.querySelector('.hl-grid'); if (!it || !grid) return;
-      grid.innerHTML = it.items.map(function (h) {
-        return '<div class="hl-card"><h3>' + esc(h[1]) + '</h3><div class="num">' + esc(h[0]) + '</div>' +
-          '<div class="who">' + esc(h[2]) + '</div>' +
-          (h[3] ? '<a class="call-btn" href="tel:' + esc(h[3]) + '">&#128222; Call now</a>' : '<span class="chip" style="margin-top:12px">Text-based service</span>') + '</div>';
-      }).join('');
+      if (!it) return;
+      seen[it.region] = 1;
+      var grid = sec.querySelector('.hl-grid'); if (!grid) return;
+      grid.innerHTML = hlCards(it.items);
+    });
+    var fresh = items.filter(function (x) { return x && x.region && !seen[x.region] && Array.isArray(x.items) && x.items.length; });
+    if (!fresh.length) return;
+    var host = secs.length ? secs[secs.length - 1].parentNode : (document.querySelector('main .wrap') || document.querySelector('main'));
+    fresh.forEach(function (it) {
+      insertSection(host, '<section class="hl-region"><span class="kicker amber">' + esc(it.region) + '</span>' +
+        '<div class="hl-grid">' + hlCards(it.items) + '</div></section>');
     });
   }
 
+  function legalRows(table) {
+    return table.slice(1).map(function (r) {
+      return '<tr>' + r.map(function (c, i) { return (i === 0 ? '<th style="width:45%">' : '<td>') + esc(c) + (i === 0 ? '</th>' : '</td>'); }).join('') + '</tr>';
+    }).join('');
+  }
   function renderSentencing(items) {
-    document.querySelectorAll('.legal-doc').forEach(function (doc) {
+    var seen = {};
+    var docs = document.querySelectorAll('.legal-doc');
+    docs.forEach(function (doc) {
       var h = doc.querySelector('h2'); if (!h) return;
       var it = items.filter(function (x) { return x.region === h.textContent.trim() && Array.isArray(x.table); })[0] || items.find(function (x) { return x.region === h.textContent.trim(); });
       if (!it) return;
+      seen[it.region] = 1;
       var p = doc.querySelector('p'); if (p && it.summary) p.textContent = it.summary;
-      var tb = doc.querySelector('.tbl tbody'); if (tb && Array.isArray(it.table))
-        tb.innerHTML = it.table.slice(1).map(function (r) {
-          return '<tr>' + r.map(function (c, i) { return (i === 0 ? '<th style="width:45%">' : '<td>') + esc(c) + (i === 0 ? '</th>' : '</td>'); }).join('') + '</tr>';
-        }).join('');
+      var tb = doc.querySelector('.tbl tbody'); if (tb && Array.isArray(it.table)) tb.innerHTML = legalRows(it.table);
+    });
+    var fresh = items.filter(function (x) { return x && x.region && !seen[x.region]; });
+    if (!fresh.length) return;
+    var host = docs.length ? docs[docs.length - 1].parentNode : (document.querySelector('main .wrap') || document.querySelector('main'));
+    fresh.forEach(function (it) {
+      var tbl = (Array.isArray(it.table) && it.table.length) ? '<table class="tbl"><thead><tr>' +
+        it.table[0].map(function (c) { return '<th>' + esc(c) + '</th>'; }).join('') + '</tr></thead><tbody>' +
+        legalRows(it.table) + '</tbody></table>' : '';
+      insertSection(host, '<div class="legal-doc" style="margin-bottom:22px"><span class="seal">INFO<br>ONLY</span>' +
+        '<h2 style="margin-top:0">' + esc(it.region) + '</h2>' +
+        (it.summary ? '<p style="color:#667085">' + esc(it.summary) + '</p>' : '') + tbl + '</div>');
     });
   }
 })();
@@ -364,7 +493,3 @@ function initBreaking() {
     }).catch(function () {});
   }
 
-
-  var box = document.getElementById('breaking'); if (!box) return;
-  var slides = box.querySelectorAll('.b-slide'); if (!slides.length) return;
-  var dots = box.querySelectorAll('.b-dot');

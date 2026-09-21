@@ -103,7 +103,7 @@ dict(slug="morphine-60mg", image="https://plugreports.com/media/drugs/morphine-6
  legalStatus="Rx-only, Schedule II; felony without prescription",
  lastUpdated="2026-09-12", sources=["NIDA","DEA"]),
 
-dict(slug="hydromorphone", name="Hydromorphone (Dilaudid 8 mg)", aliases=["Dilaudid", "D", "Dillies", "8s" "dilsudid"],
+dict(slug="hydromorphone", name="Hydromorphone (Dilaudid 8 mg)", aliases=["Dilaudid", "D", "Dillies", "8s", "dilsudid"],
  category="opioids", schedule="Schedule II (US)",
  appearance="Small triangular white tablets ('8mg triangles'); clear injectable liquid",
  effects=["Rapid euphoria, warm sedation — 5× morphine potency"],
@@ -113,7 +113,7 @@ dict(slug="hydromorphone", name="Hydromorphone (Dilaudid 8 mg)", aliases=["Dilau
  legalStatus="Rx-only, Schedule II; felony without prescription",
  lastUpdated="2026-09-12", sources=["NIDA","DEA","CADTH"]),
 
-dict(slug="oxycodone", image="https://plugreports.com/media/drugs/oxycodone.png", name="Oxycodone (Roxicodone 30 mg)", aliases=["Roxy", "30s", "Blues", "Percs (with APAP)" "oxys", "roxies"],
+dict(slug="oxycodone", image="https://plugreports.com/media/drugs/oxycodone.png", name="Oxycodone (Roxicodone 30 mg)", aliases=["Roxy", "30s", "Blues", "Percs (with APAP)", "oxys", "roxies"],
  category="opioids", schedule="Schedule II (US)",
  appearance="Blue 30 mg IR tablets; also white pills with various imprints",
  effects=["Euphoria, pain relief, energy then sedation"],
@@ -173,7 +173,7 @@ dict(slug="meperidine", image="https://plugreports.com/media/drugs/meperidine.jp
  legalStatus="Rx-only, Schedule II; felony without prescription",
  lastUpdated="2026-09-12", sources=["FDA","NIDA"]),
 
-dict(slug="methadone", name="Methadone", aliases=["Done", "Dolly", "Amidone" "methalone"],
+dict(slug="methadone", name="Methadone", aliases=["Done", "Dolly", "Amidone", "methalone"],
  category="opioids", schedule="Schedule II (US)",
  appearance="Orange/red diskettes (40 mg), liquid (cherry), tablets, injectable ampoules",
  effects=["Long-lasting (24–36 h) opioid stability, blocks withdrawal and cravings"],
@@ -236,7 +236,7 @@ dict(slug="alprazolam", image="https://plugreports.com/media/drugs/alprazolam.pn
  legalStatus="Rx-only, Schedule IV; felony without prescription",
  lastUpdated="2026-09-12", sources=["NIDA","DEA","EMCDDA"]),
 
-dict(slug="lorazepam", name="Lorazepam (Ativan 2.5 mg)", aliases=["Ativan", "Tranks" "lorazap", "lorazipam"],
+dict(slug="lorazepam", name="Lorazepam (Ativan 2.5 mg)", aliases=["Ativan", "Tranks", "lorazap", "lorazipam"],
  category="benzodiazepines", schedule="Schedule IV (US)",
  appearance="White tablets (0.5–2.5 mg) marked imprint; clear injectable vials (hospitals)",
  effects=["Calm, sedation, anti-anxiety, seizure control"],
@@ -457,7 +457,7 @@ dict(slug="gbl", name="GBL (gamma-butyrolactone)", aliases=["GBL", "Liquid gold"
  legalStatus="Schedule I (US); Class B UK; controlled EU/AU/CA — industrial chemical restrictions apply",
  lastUpdated="2026-09-12", sources=["EMCDDA","NIDA","Home Office"]),
 
-dict(slug="ketamine", name="Ketamine", aliases=["K", "Special K", "Kit Kat", "Ketalar" "ketmaine"],
+dict(slug="ketamine", name="Ketamine", aliases=["K", "Special K", "Kit Kat", "Ketalar", "ketmaine"],
  category="dissociatives", schedule="Schedule III (US)",
  appearance="White crystalline powder; clear injectable liquid (Ketalar vials)",
  effects=["Dissociation (out-of-body), euphoria, pain relief; sedative at higher doses"],
@@ -581,7 +581,7 @@ dict(slug="4-fa", name="4-FA (4-fluoroamphetamine)", aliases=["4-FMP", "Palladiu
  legalStatus="Analogue Act (US); controlled NL/UK/DE/others — check locally",
  lastUpdated="2026-09-12", sources=["EMCDDA","TripSit"]),
 
-dict(slug="mephedrone", name="Mephedrone (4-MMC)", aliases=["4-MMC", "Meow Meow", "M-Cat", "Drone", "Bubbles" "meohedrone"],
+dict(slug="mephedrone", name="Mephedrone (4-MMC)", aliases=["4-MMC", "Meow Meow", "M-Cat", "Drone", "Bubbles", "meohedrone"],
  category="stimulants", schedule="Schedule I (US, 2011); Class B UK",
  appearance="White/off-white crystals or powder (crystals = '4-MMC crystals')",
  effects=["Euphoria, empathy, energy, strong urge to redose"],
@@ -1030,7 +1030,7 @@ dict(slug="dihydrocodeine", name="Dihydrocodeine (DHC)", aliases=["DHC", "DF-118
  image="https://plugreports.com/media/drugs/dihydrocodeine.avif",
  related=["codeine-30-500","heroin","quit:heroin"]),
 
-dict(slug="triazolam", name="Triazolam (Halcion)", aliases=["Halcion", "Apo-Triazo" "halcyon"],
+dict(slug="triazolam", name="Triazolam (Halcion)", aliases=["Halcion", "Apo-Triazo", "halcyon"],
  category="benzodiazepines", schedule="Schedule IV (US)",
  appearance="White/blue tablets (0.125/0.25 mg), 'HALCION' imprint",
  effects=["Fast, short sleep induction", "Amnesia, disinhibition at higher doses"],
@@ -2256,7 +2256,7 @@ dict(slug="carfentanil", name="Carfentanil", aliases=["Wildnil", "Elephant tranq
  legalStatus="Schedule II veterinary only; human possession = felony; analogue prosecutions automatic",
  lastUpdated="2026-09-17", sources=["DEA","NIDA"],
  related=["fentanyl","sufentanil","topics:fentanyl-numbers"]),
-dict(slug="u-47700", name="U-47700 (Pink / U4)", aliases=["Pink", "U4", "Pinky" "u4ea", "U4EA"],
+dict(slug="u-47700", name="U-47700 (Pink / U4)", aliases=["Pink", "U4", "Pinky", "u4ea", "U4EA"],
  category="opioids", schedule="Schedule I (US, 2016)",
  appearance="White or pink powder, pills; sold online as 'research chemical'",
  effects=["Fentanyl-like opioid euphoria, sedation"],
@@ -2729,7 +2729,7 @@ dict(slug="tfmpp", name="TFMPP (Trifluoromethylphenylpiperazine)", aliases=["TFM
  lastUpdated="2026-09-17", sources=["EMCDDA","NIDA"],
  related=["mCPP","bZP","mdma"]),
 dict(slug="bzp", name="BZP (Benzylpiperazine)", aliases=["BZP", 'Legal X', "A2"],
- category="empatogens" if False else "empathogens", schedule="Schedule I (US, 2002); controlled worldwide",
+ category="empathogens", schedule="Schedule I (US, 2002); controlled worldwide",
  appearance="Pills/powder — the original 'party pill'",
  effects=["Amphetamine-like stimulation, euphoria", "Less empathy than MDMA"],
  risks=["The 2000s 'party pill' wave before banning", "Serotonin syndrome (BZP+TFMPP combos)", "Insomnia, agitation", "Seizures at high doses", "Cardiovascular strain"],

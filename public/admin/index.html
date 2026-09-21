@@ -73,12 +73,12 @@ const SCHEMAS={
   {k:'tagline',l:'Tagline',t:'text'},{k:'blurb',l:'Description',t:'textarea',cls:'tall'}],
  drugs:[{k:'name',l:'Drug name',t:'text',req:1,ph:'Fentanyl'},{k:'slug',l:'Slug (URL)',t:'text',auto:1,hint:'auto-generated from name if empty'},
   {k:'category',l:'Category',t:'category'},{k:'schedule',l:'Schedule / class',t:'text',ph:'Schedule I (US)'},
-  {k:'aliases',l:'Street names',t:'csv',ph:'Dope, H, Smack'},{k:'appearance',l:'Appearance',t:'textarea',ph:'White/off-white powder…'},
+  {k:'aliases',l:'Street names',t:'csv',ph:'Common street or slang names, comma-separated'},{k:'appearance',l:'Appearance',t:'textarea',ph:'Form, colour, packaging, markings — what it actually looks like'},
   {k:'image',l:'Featured image',t:'image'},
   {k:'effects',l:'Effects',t:'list',hint:'one per line'},{k:'risks',l:'Risks',t:'list',hint:'one per line'},
-  {k:'overdoseSigns',l:'Overdose signs',t:'list',hint:'one per line'},{k:'streetPrice',l:'Street price',t:'text',ph:'~$20–$40 per pill'},
+  {k:'overdoseSigns',l:'Overdose signs',t:'list',hint:'one per line'},{k:'streetPrice',l:'Street price',t:'text',ph:'Typical price per unit / weight, with region if known'},
   {k:'legalStatus',l:'Legal status',t:'textarea'},{k:'sources',l:'Sources',t:'csv',ph:'NIDA, DEA, EMCDDA'},
-  {k:'brands',l:'Brand names (grey market)',t:'csv',ph:'Cenforce, Fildena…'},
+  {k:'brands',l:'Brand names (grey market)',t:'csv',ph:'Brand or trade names it is sold under, comma-separated'},
   {k:'lastUpdated',l:'Last updated',t:'text',ph:'2026-09-16'},REL,RELND].concat(SEO),
  busts:[{k:'title',l:'Headline',t:'text',req:1},{k:'slug',l:'Slug',t:'text',auto:1},{k:'image',l:'Featured image',t:'image'},
   {k:'date',l:'Date',t:'text',ph:'2026-09-16'},{k:'location',l:'Location',t:'text',ph:'Los Angeles, CA'},{k:'agency',l:'Agency',t:'text',ph:'DEA'},
@@ -174,8 +174,8 @@ async function renderRows(q){
  const f=(q||'').toLowerCase().trim();
  const rows=items.map((it,i)=>({it,i})).filter(o=>!f||String(o.it.slug||'').toLowerCase().includes(f)||String(o.it.name||o.it.title||'').toLowerCase().includes(f));
  const el=document.getElementById('rows'); if(!el)return;
- el.innerHTML='<table><tr><th style="width:70px"></th><th>slug / key</th><th>title / name</th></tr>'+rows.map(o=>
- `<tr><td><button class="btn x sm" onclick="editForm(${o.i},this)">edit</button></td><td>${o.it.slug||o.it.region||''}</td><td>${(o.it.title||o.it.name||'').slice(0,70)}</td></tr>`).join('')+'</table><div id="rowEditor"></div>';
+ el.innerHTML='<table><tr><th style="width:150px"></th><th>slug / key</th><th>title / name</th></tr>'+rows.map(o=>
+ `<tr><td><button class="btn x sm" onclick="editForm(${o.i},this)">edit</button>${o.it.unpublished?`<button class="btn g sm" onclick="repub('${esc(o.it.slug||'')}')">restore</button>`:''}</td><td>${o.it.slug||o.it.region||''}${o.it.unpublished?' <span style="background:#fef2f2;color:#b91c1c;border:1px solid #fecaca;border-radius:6px;padding:1px 7px;font-size:11px;font-weight:700">unpublished</span>':''}</td><td>${(o.it.title||o.it.name||'').slice(0,70)}</td></tr>`).join('')+'</table><div id="rowEditor"></div>';
  const c=document.getElementById('lcount'); if(c)c.textContent='('+rows.length+'/'+items.length+')';
 }
 function editForm(i,btn){jsonMode=false;window._editIdx=(i==='')?null:i;const it=window._items[i]||{};
@@ -242,7 +242,7 @@ async function saveNewCat(){
  msg('Category "'+name+'" created — hub page live at /categories/'+slug+'/')}
 async function uploadField(k){const f=document.getElementById('f_'+k+'_file').files[0];if(!f)return msg('Pick a file first',0);
  const slug=val('slug')||slugify(val('name')||val('title')||'misc');
- const name='drugs/'+slug+'.'+(f.name.split('.').pop().toLowerCase());
+ const name=cur+'/'+slug+'.'+(f.name.split('.').pop().toLowerCase());
  const r=await fetch('/api/admin/upload?name='+encodeURIComponent(name),{method:'POST',headers:{'Content-Type':f.type,Authorization:'Bearer '+token},body:f});
  const j=await r.json();if(!j.ok)return msg(j.error||'Upload failed',0);
  document.getElementById('f_'+k).value=j.url;msg('Uploaded: '+j.url)}
@@ -269,9 +269,13 @@ async function saveForm(slug){let obj;
  const r=await api(`admin/content?type=${cur}${slug?'&slug='+slug:''}`,{method:slug?'PUT':'POST',body:JSON.stringify(obj)});
  msg(r.ok?'Saved.':'Error: '+(r.error||''),r.ok);
  if(r.ok){_clearDraft();setTimeout(()=>list(document.getElementById('body')),600)}}
-async function del(slug){if(!confirm('Unpublish '+slug+'? (fields preserved — page goes offline)'))return;
+async function del(slug){if(!confirm('Unpublish '+slug+'? (fields preserved — page goes offline; use Restore in the list to bring it back)'))return;
  const r=await api(`admin/content?type=${cur}&slug=${slug}`,{method:'DELETE'});
- msg(r.ok?'Unpublished. (Restorable in KV if needed)':(r.error||'Error'),r.ok);
+ msg(r.ok?'Unpublished — page is offline. Use Restore in the list to re-publish.':(r.error||'Error'),r.ok);
+ if(r.ok)setTimeout(()=>list(document.getElementById('body')),600)}
+async function repub(slug){if(!slug)return;
+ const r=await api(`admin/content?type=${cur}&slug=${slug}`,{method:'PUT',body:JSON.stringify({unpublished:false})});
+ msg(r.ok?'Re-published — page is live again.':(r.error||'Error'),r.ok);
  if(r.ok)setTimeout(()=>list(document.getElementById('body')),600)}
 async function settings(b){const s=(await api('admin/settings')).settings||{};
  b.innerHTML=`<h2>Settings & SEO sockets</h2><p style="font-size:13px;color:#667085">Paste verification / tracking IDs. They inject site-wide within seconds — no rebuild needed.</p>
@@ -290,10 +294,15 @@ async function saveSettings(){const s={};['gsc','bing','clarity','ga','crisisNot
 async function changePin(){const r=await api('admin/pin',{method:'POST',body:JSON.stringify({current:p0.value,next:p1.value})});
  msg(r.ok?'PIN changed.':(r.error||'Error'),r.ok)}
 async function sugg(b){const a=await api('admin/suggestions');const items=a.items||[];
- b.innerHTML=`<h2>Suggestions inbox (${items.length})</h2>`+items.map(s=>
+ b.innerHTML=`<h2>Suggestions inbox (${items.length})</h2>`+items.map((s,i)=>
  `<div style="background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px;margin:8px 0">
  <b>${esc(s.type)}</b> · ${esc(s.name||'anon')} · <span style="color:#98a2b3">${new Date(s.ts).toLocaleString()} · ${esc(s.page||'')}</span>
- <p style="margin:6px 0">${esc(s.message||'')}</p><span style="color:#98a2b3">${esc(s.contact||'')}</span></div>`).join('')}
+ <p style="margin:6px 0">${esc(s.message||'')}</p><span style="color:#98a2b3">${esc(s.contact||'')}</span>
+ <div style="margin-top:8px"><button class="btn x sm" onclick="delSugg(${i})">Delete</button></div></div>`).join('')}
+async function delSugg(i){if(!confirm('Delete this suggestion?'))return;
+ const r=await api('admin/suggestions?i='+i,{method:'DELETE'});
+ msg(r.ok?'Suggestion deleted.':(r.error||'Error'),r.ok);
+ if(r.ok)sugg(document.getElementById('body'))}
 const AUTOLOGOUT_MS=40000, WARN_MS=25000;
 let _idleT=null,_warnT=null;
 function _editorOpen(){return !!(document.getElementById('formview')||document.getElementById('j'));}

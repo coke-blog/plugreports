@@ -42,8 +42,10 @@ function gate(){
   if(localStorage.getItem('pr-age')==='1') return;
   var g=document.getElementById('agegate'); if(!g) return;
   g.hidden=false;
-  g.querySelector('[data-gate-yes]').addEventListener('click',function(){ localStorage.setItem('pr-age','1'); g.hidden=true; });
-  g.querySelector('[data-gate-no]').addEventListener('click',function(){ location.href='https://www.google.com'; });
+  var yes=g.querySelector('[data-gate-yes]');
+  if(yes) yes.addEventListener('click',function(){ localStorage.setItem('pr-age','1'); g.hidden=true; });
+  var no=g.querySelector('[data-gate-no]')||g.querySelector('[data-i18n="ageNo"]')||g.querySelector('a[href*="google.com"]');
+  if(no) no.addEventListener('click',function(){ location.href='https://www.google.com'; });
 }
 
 /* ---------------- tabs ---------------- */
@@ -79,12 +81,13 @@ function initSuggest(){
   f.addEventListener('submit',function(e){
     e.preventDefault();
     var data={type:f.type.value,name:f.name.value,contact:f.contact.value,message:f.message.value,page:location.pathname};
-    var btn=f.querySelector('button'); btn.disabled=true; btn.textContent='Sending…';
+    var btn=f.querySelector('button'); if(btn){ btn.disabled=true; btn.textContent='Sending…'; }
+    var ok=document.getElementById('suggest-ok');
     fetch('/api/suggest',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)})
       .then(function(r){ return r.json(); })
-      .then(function(){ document.getElementById('suggest-ok').hidden=false; f.reset(); })
-      .catch(function(){ document.getElementById('suggest-ok').hidden=false; f.reset(); })
-      .finally(function(){ btn.disabled=false; btn.textContent='Submit'; });
+      .then(function(){ if(ok)ok.hidden=false; f.reset(); })
+      .catch(function(){ if(ok)ok.hidden=false; f.reset(); })
+      .finally(function(){ if(btn){ btn.disabled=false; btn.textContent='Submit'; } });
   });
 }
 
@@ -128,7 +131,8 @@ function translateContent(lang){
       }).catch(function(){ batch(start+CH); });
   })(0);
 }
-document.addEventListener('DOMContentLoaded',function(){ applyI18n(); gate(); initSearch(); initSuggest(); injectSettings(); initTranslate();
+document.addEventListener('DOMContentLoaded',function(){
+  [applyI18n,gate,initSearch,initSuggest,injectSettings,initTranslate].forEach(function(fn){ try{ fn(); }catch(e){} });
   var b=document.querySelector('.burger'); if(b){ b.addEventListener('click',function(){ document.querySelector('.nav-links').classList.toggle('open'); }); }
 });
 })();
