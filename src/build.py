@@ -99,6 +99,19 @@ def resolve_slug(s):
     if s in QUIT_SPECS: return f"quit/{s}"
     return s  # section pages: busts, hotlines, sentencing...
 
+def rel_link(entry, es=False):
+    target, _, label = str(entry).partition("|")
+    target = target.strip()
+    if target.startswith("http"):
+        lab = (label or target.replace("https://", "").replace("http://", "").strip("/").split("/")[0])
+        return f'<a href="{esc(target)}" target="_blank" rel="noopener"><span class="mini" style="background:#667085">&#8599;</span><span>{esc(lab)}</span></a>'
+    href = "/" + resolve_slug(target) + "/"
+    if es and target in DRUG_BY_SLUG:
+        from data_es import ES_DRUGS as _ESD2
+        if target in _ESD2:
+            href = f"/es/drugs/{target}/"
+    return f'<a href="{href}">{rel_card(target)}</a>'
+
 def rel_card(slug):
     if ":" in slug:
         sl = slug.split(":", 1)[1]
@@ -386,10 +399,19 @@ def build_drugs(es=False):
         fx = o.get("effects", d["effects"]); rk = o.get("risks", d["risks"]); od = o.get("overdoseSigns", d["overdoseSigns"])
         app_ = o.get("appearance", d["appearance"]); pr = o.get("streetPrice", d["streetPrice"])
         lg = o.get("legalStatus", d["legalStatus"]); sch = o.get("schedule", d["schedule"])
-        rel = [DRUG_BY_SLUG[x] for x in (d.get("related") or []) if x in DRUG_BY_SLUG] or related_drugs(d)
         ext_img = (d.get("image") or "").strip()
         img_rel = ext_img if ext_img.startswith("http") else drug_image(d["slug"])
-        relhtml = "".join(f'<a href="/{("es/" if es and r["slug"] in ES_DRUGS else "")}drugs/{r["slug"]}/">{rel_card(r["slug"])}</a>' for r in rel)
+        rel = related_drugs(d)
+        rel_entries = d.get("related") or []
+        if rel_entries:
+            relhtml = "".join(rel_link(e, es=es) for e in rel_entries)
+        else:
+            relhtml = "".join(rel_link(r["slug"], es=es) for r in related_drugs(d))
+        defextra = "" if d.get("relatedNoDefaults") else ('<a href="/topics/fentanyl-numbers/"><span class="mini" style="background:#b45309">&#128218;</span><span>Fentanyl: the numbers</span></a>'
+            '<a href="/quit/"><span class="mini" style="background:#16a34a">&#8987;</span><span>Quitting — day by day</span></a>'
+            + (f'<a href="/drugs/{qslug}/"><span class="mini" style="background:#d97706">{esc(qname[0])}</span><span>About {esc(qname)}</span></a>' if qslug else '')
+            + '<a href="/hotlines/"><span class="mini" style="background:#dc2626">&#9742;</span><span>Hotlines</span></a>'
+            '<a href="/pharmacies/"><span class="mini" style="background:#3b82f6">Rx</span><span>Verified pharmacies</span></a>')
         rows = "".join(f'<div class="fact"><b>{k}</b><span>{v}</span></div>' for k, v in [
             ("Also known as", ", ".join(d["aliases"])),
             ("Category", f'<span class="cat-dot" style="background:{c["color"]}"></span>{esc(cat_name)}'),
@@ -465,12 +487,7 @@ def build_drugs(es=False):
 {sources_html}
 
 <div class="related print-hide"><h2>You may also want to know about</h2>
-<div class="rel-grid">{relhtml}
-<a href="/topics/fentanyl-numbers/"><span class="mini" style="background:#b45309">&#128218;</span><span>Fentanyl: the numbers</span></a>
-<a href="/quit/"><span class="mini" style="background:#16a34a">&#8987;</span><span>Quitting — day by day</span></a>
-{f'<a href="/drugs/{qslug}/"><span class="mini" style="background:#d97706">{esc(qname[0])}</span><span>About {esc(qname)}</span></a>' if qslug else ''}
-<a href="/hotlines/"><span class="mini" style="background:#dc2626">&#9742;</span><span>Hotlines</span></a>
-<a href="/pharmacies/"><span class="mini" style="background:#3b82f6">Rx</span><span>Verified pharmacies</span></a></div></div>
+<div class="rel-grid">{relhtml}{defextra}</div></div>
 </div>"""
         if es:
             title = f"{d['name']}: efectos, riesgos, signos de sobredosis y precio | plugreports"

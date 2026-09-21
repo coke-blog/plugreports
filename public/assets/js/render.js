@@ -85,9 +85,16 @@
       '<a href="/quit/"><span class="mini" style="background:#16a34a">&#8987;</span><span>Quitting — day by day</span></a></div></div>';
   }
   function relChip(entry) {
-    var p = String(entry).split(':');
+    var e2 = String(entry);
+    var pipe = e2.split('|');
+    var target = pipe[0].trim(), custom = (pipe[1] || '').trim();
+    if (/^https?:\/\//.test(target)) {
+      var elab = custom || target.replace(/^https?:\/\//, '').split('/')[0];
+      return '<a href="' + esc(target) + '" target="_blank" rel="noopener"><span class="mini" style="background:#667085">&#8599;</span><span>' + esc(elab) + '</span></a>';
+    }
+    var p = target.split(':');
     var href = '/' + (p.length > 1 ? p[0] + '/' + p[1] : 'drugs/' + entry) + '/';
-    var lbl = (p.length > 1 ? p[1] : entry).replace(/-/g, ' ');
+    var lbl = custom || (p.length > 1 ? p[1] : target).replace(/-/g, ' ');
     return '<a href="' + href + '"><span class="mini" style="background:#d97706">' + esc((lbl[0] || '?').toUpperCase()) + '</span><span>' + esc(lbl) + '</span></a>';
   }
   function fact(k, v) { return '<div class="fact"><b>' + esc(k) + '</b><span>' + esc(v || '—') + '</span></div>'; }

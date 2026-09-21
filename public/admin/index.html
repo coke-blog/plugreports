@@ -63,8 +63,9 @@ input:focus,select:focus,textarea:focus{outline:2px solid #fcd34d;border-color:v
 const TYPES=["drugs","categories","busts","news","topics","quit","hotlines","pharmacies","rehabs","sentencing"];
 const PALETTE=['#0ea5e9','#8b5cf6','#ec4899','#f43f5e','#14b8a6','#f59e0b','#84cc16','#6366f1','#a855f7','#0d9488','#e11d48','#ca8a04'];
 const CATS=["opioids","stimulants","benzodiazepines","sedatives","depressants","dissociatives","empathogens","psychedelics","cannabinoids","performance","hazardous"];
+const RELND={k:'relatedNoDefaults',l:'Hide default cards (Fentanyl numbers / Quitting / Hotlines)',t:'checkbox'};
 const SEO=[{k:'seoTitle',l:'SEO title (optional — overrides auto-generated)',t:'text'},{k:'seoDesc',l:'SEO description (optional)',t:'textarea'}];
-const REL="{k:'related',l:'Related links (drug slug, or type:slug — topics:x, news:x, quit:x)',t:'csv',ph:'heroin, topics:nitazenes-new-opioids, sentencing'}";
+const REL="{k:'related',l:'You may also want to know about — drug slug, type:slug (topics:x), or https://link|Label',t:'csv',ph:'heroin, topics:nitazenes-new-opioids, https://nida.nih.gov|NIDA'},RELND";
 const SCHEMAS={
  categories:[{k:'name',l:'Category name',t:'text',req:1,ph:'Steroids & PEDs'},{k:'slug',l:'Slug',t:'text',auto:1},
   {k:'color',l:'Color',t:'select',opts:PALETTE},{k:'grad',l:'Gradient CSS (optional)',t:'text',ph:'linear-gradient(135deg,#1e40af,#3b82f6)'},
