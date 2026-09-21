@@ -218,9 +218,9 @@ def shell(path, title, desc, body, jsonld=None, canonical=None, extra_head="", o
     if SETTINGS.get("clarity"): ld += '<script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","' + esc(SETTINGS["clarity"]) + '")</script>'
     if SETTINGS.get("ga"): ld += '<script async src="https://www.googletagmanager.com/gtag/js?id=' + esc(SETTINGS["ga"]) + '"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date());gtag("config","' + esc(SETTINGS["ga"]) + '")</script>' 
     if path.split("/")[0] in ("busts","news","drugs","topics","quit","mix","hotlines","pharmacies","rehabs","sentencing","index.html"):
-        ld += '<script src="/assets/js/hydrate.js?v=10" defer></script>'
+        ld += '<script src="/assets/js/hydrate.js?v=11" defer></script>'
         if path == "index.html":
-            ld += '<script src="/assets/js/breaking.js?v=10" defer></script>'
+            ld += '<script src="/assets/js/breaking.js?v=11" defer></script>'
     return f"""<!DOCTYPE html>
 <html lang="{lang}">
 <head>
@@ -245,7 +245,7 @@ def shell(path, title, desc, body, jsonld=None, canonical=None, extra_head="", o
 <link rel="icon" href="/assets/img/logo.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Source+Serif+4:opsz,wght@8..60,600;8..60,800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/css/style.css">
+<link rel="stylesheet" href="/assets/css/style.css?v=11">
 {extra_head}{ld}
 </head>
 <body>
@@ -288,7 +288,7 @@ def shell(path, title, desc, body, jsonld=None, canonical=None, extra_head="", o
 <p data-i18n="ageBody">This site contains educational information about drugs and harm reduction. It is not medical or legal advice. You must be of legal age or accessing with intent to help yourself or someone else.</p>
 <div class="row"><button class="btn btn-red" data-gate-yes data-i18n="ageYes">I understand — enter</button>
 <a class="btn btn-ghost" href="https://www.google.com" data-i18n="ageNo">Leave</a></div></div></div>
-<script src="/assets/js/app.js?v=10"></script>
+<script src="/assets/js/app.js?v=11"></script>
 </body></html>"""
 
 def breadcrumb_ld(parts):
@@ -621,7 +621,7 @@ def build_news():
 <h3>{esc(n['title'])}</h3><p>{esc(n['summary'])}</p><div class="foot">Read &rarr;</div></a>''' for n in NEWS)
     w("news/index.html", shell("news/index.html", "Drug News & Supply Alerts | plugreports",
       clip("Drug news, adulterant alerts and supply trends: nitazenes, xylazine, high-dose pills, counterfeit pharmaceuticals — with sources."),
-      f'<div class="wrap"><section class="sec-head" style="padding-top:30px"><div><span class="kicker">Newsroom</span><h2>Drug news & alerts</h2><p>Sourced from NIDA, DEA, EMCDDA, ONS and drug-checking services. Subscribe via <a href="/rss.xml">RSS</a>.</p></div></div><div class="cards">{idx_cards}</div></div>'))
+      f'<div class="wrap"><section class="sec-head" style="padding-top:30px"><div><span class="kicker">Newsroom</span><h1>Drug news & alerts</h1><p>Sourced from NIDA, DEA, EMCDDA, ONS and drug-checking services. Subscribe via <a href="/rss.xml">RSS</a>.</p></div></div><div class="cards">{idx_cards}</div></div>'))
     for n in NEWS:
         body = "".join(f"<p>{p}</p>" for p in n["body"])
         rels = "".join(f'<a href="/drugs/{s}/">{rel_card(s)}</a>' for s in n.get("drugsInvolved", []))
@@ -645,7 +645,7 @@ def build_busts():
     w("busts/index.html", shell("busts/index.html", "Drug Busts & Seizures Tracker | plugreports",
       clip("Recent drug busts and seizures worldwide: location, agency, substances, quantities and sentencing exposure. Pending items are marked until editor-verified."),
       f'''<div class="wrap"><section class="sec-head" style="padding-top:30px"><div>
-<span class="kicker">Enforcement tracker</span><h2>Busts & seizures</h2>
+<span class="kicker">Enforcement tracker</span><h1>Busts & seizures</h1>
 <p>Each report lists agency, location, substances involved and potential sentencing. Items marked <b>pending verification</b> are awaiting editor confirmation from source material — we never publish unverified seizure claims as fact.</p></div></div>
 <div class="cards">{cards}</div>
 <div class="callout amber"><b>Editorial policy</b>Bust entries are only published as fact after verification against an official agency release or credible reporting. Source links are attached to every entry.</div></div>'''))
@@ -733,7 +733,7 @@ def build_topics():
 <h3>{esc(t['title'])}</h3><p>{esc(t['desc'])}</p><div class="foot">Read guide &rarr;</div></a>''' for t in TOPICS)
     w("topics/index.html", shell("topics/index.html", "Drug Guides & Explainers | plugreports",
       clip("Visual explainers: xylazine, fentanyl numbers, pressed pills, nitazenes, krokodil facts, sentencing, talking to your kids, quitting day by day."),
-      f'<div class="wrap"><section class="sec-head" style="padding-top:30px"><div><span class="kicker amber">Guides</span><h2>Explainers & deep-dives</h2><p>Written for fast reading: tables, timelines and callouts instead of walls of text.</p></div></div><div class="cards">{cards}</div></div>'))
+      f'<div class="wrap"><section class="sec-head" style="padding-top:30px"><div><span class="kicker amber">Guides</span><h1>Explainers & deep-dives</h1><p>Written for fast reading: tables, timelines and callouts instead of walls of text.</p></div></div><div class="cards">{cards}</div></div>'))
     for t in TOPICS:
         if t.get("markdown"):
             inner = md_render(t["markdown"])
@@ -765,7 +765,7 @@ def build_quit():
 <h3>Quitting {esc(v['name'])}</h3><p>{esc(v['danger'][:120])}…</p><div class="foot">Full timeline &rarr;</div></a>''' for k, v in QUIT_SPECS.items())
     w("quit/index.html", shell("quit/index.html", "What Happens When You Quit Drugs — Day-by-Day Timelines | plugreports",
       clip("Honest withdrawal timelines: heroin, fentanyl, cocaine, meth, MDMA, Xanax, ketamine, GHB. What's normal, what hurts, when it ends, and when detox must be medical."),
-      f'<div class="wrap"><section class="sec-head" style="padding-top:30px"><div><span class="kicker green">Recovery</span><h2>Quitting — day by day</h2><p>Start with the <a href="/topics/what-actually-happens-when-you-quit/">master explainer</a>, then pick your substance.</p></div></div><div class="cards">{cards}</div></div>'))
+      f'<div class="wrap"><section class="sec-head" style="padding-top:30px"><div><span class="kicker green">Recovery</span><h1>Quitting — day by day</h1><p>Start with the <a href="/topics/what-actually-happens-when-you-quit/">master explainer</a>, then pick your substance.</p></div></div><div class="cards">{cards}</div></div>'))
     for k, v in QUIT_SPECS.items():
         qslug = k if k in DRUG_BY_SLUG else ("methamphetamine" if k == "meth" else None)
         qname = DRUG_BY_SLUG[qslug]["name"] if qslug else v["name"]
@@ -827,7 +827,7 @@ def build_mix():
                     f'<p style="color:var(--muted);font-size:14.5px;margin:6px 0 14px">{sub}</p>'
                     f'<div class="cards" data-tier="{tier}">{"".join(card(m) for m in items)}</div></section>')
     hub = ('<div class="wrap"><section class="sec-head" style="padding-top:30px"><div>'
-           '<span class="kicker">Mixing dangers</span><h2>Mixing drugs &mdash; what actually happens</h2>'
+           '<span class="kicker">Mixing dangers</span><h1>Mixing drugs &mdash; what actually happens</h1>'
            f'<p>Most fatal overdoses involve more than one substance. These {len(MIX)} plain-language guides explain why specific combinations are dangerous, '
            'what the mix does to your body, the warning signs of trouble, and exactly what to do.</p></div></section>'
            '<div class="callout red"><b>If you&rsquo;re mixing or thinking about it, read the deadly tier first.</b>'
@@ -961,7 +961,7 @@ def build_directory(name, items, singular, title, desc, thumb):
                 "numberOfItems":len(items),
                 "itemListElement":[{"@type":"ListItem","position":i+1,"name":it["name"],"url":f"{SITE}/{name}/{it['slug']}/"} for i,it in enumerate(items)]}
     w(f"{name}/index.html", shell(f"{name}/index.html", title, clip(desc),
-      f'<div class="wrap"><section class="sec-head" style="padding-top:30px"><div><span class="kicker green">Verified directory</span><h2>{esc(title.split("|")[0].strip())}</h2><p>Every listing is checked against official accreditation/registries before publishing. <a href="/suggest/">Recommend a facility</a>.</p></div></div><div class="dir-grid">{cards}</div></div>', jsonld=itemlist))
+      f'<div class="wrap"><section class="sec-head" style="padding-top:30px"><div><span class="kicker green">Verified directory</span><h1>{esc(title.split("|")[0].strip())}</h1><p>Every listing is checked against official accreditation/registries before publishing. <a href="/suggest/">Recommend a facility</a>.</p></div></div><div class="dir-grid">{cards}</div></div>', jsonld=itemlist))
     for it in items:
         body = f"""<div class="wrap"><div style="max-width:760px;padding:26px 0">
 <span class="kicker green">{'&#10004; VERIFIED' if it.get('verified') else 'LISTING'}</span>
@@ -1164,7 +1164,7 @@ def build_categories_es():
         w("es/categories/index.html", shell("es/categories/index.html",
             "Categorías de drogas — opioides, estimulantes, benzos y más | plugreports",
             "Todas las categorías de drogas en plugreports: opioides, estimulantes, benzodiacepinas, cannabinoides y más.",
-            "<div class=\"wrap\"><section class=\"sec-head\" style=\"padding-top:30px\"><div><span class=\"kicker amber\">Biblioteca de drogas</span><h2>Categorías</h2></div></section><div class=\"cards\">" + idx + "</div></div>",
+            "<div class=\"wrap\"><section class=\"sec-head\" style=\"padding-top:30px\"><div><span class=\"kicker amber\">Biblioteca de drogas</span><h1>Categorías</h1></div></section><div class=\"cards\">" + idx + "</div></div>",
             lang="es", canonical=f"{SITE}/es/categories/",
             alts=_alt_set(f"{SITE}/categories/", es=f"{SITE}/es/categories/")))
 
@@ -1284,7 +1284,7 @@ def build_indexes():
     cards = "".join(
         "<a class=\"card\" href=\"/categories/" + k + "/\"><div class=\"meta\"><span class=\"chip\" style=\"border-color:" + v["color"] + "33;color:" + v["color"] + "\">" + str(sum(1 for d in DRUGS if d["category"] == k)) + " substances</span></div><h3>" + esc(v["name"]) + "</h3><p>" + esc(v["tagline"]) + "</p><div class=\"foot\">Browse category &rarr;</div></a>"
         for k, v in CATEGORIES.items())
-    catidx_body = "<div class=\"wrap\"><section class=\"sec-head\" style=\"padding-top:30px\"><div><span class=\"kicker amber\">Drug Library</span><h2 style=\"font-family:var(--font-ed);font-size:clamp(28px,4vw,44px)\">All <span style=\"background:linear-gradient(92deg,#f59e0b,#dc2626);-webkit-background-clip:text;background-clip:text;color:transparent\">categories</span></h2><p>" + str(len(CATEGORIES)) + " categories, " + str(len(DRUGS)) + " substances — every profile covers effects, overdose signs, street prices and legal status.</p></div></section><div class=\"cards\">" + cards + "</div></div>"
+    catidx_body = "<div class=\"wrap\"><section class=\"sec-head\" style=\"padding-top:30px\"><div><span class=\"kicker amber\">Drug Library</span><h1 style=\"font-family:var(--font-ed);font-size:clamp(28px,4vw,44px)\">All <span style=\"background:linear-gradient(92deg,#f59e0b,#dc2626);-webkit-background-clip:text;background-clip:text;color:transparent\">categories</span></h1><p>" + str(len(CATEGORIES)) + " categories, " + str(len(DRUGS)) + " substances — every profile covers effects, overdose signs, street prices and legal status.</p></div></section><div class=\"cards\">" + cards + "</div></div>"
     w("categories/index.html", shell("categories/index.html",
         "Drug Categories — Opioids, Stimulants, Benzos, Psychedelics & More | plugreports",
         clip("Browse all drug categories: opioids, stimulants, benzodiazepines, psychedelics, dissociatives, synthetic cannabinoids and more — harm-reduction profiles for every substance."),
@@ -1299,7 +1299,7 @@ def build_indexes():
     w("drugs/index.html", shell("drugs/index.html",
         "Drugs A–Z — All Substances: Street Names, Effects, Overdose Signs | plugreports",
         clip("Complete A-Z index of street drugs, pharmaceuticals, and grey-market substances: street names, effects, overdose signs, street prices and legal status."),
-        "<div class=\"wrap\"><section class=\"sec-head\" style=\"padding-top:30px\"><div><span class=\"kicker amber\">A-Z Index</span><h2 style=\"font-family:var(--font-ed);font-size:clamp(28px,4vw,44px)\">All <span style=\"background:linear-gradient(92deg,#f59e0b,#dc2626);-webkit-background-clip:text;background-clip:text;color:transparent\">" + str(len(DRUGS)) + " substances</span>, A to Z</h2><p>Tap any substance for effects, risks, overdose signs and street info.</p></div></section><div class=\"rail\" style=\"grid-template-rows:none;overflow:visible\">" + tiles + "</div></div>", jsonld=az_ld))
+        "<div class=\"wrap\"><section class=\"sec-head\" style=\"padding-top:30px\"><div><span class=\"kicker amber\">A-Z Index</span><h1 style=\"font-family:var(--font-ed);font-size:clamp(28px,4vw,44px)\">All <span style=\"background:linear-gradient(92deg,#f59e0b,#dc2626);-webkit-background-clip:text;background-clip:text;color:transparent\">" + str(len(DRUGS)) + " substances</span>, A to Z</h1><p>Tap any substance for effects, risks, overdose signs and street info.</p></div></section><div class=\"rail\" style=\"grid-template-rows:none;overflow:visible\">" + tiles + "</div></div>", jsonld=az_ld))
 
 def main():
     build_index(); build_categories(); build_categories_es(); build_drugs(); build_news(); build_busts()
@@ -1323,7 +1323,7 @@ def main():
     w("_static.json", json.dumps(manifest))
     w("_dynamic.html", shell("_dynamic.html", "plugreports",
       "Live content", '<div class="wrap" id="dyn" style="padding:44px 20px;min-height:50vh"><p>Loading\u2026</p></div>',
-      extra_head='<script src="/assets/js/render.js?v=10" defer></script>', canonical=SITE + "/"))
+      extra_head='<script src="/assets/js/render.js?v=11" defer></script>', canonical=SITE + "/"))
     print(f"Built {len(DRUGS)} drug pages, {len(CATEGORIES)} categories, {len(TOPICS)} topics, "
           f"{len(QUIT_SPECS)} quit pages, {len(NEWS)} news, {len(BUSTS)} busts, {len(MIX)} mix pages into {PUB}")
 
