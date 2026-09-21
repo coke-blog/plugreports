@@ -57,6 +57,7 @@ input:focus,select:focus,textarea:focus{outline:2px solid #fcd34d;border-color:v
 <input id="pin" type="password" placeholder="PIN" style="width:90%"><br><button class="btn" onclick="login()">Unlock</button>
 <div id="gatemsg"></div></div>
 <div class="wrap" id="app" hidden>
+<div id="idlewarn" hidden style="position:fixed;bottom:18px;left:50%;transform:translateX(-50%);z-index:200;background:#7f1d1d;color:#fff;padding:12px 22px;border-radius:12px;font-weight:700;box-shadow:0 8px 30px rgba(0,0,0,.45);font-size:14px">&#9202; Logging out in seconds — click anywhere to stay logged in</div>
 <nav id="tabs"></nav>
 <main><div id="msg"></div><div id="topEditor"></div><div id="body"></div></main></div>
 <script>
@@ -195,7 +196,9 @@ function editForm(i,btn){jsonMode=false;window._editIdx=(i==='')?null:i;const it
    document.getElementById('topEditor').innerHTML=`<div class="inline-editor">${html}</div>`;
    document.getElementById('topEditor').scrollIntoView({behavior:'smooth',block:'start'});
  }
- loadCategories(it.category||'')}
+ loadCategories(it.category||'')
+ const dr=sessionStorage.getItem('pr-draft-'+cur)
+ if(dr){try{_applyDraft(JSON.parse(dr));msg('Draft restored — your unsaved changes from last time are back in the form.')}catch(e){}}}
 function toggleJson(){jsonMode=!jsonMode;const fv=document.getElementById('formview'),jv=document.getElementById('jsonview');
  if(!fv){document.querySelectorAll('#formview,#jsonview').forEach(e=>e.hidden=!e.hidden);return}
  fv.hidden=jsonMode;jv.hidden=!jsonMode;
@@ -265,7 +268,7 @@ async function saveForm(slug){let obj;
  if(!obj.slug)obj.slug=slugify(obj.name||obj.title||'item');
  const r=await api(`admin/content?type=${cur}${slug?'&slug='+slug:''}`,{method:slug?'PUT':'POST',body:JSON.stringify(obj)});
  msg(r.ok?'Saved.':'Error: '+(r.error||''),r.ok);
- if(r.ok)setTimeout(()=>list(document.getElementById('body')),600)}
+ if(r.ok){_clearDraft();setTimeout(()=>list(document.getElementById('body')),600)}}
 async function del(slug){if(!confirm('Unpublish '+slug+'? (fields preserved — page goes offline)'))return;
  const r=await api(`admin/content?type=${cur}&slug=${slug}`,{method:'DELETE'});
  msg(r.ok?'Unpublished. (Restorable in KV if needed)':(r.error||'Error'),r.ok);
@@ -291,9 +294,34 @@ async function sugg(b){const a=await api('admin/suggestions');const items=a.item
  `<div style="background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px;margin:8px 0">
  <b>${esc(s.type)}</b> · ${esc(s.name||'anon')} · <span style="color:#98a2b3">${new Date(s.ts).toLocaleString()} · ${esc(s.page||'')}</span>
  <p style="margin:6px 0">${esc(s.message||'')}</p><span style="color:#98a2b3">${esc(s.contact||'')}</span></div>`).join('')}
-const AUTOLOGOUT_MS=40000;
-let _idleT=null;
-function _armIdle(){clearTimeout(_idleT);_idleT=setTimeout(()=>{if(sessionStorage.getItem('pr-token')){logout()}},AUTOLOGOUT_MS)}
+const AUTOLOGOUT_MS=40000, WARN_MS=25000;
+let _idleT=null,_warnT=null;
+function _editorOpen(){return !!(document.getElementById('formview')||document.getElementById('j'));}
+function _showWarn(){const w=document.getElementById('idlewarn');if(w)w.hidden=false;}
+function _hideWarn(){const w=document.getElementById('idlewarn');if(w)w.hidden=true;}
+function _doLogout(){if(_editorOpen()){_showWarn();return;}if(sessionStorage.getItem('pr-token'))logout();}
+function _armIdle(){clearTimeout(_idleT);clearTimeout(_warnT);_hideWarn();
+  _warnT=setTimeout(_showWarn,WARN_MS);
+  _idleT=setTimeout(_doLogout,AUTOLOGOUT_MS);}
 ['mousemove','mousedown','keydown','scroll','touchstart','click'].forEach(e=>document.addEventListener(e,_armIdle,{passive:true}));
+
+const _draftKey=()=>'pr-draft-'+cur;
+function _saveDraft(){const j=document.getElementById('j');
+  if(!document.getElementById('formview')&&!j)return;
+  if(!sessionStorage.getItem('pr-token'))return;
+  try{const data=jsonMode&&j?JSON.parse(j.value):collectForm();
+    if(data&&Object.keys(data).length>1)sessionStorage.setItem(_draftKey(),JSON.stringify(data));
+  }catch(e){}}
+setInterval(_saveDraft,8000);
+function _clearDraft(){sessionStorage.removeItem(_draftKey());}
+function _applyDraft(obj){(SCHEMAS[cur]||[]).forEach(f=>{const el=document.getElementById('f_'+f.k);if(!el)return;const v=obj[f.k];if(v===undefined)return;
+  if(f.t==='checkbox')el.checked=!!v;
+  else if(f.t==='csv')el.value=Array.isArray(v)?v.join(', '):v;
+  else if(f.t==='list'||f.t==='paras')el.value=Array.isArray(v)?v.join(f.t==='paras'?'\n\n':'\n'):v;
+  else if(f.t==='lines4')el.value=(v||[]).map(r=>r.slice(0,4).join(' | ')).join('\n');
+  else if(f.t==='table')el.value=(v||[]).map(r=>r.join(' | ')).join('\n');
+  else if(f.t==='json')el.value=typeof v==='string'?v:JSON.stringify(v,null,2);
+  else el.value=v;});
+  if(obj.category)loadCategories(obj.category);}
 if(token)boot();
 </script></body></html>
