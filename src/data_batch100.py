@@ -1194,3 +1194,26 @@ dict(slug="snake-venom-creams", name="Syn-Ake & 'Snake Venom' Cosmetics", aliase
  lastUpdated="2026-09-20", sources=["FDA","EMA"],
  related=["botox","pharmacies","topics:beauty-injection-dangers"]),
 ]
+
+BATCH += [
+dict(slug="numbrino", name="Numbrino (Cocaine HCl 4% Nasal Solution)", aliases=["Numbrino", "Cocaine nasal solution", "Cocaine hydrochloride spray", "Legal cocaine"],
+ category="stimulants", schedule="Schedule II (US) — approved pharmaceutical; dispensed to clinics/hospitals, not to patients",
+ appearance="Single-use 4 mL bottles of 4% (40 mg/mL) clear solution, NDC 0527-1961; box labeled 'FOR TOPICAL USE ONLY. NOT FOR INJECTION OR OPHTHALMIC USE'",
+ effects=["Local anesthesia of the nasal mucosa plus vasoconstriction — numbs the nose and stops bleeding during ENT procedures", "Applied by a clinician on soaked cotton/pads or sprayed; patients are monitored"],
+ risks=["IT'S NOT PRESCRIBED LIKE NORMAL MEDICINE: Numbrino is ordered by hospitals and ENT clinics as a procedure supply — there is no take-home prescription pathway for patients. Anyone 'selling Numbrino online' is selling diverted pharmaceutical stock or counterfeits — a federal felony", "Systemic absorption is real even topically: cardiovascular strain, blood pressure spikes, possible arrhythmia", "Label warnings: seizure risk, not for patients with epilepsy/cardiovascular disease; NOT for injection or eye use", "Same addiction pharmacology as street cocaine if misused — the Schedule II classification exists because of it", "Diversion from clinics is rare but documented historically with medical cocaine"],
+ overdoseSigns=["(Clinical misuse) chest pain, racing irregular heart", "Severe agitation, seizures", "Hypertensive crisis signs"],
+ streetPrice="Not a street product; any 'for sale' listing online ($100–$300/bottle claims) is diversion or counterfeit",
+ legalStatus="FDA-approved December 2019 (Lannett) for anesthesia of the nasal mucosa in adults — an in-clinic pharmaceutical. Schedule II. Personal possession without legitimate medical context is treated like any other cocaine offense.",
+ lastUpdated="2026-09-21", sources=["FDA","DEA","Lannett prescribing information"],
+ related=["cocaine","cocaine-nasal-spray","ketamine-nasal-spray","topics:nasal-spray-drug-use","topics:spot-pressed-pills"]),
+dict(slug="ketamine-nasal-spray", name="Ketamine Nasal Spray (Gray-Market & Compounded)", aliases=["K nasal spray", "Ketamine spray", "Compounded ketamine", "Special K spray", "At-home Spravato"],
+ category="dissociatives", schedule="Spravato (esketamine) = Schedule III, REMS clinic-only; compounded/gray sprays unregulated",
+ appearance="Small spray bottles of clear liquid sold online as 'ketamine nasal spray' or 'K spray'; compounded versions from telehealth clinics; distinct from Spravato's clinic-administered device",
+ effects=["Dissociation, euphoria, calm — onset 5–15 min via nasal route", "Marketed for 'depression treatment at home' by telehealth clinics and grey sellers"],
+ risks=["THE DOSAGE LIE: grey-market sprays rarely state mg/mL accurately — a 'spray' can be anything from a threshold dose to a k-hole; bottles from the same seller vary", "Bladder damage (ketamine cystitis) risk identical to powder — daily spray use makes it easy to use daily", "Dependence creeps fastest with convenient formats; the spray removes every friction point", "Telehealth 'ketamine at home' prescribing has drawn FDA scrutiny and state crackdowns (2024–2025) after adverse events", "Never drive — impairment from a nasal dose lasts 1–3 hours", "Spravato exists ONLY as a clinic-locked REMS program for one reason: monitoring. Any 'at-home Spravato' is a red flag"],
+ overdoseSigns=["Heavy dissociative sedation, unresponsive but eyes open", "Vomiting while impaired", "Slow breathing (rare alone; dangerous with depressants)"],
+ streetPrice="Grey sprays $60–$150 per bottle; telehealth programs $200–$600/mo; Spravato clinic course $4,700+/mo",
+ legalStatus="Esketamine (Spravato) Rx + REMS-locked; compounded ketamine in a legal gray zone being tightened; gray-market sprays illegal everywhere",
+ lastUpdated="2026-09-21", sources=["FDA","DEA","EMA","NIDA"],
+ related=["esketamine","ketamine","numbrino","topics:nasal-spray-drug-use","quit:ketamine"]),
+]

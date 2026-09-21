@@ -1163,3 +1163,68 @@ Our full Gulf sentencing section — with Saudi Arabia's 2025 execution record, 
   drugsInvolved=[],
   related=["sentencing","hotlines","pharmacies","topics:talk-to-your-kid"]),
 ]
+
+TOPICS += [
+ dict(slug="nasal-spray-drug-use", title="Nasal Spray Drug Use: the fastest-growing consumption method nobody teaches you about", date="2026-09-21", read="8 min",
+  image="",
+  desc="From Spravato and Numbrino to gray-market ketamine sprays and TikTok cocaine spray tutorials — why nasal sprays changed the risk math, and what every user and parent should know.",
+  markdown="""## The spray format went mainstream — and the black market followed
+
+Ten years ago, "nasal drug spray" meant one thing: decongestant. Then two pharmaceutical approvals changed everything:
+
+| Year | Event |
+|---|---|
+| 2019 | **Spravato (esketamine)** — first nasal spray for depression, but locked in clinics under a strict REMS program |
+| 2019 | **Numbrino (cocaine HCl 4%)** — FDA-approved cocaine spray for ENT surgery, administered only by clinicians |
+| 2022–2025 | Gray-market **ketamine sprays** explode via telehealth and online sellers |
+| 2024–2026 | TikTok tutorials teach DIY cocaine/MDMA/ketamine nasal sprays; "coke spray" and "K spray" become search terms |
+
+The pattern is always the same: pharma legitimizes a format, the black market copies the format. Sprays are now being filled with cocaine, ketamine, MDMA, crushed pills, opioids — even research chemicals.
+
+## Why sprays change the risk math
+
+**1. Faster, stronger absorption.** Snorting powder is surprisingly inefficient — much of it drips down the throat or sits unabsorbed. An atomized spray coats the nasal mucosa evenly and absorbs faster and more completely. Translation: the same amount of drug hits harder and quicker than the line users are used to. People dose for the line they know and get the spray they don't.
+
+**2. The dose-per-spray problem.** A standard spray bottle delivers roughly 0.1 mL per pump. But the concentration inside? Unknown in any gray-market bottle. "Two sprays" from two different sellers can differ by 5–10×. This is the single biggest overdose driver in this category — users can't know their dose, so they can't titrate.
+
+**3. No paraphernalia, no friction.** A spray bottle looks like a decongestant. No mirror, no card, no rolled note, no smell trail. That discretion is exactly why dependence escalates faster — the ritual barriers that slow use are gone.
+
+**4. Nasal damage scales.** Frequent spraying of anything but saline irritates and eventually erodes the septum — same mechanism as cocaine nose, but now applying to ketamine, MDMA and RC users who thought they were avoiding it.
+
+## The legal landscape (it matters)
+
+- **Numbrino** is real pharmaceutical cocaine — but it's a clinic supply for ENT procedures. There is no patient prescription for take-home cocaine spray. Any website "selling Numbrino" is selling diversion or counterfeit — both federal felonies, for seller AND buyer.
+- **Spravato** is the only legal ketamine-family spray, and it physically cannot leave the clinic — patients are observed for 2 hours per session.
+- **Compounded ketamine sprays** from telehealth clinics occupied a gray zone that regulators have been closing (state boards disciplined multiple companies in 2024–2025 after adverse events).
+- Everything else in a spray bottle is an unregulated, unmeasured product.
+
+## What's actually inside gray-market sprays
+
+Testing of seized and voluntarily submitted sprays has found:
+
+- **Correct drug, wrong dose** — the most common finding; concentrations varying 2–10× between bottles from the same seller
+- **Wrong drug entirely** — ketamine sprays containing deschloroketamine or 2F-DCK; "coke spray" containing lidocaine + caffeine + levamisole
+- **Contaminants** — residual solvents, heavy metals, bacterial growth in non-sterile home-brewed bottles
+- **Surprise opioids** — fentanyl appearing in spray bottles is rare but documented; if someone collapses after any unknown spray, treat it as a possible opioid overdose and give naloxone
+
+## If someone is using these anyway — the harm-reduction floor
+
+1. **Never assume the dose.** Treat every new bottle as unknown strength; a test dose (one spray, wait 20+ minutes) isn't optional with this format
+2. **Never share bottles.** Nasal membranes bleed; blood-borne infections transmit
+3. **Saline rinse after use** — the single best thing you can do for your nose
+4. **Watch the frequency.** The convenience trap is the mechanism: if sprays became daily, that's the dependence pattern — bladder damage (ketamine), septum damage (everything)
+5. **Naloxone anyway.** Unknown bottle + collapse = give naloxone, call emergency services, stay
+6. **Never drive.** Nasal onset feels "milder" than injection or lines; impairment is not milder
+
+::: danger The overdose picture
+Someone who sprays an unknown concentration and redoses because "nothing's happening yet" (nasal absorption is fast but not instant) is the classic fatal pattern in this category. The second dose lands while the first is still climbing. With opioids in the bottle, naloxone and 911; with stimulants, treat the racing heart and call anyway. The delay kills.
+:::
+
+## The bigger picture
+
+Consumption methods evolve faster than drug education. We published guides on pressed pills and gas-station drugs because the market moved; nasal sprays are the same story one chapter later. Every profile below — Numbrino, ketamine sprays, cocaine spray, MDMA spray — exists because the format itself is now a risk category.
+
+Know the format. The bottle is not a decongestant just because it looks like one.""",
+  drugsInvolved=["ketamine-nasal-spray","numbrino","cocaine","esketamine"],
+  related=["topics:cocaine-nasal-spray","topics:mdma-nasal-spray","numbrino","ketamine-nasal-spray","esketamine","topics:spot-pressed-pills"]),
+]
