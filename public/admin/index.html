@@ -66,7 +66,7 @@ const PALETTE=['#0ea5e9','#8b5cf6','#ec4899','#f43f5e','#14b8a6','#f59e0b','#84c
 const CATS=["opioids","stimulants","benzodiazepines","sedatives","depressants","dissociatives","empathogens","psychedelics","cannabinoids","performance","hazardous"];
 const RELND={k:'relatedNoDefaults',l:'Hide default cards (Fentanyl numbers / Quitting / Hotlines)',t:'checkbox'};
 const SEO=[{k:'seoTitle',l:'SEO title (optional — overrides auto-generated)',t:'text'},{k:'seoDesc',l:'SEO description (optional)',t:'textarea'}];
-const REL="{k:'related',l:'You may also want to know about — drug slug, type:slug (topics:x), or https://link|Label',t:'csv',ph:'heroin, topics:nitazenes-new-opioids, https://nida.nih.gov|NIDA'},RELND";
+const REL={k:'related',l:'You may also want to know about — drug slug, type:slug (topics:x), or https://link|Label',t:'csv',ph:'heroin, topics:nitazenes-new-opioids, https://nida.nih.gov|NIDA'};
 const SCHEMAS={
  categories:[{k:'name',l:'Category name',t:'text',req:1,ph:'Steroids & PEDs'},{k:'slug',l:'Slug',t:'text',auto:1},
   {k:'color',l:'Color',t:'select',opts:PALETTE},{k:'grad',l:'Gradient CSS (optional)',t:'text',ph:'linear-gradient(135deg,#1e40af,#3b82f6)'},
@@ -79,24 +79,24 @@ const SCHEMAS={
   {k:'overdoseSigns',l:'Overdose signs',t:'list',hint:'one per line'},{k:'streetPrice',l:'Street price',t:'text',ph:'~$20–$40 per pill'},
   {k:'legalStatus',l:'Legal status',t:'textarea'},{k:'sources',l:'Sources',t:'csv',ph:'NIDA, DEA, EMCDDA'},
   {k:'brands',l:'Brand names (grey market)',t:'csv',ph:'Cenforce, Fildena…'},
-  {k:'lastUpdated',l:'Last updated',t:'text',ph:'2026-09-16'},REL].concat(SEO),
+  {k:'lastUpdated',l:'Last updated',t:'text',ph:'2026-09-16'},REL,RELND].concat(SEO),
  busts:[{k:'title',l:'Headline',t:'text',req:1},{k:'slug',l:'Slug',t:'text',auto:1},{k:'image',l:'Featured image',t:'image'},
   {k:'date',l:'Date',t:'text',ph:'2026-09-16'},{k:'location',l:'Location',t:'text',ph:'Los Angeles, CA'},{k:'agency',l:'Agency',t:'text',ph:'DEA'},
   {k:'confirmed',l:'Verified against source',t:'checkbox'},{k:'sourceUrl',l:'Source URL',t:'text',ph:'https://…'},
   {k:'summary',l:'Summary',t:'textarea',cls:'tall'},{k:'drugsInvolved',l:'Drugs involved (slugs)',t:'csv',ph:'fentanyl, cocaine'},
-  {k:'sentencing',l:'Sentencing exposure',t:'textarea'},REL].concat(SEO),
+  {k:'sentencing',l:'Sentencing exposure',t:'textarea'},REL,RELND].concat(SEO),
  news:[{k:'title',l:'Headline',t:'text',req:1},{k:'slug',l:'Slug',t:'text',auto:1},{k:'image',l:'Featured image',t:'image'},
   {k:'date',l:'Date',t:'text'},{k:'tag',l:'Tag ("Alert" = breaking carousel)',t:'text',ph:'Alert / Trend / Adulterant'},{k:'country',l:'Country / region tag',t:'text',ph:'UK / USA / EU / India...'},{k:'summary',l:'Summary',t:'textarea',cls:'tall'},
   {k:'markdown',l:'Article body (Markdown)',t:'markdown'},{k:'sources',l:'Sources',t:'csv'},
-  {k:'drugsInvolved',l:'Drugs involved (slugs)',t:'csv'},REL].concat(SEO),
+  {k:'drugsInvolved',l:'Drugs involved (slugs)',t:'csv'},REL,RELND].concat(SEO),
  topics:[{k:'title',l:'Guide title',t:'text',req:1},{k:'slug',l:'Slug',t:'text',auto:1},{k:'image',l:'Featured image',t:'image'},
   {k:'tag',l:'Tag (set "Important" to feature on home)',t:'text',ph:'Important / Guide / blank'},
   {k:'date',l:'Date',t:'text'},{k:'read',l:'Read time',t:'text',ph:'6 min'},{k:'desc',l:'Description / meta',t:'textarea'},
   {k:'markdown',l:'Article body (Markdown — headings, tables, callouts)',t:'markdown',hint:'replaces the old JSON blocks when filled'},
-  {k:'drugsInvolved',l:'Drugs mentioned (slugs, comma-separated)',t:'csv',ph:'fentanyl, xylazine'},REL].concat(SEO),
+  {k:'drugsInvolved',l:'Drugs mentioned (slugs, comma-separated)',t:'csv',ph:'fentanyl, xylazine'},REL,RELND].concat(SEO),
  quit:[{k:'name',l:'Substance name',t:'text',req:1},{k:'slug',l:'Slug',t:'text',auto:1},{k:'cat',l:'Category label',t:'text',ph:'Opioid'},
   {k:'image',l:'Featured image',t:'image'},{k:'danger',l:'Safety warning',t:'textarea',cls:'tall'},
-  {k:'days',l:'Timeline (JSON)',t:'json',cls:'tall'},{k:'tips',l:'Tips',t:'list',hint:'one per line'},REL].concat(SEO),
+  {k:'days',l:'Timeline (JSON)',t:'json',cls:'tall'},{k:'tips',l:'Tips',t:'list',hint:'one per line'},REL,RELND].concat(SEO),
  hotlines:[{k:'region',l:'Region name',t:'text',req:1,ph:'USA'},{k:'slug',l:'Slug',t:'text',auto:1},
   {k:'items',l:'Entries',t:'lines4',hint:'one per line: number | name | description | tel (tel optional)'}],
  pharmacies:[{k:'name',l:'Name',t:'text',req:1},{k:'slug',l:'Slug',t:'text',auto:1},{k:'region',l:'Region',t:'text'},
@@ -107,7 +107,7 @@ const SCHEMAS={
   {k:'verified',l:'Verified',t:'checkbox'}].concat(SEO),
  sentencing:[{k:'region',l:'Region',t:'text',req:1},{k:'slug',l:'Slug',t:'text',auto:1},
   {k:'summary',l:'Summary',t:'textarea',cls:'tall'},
-  {k:'table',l:'Table rows',t:'table',hint:'one per line: Cell | Cell (first line = header)'},REL].concat(SEO),
+  {k:'table',l:'Table rows',t:'table',hint:'one per line: Cell | Cell (first line = header)'},REL,RELND].concat(SEO),
 };
 const ICONS={drugs:['💊','#dc2626'],categories:['🗂️','#f59e0b'],busts:['🚨','#b45309'],news:['📰','#dc2626'],topics:['📖','#4338ca'],quit:['⏳','#16a34a'],hotlines:['☎️','#dc2626'],pharmacies:['Rx','#3b82f6'],rehabs:['➕','#16a34a'],sentencing:['⚖️','#111827'],settings:['⚙️','#667085'],suggestions:['📥','#0ea5e9']};
 const ACC=[{label:'Content',items:['drugs','categories','busts','news','topics','quit']},{label:'Directories',items:['hotlines','pharmacies','rehabs']},{label:'Site',items:['sentencing','settings','suggestions']}];
