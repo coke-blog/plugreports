@@ -5,11 +5,11 @@
 
 RELATED_OVERRIDES = {
  "drugs": {
-  "fentanyl":        {"related": ["xylazine", "medetomidine", "heroin", "etonitazene", "topics:fentanyl-numbers", "topics:spot-pressed-pills"]},
+  "fentanyl":        {"related": ["xylazine", "medetomidine", "heroin", "etonitazene", "para-fluorofentanyl", "etonitazepyne", "topics:fentanyl-numbers", "topics:spot-pressed-pills"]},
   "heroin":          {"related": ["fentanyl", "xylazine", "quit:heroin", "topics:what-actually-happens-when-you-quit"]},
   "cocaine":         {"related": ["crack", "4-fluorococaine", "topics:cocaine-purity-and-cuts", "busts:bust-australia-sydney-cocaine-record"]},
   "methamphetamine": {"related": ["speed", "mdpv", "quit:meth", "busts:bust-texas-cabbage-meth"]},
-  "mdma":            {"related": ["molly", "xtc-pills", "topics:spot-pressed-pills", "news:high-dose-ecstasy-warning"]},
+  "mdma":            {"related": ["molly", "xtc-pills", "ssris-snris", "topics:spot-pressed-pills", "news:high-dose-ecstasy-warning"]},
   "xylazine":        {"related": ["fentanyl", "medetomidine", "topics:what-is-xylazine", "topics:krokodil-fact-vs-myth"]},
   "alprazolam":      {"related": ["etizolam", "bromazolam", "flubromazolam", "topics:spot-pressed-pills", "news:counterfeit-xanax-update", "quit:alprazolam"]},
   "ketamine":        {"related": ["2f-dck", "quit:ketamine"]},

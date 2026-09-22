@@ -6,7 +6,7 @@ Complete machine-readable drug records: [llms-full.txt](https://plugreports.com/
 
 ## Key pages
 - [/hotlines/](https://plugreports.com/hotlines/) Verified overdose & crisis hotlines, 9 regions
-- [/drugs/](https://plugreports.com/drugs/) A-Z index of all 437 substance profiles
+- [/drugs/](https://plugreports.com/drugs/) A-Z index of all 446 substance profiles
 - [/categories/](https://plugreports.com/categories/) Browse by category
 - [/news/](https://plugreports.com/news/) Drug news & alerts
 - [/busts/](https://plugreports.com/busts/) Busts & seizures tracker
@@ -17,7 +17,7 @@ Complete machine-readable drug records: [llms-full.txt](https://plugreports.com/
 - [/rehabs/](https://plugreports.com/rehabs/) Verified rehab centers
 - [/about/](https://plugreports.com/about/) Mission & editorial policy
 
-## Drug library (437 profiles)
+## Drug library (446 profiles)
 ### Opioids
 - [/drugs/heroin/](https://plugreports.com/drugs/heroin/) Heroin — aka Dope, H, Smack
 - [/drugs/fentanyl/](https://plugreports.com/drugs/fentanyl/) Fentanyl — aka Apache, China Girl, Dance Fever
@@ -71,6 +71,9 @@ Complete machine-readable drug records: [llms-full.txt](https://plugreports.com/
 - [/drugs/diphenoxylate/](https://plugreports.com/drugs/diphenoxylate/) Diphenoxylate (Lomotil) — aka Lomotil, Diphenoxylate-atropine
 - [/drugs/medetomidine/](https://plugreports.com/drugs/medetomidine/) Medetomidine — aka Medeto, New tranq, Medetomidine dope
 - [/drugs/7-hydroxymitragynine/](https://plugreports.com/drugs/7-hydroxymitragynine/) 7-Hydroxymitragynine (7-OH) — aka 7-OH, 7-hydroxy, Concentrated kratom
+- [/drugs/etonitazepyne/](https://plugreports.com/drugs/etonitazepyne/) Etonitazepyne (NPE) — aka NPE, Etonitazepyne HCl, 'Neo' nitazene
+- [/drugs/para-fluorofentanyl/](https://plugreports.com/drugs/para-fluorofentanyl/) Para-fluorofentanyl (4-FBF) — aka pFF, 4-FBF, Fluorofentanyl
+- [/drugs/o-dsmt/](https://plugreports.com/drugs/o-dsmt/) O-Desmethyltramadol (O-DSMT) — aka O-DSMT, Desmetramadol, O-DST
 ### Stimulants
 - [/drugs/cocaine/](https://plugreports.com/drugs/cocaine/) Cocaine — aka Coke, Blow, Snow
 - [/drugs/speed/](https://plugreports.com/drugs/speed/) Speed (amphetamine paste) — aka Amphetamine, Base, Paste
@@ -142,6 +145,7 @@ Complete machine-readable drug records: [llms-full.txt](https://plugreports.com/
 - [/drugs/crack/](https://plugreports.com/drugs/crack/) Crack Cocaine — aka Crack, Rock, Stones
 - [/drugs/dmaa/](https://plugreports.com/drugs/dmaa/) DMAA — aka 1,3-DMAA, Geranium extract, Methylhexanamine
 - [/drugs/dmha/](https://plugreports.com/drugs/dmha/) DMHA — aka 2-Aminoisoheptane, Octodrine, Juglans regia extract
+- [/drugs/bupropion/](https://plugreports.com/drugs/bupropion/) Bupropion (Wellbutrin / Zyban) — aka Wellbutrin, Zyban, Budeprion
 ### Benzodiazepines
 - [/drugs/diazepam-drug/](https://plugreports.com/drugs/diazepam-drug/) Diazepam — aka Valium, Bensedine, Apaurine (blue valium)
 - [/drugs/alprazolam/](https://plugreports.com/drugs/alprazolam/) Alprazolam (Xanax 2 mg) — aka Xanax, Bars, Pfizer LongBars
@@ -167,6 +171,7 @@ Complete machine-readable drug records: [llms-full.txt](https://plugreports.com/
 - [/drugs/clobazam/](https://plugreports.com/drugs/clobazam/) Clobazam (Onfi / Frisium) — aka Onfi, Frisium, Urbanol
 - [/drugs/norflurazepam/](https://plugreports.com/drugs/norflurazepam/) Norflurazepam — aka N-Desalkylflurazepam, Norflura
 - [/drugs/bromazolam/](https://plugreports.com/drugs/bromazolam/) Bromazolam — aka Bromo, Bromaz, Fake Xanax
+- [/drugs/phenazolam/](https://plugreports.com/drugs/phenazolam/) Phenazolam (Clobromazolam) — aka Clobromazolam, Phenazo, Designer long-tail benzo
 ### Sedatives & Hypnotics
 - [/drugs/zolpidem/](https://plugreports.com/drugs/zolpidem/) Zolpidem (Ambien/Stilnox) — aka Ambien, Stilnox, Z-drugs
 - [/drugs/secobarbital/](https://plugreports.com/drugs/secobarbital/) Secobarbital (Seconal) — aka Seconal, Reds, Red devils
@@ -195,6 +200,7 @@ Complete machine-readable drug records: [llms-full.txt](https://plugreports.com/
 - [/drugs/hydroxyzine/](https://plugreports.com/drugs/hydroxyzine/) Hydroxyzine (Vistaril / Atarax) — aka Vistaril, Atarax, Hydroxizine
 - [/drugs/bobinsana/](https://plugreports.com/drugs/bobinsana/) Bobinsana (Calliandra angustifolia) — aka Bobinsana, Bubusana, Calliandra
 - [/drugs/sakae-naa/](https://plugreports.com/drugs/sakae-naa/) Combretum quadrangulare (Sakae Naa) — aka Sakae Naa, Combretum, Thai kratom alternative
+- [/drugs/ssris-snris/](https://plugreports.com/drugs/ssris-snris/) SSRIs & SNRIs (the antidepressant class) — aka Fluoxetine, Sertraline, Escitalopram
 ### GHB / GBL
 - [/drugs/ghb/](https://plugreports.com/drugs/ghb/) GHB (gamma-hydroxybutyrate) — aka G, Liquid ecstasy, Grievous Bodily Harm
 - [/drugs/ghb-liquid/](https://plugreports.com/drugs/ghb-liquid/) GHB Liquid — aka G liquid, Liquid G
@@ -362,6 +368,7 @@ Complete machine-readable drug records: [llms-full.txt](https://plugreports.com/
 - [/drugs/wild-dagga/](https://plugreports.com/drugs/wild-dagga/) Wild Dagga (Leonotis leonurus) — aka Lion's tail, Wild dagga, Leonotis
 - [/drugs/mugwort/](https://plugreports.com/drugs/mugwort/) Mugwort (Artemisia vulgaris) — aka Mugwort, Dream herb, Artemisia
 - [/drugs/california-poppy/](https://plugreports.com/drugs/california-poppy/) California Poppy (Eschscholzia californica) — aka Cal poppy, Eschscholzia, Cup of gold
+- [/drugs/btmps/](https://plugreports.com/drugs/btmps/) BTMPS (Tinuvin 770) — aka Tinuvin 770, HALS-770, Bis(2,2,6,6-tetramethyl-4-piperidyl) sebacate
 ### Steroids & Anabolics
 - [/drugs/testosterone/](https://plugreports.com/drugs/testosterone/) Testosterone (injections & gels) — aka Test, Test C, Test E
 - [/drugs/trenbolone/](https://plugreports.com/drugs/trenbolone/) Trenbolone — aka Tren, Tri-Tren, Parabolan
@@ -424,6 +431,8 @@ Complete machine-readable drug records: [llms-full.txt](https://plugreports.com/
 - [/drugs/aod-9604/](https://plugreports.com/drugs/aod-9604/) AOD-9604 — aka HGH Fragment 176-191, AOD
 - [/drugs/adipotide/](https://plugreports.com/drugs/adipotide/) Adipotide (FTPP) — aka Prohibitin-targeting peptide
 - [/drugs/semaglutide/](https://plugreports.com/drugs/semaglutide/) Semaglutide (Ozempic / Wegovy / Rybelsus) — aka Ozempic, Wegovy, Rybelsus
+- [/drugs/tirzepatide/](https://plugreports.com/drugs/tirzepatide/) Tirzepatide (Mounjaro / Zepbound) — aka Mounjaro, Zepbound, GIP/GLP-1
+- [/drugs/retatrutide/](https://plugreports.com/drugs/retatrutide/) Retatrutide ('Reta') — aka Reta, LY3437943, Triple G
 ### Hair Loss & Hormone Meds
 - [/drugs/hgh/](https://plugreports.com/drugs/hgh/) Somatropin (Human Growth Hormone) — aka HGH, Somatropin, Genotropin-style pens
 - [/drugs/finasteride/](https://plugreports.com/drugs/finasteride/) Finasteride (Propecia/Proscar) — aka Propecia, Proscar, Finax

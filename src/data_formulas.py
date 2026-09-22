@@ -312,3 +312,4 @@ FORMULAS = {
     "crack": "C₁₇H₂₁NO₄",
 }
 FORMULAS.update({"dmaa": "C₇H₁₇N", "dmha": "C₈H₁₉N"})
+FORMULAS.update({"tirzepatide": "C₂₂₅H₃₄₂N₄₆O₆₈", "retatrutide": "C₂₂₁H₃₄₂N₄₆O₆₈", "phenazolam": "C₁₇H₁₂BrClN₄", "etonitazepyne": "C₂₃H₂₅N₅O₂", "para-fluorofentanyl": "C₂₂H₂₈FN₂O", "btmps": "C₂₈H₅₆N₂O₄", "o-dsmt": "C₁₅H₂₁NO₂", "bupropion": "C₁₃H₁₈ClNO"})
