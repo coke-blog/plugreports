@@ -1,8 +1,8 @@
 # plugreports.com — Project Resume
-> Snapshot: 2026-09-21 (round-2 review complete + hub h1 fix, CF deploy 9e5408c2) · Read this first in any new session before touching anything.
+> Snapshot: 2026-09-21 (P0 drug batch live: bromazolam, medetomidine, 7-OH, PCP, crack — 435 profiles, CF deploy 83eafc88) · Read this first in any new session before touching anything.
 
 ## One-paragraph summary
-plugreports.com is a multilingual harm-reduction library (430 drug profiles, 26 guides, 61 mixing-dangers pages, 9 hotline regions, 9 sentencing regions, verified directories) built as a Python-generated static site on Cloudflare Pages + Pages Functions + KV. Content is fully editable through a PIN-protected `/admin` CMS backed by KV (all 11 collections seeded + editable), with live hydration overlaying admin edits onto static pages. Runs on Cloudflare's free tier; repo at github.com/coke-blog/plugreports (public, main branch).
+plugreports.com is a multilingual harm-reduction library (435 drug profiles, 26 guides, 61 mixing-dangers pages, 9 hotline regions, 9 sentencing regions, verified directories) built as a Python-generated static site on Cloudflare Pages + Pages Functions + KV. Content is fully editable through a PIN-protected `/admin` CMS backed by KV (all 11 collections seeded + editable), with live hydration overlaying admin edits onto static pages. Runs on Cloudflare's free tier; repo at github.com/coke-blog/plugreports (public, main branch).
 
 ## Stack & architecture
 - **Static generator:** `src/build.py` (Python 3, no deps) — reads `src/data_*.py`, emits all HTML to `public/` with JSON-LD (MedicalWebPage/FAQPage/NewsArticle/Article/ItemList/MedicalBusiness/Organization/BreadcrumbList), REAL bidirectional hreflang clusters (path-based only — never `?lang=` alternates; `?lang=` is client-side UI strings only), sitemap.xml (truthful per-item lastmod, no /admin/), RFC-822 rss.xml, full llms.txt + llms-full.txt, _static.json manifest, _headers, 404.html, robots.txt. Also builds the **/mix/ section** (`build_mix()`: hub with 3 data-tier grids + 61 detail pages with level badges) and **formula placeholders** (`drug_placeholder_panel()` + `pimg_html()` — molecular formula panel shown until a photo is mapped; `src/data_formulas.py`, 303 slug→formula entries). Drug profile top = `.ptop` two-column grid (main + right rail: image above Quick facts — no floats).
@@ -10,7 +10,7 @@ plugreports.com is a multilingual harm-reduction library (430 drug profiles, 26 
 - **Storage:** KV namespace `plugreports-content` (binding `CONTENT`, id `4bf215d251e940ed9f97ea2811f6ebce`). Merge-seed only — **KV (admin) values win on conflict**; seed only fills missing fields/items. Never bulk-overwrite.
 - **Live layer:** `hydrate.js` overlays KV content on static pages (full-field drug hydration incl. `.pimg-formula`→`<img>` swap when KV gains an image, dir-grid on /pharmacies/ + /rehabs/, hotline/sentencing region append, category hero, 410 notice for unpublished, renderMix for mix pages); `render.js` builds pages client-side for KV-only items (drugs, busts, news, topics, categories, pharmacies, rehabs, quit, **mix** via mixPage; centers via centerPage); dynamic routes consult `_static.json` (60s module-scope cache, fail-open to static) then KV (all routes enforce `!unpublished`). `functions/mix/[slug].js` serves mix detail routes.
 - **Media:** uploads to KV (`media:` prefix, per-type path `<type>/<slug>.<ext>`), served via `/media/*` with `max-age=3600, must-revalidate` (re-uploads propagate within the hour). 67 drugs have mapped photos; 17 orphaned KV media files were mapped to drug records live via admin API PUT on 2026-09-21 (cocaine, fentanyl, ketamine, molly, oxycontin…).
-- **Caching:** sw.js `pr-v10` — network-first for HTML/API/media, cache-first only `/assets/*`. HTML pins JS with `?v=10` **and CSS with `style.css?v=10`** — bump all three together on every asset change. HARD LESSON (2026-09-21): `_headers` gives `/assets/*` `max-age=604800`, so an **unpinned** stylesheet stays stale at the edge for a week (broke the .ptop grid live until the pin shipped). CSS must be version-pinned exactly like JS.
+- **Caching:** sw.js `pr-v11` — network-first for HTML/API/media, cache-first only `/assets/*`. HTML pins JS with `?v=11` **and CSS with `style.css?v=11`** — bump all three together on every asset change. HARD LESSON (2026-09-21): `_headers` gives `/assets/*` `max-age=604800`, so an **unpinned** stylesheet stays stale at the edge for a week (broke the .ptop grid live until the pin shipped). CSS must be version-pinned exactly like JS.
 - **i18n:** full sections `/es` (24 profiles + hubs) and `/de /hi /no /pl /fr` (8 profiles + home/hotlines/categories each). de/hi/no/pl/fr drug pages currently keep EN titles/descriptions (no per-locale meta strings in data_i18n.py — content task).
 
 ## Operating procedures (critical)
@@ -36,7 +36,7 @@ plugreports.com is a multilingual harm-reduction library (430 drug profiles, 26 
 - Repo is public. No secrets may be committed.
 
 ## Content stats
-430 drug profiles (67 with photos, 303 with formula placeholders) · 18 categories · 26 topics · 8 quit timelines · 7 busts (3 thin tiktok stubs are noindex) · 5 news · **61 mix pages** (26 deadly / 25 dangerous / 10 caution) · hotlines 9 regions · pharmacies 6 · rehabs 6 · sentencing 9 regions. ES + 5 languages. ~690 sitemap URLs.
+435 drug profiles (67 with photos, 308 with formula placeholders) · 18 categories · 26 topics · 8 quit timelines · 7 busts (3 thin tiktok stubs are noindex) · 5 news · **61 mix pages** (26 deadly / 25 dangerous / 10 caution) · hotlines 9 regions · pharmacies 6 · rehabs 6 · sentencing 9 regions. ES + 5 languages. ~690 sitemap URLs.
 
 ## SEO/GEO state (fixed 2026-09-21)
 - hreflang: real path-based bidirectional clusters + x-default → EN. No fake alternates.
@@ -48,7 +48,7 @@ plugreports.com is a multilingual harm-reduction library (430 drug profiles, 26 
 - Remaining: per-locale translated meta strings, ~490 titles still >60 chars (long drug/topic names — content call), SearchAction omitted (search is client-side), reviewer attribution is Organization-level (no named humans).
 
 ## Roadmap (agreed, not done)
-- Content gaps report: `content-gaps.md` (P0 missing: bromazolam, medetomidine, 7-OH/MGM-15, PCP, crack; guides: fentanyl test strips, naloxone; quit timelines for alcohol/nicotine; detection-window pages — top SEO opportunity). ~~mixing-danger hub~~ → DONE 2026-09-21 (/mix/, 61 pages).
+- Content gaps report: `content-gaps.md` — ~~P0: bromazolam, medetomidine, 7-OH, PCP, crack~~ → DONE 2026-09-21 (all five live; 14 pre-existing broken related-refs also fixed, 435 profiles fully validated). Remaining P1: tirzepatide, retatrutide, phenazolam, etonitazepyne, p-fluorofentanyl, BTMPS, O-DSMT, bupropion, SSRI/SNRI class; guides: fentanyl test strips, naloxone; quit timelines for alcohol/nicotine; detection-window pages — top SEO opportunity. ~~mixing-danger hub~~ → DONE (/mix/, 61 pages).
 - 70 more profiles → 500 milestone → press release + Product Hunt launch (copy drafted).
 - Video pipeline `tools/make_video.py` — 2 done; YouTube/TikTok not launched.
 - Quora/Reddit cadence; backlink queue; Sterling sentencing follow-up Nov 25.

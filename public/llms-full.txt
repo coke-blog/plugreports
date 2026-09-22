@@ -1,5 +1,5 @@
 # plugreports — full drug records
-> 430 harm-reduction profiles, compiled from NIDA, DEA, EMCDDA, WHO and peer-reviewed literature. Street prices are regional estimates that change quickly. Educational information only — not medical advice. Canonical pages: https://plugreports.com/drugs/<slug>/
+> 435 harm-reduction profiles, compiled from NIDA, DEA, EMCDDA, WHO and peer-reviewed literature. Street prices are regional estimates that change quickly. Educational information only — not medical advice. Canonical pages: https://plugreports.com/drugs/<slug>/
 
 ## Heroin
 - url: https://plugreports.com/drugs/heroin/
@@ -3573,7 +3573,7 @@
 
 ## mCPP (1-(3-Chlorophenyl)piperazine)
 - url: https://plugreports.com/drugs/mcpp/
-- aliases: mCPP, Chlorophenylpiperazine
+- aliases: mcpp, Chlorophenylpiperazine
 - category: Empathogens
 - schedule: Schedule I analog; controlled EU
 - appearance: Pills or powder — sold as 'ecstasy' or 'legal high'
@@ -3713,7 +3713,7 @@
 
 ## 4-EMC (4-Ethylmethcathinone)
 - url: https://plugreports.com/drugs/4-emc/
-- aliases: 4-EMC, Ethcathinone
+- aliases: 4-emc, Ethcathinone
 - category: Stimulants
 - schedule: Schedule I analog; controlled EU
 - appearance: White crystals
@@ -6020,3 +6020,73 @@
 - legalStatus: Esketamine (Spravato) Rx + REMS-locked; compounded ketamine in a legal gray zone being tightened; gray-market sprays illegal everywhere
 - lastUpdated: 2026-09-21
 - sources: FDA, DEA, EMA, NIDA
+
+## Bromazolam
+- url: https://plugreports.com/drugs/bromazolam/
+- aliases: Bromo, Bromaz, Fake Xanax, Designer Xanax
+- category: Benzodiazepines
+- schedule: Not federally scheduled (US) as of 2026 — several US states emergency-scheduled; controlled in multiple EU countries and the UK
+- appearance: White to off-white powder, pressed into counterfeit Xanax/Valium bars or sold as pellets; active at 1–3 mg
+- effects: Sedation, anxiety relief and muscle relaxation — like alprazolam but often stronger per milligram; Short-term memory loss and blackouts, especially above ~3 mg; Compulsive redosing when the blackout makes you forget you already took some
+- risks: The #1 novel benzodiazepine detected in counterfeit 'Xanax bars' in North America since 2023 — most users have no idea they're taking it; Pressed bars have wildly uneven doses: one quarter of a bar can floor you while the next does nothing; Multi-day blackouts, falls, car accidents and assault risk; Dependence within weeks; withdrawal can cause seizures and kills faster than opioid withdrawal; Frequently found together with fentanyl in the same supply — respiratory depression stacks
+- overdoseSigns: Unrousable sleep that outlasts a normal dose by many hours; Very slow or irregular breathing, especially mixed with opioids; Cold, clammy skin; gurgling or snoring breath sounds
+- streetPrice: ~$2–$5 per pressed 'bar'; ~$30–$80/g powder
+- legalStatus: Unscheduled federally in the US (state bans spreading); Class C-style controls in UK; controlled in DE/SE and others; analogue prosecutions possible
+- lastUpdated: 2026-09-21
+- sources: DEA, CFSRE, CDC, Aegis, UNODC
+
+## Medetomidine
+- url: https://plugreports.com/drugs/medetomidine/
+- aliases: Medeto, New tranq, Medetomidine dope
+- category: Opioids
+- schedule: Not federally scheduled (US) as of 2026; veterinary anesthetic, no approved human use
+- appearance: No street form of its own — detected as a whitish powder mixed into fentanyl/heroin, often alongside xylazine and BTMPS
+- effects: Profound, hours-long sedation and blackout; Very slow heart rate and breathing; severe drops in blood pressure; In someone opioid-dependent: precipitated, violent withdrawal on top of opioid withdrawal
+- risks: Not an opioid — naloxone does NOT reverse it, and it still shuts down breathing; The successor to xylazine: detected in 18+ US states and roughly a third of tested opioid samples by late 2025; Withdrawal is ICU-grade — severe hypertension, racing heart, agitation — and standard opioid-withdrawal treatment (clonidine protocols) often fails; Wounds and tissue damage like xylazine's are being reported
+- overdoseSigns: Unresponsive with slow or gasping breathing; Pinpoint pupils plus bradycardia (slow pulse) — a mixed picture that confuses responders; Blue-gray lips and extremities
+- streetPrice: Sold as part of fentanyl/heroin bags (~$10–$40) — no separate price
+- legalStatus: Veterinary Rx-only; human use illegal; treated as an adulterant in prosecutions, often charged by total mixture weight
+- lastUpdated: 2026-09-21
+- sources: CDC, DEA, CFSRE, JAMA
+
+## 7-Hydroxymitragynine (7-OH)
+- url: https://plugreports.com/drugs/7-hydroxymitragynine/
+- aliases: 7-OH, 7-hydroxy, Concentrated kratom, Tabz, 7-OH shots
+- category: Opioids
+- schedule: FDA recommended Schedule I (July 2025); DEA issued Notices of Intent to temporarily schedule 7-OH + 3 synthetic derivatives (July 2026); banned or restricted in several US states
+- appearance: Tablets, pellets, gummies and concentrated 'shots' sold at gas stations, vape shops and online — far stronger than kratom leaf per dose
+- effects: Opioid-like analgesia and warmth at low doses; Euphoria and heavy sedation at higher doses; Onset within minutes for shots/tablets — much faster than kratom tea
+- risks: Dependence forms fast — often within 1–2 weeks of daily use; Withdrawal is opioid-type (restless legs, cramps, insomnia, diarrhea) and can be severe; users report it's harder to quit than kratom leaf; Respiratory depression, especially mixed with alcohol, benzos or other opioids; Seizures reported; rare liver injury; Products are unregulated — labeled strengths routinely fail third-party testing, sometimes by a factor of 10
+- overdoseSigns: Pinpoint pupils; Slow, shallow breathing; gurgling sounds; Unresponsiveness; blue lips or fingertips
+- streetPrice: ~$10–$40 per bottle of shots or pack of tablets
+- legalStatus: Federal scheduling in progress (DEA NOI July 2026); already banned/restricted in states including FL and TN; FDA seizures ongoing
+- lastUpdated: 2026-09-21
+- sources: FDA, DEA, CDC, NIDA
+
+## Phencyclidine (PCP)
+- url: https://plugreports.com/drugs/pcp/
+- aliases: Angel dust, Sherm, Shermans, Dipper, Wet, Embalming fluid, Rocket fuel
+- category: Dissociatives
+- schedule: Schedule II (US); Class A (UK); controlled virtually everywhere
+- appearance: White crystalline powder, clear yellowish liquid, or cigarettes/blunts dipped in liquid PCP ('sherms', 'dippers')
+- effects: Strong dissociation — feeling detached from your body; numbness; Euphoria, bursts of energy, distorted body image and hallucinations; Horizontal or vertical eye jerks (nystagmus) — a clinical tell; Effects last 4–8 hours; residual fogginess for a day or more
+- risks: Acute behavioral toxicity: panic, paranoia and unpredictable aggression, worsened in unfamiliar or stressful settings; Rhabdomyolysis (muscle breakdown) from struggling/restraint → kidney failure; Dangerously high blood pressure, seizures, hyperthermia; Long-term use: memory loss, speech problems, persistent psychosis, depression and suicidal thinking; Mixing with alcohol or benzos compounds sedation; with stimulants, blood pressure can become lethal
+- overdoseSigns: Severe agitation or catatonic stillness alternating; Fever with rigid muscles and seizures; Very high blood pressure; coma in severe cases
+- streetPrice: ~$5–$30 per dipped cigarette; ~$50–$100/g powder
+- legalStatus: Schedule II (US); Class A (UK); Schedule I-class controls across EU; veterinary (ketamine) analogues separately controlled
+- lastUpdated: 2026-09-21
+- sources: NIDA, DEA, EMCDDA, UNODC
+
+## Crack Cocaine
+- url: https://plugreports.com/drugs/crack/
+- aliases: Crack, Rock, Stones, Base, Freebase
+- category: Stimulants
+- schedule: Schedule II (US); Class A (UK); criminalized everywhere we track
+- appearance: Small off-white to beige 'rocks' that smoke with a crackling sound — smoked in glass pipes, sometimes with steel wool or brillo
+- effects: Intense but very short euphoria (5–15 minutes), energy and confidence; Rapid crash: irritability, exhaustion, intense craving for another hit; Smoked route hits the brain in seconds — one of the most reinforcing drug experiences known
+- risks: The short high creates a compulsive redosing loop that drives binge patterns and rapid dependence; Crack lung: chest pain, cough and lung bleeding (eosinophilic pneumonitis) after smoking sessions; Chipped/burned lips and pipe-sharing spread MRSA, hepatitis C and other infections; Heart attack, dangerous arrhythmias and stroke — risk is real even in young users; Paranoia, aggression and stimulant psychosis with binges; malnutrition and sleep loss compound harm; Same supply risk as powder cocaine: cuts and, increasingly, fentanyl contamination
+- overdoseSigns: Chest pain, pounding or irregular heartbeat; Seizures; extremely high body temperature; Severe agitation, paranoia or hallucinations; Stroke signs: one-sided weakness, slurred speech, facial droop
+- streetPrice: ~$10–$20 per rock; quantity discounts on the gram
+- legalStatus: Schedule II (US); Class A (UK); penalties typically track powder cocaine with small quantity distinctions in some jurisdictions
+- lastUpdated: 2026-09-21
+- sources: NIDA, DEA, CDC, EMCDDA

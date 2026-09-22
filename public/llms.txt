@@ -6,7 +6,7 @@ Complete machine-readable drug records: [llms-full.txt](https://plugreports.com/
 
 ## Key pages
 - [/hotlines/](https://plugreports.com/hotlines/) Verified overdose & crisis hotlines, 9 regions
-- [/drugs/](https://plugreports.com/drugs/) A-Z index of all 430 substance profiles
+- [/drugs/](https://plugreports.com/drugs/) A-Z index of all 435 substance profiles
 - [/categories/](https://plugreports.com/categories/) Browse by category
 - [/news/](https://plugreports.com/news/) Drug news & alerts
 - [/busts/](https://plugreports.com/busts/) Busts & seizures tracker
@@ -17,7 +17,7 @@ Complete machine-readable drug records: [llms-full.txt](https://plugreports.com/
 - [/rehabs/](https://plugreports.com/rehabs/) Verified rehab centers
 - [/about/](https://plugreports.com/about/) Mission & editorial policy
 
-## Drug library (430 profiles)
+## Drug library (435 profiles)
 ### Opioids
 - [/drugs/heroin/](https://plugreports.com/drugs/heroin/) Heroin — aka Dope, H, Smack
 - [/drugs/fentanyl/](https://plugreports.com/drugs/fentanyl/) Fentanyl — aka Apache, China Girl, Dance Fever
@@ -69,6 +69,8 @@ Complete machine-readable drug records: [llms-full.txt](https://plugreports.com/
 - [/drugs/isotonitazene/](https://plugreports.com/drugs/isotonitazene/) Isotonitazene ('Iso') — aka Iso, Isotonitazene, ITZ
 - [/drugs/2-methyl-ap-237/](https://plugreports.com/drugs/2-methyl-ap-237/) 2-Methyl-AP-237 — aka 2-M-AP-237, AP-237 analog
 - [/drugs/diphenoxylate/](https://plugreports.com/drugs/diphenoxylate/) Diphenoxylate (Lomotil) — aka Lomotil, Diphenoxylate-atropine
+- [/drugs/medetomidine/](https://plugreports.com/drugs/medetomidine/) Medetomidine — aka Medeto, New tranq, Medetomidine dope
+- [/drugs/7-hydroxymitragynine/](https://plugreports.com/drugs/7-hydroxymitragynine/) 7-Hydroxymitragynine (7-OH) — aka 7-OH, 7-hydroxy, Concentrated kratom
 ### Stimulants
 - [/drugs/cocaine/](https://plugreports.com/drugs/cocaine/) Cocaine — aka Coke, Blow, Snow
 - [/drugs/speed/](https://plugreports.com/drugs/speed/) Speed (amphetamine paste) — aka Amphetamine, Base, Paste
@@ -109,7 +111,7 @@ Complete machine-readable drug records: [llms-full.txt](https://plugreports.com/
 - [/drugs/mpdv/](https://plugreports.com/drugs/mpdv/) MPDV (Methylenedioxypyrovalerone analog) — aka MPDV, MDPV-like
 - [/drugs/nep/](https://plugreports.com/drugs/nep/) NEP (N-Ethylpentedrone) — aka NEP, N-ethyl-nor-pentedrone
 - [/drugs/hexen/](https://plugreports.com/drugs/hexen/) Hexen (N-Ethylhexedrone) — aka Hexen, NEH, Ethyl-hex
-- [/drugs/4-emc/](https://plugreports.com/drugs/4-emc/) 4-EMC (4-Ethylmethcathinone) — aka 4-EMC, Ethcathinone
+- [/drugs/4-emc/](https://plugreports.com/drugs/4-emc/) 4-EMC (4-Ethylmethcathinone) — aka 4-emc, Ethcathinone
 - [/drugs/4-cmc/](https://plugreports.com/drugs/4-cmc/) 4-CMC (Clephedrone) — aka 4-CMC, Clephedrone, CMC
 - [/drugs/3-fpm/](https://plugreports.com/drugs/3-fpm/) 3-FPM (3-Fluorophenmetrazine) — aka 3-FPM, PAL-593
 - [/drugs/2-fma/](https://plugreports.com/drugs/2-fma/) 2-FMA (2-Fluoromethamphetamine) — aka 2-FMA
@@ -137,6 +139,7 @@ Complete machine-readable drug records: [llms-full.txt](https://plugreports.com/
 - [/drugs/4f-mph/](https://plugreports.com/drugs/4f-mph/) 4F-MPH (4-Fluoromethylphenidate) — aka 4F-MPH, 4-FMPH, IPPH (isopropylphenidate)
 - [/drugs/benzedrex/](https://plugreports.com/drugs/benzedrex/) Propylhexedrine (Benzedrex Inhaler) — aka Benzedrex, Propylhexedrine, The OTC stimulant
 - [/drugs/numbrino/](https://plugreports.com/drugs/numbrino/) Numbrino (Cocaine HCl 4% Nasal Solution) — aka Numbrino, Cocaine nasal solution, Cocaine hydrochloride spray
+- [/drugs/crack/](https://plugreports.com/drugs/crack/) Crack Cocaine — aka Crack, Rock, Stones
 ### Benzodiazepines
 - [/drugs/diazepam-drug/](https://plugreports.com/drugs/diazepam-drug/) Diazepam — aka Valium, Bensedine, Apaurine (blue valium)
 - [/drugs/alprazolam/](https://plugreports.com/drugs/alprazolam/) Alprazolam (Xanax 2 mg) — aka Xanax, Bars, Pfizer LongBars
@@ -161,6 +164,7 @@ Complete machine-readable drug records: [llms-full.txt](https://plugreports.com/
 - [/drugs/midazolam/](https://plugreports.com/drugs/midazolam/) Midazolam (Versed / Dormicum) — aka Versed, Dormicum, Midaz
 - [/drugs/clobazam/](https://plugreports.com/drugs/clobazam/) Clobazam (Onfi / Frisium) — aka Onfi, Frisium, Urbanol
 - [/drugs/norflurazepam/](https://plugreports.com/drugs/norflurazepam/) Norflurazepam — aka N-Desalkylflurazepam, Norflura
+- [/drugs/bromazolam/](https://plugreports.com/drugs/bromazolam/) Bromazolam — aka Bromo, Bromaz, Fake Xanax
 ### Sedatives & Hypnotics
 - [/drugs/zolpidem/](https://plugreports.com/drugs/zolpidem/) Zolpidem (Ambien/Stilnox) — aka Ambien, Stilnox, Z-drugs
 - [/drugs/secobarbital/](https://plugreports.com/drugs/secobarbital/) Secobarbital (Seconal) — aka Seconal, Reds, Red devils
@@ -218,13 +222,14 @@ Complete machine-readable drug records: [llms-full.txt](https://plugreports.com/
 - [/drugs/esketamine/](https://plugreports.com/drugs/esketamine/) Esketamine (Spravato) — aka Spravato, S-ketamine, Esket
 - [/drugs/memantine/](https://plugreports.com/drugs/memantine/) Memantine (Namenda) — aka Namenda, NMDA antagonist, The week-long disso
 - [/drugs/ketamine-nasal-spray/](https://plugreports.com/drugs/ketamine-nasal-spray/) Ketamine Nasal Spray (Gray-Market & Compounded) — aka K nasal spray, Ketamine spray, Compounded ketamine
+- [/drugs/pcp/](https://plugreports.com/drugs/pcp/) Phencyclidine (PCP) — aka Angel dust, Sherm, Shermans
 ### Empathogens
 - [/drugs/mdma/](https://plugreports.com/drugs/mdma/) MDMA — aka Ecstasy (in pill form), Molly (powder), E
 - [/drugs/molly/](https://plugreports.com/drugs/molly/) Molly (MDMA powder) — aka Molly, Mandy (UK), Moon rocks
 - [/drugs/xtc-pills/](https://plugreports.com/drugs/xtc-pills/) XTC Pills (ecstasy tablets) — aka E pills, Beans, Rolls
 - [/drugs/5-apb/](https://plugreports.com/drugs/5-apb/) 5-APB — aka Benzo Fury (with 6-APB blends)
 - [/drugs/kanna/](https://plugreports.com/drugs/kanna/) Kanna (Sceletium tortuosum) — aka Kanna, Kougoed, Sceletium
-- [/drugs/mcpp/](https://plugreports.com/drugs/mcpp/) mCPP (1-(3-Chlorophenyl)piperazine) — aka mCPP, Chlorophenylpiperazine
+- [/drugs/mcpp/](https://plugreports.com/drugs/mcpp/) mCPP (1-(3-Chlorophenyl)piperazine) — aka mcpp, Chlorophenylpiperazine
 - [/drugs/tfmpp/](https://plugreports.com/drugs/tfmpp/) TFMPP (Trifluoromethylphenylpiperazine) — aka TFMPP, 3-TFMPP, Legal X'
 - [/drugs/bzp/](https://plugreports.com/drugs/bzp/) BZP (Benzylpiperazine) — aka BZP, Legal X, A2
 - [/drugs/eutylone/](https://plugreports.com/drugs/eutylone/) Eutylone — aka Eutylone, bk-EBDB, EU

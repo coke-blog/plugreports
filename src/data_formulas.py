@@ -305,4 +305,9 @@ FORMULAS = {
     "zaleplon": "C₁₇H₁₅N₅O",
     "zolpidem": "C₁₉H₂₁N₃O",
     "zopiclone": "C₁₇H₁₇ClN₆O₃",
+    "bromazolam": "C₁₇H₁₃BrN₄",
+    "medetomidine": "C₁₃H₁₆N₂",
+    "7-hydroxymitragynine": "C₂₃H₃₀N₂O₅",
+    "pcp": "C₁₇H₂₅N",
+    "crack": "C₁₇H₂₁NO₄",
 }

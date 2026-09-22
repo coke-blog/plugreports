@@ -55,7 +55,8 @@
       return '<a href="' + esc(target) + '" target="_blank" rel="noopener"><span class="mini" style="background:#667085">&#8599;</span><span>' + esc(elab) + '</span></a>';
     }
     var p = target.split(':');
-    var href = '/' + (p.length > 1 ? p[0] + '/' + p[1] : 'drugs/' + entry) + '/';
+    var SECTIONS = ['busts','news','drugs','topics','quit','categories','hotlines','pharmacies','rehabs','sentencing','mix','suggest','about'];
+    var href = '/' + (p.length > 1 ? p[0] + '/' + p[1] : (SECTIONS.indexOf(target) > -1 ? target : 'drugs/' + entry)) + '/';
     var lbl = custom || (p.length > 1 ? p[1] : target).replace(/-/g, ' ');
     return '<a href="' + href + '"><span class="mini" style="background:#d97706">' + esc((lbl[0] || '?').toUpperCase()) + '</span><span>' + esc(lbl) + '</span></a>';
   }
@@ -201,11 +202,18 @@ function initBreaking() {
     }
     if (it.related && it.related.length) {
       var rg = document.querySelector('.related .rel-grid');
-      if (rg) rg.innerHTML = it.related.map(chipEntry).join('') + (it.relatedNoDefaults ? '' :
+      if (rg) {
+        rg.innerHTML = it.related.map(chipEntry).join('') + (it.relatedNoDefaults ? '' :
         '<a href="/topics/fentanyl-numbers/"><span class="mini" style="background:#b45309">&#128218;</span><span>Fentanyl: the numbers</span></a>' +
         '<a href="/quit/"><span class="mini" style="background:#16a34a">&#8987;</span><span>Quitting — day by day</span></a>' +
         '<a href="/pharmacies/"><span class="mini" style="background:#3b82f6">Rx</span><span>Verified pharmacies</span></a>' +
         '<a href="/hotlines/"><span class="mini" style="background:#dc2626">&#128222;</span><span>Hotlines</span></a>');
+        var seen = {}, dup = [];
+        Array.prototype.forEach.call(rg.querySelectorAll('a[href]'), function(a) {
+          if (seen[a.getAttribute('href')]) dup.push(a); else seen[a.getAttribute('href')] = 1;
+        });
+        dup.forEach(function(a) { a.parentNode.removeChild(a); });
+      }
     }
   }
 

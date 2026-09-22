@@ -5,13 +5,13 @@
 
 RELATED_OVERRIDES = {
  "drugs": {
-  "fentanyl":        {"related": ["xylazine", "heroin", "etonitazene", "topics:fentanyl-numbers", "topics:spot-pressed-pills"]},
+  "fentanyl":        {"related": ["xylazine", "medetomidine", "heroin", "etonitazene", "topics:fentanyl-numbers", "topics:spot-pressed-pills"]},
   "heroin":          {"related": ["fentanyl", "xylazine", "quit:heroin", "topics:what-actually-happens-when-you-quit"]},
-  "cocaine":         {"related": ["4-fluorococaine", "topics:cocaine-purity-and-cuts", "busts:bust-australia-sydney-cocaine-record"]},
+  "cocaine":         {"related": ["crack", "4-fluorococaine", "topics:cocaine-purity-and-cuts", "busts:bust-australia-sydney-cocaine-record"]},
   "methamphetamine": {"related": ["speed", "mdpv", "quit:meth", "busts:bust-texas-cabbage-meth"]},
   "mdma":            {"related": ["molly", "xtc-pills", "topics:spot-pressed-pills", "news:high-dose-ecstasy-warning"]},
-  "xylazine":        {"related": ["fentanyl", "topics:what-is-xylazine", "topics:krokodil-fact-vs-myth"]},
-  "alprazolam":      {"related": ["etizolam", "flubromazolam", "topics:spot-pressed-pills", "news:counterfeit-xanax-update", "quit:alprazolam"]},
+  "xylazine":        {"related": ["fentanyl", "medetomidine", "topics:what-is-xylazine", "topics:krokodil-fact-vs-myth"]},
+  "alprazolam":      {"related": ["etizolam", "bromazolam", "flubromazolam", "topics:spot-pressed-pills", "news:counterfeit-xanax-update", "quit:alprazolam"]},
   "ketamine":        {"related": ["2f-dck", "quit:ketamine"]},
   "adderall":        {"related": ["adderall-xr", "ritalin", "topics:spot-pressed-pills"]},
   "oxycodone":       {"related": ["oxycontin", "fentanyl", "topics:spot-pressed-pills"]},
@@ -19,7 +19,9 @@ RELATED_OVERRIDES = {
   "etonitazene":     {"related": ["isotodesnitazene", "fentanyl", "topics:nitazenes-new-opioids"]},
   "isotodesnitazene":{"related": ["etonitazene", "fentanyl", "topics:nitazenes-new-opioids"]},
   "ghb":             {"related": ["gbl", "quit:ghb"]},
-  "flubromazolam":   {"related": ["alprazolam", "clonazolam", "news:counterfeit-xanax-update"]},
+  "flubromazolam":   {"related": ["alprazolam", "clonazolam", "bromazolam", "news:counterfeit-xanax-update"]},
+  "kratom":          {"related": ["tianeptine", "7-hydroxymitragynine", "heroin", "quit:heroin"]},
+  "3-meo-pcp":       {"related": ["pcp", "ketamine", "2f-dck", "topics:talk-to-your-kid"]},
   "weed":            {"related": ["4f-adb", "5f-adbica", "nm2201", "topics:talk-to-your-kid"]},
  },
  "busts": {
