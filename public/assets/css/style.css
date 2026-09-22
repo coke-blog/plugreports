@@ -358,3 +358,26 @@ a.chip:hover{border-color:var(--amber);text-decoration:none;color:var(--amber-70
 .b-arrow:hover{background:var(--red-soft)}
 .b-prev{left:-14px}.b-next{right:-14px}
 @media(max-width:900px){.b-prev{left:4px}.b-next{right:4px}}
+
+/* ---------- vs (head-to-head) ---------- */
+.vs-hero{display:grid;grid-template-columns:1fr auto 1fr;gap:18px;align-items:center;margin:22px 0 26px;padding:26px 22px;border:1px solid var(--line);border-radius:20px;background:linear-gradient(135deg,#fffbeb 0%,#fff 45%,#eff6ff 100%);box-shadow:var(--shadow)}
+.vs-side{display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;border-top:4px solid var(--edge,var(--amber));padding-top:14px}
+.vs-side.right{border-top-color:var(--edge,var(--amber))}
+.vs-img{width:128px;height:128px;object-fit:cover;border-radius:18px;border:1px solid var(--line);box-shadow:var(--shadow)}
+.vs-ph{display:grid;place-items:center;background:var(--amber-soft,#fffbeb)}
+.vs-ph .pf-formula{font-size:15px;font-weight:700;color:var(--ink);letter-spacing:.5px}
+.vs-ph .pf-letter{display:inline-grid;place-items:center;width:72px;height:72px;border-radius:16px;color:#fff;font-size:34px;font-weight:800}
+.vs-name{font-weight:800;font-size:18px;line-height:1.2}
+.vs-tag{font-size:12px;font-weight:600;color:var(--muted);text-transform:capitalize}
+.vs-badge{display:grid;place-items:center;width:66px;height:66px;border-radius:50%;background:linear-gradient(135deg,#f59e0b,#dc2626);color:#fff;font-weight:900;font-size:22px;letter-spacing:1px;box-shadow:0 8px 20px rgba(220,38,38,.28)}
+table.vs-table td{vertical-align:top}
+table.vs-table tbody th{white-space:normal;min-width:120px;background:#fafaf9}
+table.vs-table thead th.vs-corner{background:transparent;border-color:transparent}
+.vs-duo{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.vs-dot{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:50%;color:#fff;font-weight:800;font-size:15px}
+.vs-x{font-size:12px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
+.vs-card{display:flex;flex-direction:column}
+.vs-group{margin-top:34px}
+.vs-group h2{font-size:22px}
+.vs-group-sub{color:var(--muted);font-size:14.5px;margin:6px 0 14px}
+@media(max-width:640px){.vs-hero{grid-template-columns:1fr;gap:14px;padding:20px 14px}.vs-badge{margin:0 auto;order:2}.vs-side.right{order:3}}

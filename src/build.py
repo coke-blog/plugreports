@@ -18,6 +18,10 @@ try:
     from data_mix import MIX
 except Exception:
     MIX = []
+try:
+    from data_vs import VS, VS_CATS
+except Exception:
+    VS, VS_CATS = [], {}
 
 def _apply_overrides():
     for d in DRUGS: d.update(RELATED_OVERRIDES.get("drugs", {}).get(d["slug"], {}))
@@ -151,7 +155,7 @@ def rel_card(slug):
 NAV = [
  ("/", "Home", "home"), ("/categories/opioids/", "Drug Library", "drugs"),
  ("/news/", "News", "news"), ("/busts/", "Busts", "busts"), ("/topics/", "Guides", "topics"),
- ("/quit/", "Quitting", "quit"), ("/mix/", "Mixing", "mix"), ("/hotlines/", "Hotlines", "hotline"),
+ ("/quit/", "Quitting", "quit"), ("/mix/", "Mixing", "mix"), ("/vs/", "Vs", "vs"), ("/hotlines/", "Hotlines", "hotline"),
  ("/sentencing/", "Sentencing", "sentencing"), ("/pharmacies/", "Pharmacies", "pharmacies"),
  ("/rehabs/", "Rehabs", "rehabs"), ("/about/", "About", "about"),
 ]
@@ -218,9 +222,9 @@ def shell(path, title, desc, body, jsonld=None, canonical=None, extra_head="", o
     if SETTINGS.get("clarity"): ld += '<script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","' + esc(SETTINGS["clarity"]) + '")</script>'
     if SETTINGS.get("ga"): ld += '<script async src="https://www.googletagmanager.com/gtag/js?id=' + esc(SETTINGS["ga"]) + '"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date());gtag("config","' + esc(SETTINGS["ga"]) + '")</script>' 
     if path.split("/")[0] in ("busts","news","drugs","topics","quit","mix","hotlines","pharmacies","rehabs","sentencing","index.html"):
-        ld += '<script src="/assets/js/hydrate.js?v=12" defer></script>'
+        ld += '<script src="/assets/js/hydrate.js?v=13" defer></script>'
         if path == "index.html":
-            ld += '<script src="/assets/js/breaking.js?v=12" defer></script>'
+            ld += '<script src="/assets/js/breaking.js?v=13" defer></script>'
     return f"""<!DOCTYPE html>
 <html lang="{lang}">
 <head>
@@ -245,7 +249,7 @@ def shell(path, title, desc, body, jsonld=None, canonical=None, extra_head="", o
 <link rel="icon" href="/assets/img/logo.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Source+Serif+4:opsz,wght@8..60,600;8..60,800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/css/style.css?v=12">
+<link rel="stylesheet" href="/assets/css/style.css?v=13">
 {extra_head}{ld}
 </head>
 <body>
@@ -288,7 +292,7 @@ def shell(path, title, desc, body, jsonld=None, canonical=None, extra_head="", o
 <p data-i18n="ageBody">This site contains educational information about drugs and harm reduction. It is not medical or legal advice. You must be of legal age or accessing with intent to help yourself or someone else.</p>
 <div class="row"><button class="btn btn-red" data-gate-yes data-i18n="ageYes">I understand — enter</button>
 <a class="btn btn-ghost" href="https://www.google.com" data-i18n="ageNo">Leave</a></div></div></div>
-<script src="/assets/js/app.js?v=12"></script>
+<script src="/assets/js/app.js?v=13"></script>
 </body></html>"""
 
 def breadcrumb_ld(parts):
@@ -887,6 +891,119 @@ def build_mix():
               breadcrumb_ld([("Home","/"),("Mixing","/mix/"),(m["title"],f"/mix/{m['slug']}/")])]
         w(f"mix/{m['slug']}/index.html", shell(f"mix/{m['slug']}/index.html", title, desc, body, jsonld=ld))
 
+# ------------------------------------------------------------- vs pages ----
+def vs_media(d):
+    """Live drug image when the profile has one, else a formula/letter tile."""
+    c = CATEGORIES[d["category"]]
+    ext_img = (d.get("image") or "").strip()
+    img_rel = ext_img if ext_img.startswith("http") else drug_image(d["slug"])
+    if img_rel != "assets/img/drug-placeholder.svg":
+        img_src = img_rel if img_rel.startswith("http") else "/" + img_rel
+        return f'<img class="vs-img" src="{img_src}" alt="{esc(d["name"])}" loading="lazy">'
+    f = FORMULAS.get(d["slug"], "")
+    inner = (f'<span class="pf-formula">{esc(f)}</span>' if f else
+             f'<span class="pf-letter" style="background:{c["grad"]}">{esc(d["name"][0])}</span>')
+    return f'<div class="vs-img vs-ph">{inner}</div>'
+
+def vs_rel_chip(r):
+    """Related chip that also supports external links: https://url|Label."""
+    if r.startswith("http"):
+        url, _, label = r.partition("|")
+        label = (label or url.split("//")[-1].split("/")[0]).strip()
+        return (f'<a href="{esc(url)}" target="_blank" rel="noopener">'
+                f'<span class="mini" style="background:#0f766e">&#8599;</span><span>{esc(label)}</span></a>')
+    return f'<a href="/{resolve_slug(r)}/">{rel_card(r)}</a>'
+
+def build_vs():
+    if not VS: return
+    def pair_card(v):
+        a, b = DRUG_BY_SLUG[v["aSlug"]], DRUG_BY_SLUG[v["bSlug"]]
+        ca, cb = CATEGORIES[a["category"]], CATEGORIES[b["category"]]
+        return (f'<a class="card vs-card" href="/vs/{v["slug"]}/">'
+                f'<div class="vs-duo"><span class="vs-dot" style="background:{ca["color"]}">{esc(a["name"][0])}</span>'
+                f'<span class="vs-x">vs</span>'
+                f'<span class="vs-dot" style="background:{cb["color"]}">{esc(b["name"][0])}</span></div>'
+                f'<h3>{esc(v["title"])}</h3><p>{esc(clip(v["intro"], 120))}</p>'
+                f'<div class="foot">See the comparison &rarr;</div></a>')
+    CAT_SUB = {"benzos": "Anti-anxiety sedatives, side by side.",
+               "opioids": "Painkillers and opioid treatments, head to head.",
+               "adhd": "Focus medications, compared fairly.",
+               "stimulants": "Cocaine, meth, crack and friends.",
+               "cannabis": "Weed, delta-8, HHC and the hemp aisle.",
+               "psychedelics": "The classic mind-openers, compared.",
+               "empathogens": "MDMA and its chemical family.",
+               "dissociatives": "Ketamine, PCP and the hole states.",
+               "downers": "GHB, sleep aids and nerve-pill cousins.",
+               "grey": "Grey-market and lifestyle compounds."}
+    CAT_NAME = dict(VS_CATS)
+    secs = []
+    for key, name in VS_CATS:
+        items = [v for v in VS if v["cat"] == key]
+        if not items: continue
+        secs.append(f'<section class="vs-group" id="{key}"><h2>{esc(name)}</h2>'
+                    f'<p class="vs-group-sub">{esc(CAT_SUB.get(key, ""))} {len(items)} comparisons.</p>'
+                    f'<div class="cards">{"".join(pair_card(v) for v in items)}</div></section>')
+    pills = "".join(f'<a href="#{k}">{esc(n)}</a>' for k, n in VS_CATS
+                    if any(v["cat"] == k for v in VS))
+    hub = ('<div class="wrap"><section class="sec-head" style="padding-top:30px"><div>'
+           '<span class="kicker">Head-to-head</span><h1>Vs &mdash; drug comparisons in plain English</h1>'
+           f'<p>{len(VS)} side-by-side guides: what each drug is, how it feels, how addictive it is, what it costs, and which one is more dangerous &mdash; written in simple English, no jargon.</p></div></section>'
+           f'<div class="pill-nav">{pills}</div>' + "".join(secs) + '</div>')
+    itemlist = {"@context":"https://schema.org","@type":"ItemList","name":"Drug comparisons",
+                "numberOfItems":len(VS),
+                "itemListElement":[{"@type":"ListItem","position":i+1,"name":v["title"],"url":f"{SITE}/vs/{v['slug']}/"} for i,v in enumerate(VS)]}
+    w("vs/index.html", shell("vs/index.html",
+        f"Vs — {len(VS)} Drug Comparisons in Plain English | plugreports",
+        clip(f"{len(VS)} head-to-head drug comparisons: strength, effects, addiction risk, price and the verdict on which is more dangerous. Simple English, honest answers."),
+        hub, jsonld=[{"@context":"https://schema.org","@type":"CollectionPage","name":"Drug comparisons"}, itemlist,
+                     breadcrumb_ld([("Home","/"),("Vs","/vs/")])]))
+    for v in VS:
+        a = DRUG_BY_SLUG[v["aSlug"]]; b = DRUG_BY_SLUG[v["bSlug"]]
+        ca = CATEGORIES[a["category"]]; cb = CATEGORIES[b["category"]]
+        hero = (f'<div class="vs-hero"><div class="vs-side" style="--edge:{ca["color"]}">'
+                f'{vs_media(a)}<div class="vs-name">{esc(a["name"])}</div>'
+                f'<div class="vs-tag">{esc(a["category"].replace("-"," ").title())}</div></div>'
+                f'<div class="vs-badge">VS</div>'
+                f'<div class="vs-side right" style="--edge:{cb["color"]}">'
+                f'{vs_media(b)}<div class="vs-name">{esc(b["name"])}</div>'
+                f'<div class="vs-tag">{esc(b["category"].replace("-"," ").title())}</div></div></div>')
+        trows = "".join(f'<tr><th scope="row">{esc(label)}</th><td>{esc(x)}</td><td>{esc(y)}</td></tr>'
+                        for label, x, y in v["rows"])
+        table = (f'<div class="figure"><table class="tbl vs-table"><thead><tr>'
+                 f'<th class="vs-corner"></th><th>{esc(v["a"])}</th><th>{esc(v["b"])}</th></tr></thead>'
+                 f'<tbody>{trows}</tbody></table></div>')
+        faq_html = "".join(f'<details class="faq"><summary>{esc(q)}</summary><p>{esc(x)}</p></details>' for q, x in v["faqs"])
+        relchips = ('<a href="/vs/"><span class="mini" style="background:#0f766e">&#8646;</span><span>All comparisons</span></a>'
+                    + "".join(vs_rel_chip(r) for r in v["related"]))
+        same = [x for x in VS if x is not v and x["cat"] == v["cat"]][:4]
+        more = "".join(f'<a href="/vs/{x["slug"]}/"><span class="mini" style="background:#667085">&#8646;</span>'
+                       f'<span>{esc(x["title"])}</span></a>' for x in same)
+        body = f"""<div class="wrap"><article class="article" style="padding-top:26px">
+<span class="kicker">Head-to-head</span>
+<h1 style="margin-top:10px">{esc(v['title'])}</h1>
+<div class="byline"><span data-vs="updated">Updated {esc(v.get('lastUpdated', TODAY))}</span><span data-vs="sources">Sources: {esc(", ".join(v.get('sources', [])))}</span></div>
+{hero}
+<p class="lede" data-vs="intro">{esc(v['intro'])}</p>
+<h2>{esc(v['title'])} &mdash; side by side</h2>
+{table}
+<h2>The verdict</h2>
+<div class="callout amber" data-vs="verdict">{esc(v['verdict'])}</div>
+<div class="panel" style="margin-top:20px"><h2><span class="ic" style="background:#0f766e;color:#fff">?</span>Frequently asked questions</h2>{faq_html}</div>
+<div class="related print-hide"><h2>You may also want to know</h2><div class="rel-grid" data-vs="related">{relchips}</div></div>
+{('<div class="related print-hide"><h2>More ' + esc(CAT_NAME.get(v["cat"], "comparisons").lower()) + '</h2><div class="rel-grid">' + more + '</div></div>') if more else ''}
+</article></div>"""
+        title = clip(f"{v['title']} — honest comparison in plain English | plugreports", 60)
+        desc = clip(f"{v['title']}: what each one is, how it feels, addiction risk, price, and which is more dangerous. Simple-English guide with FAQ.", 158)
+        ld = [{"@context":"https://schema.org","@type":"MedicalWebPage",
+               "name":v["title"],"url":f"{SITE}/vs/{v['slug']}/","lastReviewed":v.get("lastUpdated", TODAY),
+               "reviewedBy":{"@type":"Organization","name":"plugreports editorial","url":SITE + "/about/"},
+               "about":[{"@type":"Drug","name":a["name"]},{"@type":"Drug","name":b["name"]}],
+               "audience":{"@type":"Audience","audienceType":"People comparing two substances"}},
+              {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+                  {"@type":"Question","name":q,"acceptedAnswer":{"@type":"Answer","text":x}} for q, x in v["faqs"]]},
+              breadcrumb_ld([("Home","/"),("Vs","/vs/"),(v["title"],f"/vs/{v['slug']}/")])]
+        w(f"vs/{v['slug']}/index.html", shell(f"vs/{v['slug']}/index.html", title, desc, body, jsonld=ld))
+
 # ------------------------------------------------- help / directory pages ----
 def build_hotlines(es=False):
     qslug = None; qname = ""
@@ -1054,6 +1171,9 @@ def build_meta():
     if MIX:
         urls += [("mix/", B)]
         urls += [(f"mix/{m['slug']}/", m.get("lastUpdated", B)) for m in MIX]
+    if VS:
+        urls += [("vs/", B)]
+        urls += [(f"vs/{v['slug']}/", v.get("lastUpdated", B)) for v in VS]
     urls += [(f"pharmacies/{p['slug']}/", B) for p in PHARMACIES]
     urls += [(f"rehabs/{r['slug']}/", B) for r in REHABS]
     sm = "\n".join(f'<url><loc>{SITE}/{u}</loc><lastmod>{lm}</lastmod></url>' for u, lm in urls)
@@ -1111,6 +1231,10 @@ def build_meta():
         L += ["", "## Mixing dangers"]
         L.append(f"- [/mix/]({SITE}/mix/) Hub — {len(MIX)} drug-combination guides ranked by danger")
         for m in MIX: L.append(f"- [/mix/{m['slug']}/]({SITE}/mix/{m['slug']}/) {m['a']} + {m['b']} — {m.get('level', 'caution')}")
+    if VS:
+        L += ["", f"## Vs — drug comparisons ({len(VS)})"]
+        L.append(f"- [/vs/]({SITE}/vs/) Hub — {len(VS)} head-to-head comparisons in plain English")
+        for v in VS: L.append(f"- [/vs/{v['slug']}/]({SITE}/vs/{v['slug']}/) {v['title']}")
     w("llms.txt", "\n".join(L) + "\n")
     # ---- llms-full.txt: complete compact drug records (GEO flagship artifact) ----
     F = ["# plugreports — full drug records",
@@ -1304,7 +1428,7 @@ def build_indexes():
 def main():
     build_index(); build_categories(); build_categories_es(); build_drugs(); build_news(); build_busts()
     build_indexes()
-    build_topics(); build_quit(); build_mix(); build_hotlines(); build_sentencing()
+    build_topics(); build_quit(); build_mix(); build_vs(); build_hotlines(); build_sentencing()
     build_directory("pharmacies", PHARMACIES, "verified pharmacy",
         "Verified Online Pharmacies — USA, Canada, UK, EU & Worldwide | plugreports",
         "How to verify a licensed online pharmacy in your country — NABP & PharmacyChecker (US/CA), GPhC (UK), EU safety logo, and how to spot counterfeit pill mills before you buy medication online.", "&#128138;")
@@ -1319,11 +1443,12 @@ def main():
                 "busts":[b["slug"] for b in BUSTS], "topics":[t["slug"] for t in TOPICS],
                 "categories":[k for k in CATEGORIES],
                 "pharmacies":[p["slug"] for p in PHARMACIES], "rehabs":[r["slug"] for r in REHABS],
-                "quit":[k for k in QUIT_SPECS], "mix":[m["slug"] for m in MIX]}
+                "quit":[k for k in QUIT_SPECS], "mix":[m["slug"] for m in MIX],
+                "vs":[v["slug"] for v in VS]}
     w("_static.json", json.dumps(manifest))
     w("_dynamic.html", shell("_dynamic.html", "plugreports",
       "Live content", '<div class="wrap" id="dyn" style="padding:44px 20px;min-height:50vh"><p>Loading\u2026</p></div>',
-      extra_head='<script src="/assets/js/render.js?v=12" defer></script>', canonical=SITE + "/"))
+      extra_head='<script src="/assets/js/render.js?v=13" defer></script>', canonical=SITE + "/"))
     print(f"Built {len(DRUGS)} drug pages, {len(CATEGORIES)} categories, {len(TOPICS)} topics, "
           f"{len(QUIT_SPECS)} quit pages, {len(NEWS)} news, {len(BUSTS)} busts, {len(MIX)} mix pages into {PUB}")
 

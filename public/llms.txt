@@ -6,7 +6,7 @@ Complete machine-readable drug records: [llms-full.txt](https://plugreports.com/
 
 ## Key pages
 - [/hotlines/](https://plugreports.com/hotlines/) Verified overdose & crisis hotlines, 9 regions
-- [/drugs/](https://plugreports.com/drugs/) A-Z index of all 435 substance profiles
+- [/drugs/](https://plugreports.com/drugs/) A-Z index of all 437 substance profiles
 - [/categories/](https://plugreports.com/categories/) Browse by category
 - [/news/](https://plugreports.com/news/) Drug news & alerts
 - [/busts/](https://plugreports.com/busts/) Busts & seizures tracker
@@ -17,7 +17,7 @@ Complete machine-readable drug records: [llms-full.txt](https://plugreports.com/
 - [/rehabs/](https://plugreports.com/rehabs/) Verified rehab centers
 - [/about/](https://plugreports.com/about/) Mission & editorial policy
 
-## Drug library (435 profiles)
+## Drug library (437 profiles)
 ### Opioids
 - [/drugs/heroin/](https://plugreports.com/drugs/heroin/) Heroin — aka Dope, H, Smack
 - [/drugs/fentanyl/](https://plugreports.com/drugs/fentanyl/) Fentanyl — aka Apache, China Girl, Dance Fever
@@ -140,6 +140,8 @@ Complete machine-readable drug records: [llms-full.txt](https://plugreports.com/
 - [/drugs/benzedrex/](https://plugreports.com/drugs/benzedrex/) Propylhexedrine (Benzedrex Inhaler) — aka Benzedrex, Propylhexedrine, The OTC stimulant
 - [/drugs/numbrino/](https://plugreports.com/drugs/numbrino/) Numbrino (Cocaine HCl 4% Nasal Solution) — aka Numbrino, Cocaine nasal solution, Cocaine hydrochloride spray
 - [/drugs/crack/](https://plugreports.com/drugs/crack/) Crack Cocaine — aka Crack, Rock, Stones
+- [/drugs/dmaa/](https://plugreports.com/drugs/dmaa/) DMAA — aka 1,3-DMAA, Geranium extract, Methylhexanamine
+- [/drugs/dmha/](https://plugreports.com/drugs/dmha/) DMHA — aka 2-Aminoisoheptane, Octodrine, Juglans regia extract
 ### Benzodiazepines
 - [/drugs/diazepam-drug/](https://plugreports.com/drugs/diazepam-drug/) Diazepam — aka Valium, Bensedine, Apaurine (blue valium)
 - [/drugs/alprazolam/](https://plugreports.com/drugs/alprazolam/) Alprazolam (Xanax 2 mg) — aka Xanax, Bars, Pfizer LongBars
@@ -624,3 +626,76 @@ Complete machine-readable drug records: [llms-full.txt](https://plugreports.com/
 - [/mix/ssris-alcohol/](https://plugreports.com/mix/ssris-alcohol/) SSRIs + Alcohol — caution
 - [/mix/kratom-stimulants/](https://plugreports.com/mix/kratom-stimulants/) Kratom + Stimulants/caffeine — caution
 - [/mix/modafinil-alcohol/](https://plugreports.com/mix/modafinil-alcohol/) Modafinil + Alcohol — caution
+
+## Vs — drug comparisons (70)
+- [/vs/](https://plugreports.com/vs/) Hub — 70 head-to-head comparisons in plain English
+- [/vs/xanax-vs-valium/](https://plugreports.com/vs/xanax-vs-valium/) Xanax vs Valium
+- [/vs/xanax-vs-ativan/](https://plugreports.com/vs/xanax-vs-ativan/) Xanax vs Ativan
+- [/vs/xanax-vs-klonopin/](https://plugreports.com/vs/xanax-vs-klonopin/) Xanax vs Klonopin
+- [/vs/ativan-vs-valium/](https://plugreports.com/vs/ativan-vs-valium/) Ativan vs Valium
+- [/vs/klonopin-vs-valium/](https://plugreports.com/vs/klonopin-vs-valium/) Klonopin vs Valium
+- [/vs/ativan-vs-klonopin/](https://plugreports.com/vs/ativan-vs-klonopin/) Ativan vs Klonopin
+- [/vs/xanax-vs-etizolam/](https://plugreports.com/vs/xanax-vs-etizolam/) Xanax vs Etizolam
+- [/vs/bromazolam-vs-xanax/](https://plugreports.com/vs/bromazolam-vs-xanax/) Bromazolam vs Xanax
+- [/vs/oxycodone-vs-hydrocodone/](https://plugreports.com/vs/oxycodone-vs-hydrocodone/) Oxycodone vs Hydrocodone
+- [/vs/oxycontin-vs-oxycodone/](https://plugreports.com/vs/oxycontin-vs-oxycodone/) OxyContin vs Oxycodone
+- [/vs/dilaudid-vs-oxycodone/](https://plugreports.com/vs/dilaudid-vs-oxycodone/) Dilaudid vs Oxycodone
+- [/vs/morphine-vs-oxycodone/](https://plugreports.com/vs/morphine-vs-oxycodone/) Morphine vs Oxycodone
+- [/vs/tramadol-vs-hydrocodone/](https://plugreports.com/vs/tramadol-vs-hydrocodone/) Tramadol vs Hydrocodone
+- [/vs/tramadol-vs-oxycodone/](https://plugreports.com/vs/tramadol-vs-oxycodone/) Tramadol vs Oxycodone
+- [/vs/fentanyl-vs-heroin/](https://plugreports.com/vs/fentanyl-vs-heroin/) Fentanyl vs Heroin
+- [/vs/fentanyl-vs-morphine/](https://plugreports.com/vs/fentanyl-vs-morphine/) Fentanyl vs Morphine
+- [/vs/suboxone-vs-methadone/](https://plugreports.com/vs/suboxone-vs-methadone/) Suboxone vs Methadone
+- [/vs/suboxone-vs-subutex/](https://plugreports.com/vs/suboxone-vs-subutex/) Suboxone vs Subutex
+- [/vs/codeine-vs-hydrocodone/](https://plugreports.com/vs/codeine-vs-hydrocodone/) Codeine vs Hydrocodone
+- [/vs/kratom-vs-suboxone/](https://plugreports.com/vs/kratom-vs-suboxone/) Kratom vs Suboxone
+- [/vs/kratom-vs-7-oh/](https://plugreports.com/vs/kratom-vs-7-oh/) Kratom vs 7-OH
+- [/vs/kratom-vs-tramadol/](https://plugreports.com/vs/kratom-vs-tramadol/) Kratom vs Tramadol
+- [/vs/adderall-vs-vyvanse/](https://plugreports.com/vs/adderall-vs-vyvanse/) Adderall vs Vyvanse
+- [/vs/adderall-vs-ritalin/](https://plugreports.com/vs/adderall-vs-ritalin/) Adderall vs Ritalin
+- [/vs/vyvanse-vs-ritalin/](https://plugreports.com/vs/vyvanse-vs-ritalin/) Vyvanse vs Ritalin
+- [/vs/adderall-vs-modafinil/](https://plugreports.com/vs/adderall-vs-modafinil/) Adderall vs Modafinil
+- [/vs/cocaine-vs-crack/](https://plugreports.com/vs/cocaine-vs-crack/) Cocaine vs Crack
+- [/vs/cocaine-vs-meth/](https://plugreports.com/vs/cocaine-vs-meth/) Cocaine vs Meth
+- [/vs/meth-vs-adderall/](https://plugreports.com/vs/meth-vs-adderall/) Meth vs Adderall
+- [/vs/cocaine-vs-mdma/](https://plugreports.com/vs/cocaine-vs-mdma/) Cocaine vs MDMA
+- [/vs/crack-vs-meth/](https://plugreports.com/vs/crack-vs-meth/) Crack vs Meth
+- [/vs/delta-8-vs-delta-9/](https://plugreports.com/vs/delta-8-vs-delta-9/) Delta-8 vs Delta-9 THC
+- [/vs/delta-8-vs-hhc/](https://plugreports.com/vs/delta-8-vs-hhc/) Delta-8 vs HHC
+- [/vs/hhc-vs-delta-9/](https://plugreports.com/vs/hhc-vs-delta-9/) HHC vs Delta-9 THC
+- [/vs/thc-o-vs-delta-8/](https://plugreports.com/vs/thc-o-vs-delta-8/) THC-O vs Delta-8
+- [/vs/thcp-vs-delta-9/](https://plugreports.com/vs/thcp-vs-delta-9/) THC-P vs Delta-9
+- [/vs/delta-8-vs-thca/](https://plugreports.com/vs/delta-8-vs-thca/) Delta-8 vs THCA Flower
+- [/vs/delta-8-vs-delta-10/](https://plugreports.com/vs/delta-8-vs-delta-10/) Delta-8 vs Delta-10
+- [/vs/cbd-vs-weed/](https://plugreports.com/vs/cbd-vs-weed/) CBD vs Weed
+- [/vs/lsd-vs-shrooms/](https://plugreports.com/vs/lsd-vs-shrooms/) LSD vs Shrooms
+- [/vs/lsd-vs-dmt/](https://plugreports.com/vs/lsd-vs-dmt/) LSD vs DMT
+- [/vs/shrooms-vs-dmt/](https://plugreports.com/vs/shrooms-vs-dmt/) Shrooms vs DMT
+- [/vs/dmt-vs-5-meo-dmt/](https://plugreports.com/vs/dmt-vs-5-meo-dmt/) DMT vs 5-MeO-DMT
+- [/vs/lsd-vs-1p-lsd/](https://plugreports.com/vs/lsd-vs-1p-lsd/) LSD vs 1P-LSD
+- [/vs/mescaline-vs-shrooms/](https://plugreports.com/vs/mescaline-vs-shrooms/) Mescaline vs Shrooms
+- [/vs/mdma-vs-shrooms/](https://plugreports.com/vs/mdma-vs-shrooms/) MDMA vs Shrooms
+- [/vs/lsd-vs-2c-b/](https://plugreports.com/vs/lsd-vs-2c-b/) LSD vs 2C-B
+- [/vs/salvia-vs-dmt/](https://plugreports.com/vs/salvia-vs-dmt/) Salvia vs DMT
+- [/vs/mdma-vs-mda/](https://plugreports.com/vs/mdma-vs-mda/) MDMA vs MDA
+- [/vs/molly-vs-ecstasy/](https://plugreports.com/vs/molly-vs-ecstasy/) Molly vs Ecstasy
+- [/vs/mdma-vs-meth/](https://plugreports.com/vs/mdma-vs-meth/) MDMA vs Meth
+- [/vs/ketamine-vs-pcp/](https://plugreports.com/vs/ketamine-vs-pcp/) Ketamine vs PCP
+- [/vs/ketamine-vs-dxm/](https://plugreports.com/vs/ketamine-vs-dxm/) Ketamine vs DXM
+- [/vs/pcp-vs-dxm/](https://plugreports.com/vs/pcp-vs-dxm/) PCP vs DXM
+- [/vs/2f-dck-vs-ketamine/](https://plugreports.com/vs/2f-dck-vs-ketamine/) 2F-DCK vs Ketamine
+- [/vs/ketamine-vs-methoxetamine/](https://plugreports.com/vs/ketamine-vs-methoxetamine/) Ketamine vs Methoxetamine
+- [/vs/ghb-vs-gbl/](https://plugreports.com/vs/ghb-vs-gbl/) GHB vs GBL
+- [/vs/gbl-vs-1-4-bdo/](https://plugreports.com/vs/gbl-vs-1-4-bdo/) GBL vs 1,4-BDO
+- [/vs/ghb-vs-alcohol/](https://plugreports.com/vs/ghb-vs-alcohol/) GHB vs Alcohol
+- [/vs/phenibut-vs-ghb/](https://plugreports.com/vs/phenibut-vs-ghb/) Phenibut vs GHB
+- [/vs/phenibut-vs-alcohol/](https://plugreports.com/vs/phenibut-vs-alcohol/) Phenibut vs Alcohol
+- [/vs/gabapentin-vs-pregabalin/](https://plugreports.com/vs/gabapentin-vs-pregabalin/) Gabapentin vs Pregabalin
+- [/vs/zolpidem-vs-xanax/](https://plugreports.com/vs/zolpidem-vs-xanax/) Zolpidem (Ambien) vs Xanax
+- [/vs/kratom-vs-phenibut/](https://plugreports.com/vs/kratom-vs-phenibut/) Kratom vs Phenibut
+- [/vs/tianeptine-vs-kratom/](https://plugreports.com/vs/tianeptine-vs-kratom/) Tianeptine vs Kratom
+- [/vs/dmaa-vs-dmha/](https://plugreports.com/vs/dmaa-vs-dmha/) DMAA vs DMHA
+- [/vs/semaglutide-vs-phentermine/](https://plugreports.com/vs/semaglutide-vs-phentermine/) Semaglutide vs Phentermine
+- [/vs/viagra-vs-cialis/](https://plugreports.com/vs/viagra-vs-cialis/) Viagra vs Cialis
+- [/vs/vapes-vs-cigarettes/](https://plugreports.com/vs/vapes-vs-cigarettes/) Vapes vs Cigarettes
+- [/vs/snus-vs-cigarettes/](https://plugreports.com/vs/snus-vs-cigarettes/) Snus vs Cigarettes

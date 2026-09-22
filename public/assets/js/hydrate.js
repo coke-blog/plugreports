@@ -23,6 +23,7 @@
     if (!it) return;
     if (type === 'drugs') return renderDrug(it);
     if (type === 'mix') return renderMix(it);
+    if (type === 'vs') return renderVs(it);
     if (type === 'busts' || type === 'news') return renderDetail(it, type);
     if (type === 'topics') return renderTopic(it);
     if (type === 'quit') return renderQuit(it);
@@ -345,6 +346,42 @@ function initBreaking() {
     fill('effects', it.effects); fill('signs', it.signs); fill('whatToDo', it.whatToDo);
     var up = q('updated'); if (up && it.lastUpdated) up.textContent = 'Updated ' + it.lastUpdated;
     var so = q('sources'); if (so && it.sources) so.textContent = 'Sources: ' + it.sources;
+  }
+
+  function renderVs(it) {
+    setH1(it.title);
+    if (it.seoTitle) document.title = it.seoTitle;
+    if (it.seoDesc) { var m = document.querySelector('meta[name="description"]'); if (m) m.setAttribute('content', it.seoDesc); }
+    var q = function (k) { return document.querySelector('[data-vs="' + k + '"]'); };
+    var up = q('updated'); if (up && it.lastUpdated) up.textContent = 'Updated ' + it.lastUpdated;
+    var so = q('sources'); if (so && Array.isArray(it.sources)) so.textContent = 'Sources: ' + it.sources.join(', ');
+    var in_ = q('intro'); if (in_ && it.intro) in_.textContent = it.intro;
+    var vd = q('verdict'); if (vd && it.verdict) vd.textContent = it.verdict;
+    var tb = document.querySelector('table.vs-table tbody');
+    if (tb && Array.isArray(it.rows) && it.rows.length) {
+      tb.innerHTML = it.rows.map(function (r) {
+        return '<tr><th scope="row">' + esc(r[0]) + '</th><td>' + esc(r[1]) + '</td><td>' + esc(r[2]) + '</td></tr>';
+      }).join('');
+    }
+    var ths = document.querySelectorAll('table.vs-table thead th');
+    if (ths.length === 3) { if (it.a && ths[1]) ths[1].textContent = it.a; if (it.b && ths[2]) ths[2].textContent = it.b; }
+    var sides = document.querySelectorAll('.vs-side .vs-name');
+    if (sides.length === 2) { if (it.a && sides[0]) sides[0].textContent = it.a; if (it.b && sides[1]) sides[1].textContent = it.b; }
+    var imgs = document.querySelectorAll('.vs-hero .vs-img');
+    if (imgs.length === 2) {
+      if (it.aImg) { var ia = imgs[0]; if (ia.tagName === 'IMG') ia.src = it.aImg; }
+      if (it.bImg) { var ib = imgs[1]; if (ib.tagName === 'IMG') ib.src = it.bImg; }
+    }
+    var rg = q('related');
+    if (rg && Array.isArray(it.related) && it.related.length) {
+      rg.innerHTML = '<a href="/vs/"><span class="mini" style="background:#0f766e">&#8646;</span><span>All comparisons</span></a>' +
+        it.related.map(chipEntry).join('');
+      var seen = {}, dup = [];
+      Array.prototype.forEach.call(rg.querySelectorAll('a[href]'), function(a) {
+        if (seen[a.getAttribute('href')]) dup.push(a); else seen[a.getAttribute('href')] = 1;
+      });
+      dup.forEach(function(a) { a.parentNode.removeChild(a); });
+    }
   }
 
   function renderCenter(it) {

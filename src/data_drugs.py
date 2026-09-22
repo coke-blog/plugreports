@@ -3335,3 +3335,29 @@ dict(slug="crack", name="Crack Cocaine", aliases=["Crack", "Rock", "Stones", "Ba
  related=["cocaine","topics:cocaine-purity-and-cuts","quit:cocaine","topics:what-actually-happens-when-you-quit","hotlines"]),
 ]
 DRUGS += P0_GAPS
+VS_SUPPORT = [
+dict(slug="dmaa", name="DMAA", aliases=["1,3-DMAA", "Geranium extract", "Methylhexanamine", "Geranamine"],
+ category="stimulants", schedule="Not a legal dietary ingredient (US FDA 2013); controlled in several countries including Australia, Canada, Brazil",
+ appearance="White crystalline powder; typical pre-workout dose 25–75 mg",
+ effects=["Sharp, tunnel-vision energy and focus at 25–50 mg", "Elevated heart rate and blood pressure — the 'cracked-out' workout feel", "Crash and irritability as it wears off (~2–4 h)"],
+ risks=["Linked to deaths, hemorrhagic strokes and cardiac events; FDA issued warning letters from 2012 and ruled it an adulterant in 2013", "Blood pressure and heart-rate spikes dangerous for anyone with cardiac risk", "Sold for years as 'geranium extract' despite containing no detectable DMAA from natural sources", "Banned from competition by WADA and most sports federations"],
+ overdoseSigns=["Chest pain, severe headache, pounding or irregular heartbeat", "Spiking blood pressure, confusion, collapse", "Stroke symptoms: one-sided weakness, slurred speech"],
+ streetPrice="~$1–3 per dose inside pre-workout tubs ($30–60 per bottle); gray-market powder ~$20–40/g",
+ legalStatus="FDA: not a lawful supplement ingredient; products containing it are adulterated. Scheduled in AU/CA/BR and others. Gray zone persists in some markets.",
+ lastUpdated="2026-09-21", sources=["FDA","WADA","regulatory alerts"],
+ related=["dmha","adderall","modafinil","topics:gas-station-drugs"]),
+
+dict(slug="dmha", name="DMHA", aliases=["2-Aminoisoheptane", "Octodrine", "Juglans regia extract", "Aminoisoheptane"],
+ category="stimulants", schedule="Unscheduled federally (US) but FDA has warned; controlled in Australia and several other countries",
+ appearance="White-to-off-white powder in pre-workout and fat-burner products; typical dose 100–200 mg",
+ effects=["Stimulating, appetite-suppressing energy similar to DMAA but usually milder and shorter", "Elevated heart rate, blood pressure and body temperature", "Insomnia and anxiety at high doses"],
+ risks=["Successor to DMAA in the same cat-and-mouse pattern: launched as 'geranium/juglans extract' shortly after DMAA was banned", "Human safety data essentially absent — structure predicts similar cardiovascular stress to DMAA", "Frequently combined with extreme caffeine stacks that multiply cardiac load", "WADA-banned in competition"],
+ overdoseSigns=["Racing or irregular heartbeat, chest pressure", "Severe anxiety, tremor, overheating", "Fainting or collapse during exercise"],
+ streetPrice="~$1–3 per dose inside pre-workout tubs; gray-market bulk powder widely available",
+ legalStatus="US: unscheduled but FDA warning letters issued; 'not a dietary ingredient' enforcement risk. Scheduled in AU and others. Status varies by country.",
+ lastUpdated="2026-09-21", sources=["FDA","WADA","regulatory alerts"],
+ related=["dmaa","adderall","modafinil","topics:gas-station-drugs"]),
+]
+
+DRUGS += VS_SUPPORT
+

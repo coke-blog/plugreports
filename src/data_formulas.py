@@ -311,3 +311,4 @@ FORMULAS = {
     "pcp": "C₁₇H₂₅N",
     "crack": "C₁₇H₂₁NO₄",
 }
+FORMULAS.update({"dmaa": "C₇H₁₇N", "dmha": "C₈H₁₉N"})

@@ -55,6 +55,10 @@ if __name__ == "__main__":
         from data_mix import MIX
     except Exception:
         MIX = []
+    try:
+        from data_vs import VS
+    except Exception:
+        VS = []
     for d in DRUGS: d.update(RELATED_OVERRIDES.get("drugs", {}).get(d["slug"], {}))
     for b in BUSTS: b.update(RELATED_OVERRIDES.get("busts", {}).get(b["slug"], {}))
     for n in NEWS: n.update(RELATED_OVERRIDES.get("news", {}).get(n["slug"], {}))
@@ -74,6 +78,7 @@ if __name__ == "__main__":
         "sentencing": [dict(s, slug=s.get("slug") or slugify(s["region"])) for s in SENTENCING],
         # mix items already match the admin shape (slug,a,b,aSlug,bSlug,level,title,...)
         "mix": MIX,
+        "vs": VS,
     }
     types = sys.argv[1:] or list(seeds.keys())
     for t in types:

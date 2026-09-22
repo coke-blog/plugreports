@@ -60,6 +60,7 @@
     else if (type === 'topics') html = topicPage(it);
     else if (type === 'pharmacies' || type === 'rehabs') html = centerPage(it, type);
     else if (type === 'quit') html = quitPage(it);
+    else if (type === 'vs') html = vsPage(it);
     box.innerHTML = html;
     try { window.scrollTo(0, 0); } catch (e) {}
   }).catch(function () {
@@ -195,6 +196,40 @@
       cross +
       '<div class="related print-hide"><h2>More mixing dangers</h2><div class="rel-grid">' +
       '<a href="/mix/"><span class="mini" style="background:#dc2626">&#9888;</span><span>All mixing dangers</span></a>' +
+      '<a href="/hotlines/"><span class="mini" style="background:#dc2626">&#9742;</span><span>Hotlines</span></a></div></div></article>';
+  }
+
+  function vsPage(it) {
+    function fighter(name, img, catName, color, right) {
+      var media = img ? '<img class="vs-img" src="' + esc(img) + '" loading="lazy">'
+        : '<div class="vs-img vs-ph"><span class="pf-letter" style="background:' + (color || '#d97706') + '">' +
+          esc(((name || '?')[0] || '?').toUpperCase()) + '</span></div>';
+      return '<div class="vs-side' + (right ? ' right' : '') + '" style="--edge:' + (color || '#d97706') + '">' +
+        media + '<div class="vs-name">' + esc(name || '') + '</div>' +
+        '<div class="vs-tag">' + esc(catName || '') + '</div></div>';
+    }
+    var rows = (it.rows || []).map(function (r) {
+      return '<tr><th scope="row">' + esc(r[0]) + '</th><td>' + esc(r[1]) + '</td><td>' + esc(r[2]) + '</td></tr>';
+    }).join('');
+    var faqs = (it.faqs || []).map(function (f) {
+      return '<details class="faq"><summary>' + esc(f[0]) + '</summary><p>' + esc(f[1]) + '</p></details>';
+    }).join('');
+    return '<article class="article" style="padding-top:26px">' +
+      '<span class="kicker">Head-to-head</span>' +
+      '<h1 style="margin-top:12px">' + esc(it.title || ((it.a || '') + ' vs ' + (it.b || ''))) + '</h1>' +
+      '<div class="byline"><span>Updated ' + esc(it.lastUpdated || '') + '</span><span>Sources: ' +
+        esc(Array.isArray(it.sources) ? it.sources.join(', ') : (it.sources || '')) + '</span></div>' +
+      '<div class="vs-hero">' + fighter(it.a, it.aImg, it.aCat, it.aColor) +
+      '<div class="vs-badge">VS</div>' + fighter(it.b, it.bImg, it.bCat, it.bColor, true) + '</div>' +
+      (it.intro ? '<p class="lede">' + esc(it.intro) + '</p>' : '') +
+      (rows ? '<h2>' + esc(it.title || 'Side by side') + ' &mdash; side by side</h2>' +
+        '<div class="figure"><table class="tbl vs-table"><thead><tr><th class="vs-corner"></th><th>' + esc(it.a || '') + '</th><th>' +
+        esc(it.b || '') + '</th></tr></thead><tbody>' + rows + '</tbody></table></div>' : '') +
+      (it.verdict ? '<h2>The verdict</h2><div class="callout amber">' + esc(it.verdict) + '</div>' : '') +
+      (faqs ? '<div class="panel" style="margin-top:20px"><h2><span class="ic" style="background:#0f766e;color:#fff">?</span>Frequently asked questions</h2>' + faqs + '</div>' : '') +
+      '<div class="related print-hide"><h2>You may also want to know</h2><div class="rel-grid">' +
+      '<a href="/vs/"><span class="mini" style="background:#0f766e">&#8646;</span><span>All comparisons</span></a>' +
+      ((it.related || []).map(relChip).join('')) +
       '<a href="/hotlines/"><span class="mini" style="background:#dc2626">&#9742;</span><span>Hotlines</span></a></div></div></article>';
   }
 

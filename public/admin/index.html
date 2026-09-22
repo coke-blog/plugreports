@@ -61,7 +61,7 @@ input:focus,select:focus,textarea:focus{outline:2px solid #fcd34d;border-color:v
 <nav id="tabs"></nav>
 <main><div id="msg"></div><div id="topEditor"></div><div id="body"></div></main></div>
 <script>
-const TYPES=["drugs","categories","busts","news","topics","mix","quit","hotlines","pharmacies","rehabs","sentencing"];
+const TYPES=["drugs","categories","busts","news","topics","mix","vs","quit","hotlines","pharmacies","rehabs","sentencing"];
 const PALETTE=['#0ea5e9','#8b5cf6','#ec4899','#f43f5e','#14b8a6','#f59e0b','#84cc16','#6366f1','#a855f7','#0d9488','#e11d48','#ca8a04'];
 const CATS=["opioids","stimulants","benzodiazepines","sedatives","depressants","dissociatives","empathogens","psychedelics","cannabinoids","performance","hazardous"];
 const RELND={k:'relatedNoDefaults',l:'Hide default cards (Fentanyl numbers / Quitting / Hotlines)',t:'checkbox'};
@@ -103,6 +103,16 @@ const SCHEMAS={
   {k:'effects',l:'What happens',t:'list',hint:'one per line'},{k:'signs',l:'Warning signs',t:'list',hint:'one per line'},
   {k:'whatToDo',l:'What to do',t:'list',hint:'one per line'},
   {k:'sources',l:'Sources',t:'text',ph:'FDA, CDC'},{k:'lastUpdated',l:'Last updated',t:'text',ph:'2026-09-21'}].concat(SEO),
+ vs:[{k:'a',l:'Drug A name',t:'text',req:1,ph:'Xanax'},{k:'b',l:'Drug B name',t:'text',req:1,ph:'Valium'},
+  {k:'aSlug',l:'Library slug for A (images + cross-links)',t:'text',ph:'alprazolam'},{k:'bSlug',l:'Library slug for B',t:'text',ph:'diazepam-drug'},
+  {k:'cat',l:'Hub group',t:'select',opts:['benzos','opioids','adhd','stimulants','cannabis','psychedelics','empathogens','dissociatives','downers','grey']},
+  {k:'title',l:'Title',t:'text',ph:'Xanax vs Valium'},{k:'slug',l:'Slug',t:'text',auto:1},
+  {k:'intro',l:'Intro (2-3 plain-English sentences)',t:'textarea',cls:'tall'},
+  {k:'rows',l:'Comparison rows',t:'table',hint:'one per line: Aspect | Side A | Side B (first line = header)'},
+  {k:'verdict',l:'The verdict (plain English)',t:'textarea',cls:'tall'},
+  {k:'aImg',l:'Image A URL (optional, overrides library image)',t:'text'},{k:'bImg',l:'Image B URL (optional)',t:'text'},
+  {k:'faqs',l:'FAQs',t:'lines4',hint:'one per line: Question | Answer'},
+  {k:'sources',l:'Sources',t:'csv'},{k:'lastUpdated',l:'Last updated',t:'text',ph:'2026-09-21'},REL,RELND].concat(SEO),
  quit:[{k:'name',l:'Substance name',t:'text',req:1},{k:'slug',l:'Slug',t:'text',auto:1},{k:'cat',l:'Category label',t:'text',ph:'Opioid'},
   {k:'image',l:'Featured image',t:'image'},{k:'danger',l:'Safety warning',t:'textarea',cls:'tall'},
   {k:'days',l:'Timeline (JSON)',t:'json',cls:'tall'},{k:'tips',l:'Tips',t:'list',hint:'one per line'},REL,RELND].concat(SEO),
@@ -118,8 +128,8 @@ const SCHEMAS={
   {k:'summary',l:'Summary',t:'textarea',cls:'tall'},
   {k:'table',l:'Table rows',t:'table',hint:'one per line: Cell | Cell (first line = header)'},REL,RELND].concat(SEO),
 };
-const ICONS={drugs:['💊','#dc2626'],categories:['🗂️','#f59e0b'],busts:['🚨','#b45309'],news:['📰','#dc2626'],topics:['📖','#4338ca'],mix:['⚗️','#b45309'],quit:['⏳','#16a34a'],hotlines:['☎️','#dc2626'],pharmacies:['Rx','#3b82f6'],rehabs:['➕','#16a34a'],sentencing:['⚖️','#111827'],settings:['⚙️','#667085'],suggestions:['📥','#0ea5e9']};
-const ACC=[{label:'Content',items:['drugs','categories','busts','news','topics','mix','quit']},{label:'Directories',items:['hotlines','pharmacies','rehabs']},{label:'Site',items:['sentencing','settings','suggestions']}];
+const ICONS={drugs:['💊','#dc2626'],categories:['🗂️','#f59e0b'],busts:['🚨','#b45309'],news:['📰','#dc2626'],topics:['📖','#4338ca'],mix:['⚗️','#b45309'],vs:['VS','#0f766e'],quit:['⏳','#16a34a'],hotlines:['☎️','#dc2626'],pharmacies:['Rx','#3b82f6'],rehabs:['➕','#16a34a'],sentencing:['⚖️','#111827'],settings:['⚙️','#667085'],suggestions:['📥','#0ea5e9']};
+const ACC=[{label:'Content',items:['drugs','categories','busts','news','topics','mix','vs','quit']},{label:'Directories',items:['hotlines','pharmacies','rehabs']},{label:'Site',items:['sentencing','settings','suggestions']}];
 let token=sessionStorage.getItem('pr-token'),cur='drugs',jsonMode=false,openAcc=0;
 async function api(p,opt={}){opt.headers=Object.assign({'Content-Type':'application/json',Authorization:'Bearer '+token},opt.headers);
  const r=await fetch('/api/'+p,opt);if(r.status===401){logout();throw new Error('session expired')}
