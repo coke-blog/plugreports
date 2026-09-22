@@ -212,8 +212,10 @@ def shell(path, title, desc, body, jsonld=None, canonical=None, extra_head="", o
                 links.append(f'<a href="/{"/".join(acc)}/">{esc(p.replace("-"," ").title())}</a>')
             else:
                 links.append(f'<span>{esc(p.replace("-"," ").title())}</span>')
-        crumbs = ('<div class="wrap"><nav class="crumbs print-hide"><a href="/">Home</a> / '
-                  + " / ".join(links) + f' / <span>{esc(title.split("—")[0].strip())}</span></nav></div>')
+        crumb_mid = " / ".join(links)
+        crumbs = ('<div class="wrap"><nav class="crumbs print-hide"><a href="/">Home</a>'
+                  + (" / " + crumb_mid if crumb_mid else "")
+                  + f' / <span>{esc(title.split("—")[0].strip())}</span></nav></div>')
     navlinks = "".join(
         f'<a href="{u}" class="{"hot" if k=="hotline" else ""}">{t}</a>' for u, t, k in NAV)
     ld = f'<script type="application/ld+json">{json.dumps(jsonld, ensure_ascii=False)}</script>' if jsonld else ""
@@ -831,9 +833,11 @@ def build_mix():
                     f'<p style="color:var(--muted);font-size:14.5px;margin:6px 0 14px">{sub}</p>'
                     f'<div class="cards" data-tier="{tier}">{"".join(card(m) for m in items)}</div></section>')
     hub = ('<div class="wrap"><section class="sec-head" style="padding-top:30px"><div>'
-           '<span class="kicker">Mixing dangers</span><h1>Mixing drugs &mdash; what actually happens</h1>'
-           f'<p>Most fatal overdoses involve more than one substance. These {len(MIX)} plain-language guides explain why specific combinations are dangerous, '
-           'what the mix does to your body, the warning signs of trouble, and exactly what to do.</p></div></section>'
+           '<span class="kicker">Mixing dangers</span><h1>Mixing drugs &mdash; why combinations kill more than any single drug</h1>'
+           f'<p>Here is the number most people never hear: <b>most fatal overdoses involve more than one substance.</b> Mixing is not additive &mdash; it is multiplicative. '
+           'Two depressants together can stop your breathing at doses either one would survive alone. A stimulant masks a downer&rsquo;s warning signs until it is too late. '
+           'And medicines mixed without a doctor&rsquo;s oversight &mdash; a friend&rsquo;s prescription, a pill from a stranger, a drink on top of a sleep aid &mdash; are the single most common path into an overdose. '
+           f'These {len(MIX)} plain-language guides explain exactly why each combination is dangerous, what the mix does to your body, the warning signs of trouble, and what to do in the first minutes.</p></div></section>'
            '<div class="callout red"><b>If you&rsquo;re mixing or thinking about it, read the deadly tier first.</b>'
            'Those combinations kill quickly — often before help can arrive. If someone is unresponsive or breathing slowly, '
            'call emergency services now, then give naloxone if opioids might be involved. <a href="/hotlines/">Hotlines</a></div>'
@@ -842,8 +846,8 @@ def build_mix():
                 "numberOfItems":len(MIX),
                 "itemListElement":[{"@type":"ListItem","position":i+1,"name":m["title"],"url":f"{SITE}/mix/{m['slug']}/"} for i,m in enumerate(MIX)]}
     w("mix/index.html", shell("mix/index.html",
-        "Mixing Drugs — Dangerous Combinations, Signs & What To Do | plugreports",
-        clip(f"{len(MIX)} drug-combination guides ranked by danger: why each mix is risky, warning signs and what to do in an emergency. Read the deadly tier first."),
+        "Mixing Drugs — Why Combinations Kill & the Deadliest Mixes | plugreports",
+        clip(f"Most fatal overdoses involve 2+ substances — mixing is multiplicative, not additive. {len(MIX)} plain-language guides: why each combination is dangerous, warning signs, what to do."),
         hub, jsonld=[{"@context":"https://schema.org","@type":"CollectionPage","name":"Mixing dangers"}, itemlist,
                      breadcrumb_ld([("Home","/"),("Mixing","/mix/")])]))
     for m in MIX:
@@ -945,17 +949,35 @@ def build_vs():
                     f'<div class="cards">{"".join(pair_card(v) for v in items)}</div></section>')
     pills = "".join(f'<a href="#{k}">{esc(n)}</a>' for k, n in VS_CATS
                     if any(v["cat"] == k for v in VS))
+    hub_faqs = [
+        ("Why should I compare two drugs before taking anything?",
+         "Because the risks hide in the differences. A bar pressed to look like Xanax may actually be bromazolam or contain fentanyl. Two painkillers with similar names can differ tenfold in strength. Two party drugs that feel fine alone can stop your breathing together. Comparing first turns a guess into an informed choice."),
+        ("Is one drug in a comparison ever 'safe'?",
+         "No — and any page that says otherwise is selling something. Every comparison here is harm reduction: both substances carry real risks, and the honest answer is which risks are bigger, how they differ, and how to reduce them. The safest choice is always not to use; the second-safest is to know exactly what you're dealing with."),
+        ("Where does this information come from?",
+         "Each comparison is compiled from public health sources — NIDA, CDC, FDA, DEA, WHO, EMCDDA and peer-reviewed studies — and every page lists its sources and last-updated date. Nothing here is medical advice; in an emergency, call your local emergency number first."),
+    ]
+    faq_html = "".join(f'<details class="faq"><summary>{esc(q)}</summary><p>{esc(a)}</p></details>' for q, a in hub_faqs)
     hub = ('<div class="wrap"><section class="sec-head" style="padding-top:30px"><div>'
-           '<span class="kicker">Head-to-head</span><h1>Vs &mdash; drug comparisons in plain English</h1>'
-           f'<p>{len(VS)} side-by-side guides: what each drug is, how it feels, how addictive it is, what it costs, and which one is more dangerous &mdash; written in simple English, no jargon.</p></div></section>'
-           f'<div class="pill-nav">{pills}</div>' + "".join(secs) + '</div>')
+           '<span class="kicker">Head-to-head</span><h1>Compare drugs before you take them &mdash; it can save your life</h1>'
+           f'<p>A pill sold as Xanax may be bromazolam. A painkiller with a familiar name may be ten times stronger than the one beside it. '
+           'And mixing medicines that were never prescribed together &mdash; an opioid with a benzo, a stimulant with a depressant &mdash; is how most fatal overdoses actually happen. '
+           f'These {len(VS)} honest comparisons answer the questions people really search: <b>which is stronger, which is more addictive, what it costs, and which one will hurt you more</b> &mdash; in plain English, with sources.</p></div></section>'
+           '<div class="callout red"><b>About to mix something, or holding a pill you can&rsquo;t verify?</b>'
+           ' Start with <a href="/mix/">mixing dangers</a> and <a href="/topics/spot-pressed-pills/">how to spot pressed pills</a> &mdash; and keep <a href="/hotlines/">a hotline</a> handy. '
+           'Counterfeit pills have killed people who thought they knew what they were taking.</div>'
+           f'<div class="pill-nav">{pills}</div>' + "".join(secs) +
+           f'<section class="vs-group"><h2>Frequently asked questions</h2><div class="panel" style="margin-top:10px">{faq_html}</div></section></div>')
     itemlist = {"@context":"https://schema.org","@type":"ItemList","name":"Drug comparisons",
                 "numberOfItems":len(VS),
                 "itemListElement":[{"@type":"ListItem","position":i+1,"name":v["title"],"url":f"{SITE}/vs/{v['slug']}/"} for i,v in enumerate(VS)]}
     w("vs/index.html", shell("vs/index.html",
-        f"Vs — {len(VS)} Drug Comparisons in Plain English | plugreports",
-        clip(f"{len(VS)} head-to-head drug comparisons: strength, effects, addiction risk, price and the verdict on which is more dangerous. Simple English, honest answers."),
-        hub, jsonld=[{"@context":"https://schema.org","@type":"CollectionPage","name":"Drug comparisons"}, itemlist,
+        f"Vs — {len(VS)} Drug Comparisons: Which Is Stronger, Safer, More Addictive? | plugreports",
+        clip(f"Why comparing drugs matters: pressed pills, hidden strength differences, and deadly mixes. {len(VS)} honest head-to-head guides in plain English — which is stronger, which is more addictive, which is more dangerous."),
+        hub, jsonld=[{"@context":"https://schema.org","@type":"CollectionPage","name":"Drug comparisons"},
+                     {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+                         {"@type":"Question","name":q,"acceptedAnswer":{"@type":"Answer","text":a}} for q, a in hub_faqs]},
+                     itemlist,
                      breadcrumb_ld([("Home","/"),("Vs","/vs/")])]))
     for v in VS:
         a = DRUG_BY_SLUG[v["aSlug"]]; b = DRUG_BY_SLUG[v["bSlug"]]
