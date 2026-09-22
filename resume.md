@@ -1,8 +1,8 @@
 # plugreports.com — Project Resume
-> Snapshot: 2026-09-21 (P0 drug batch live: bromazolam, medetomidine, 7-OH, PCP, crack — 435 profiles, CF deploy 83eafc88) · Read this first in any new session before touching anything.
+> Snapshot: 2026-09-21 (VS section live: 70 drug comparisons at /vs/, 437 profiles incl. dmaa+dmha, CF deploy 0685dcc9, repo main 9c73ece4) · Read this first in any new session before touching anything.
 
 ## One-paragraph summary
-plugreports.com is a multilingual harm-reduction library (435 drug profiles, 26 guides, 61 mixing-dangers pages, 9 hotline regions, 9 sentencing regions, verified directories) built as a Python-generated static site on Cloudflare Pages + Pages Functions + KV. Content is fully editable through a PIN-protected `/admin` CMS backed by KV (all 11 collections seeded + editable), with live hydration overlaying admin edits onto static pages. Runs on Cloudflare's free tier; repo at github.com/coke-blog/plugreports (public, main branch).
+plugreports.com is a multilingual harm-reduction library (437 drug profiles, 26 guides, 61 mixing-dangers pages, 70 head-to-head Vs comparisons, 9 hotline regions, 9 sentencing regions, verified directories) built as a Python-generated static site on Cloudflare Pages + Pages Functions + KV. Content is fully editable through a PIN-protected `/admin` CMS backed by KV (all 12 collections seeded + editable, incl. `vs`), with live hydration overlaying admin edits onto static pages. Runs on Cloudflare's free tier; repo at github.com/coke-blog/plugreports (public, main branch).
 
 ## Stack & architecture
 - **Static generator:** `src/build.py` (Python 3, no deps) — reads `src/data_*.py`, emits all HTML to `public/` with JSON-LD (MedicalWebPage/FAQPage/NewsArticle/Article/ItemList/MedicalBusiness/Organization/BreadcrumbList), REAL bidirectional hreflang clusters (path-based only — never `?lang=` alternates; `?lang=` is client-side UI strings only), sitemap.xml (truthful per-item lastmod, no /admin/), RFC-822 rss.xml, full llms.txt + llms-full.txt, _static.json manifest, _headers, 404.html, robots.txt. Also builds the **/mix/ section** (`build_mix()`: hub with 3 data-tier grids + 61 detail pages with level badges) and **formula placeholders** (`drug_placeholder_panel()` + `pimg_html()` — molecular formula panel shown until a photo is mapped; `src/data_formulas.py`, 303 slug→formula entries). Drug profile top = `.ptop` two-column grid (main + right rail: image above Quick facts — no floats).
@@ -36,7 +36,7 @@ plugreports.com is a multilingual harm-reduction library (435 drug profiles, 26 
 - Repo is public. No secrets may be committed.
 
 ## Content stats
-435 drug profiles (67 with photos, 308 with formula placeholders) · 18 categories · 26 topics · 8 quit timelines · 7 busts (3 thin tiktok stubs are noindex) · 5 news · **61 mix pages** (26 deadly / 25 dangerous / 10 caution) · hotlines 9 regions · pharmacies 6 · rehabs 6 · sentencing 9 regions. ES + 5 languages. ~690 sitemap URLs.
+437 drug profiles (67 with photos, 310 with formula placeholders) · 18 categories · 26 topics · 8 quit timelines · 7 busts (3 thin tiktok stubs are noindex) · 5 news · **61 mix pages** (26 deadly / 25 dangerous / 10 caution) · **70 vs pages** (10 groups: benzos/opioids/adhd/stimulants/cannabis/psychedelics/empathogens/dissociatives/downers/grey; 26 heroes with live photos; related supports https://url|Label external links) · hotlines 9 regions · pharmacies 6 · rehabs 6 · sentencing 9 regions. ES + 5 languages. ~830 sitemap URLs.
 
 ## SEO/GEO state (fixed 2026-09-21)
 - hreflang: real path-based bidirectional clusters + x-default → EN. No fake alternates.
