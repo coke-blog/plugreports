@@ -359,7 +359,7 @@ def build_index(es=False):
 <a class="btn btn-ghost" href="/topics/what-actually-happens-when-you-quit/">Quitting, day by day</a></div>
 <div class="hero-stats">
 <div class="st"><b>{len(DRUGS)}</b><span>drug profiles</span></div>
-<div class="st"><b>11</b><span>categories</span></div>
+<div class="st"><b>{len(CATEGORIES)}</b><span>categories</span></div>
 <div class="st"><b>20+</b><span>verified hotlines</span></div>
 <div class="st"><b>{len(TOPICS)+len(QUIT_SPECS)}</b><span>guides & timelines</span></div></div></div></section>
 
