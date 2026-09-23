@@ -113,7 +113,7 @@ def help_links(drugs=None, extra=None, related=None):
 def resolve_slug(s):
     if ":" in s:
         t, sl = s.split(":", 1)
-        if t in ("drugs","busts","news","topics","quit","categories","hotlines","pharmacies","rehabs","sentencing"):
+        if t in ("drugs","busts","news","topics","quit","categories","hotlines","pharmacies","rehabs","sentencing","mix","vs"):
             return f"{t}/{sl}"
         return s
     if s in DRUG_BY_SLUG: return f"drugs/{s}"
@@ -223,6 +223,8 @@ def shell(path, title, desc, body, jsonld=None, canonical=None, extra_head="", o
     if SETTINGS.get("bing"): ld += f'<meta name="msvalidate.01" content="{esc(SETTINGS["bing"])}">'
     if SETTINGS.get("clarity"): ld += '<script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","' + esc(SETTINGS["clarity"]) + '")</script>'
     if SETTINGS.get("ga"): ld += '<script async src="https://www.googletagmanager.com/gtag/js?id=' + esc(SETTINGS["ga"]) + '"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date());gtag("config","' + esc(SETTINGS["ga"]) + '")</script>' 
+    if path.split("/")[0] in ("busts","news","topics"):
+        ld += '<script src="/assets/js/markdown.js?v=15" defer></script>'
     if path.split("/")[0] in ("busts","news","drugs","topics","quit","mix","vs","categories","hotlines","pharmacies","rehabs","sentencing","index.html"):
         ld += '<script src="/assets/js/hydrate.js?v=15" defer></script>'
         if path == "index.html":
@@ -629,7 +631,7 @@ def build_news():
       clip("Drug news, adulterant alerts and supply trends: nitazenes, xylazine, high-dose pills, counterfeit pharmaceuticals — with sources."),
       f'<div class="wrap"><section class="sec-head" style="padding-top:30px"><div><span class="kicker">Newsroom</span><h1>Drug news & alerts</h1><p>Sourced from NIDA, DEA, EMCDDA, ONS and drug-checking services. Subscribe via <a href="/rss.xml">RSS</a>.</p></div></div><div class="cards">{idx_cards}</div></div>'))
     for n in NEWS:
-        body = "".join(f"<p>{p}</p>" for p in n["body"])
+        body = md_render(n["markdown"]) if n.get("markdown") else "".join(f"<p>{p}</p>" for p in n["body"])
         rels = "".join(f'<a href="/drugs/{s}/">{rel_card(s)}</a>' for s in n.get("drugsInvolved", []))
         full = f"""<div class="wrap"><article class="article" style="padding-top:26px">
 <span class="kicker">{esc(n['tag'])}</span><h1 style="margin-top:12px">{esc(n['title'])}</h1>

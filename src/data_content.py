@@ -48,6 +48,35 @@ BUSTS = [
 ]
 
 NEWS = [
+dict(slug="hayden-panettiere-fentanyl-toxicology", country="USA", title="Hayden Panettiere died from fentanyl and prescription-drug mix, coroner rules", date="2026-09-23", tag="Alert",
+  views=850,
+  summary="A South Carolina coroner has ruled that actor Hayden Panettiere died from the toxic effects of fentanyl, its manufacturing byproduct 4-ANPP, Xanax (alprazolam), a muscle relaxer and an antipsychotic. The 36-year-old 'Heroes' and 'Nashville' star was found unresponsive in a Greenville apartment on August 16. Her death was ruled an accident — and police say their investigation is not over.",
+  markdown="""## The coroner's ruling, in plain terms
+On September 22 the Greenville County Coroner's Office released the toxicology findings. The cause of death: the combined toxic effects of five substances — **fentanyl**, **4-ANPP** (a chemical used in fentanyl manufacturing; its presence almost always means illicitly made fentanyl, not a hospital prescription), **alprazolam** (the benzodiazepine sold as Xanax), **methocarbamol** (a prescription muscle relaxer) and **quetiapine** (the sedating antipsychotic sold as Seroquel). The manner of death was ruled an accident, and the coroner has administratively closed its case.
+
+## What investigators found at the apartment
+A 911 call at 1:51 PM on August 16 brought first responders to the Judson Mill Lofts on Easley Bridge Road in Greenville, where Panettiere was temporarily staying. According to the coroner's report, she was found face-down on a sofa bed, her skin deep purple. Her boyfriend, Brian Hickerson, administered two doses of Narcan before paramedics arrived; she did not respond. EMS crews continued resuscitation for more than 40 minutes before she was pronounced dead at 2:32 PM.
+
+Investigators found **blue pressed pills and a cut straw** — both later testing positive for fentanyl — in a makeup bag, and a white powdery substance in a sunglasses case inside her suitcase. The autopsy found no signs of trauma. She had planned to spend her 36th birthday in Greenville five days later, then travel to Ukraine to visit her daughter.
+
+## Why this combination stops breathing
+Four of the five substances in her system slow the central nervous system: fentanyl (an opioid), alprazolam (a benzodiazepine), methocarbamol (a muscle relaxer) and quetiapine (a sedating antipsychotic). Stacked together they do not add up — they multiply. Each one deepens the respiratory depression of the others until breathing simply stops. This exact pattern — an opioid plus a benzo plus other sedating prescriptions — sits behind most fatal overdoses we track.
+
+## The tolerance trap: she had just left rehab
+Weeks before her death, Panettiere was released from a drug rehabilitation facility in Malibu, California, according to the coroner's report obtained by the AP. After any period of abstinence, tolerance collapses — a dose that was survivable in the spring can be fatal in the fall. It is the single deadliest window in opioid recovery, and it is why every quitting guide on this site repeats the same warning: after even a week clean, treat any dose like your first time, never use alone, and keep naloxone close.
+
+## The counterfeit-pill theory
+TMZ reports that law-enforcement sources believe Panettiere took a fentanyl-laced oxycodone pill supplied by a long-time dealer in Los Angeles, and that the DEA is working to trace the fatal pill back along that supply chain — a pattern that echoes the Mac Miller case, where dealers were later convicted. Greenville Police say their own investigation remains active even though the coroner's office has closed its file.
+
+## What this changes for anyone reading
+- Never mix opioids with benzodiazepines, sleepers, muscle relaxers or antipsychotics — that stack is what kills.
+- A pill bought anywhere but a pharmacy can contain fentanyl, whatever it looks like. Test it before it touches you.
+- After detox or rehab your tolerance is gone — the riskiest day of recovery is the first slip.
+- Naloxone reverses fentanyl, but multiple doses are often needed and it only buys time. Call emergency services first, then give naloxone, then stay with the person.
+
+If you or someone you know is struggling with opioids or prescription sedatives, the hotlines page lists free, confidential help in your region.""",
+  sources=["Greenville County Coroner", "AP", "BBC", "The Guardian"], drugsInvolved=["fentanyl","alprazolam","methocarbamol","quetiapine"],
+  related=["topics:fentanyl-numbers","topics:spot-pressed-pills","mix:opioids-benzodiazepines","quit:fentanyl"]),
 dict(slug="sterling-nitrous-driving-case", country="United Kingdom", image="https://plugreports.com/media/drugs/sterling-nitrous-driving-case.webp", title="Raheem Sterling pleads guilty to driving on nitrous oxide before £270k Lamborghini crash", date="2026-09-17", tag="Alert",
   views=900,
   summary="The former England star admitted dangerous driving, possessing six 670g nitrous canisters and refusing a blood test after witnesses saw him inhaling from balloons at the wheel on the M3. Sentencing is set for November 25 - and it has put nitrous oxide, balloons and driving firmly in the spotlight.",

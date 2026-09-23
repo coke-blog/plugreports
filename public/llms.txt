@@ -577,6 +577,7 @@ Complete machine-readable drug records: [llms-full.txt](https://plugreports.com/
 - [/sentencing/](https://plugreports.com/sentencing/) Latin America (selected)
 
 ## News
+- [/news/hayden-panettiere-fentanyl-toxicology/](https://plugreports.com/news/hayden-panettiere-fentanyl-toxicology/) Hayden Panettiere died from fentanyl and prescription-drug mix, coroner rules
 - [/news/sterling-nitrous-driving-case/](https://plugreports.com/news/sterling-nitrous-driving-case/) Raheem Sterling pleads guilty to driving on nitrous oxide before £270k Lamborghini crash
 - [/news/nitazenes-spreading-eu/](https://plugreports.com/news/nitazenes-spreading-eu/) Nitazenes now detected in 12 European monitoring systems
 - [/news/xylazine-beyond-us/](https://plugreports.com/news/xylazine-beyond-us/) Xylazine ('Tranq') confirmed in drug supply outside North America
