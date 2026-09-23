@@ -224,11 +224,11 @@ def shell(path, title, desc, body, jsonld=None, canonical=None, extra_head="", o
     if SETTINGS.get("clarity"): ld += '<script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","' + esc(SETTINGS["clarity"]) + '")</script>'
     if SETTINGS.get("ga"): ld += '<script async src="https://www.googletagmanager.com/gtag/js?id=' + esc(SETTINGS["ga"]) + '"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date());gtag("config","' + esc(SETTINGS["ga"]) + '")</script>' 
     if path.split("/")[0] in ("busts","news","topics"):
-        ld += '<script src="/assets/js/markdown.js?v=15" defer></script>'
+        ld += '<script src="/assets/js/markdown.js?v=16" defer></script>'
     if path.split("/")[0] in ("busts","news","drugs","topics","quit","mix","vs","categories","hotlines","pharmacies","rehabs","sentencing","index.html"):
-        ld += '<script src="/assets/js/hydrate.js?v=15" defer></script>'
+        ld += '<script src="/assets/js/hydrate.js?v=16" defer></script>'
         if path == "index.html":
-            ld += '<script src="/assets/js/breaking.js?v=15" defer></script>'
+            ld += '<script src="/assets/js/breaking.js?v=16" defer></script>'
     return f"""<!DOCTYPE html>
 <html lang="{lang}">
 <head>
@@ -253,7 +253,7 @@ def shell(path, title, desc, body, jsonld=None, canonical=None, extra_head="", o
 <link rel="icon" href="/assets/img/logo.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Source+Serif+4:opsz,wght@8..60,600;8..60,800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/css/style.css?v=15">
+<link rel="stylesheet" href="/assets/css/style.css?v=16">
 {extra_head}{ld}
 </head>
 <body>
@@ -296,7 +296,7 @@ def shell(path, title, desc, body, jsonld=None, canonical=None, extra_head="", o
 <p data-i18n="ageBody">This site contains educational information about drugs and harm reduction. It is not medical or legal advice. You must be of legal age or accessing with intent to help yourself or someone else.</p>
 <div class="row"><button class="btn btn-red" data-gate-yes data-i18n="ageYes">I understand — enter</button>
 <a class="btn btn-ghost" href="https://www.google.com" data-i18n="ageNo">Leave</a></div></div></div>
-<script src="/assets/js/app.js?v=15"></script>
+<script src="/assets/js/app.js?v=16"></script>
 </body></html>"""
 
 def breadcrumb_ld(parts):
@@ -317,7 +317,8 @@ def build_index(es=False):
 <h3>{esc(d['name'])}</h3><span class="cat"><span class="cat-dot" style="background:{c['color']}"></span>{esc(c['name'])}</span></a>''')
     catpills = "".join(f'<a href="/categories/{k}/"><span class="cat-dot" style="background:{v["color"]}"></span>{esc(v["name"])} ({sum(1 for d in DRUGS if d["category"]==k)})</a>' for k,v in CATEGORIES.items())
     def card(href, chips, h, p, foot, img=None):
-        thumb = f'<div class="thumb"><img src="{esc(img)}" alt="" loading="lazy"></div>' if img else ''
+        thumb = (f'<div class="thumb"><img src="{esc(img)}" alt="" loading="lazy"></div>' if img
+                 else f'<div class="thumb thumb-ph"><span>{esc((h or "?")[0])}</span></div>')
         return f'<a class="card" href="{href}">{thumb}<div class="meta">{chips}</div><h3>{esc(h)}</h3><p>{esc(p)}</p><div class="foot">{foot} &rarr;</div></a>'
     newscards = "".join(card(f"/news/{n['slug']}/", f'<span class="chip amber">{esc(n["tag"])}</span><span class="chip">{esc(n["date"])}</span>', n["title"], n["summary"], "Read", n.get("image")) for n in NEWS)
     def bust_chip(b):
@@ -335,7 +336,7 @@ def build_index(es=False):
     if alerts:
         slides = []
         for i, al in enumerate(alerts):
-            bimg = f'<img src="{esc(al.get("image") or "/assets/img/og.png")}" alt="" loading="lazy">' if al.get("image") else ""
+            bimg = f'<img src="{esc(al.get("image") or "/assets/img/og.png")}" alt="" loading="lazy">'
             country = al.get("country", "")
             cchip = f'<span class="b-country">&#127760; {esc(country)}</span>' if country else ""
             slides.append(f"""<div class="b-slide{' on' if i==0 else ''}">{bimg}<div><div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">{cchip}<span class="b-date">{esc(al["date"])}</span></div>
@@ -624,7 +625,7 @@ def build_categories():
 
 # ---------------------------------------------------- news / busts/topics ----
 def build_news():
-    idx_cards = "".join(f'''<a class="card" href="/news/{n['slug']}/">{f'<div class="thumb"><img src="{esc(n["image"])}" alt="" loading="lazy"></div>' if n.get("image") else ''}<div class="meta">
+    idx_cards = "".join(f'''<a class="card" href="/news/{n['slug']}/">{f'<div class="thumb"><img src="{esc(n["image"])}" alt="" loading="lazy"></div>' if n.get("image") else f'<div class="thumb thumb-ph"><span>{esc((n["title"] or "?")[0])}</span></div>'}<div class="meta">
 <span class="badge-live">{esc(n["tag"]).upper()}</span><span class="chip">{esc(n["date"])}</span></div>
 <h3>{esc(n['title'])}</h3><p>{esc(n['summary'])}</p><div class="foot">Read &rarr;</div></a>''' for n in NEWS)
     w("news/index.html", shell("news/index.html", "Drug News & Supply Alerts | plugreports",
@@ -646,7 +647,7 @@ def build_news():
         w(f"news/{n['slug']}/index.html", shell(f"news/{n['slug']}/index.html", f"{n['title']} | plugreports", clip(n["summary"]), full, jsonld=ld, ogtype="article"))
 
 def build_busts():
-    cards = "".join(f'''<a class="card" href="/busts/{b['slug']}/"><div class="meta">
+    cards = "".join(f'''<a class="card" href="/busts/{b['slug']}/">{f'<div class="thumb"><img src="{esc(b["image"])}" alt="" loading="lazy"></div>' if b.get("image") else f'<div class="thumb thumb-ph"><span>{esc((b["title"] or "?")[0])}</span></div>'}<div class="meta">
 <span class="chip {"red" if not b.get("confirmed") else "amber"}">{"&#9888; PENDING VERIFICATION" if not b.get("confirmed") else "&#10004; CONFIRMED"}</span>
 <span class="chip">{esc(b["date"])}</span></div><h3>{esc(b['title'])}</h3><p>{esc(b['summary'])}</p>
 <div class="foot">{esc(b["location"])} · {esc(b["agency"])} &rarr;</div></a>''' for b in BUSTS)
@@ -736,7 +737,7 @@ def md_render(src):
     return "\n".join(out)
 
 def build_topics():
-    cards = "".join(f'''<a class="card" href="/topics/{t['slug']}/"><div class="meta">
+    cards = "".join(f'''<a class="card" href="/topics/{t['slug']}/">{f'<div class="thumb"><img src="{esc(t["image"])}" alt="" loading="lazy"></div>' if t.get("image") else f'<div class="thumb thumb-ph"><span>{esc((t["title"] or "?")[0])}</span></div>'}<div class="meta">
 <span class="chip red">GUIDE</span><span class="chip">{esc(t["read"])}</span><span class="chip">{esc(t["date"])}</span></div>
 <h3>{esc(t['title'])}</h3><p>{esc(t['desc'])}</p><div class="foot">Read guide &rarr;</div></a>''' for t in TOPICS)
     w("topics/index.html", shell("topics/index.html", "Drug Guides & Explainers | plugreports",
@@ -1683,7 +1684,7 @@ def main():
     w("_static.json", json.dumps(manifest))
     w("_dynamic.html", shell("_dynamic.html", "plugreports",
       "Live content", '<div class="wrap" id="dyn" style="padding:44px 20px;min-height:50vh"><p>Loading\u2026</p></div>',
-      extra_head='<script src="/assets/js/render.js?v=15" defer></script>', canonical=SITE + "/"))
+      extra_head='<script src="/assets/js/render.js?v=16" defer></script>', canonical=SITE + "/"))
     print(f"Built {len(DRUGS)} drug pages, {len(CATEGORIES)} categories, {len(TOPICS)} topics, "
           f"{len(QUIT_SPECS)} quit pages, {len(NEWS)} news, {len(BUSTS)} busts, {len(MIX)} mix pages into {PUB}")
 

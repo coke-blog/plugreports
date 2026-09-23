@@ -50,6 +50,7 @@ BUSTS = [
 NEWS = [
 dict(slug="hayden-panettiere-fentanyl-toxicology", country="USA", title="Hayden Panettiere died from fentanyl and prescription-drug mix, coroner rules", date="2026-09-23", tag="Alert",
   views=850,
+  image="/assets/img/news-hayden-panettiere.png",
   summary="A South Carolina coroner has ruled that actor Hayden Panettiere died from the toxic effects of fentanyl, its manufacturing byproduct 4-ANPP, Xanax (alprazolam), a muscle relaxer and an antipsychotic. The 36-year-old 'Heroes' and 'Nashville' star was found unresponsive in a Greenville apartment on August 16. Her death was ruled an accident — and police say their investigation is not over.",
   markdown="""## The coroner's ruling, in plain terms
 On September 22 the Greenville County Coroner's Office released the toxicology findings. The cause of death: the combined toxic effects of five substances — **fentanyl**, **4-ANPP** (a chemical used in fentanyl manufacturing; its presence almost always means illicitly made fentanyl, not a hospital prescription), **alprazolam** (the benzodiazepine sold as Xanax), **methocarbamol** (a prescription muscle relaxer) and **quetiapine** (the sedating antipsychotic sold as Seroquel). The manner of death was ruled an accident, and the coroner has administratively closed its case.
@@ -1273,4 +1274,70 @@ Consumption methods evolve faster than drug education. We published guides on pr
 Know the format. The bottle is not a decongestant just because it looks like one.""",
   drugsInvolved=["ketamine-nasal-spray","numbrino","cocaine","esketamine"],
   related=["topics:cocaine-nasal-spray","topics:mdma-nasal-spray","numbrino","ketamine-nasal-spray","esketamine","topics:spot-pressed-pills"]),
+]
+
+
+TOPICS += [
+ dict(slug="ketamine-nasal-spray", tag="Important", title="Ketamine Nasal Spray: the Spravato confusion, the dosing trap, and the bladder damage nobody warns you about", date="2026-09-23", read="8 min",
+  image="/assets/img/topics-ketamine-nasal-spray.png",
+  desc="Ketamine nasal sprays are everywhere now — some prescribed, most homemade from street powder. Why the dose is a guess, why the k-hole comes on fast, and what heavy use does to your bladder.",
+  markdown="""## The two sprays people confuse — and why it matters
+
+There are really two things called "ketamine nasal spray," and mixing them up is where the trouble starts.
+
+The first is **Spravato (esketamine)** — a prescription spray for treatment-resistant depression, made by Janssen, taken in a clinic under observation because of its dissociation and blood-pressure effects. It is precisely dosed (28 mg or 84 mg per device), pharmacy-sealed, and legally dispensed.
+
+The second is everything else: **street sprays made by dissolving ketamine powder — or crushed tablets — in water or saline** and pouring it into a nasal spray bottle. Sold on Telegram, passed around at festivals, sometimes marketed as "microdose sprays." The concentration is whatever the maker felt like that day. The myth is that spraying is cleaner and more controlled than snorting lines. The reality is almost the opposite: **with a homemade spray, the dose per pump is unknown, the powder may be cut, and the fast nasal onset means the k-hole arrives before you have time to reconsider.**
+
+::: amber The core trap
+A line of ketamine lets you see roughly how much powder you're taking. A spray bottle hides it completely. One bottle might deliver 5 mg per pump; the next, from the same seller, might deliver 30 mg. Users routinely redose because "the first spray did nothing" — and the second pump lands while the first is still climbing. That is exactly how an evening turns into a k-hole in a bathroom stall.
+:::
+
+## Why the dose is a guess
+
+Street ketamine is already variable — purity ranges widely, and powders are commonly cut with MSG, caffeine, or other dissociatives. Dissolving an unknown amount of that powder in an unknown volume of water removes the last rough gauge users had: visual size. There is no way to eyeball concentration in a liquid.
+
+- **No label, no math.** Sellers quote "mg per spray" that nobody has ever measured.
+- **Pumps vary.** Cheap bottles deliver wildly different volumes per press.
+- **Tolerance resets nothing.** A bottle strength that was manageable last month is not a promise about the next bottle.
+
+If you are going to use it regardless, the only defensible move is to **test one pump first and wait at least 20 minutes** before any second — nasal ketamine onsets in 5–15 minutes and peaks later than users expect.
+
+## The k-hole comes faster than you think
+
+Nasal absorption bypasses nothing — ketamine sprayed up the nose hits the bloodstream quickly through the nasal mucosa. The dissociative effect that experienced users call a **k-hole** — full-body detachment, inability to move or speak coherently, time distortion — can arrive within minutes of a strong pump.
+
+::: danger What a k-hole actually looks like from outside
+Someone in a deep k-hole cannot protect themselves: they may be immobile, unable to call for help, vomiting while lying on their back. If someone near you is unresponsive but breathing after ketamine, put them in the **recovery position**, stay with them, and call emergency services if breathing is slow or they cannot be roused. Ketamine overdoses are rarely fatal alone — but **mixing with alcohol, GHB, opioids, or benzos changes that completely**, because every one of those adds respiratory depression on top.
+:::
+
+## The part nobody warns you about: your bladder
+
+This is the section that matters most for regular users, and the one TikTok never mentions. **Ketamine destroys the bladder lining.** Heavy or frequent use causes **ketamine-induced cystitis**: urinary frequency, urgency, pain, blood in the urine, and — in advanced cases — a bladder so scarred and shrunken it holds a fraction of its normal volume. Some long-term users have needed **bladder removal surgery in their twenties**.
+
+The damage is dose- and frequency-related, appears in some users within months of heavy use, and is only partially reversible. Early warning signs:
+
+1. Needing to urinate far more often, in small amounts
+2. Pain or burning when urinating
+3. Blood in urine
+4. Lower abdominal cramps between uses
+
+If any of these show up, **stop completely and see a doctor — and tell them it is ketamine.** Continuing to use through bladder symptoms is how a treatable irritation becomes a surgical problem.
+
+## Harm reduction checklist
+
+If someone is going to use ketamine nasal spray despite all of the above:
+
+1. **Know what "one spray" means for THIS bottle** — test a single pump and wait 20+ minutes before more
+2. **Never mix with alcohol, GHB, opioids, or benzos** — this combination is the actual killer, not ketamine alone
+3. **Don't use alone at high doses** — a k-hole leaves you unable to protect yourself
+4. **Recovery position** for anyone unresponsive but breathing; emergency services if breathing is slow or shallow
+5. **Track bladder symptoms** — frequency, pain, or blood means stop now, not later
+6. **Never drive.** Nasal onset feels smoother than snorting; impairment is not smoother
+
+## The bottom line
+
+Spraying ketamine does not sanitize it. It removes the one rough dose-gauge users had, accelerates the onset, and — with heavy use — quietly wrecks the bladder while users are watching for other problems. If bladder symptoms have already started, or if use has become daily, our ketamine recovery guide below covers what quitting actually involves, including what to expect as the bladder heals.""",
+  drugsInvolved=["ketamine"],
+  related=["ketamine","topics:nasal-spray-drug-use","topics:cocaine-nasal-spray","topics:mdma-nasal-spray","quit:ketamine"]),
 ]

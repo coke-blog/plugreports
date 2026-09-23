@@ -589,7 +589,7 @@ function initBreaking() {
         if (!alerts.length) alerts = news.slice(0, 1);
         var slidesHtml = alerts.map(function (al, i) {
           return '<div class="b-slide' + (i === 0 ? ' on' : '') + '">' +
-            (al.image ? '<img src="' + esc(al.image) + '" alt="">' : '') +
+            '<img src="' + esc(al.image || '/assets/img/og.png') + '" alt="" loading="lazy">' +
             '<div><div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">' +
             (al.country ? '<span class="b-country">&#127760; ' + esc(al.country) + '</span>' : '') +
             '<span class="b-date">' + esc(al.date || '') + '</span></div>' +
@@ -642,14 +642,15 @@ function initBreaking() {
           if (row.dataset.sort === 'important') pane('important', topics.filter(function (t) { return t.tag === 'Important' || (t.slug || '').indexOf('nasal-spray') > -1; }), topicCard);
         });
       });
+      function phThumb(t) { return '<div class="thumb thumb-ph"><span>' + esc(((t || '?')[0]).toUpperCase()) + '</span></div>'; }
       function newsCard(it) {
-        return '<a class="card" href="/news/' + it.slug + '/">' + (it.image ? '<div class="thumb"><img src="' + esc(it.image) + '" loading="lazy"></div>' : '') + '<div class="meta"><span class="badge-live">' + esc((it.tag || 'NEWS').toUpperCase()) + '</span>' + chip(it.date || '') + '</div><h3>' + esc(it.title) + '</h3><p>' + esc(it.summary || '') + '</p><div class="foot">Read &rarr;</div></a>'; }
+        return '<a class="card" href="/news/' + it.slug + '/">' + (it.image ? '<div class="thumb"><img src="' + esc(it.image) + '" loading="lazy"></div>' : phThumb(it.title)) + '<div class="meta"><span class="badge-live">' + esc((it.tag || 'NEWS').toUpperCase()) + '</span>' + chip(it.date || '') + '</div><h3>' + esc(it.title) + '</h3><p>' + esc(it.summary || '') + '</p><div class="foot">Read &rarr;</div></a>'; }
       pane('news', news, newsCard);
       function bustCard(it) {
-        return '<a class="card" href="/busts/' + it.slug + '/">' + (it.image ? '<div class="thumb"><img src="' + esc(it.image) + '" loading="lazy"></div>' : '') + '<div class="meta">' + (it.confirmed ? chip('CONFIRMED', 'amber') : chip('PENDING VERIFICATION', 'red')) + chip(it.date || '') + '</div><h3>' + esc(it.title) + '</h3><p>' + esc(it.summary || '') + '</p><div class="foot">' + esc(it.location || '') + ' · ' + esc(it.agency || '') + ' &rarr;</div></a>'; }
+        return '<a class="card" href="/busts/' + it.slug + '/">' + (it.image ? '<div class="thumb"><img src="' + esc(it.image) + '" loading="lazy"></div>' : phThumb(it.title)) + '<div class="meta">' + (it.confirmed ? chip('CONFIRMED', 'amber') : chip('PENDING VERIFICATION', 'red')) + chip(it.date || '') + '</div><h3>' + esc(it.title) + '</h3><p>' + esc(it.summary || '') + '</p><div class="foot">' + esc(it.location || '') + ' · ' + esc(it.agency || '') + ' &rarr;</div></a>'; }
       pane('busts', busts, bustCard);
       function topicCard(it) {
-        return '<a class="card" href="/topics/' + it.slug + '/">' + (it.image ? '<div class="thumb"><img src="' + esc(it.image) + '" loading="lazy"></div>' : '') + '<div class="meta">' + chip('GUIDE', 'red') + chip(it.read || '') + chip(it.date || '') + '</div><h3>' + esc(it.title) + '</h3><p>' + esc(it.desc || '') + '</p><div class="foot">Read guide &rarr;</div></a>'; }
+        return '<a class="card" href="/topics/' + it.slug + '/">' + (it.image ? '<div class="thumb"><img src="' + esc(it.image) + '" loading="lazy"></div>' : phThumb(it.title)) + '<div class="meta">' + chip('GUIDE', 'red') + chip(it.read || '') + chip(it.date || '') + '</div><h3>' + esc(it.title) + '</h3><p>' + esc(it.desc || '') + '</p><div class="foot">Read guide &rarr;</div></a>'; }
       var important = topics.filter(function (t) { return t.tag === 'Important' || (t.slug || '').indexOf('nasal-spray') > -1; });
       function importantCard(it) { return topicCard(it); }
       pane('important', important, importantCard);

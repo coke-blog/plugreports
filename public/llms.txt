@@ -527,6 +527,7 @@ Complete machine-readable drug records: [llms-full.txt](https://plugreports.com/
 - [/topics/india-drug-law/](https://plugreports.com/topics/india-drug-law/) Drug laws in India: the NDPS Act explained (what actually happens if you're caught)
 - [/topics/gulf-travel-drug-laws/](https://plugreports.com/topics/gulf-travel-drug-laws/) Traveling to the Gulf? The drug laws that catch tourists and expats
 - [/topics/nasal-spray-drug-use/](https://plugreports.com/topics/nasal-spray-drug-use/) Nasal Spray Drug Use: the fastest-growing consumption method nobody teaches you about
+- [/topics/ketamine-nasal-spray/](https://plugreports.com/topics/ketamine-nasal-spray/) Ketamine Nasal Spray: the Spravato confusion, the dosing trap, and the bladder damage nobody warns you about
 
 ## Quitting, day by day
 - [/quit/heroin/](https://plugreports.com/quit/heroin/) Quitting Heroin — day-by-day withdrawal timeline
