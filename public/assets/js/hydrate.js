@@ -5,7 +5,7 @@
   var seg = location.pathname.split('/').filter(Boolean);
   if (seg.length === 0) { renderHome(); return; }
   var type = seg[0] || '';
-  if (!/^(drugs|busts|news|topics|quit|hotlines|pharmacies|rehabs|sentencing|categories)$/.test(type)) return;
+  if (!/^(drugs|busts|news|topics|quit|hotlines|pharmacies|rehabs|sentencing|categories|vs|mix)$/.test(type)) return;
   if (seg.length === 2) { fetch('/api/view', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({type: type, slug: seg[1]})}).catch(function(){}); }
   fetch('/api/public/content?type=' + (type === 'categories' ? 'drugs' : type)).then(function (r) { return r.json(); }).then(function (d) {
     var all = (d.items || []);
@@ -106,6 +106,36 @@ function initBreaking() {
             '<h3>' + esc(it.a || '') + ' + ' + esc(it.b || '') + '</h3><p>' + esc((it.summary || '').slice(0, 140)) + '</p>' +
             '<div class="foot">Why it&rsquo;s dangerous &rarr;</div></a>';
         }).join('');
+      });
+      return;
+    }
+    if (type === 'vs') {
+      var pairCard = function (it) {
+        return '<a class="card vs-card" href="/vs/' + it.slug + '/">' +
+          '<div class="vs-duo"><span class="vs-dot" style="background:#0f766e">' + esc((it.a || '?')[0]) + '</span>' +
+          '<span class="vs-x">vs</span>' +
+          '<span class="vs-dot" style="background:#d97706">' + esc((it.b || '?')[0]) + '</span></div>' +
+          '<h3>' + esc(it.title || '') + '</h3><p>' + esc((it.intro || '').slice(0, 120)) + '</p>' +
+          '<div class="foot">See the comparison &rarr;</div></a>';
+      };
+      var seenCat = {};
+      document.querySelectorAll('.vs-group').forEach(function (sec) {
+        var key = sec.id;
+        var mine = items.filter(function (x) { return (x.cat || '') === key; });
+        if (!mine.length) return;
+        seenCat[key] = 1;
+        var g = sec.querySelector('.cards'); if (!g) return;
+        g.innerHTML = mine.map(pairCard).join('');
+      });
+      var fresh = items.filter(function (x) { return x.cat && !seenCat[x.cat]; });
+      if (!fresh.length) return;
+      var host = document.querySelector('main .wrap') || document.querySelector('main');
+      if (!host) return;
+      var byCat = {};
+      fresh.forEach(function (x) { (byCat[x.cat] = byCat[x.cat] || []).push(x); });
+      Object.keys(byCat).forEach(function (key) {
+        host.insertAdjacentHTML('beforeend', '<section class="vs-group" id="' + esc(key) + '"><h2>' + esc(key) + '</h2>' +
+          '<div class="cards">' + byCat[key].map(pairCard).join('') + '</div></section>');
       });
       return;
     }
@@ -487,6 +517,12 @@ function initBreaking() {
         '<h2 style="margin-top:0">' + esc(it.region) + '</h2>' +
         (it.summary ? '<p style="color:#667085">' + esc(it.summary) + '</p>' : '') + tbl + '</div>');
     });
+    var relEntries = [];
+    items.forEach(function (x) {
+      (x.related || []).forEach(function (r) { if (relEntries.indexOf(r) < 0) relEntries.push(r); });
+    });
+    var relGrid = document.querySelector('[data-sent-rel]');
+    if (relGrid && relEntries.length) relGrid.innerHTML = relEntries.map(chipEntry).join('');
   }
 })();
 

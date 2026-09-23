@@ -74,6 +74,8 @@ h1,h2,h3{line-height:1.2;font-weight:800;letter-spacing:-.02em}
 .sec-head h2,.sec-head h1{font-size:clamp(22px,3vw,32px)}
 .sec-head p{color:var(--muted);max-width:56ch;margin-top:6px}
 .rail{display:grid;grid-auto-flow:column;grid-template-rows:repeat(2,1fr);gap:14px;overflow-x:auto;padding:6px 4px 18px;scroll-snap-type:x proximity;scrollbar-width:thin}
+.az-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px;padding:6px 0 18px}
+.az-grid .tile{width:auto;min-height:0;scroll-snap-align:unset}
 .tile{scroll-snap-align:start;width:196px;min-height:132px;border-radius:var(--radius);padding:14px;display:flex;flex-direction:column;gap:8px;position:relative;overflow:hidden;
   background:linear-gradient(160deg,rgba(255,255,255,.82),rgba(255,255,255,.55));backdrop-filter:blur(10px);
   border:1px solid rgba(255,255,255,.9);box-shadow:var(--shadow);transition:.18s;color:var(--ink)}
@@ -140,6 +142,7 @@ table.tbl{width:100%;border-collapse:collapse;font-size:14px;margin:14px 0}
 .tbl th{background:#f9fafb;text-align:left;padding:10px 12px;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);border:1px solid var(--line)}
 .tbl td{padding:10px 12px;border:1px solid var(--line);vertical-align:top}
 .tbl tr:nth-child(even) td{background:#fcfcfd}
+@media(max-width:720px){table.tbl{display:block;overflow-x:auto;max-width:100%;-webkit-overflow-scrolling:touch}}
 .bar{height:10px;border-radius:99px;background:#f1f3f6;overflow:hidden;margin-top:6px}
 .bar i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--amber),var(--red))}
 .related{background:linear-gradient(180deg,#fffdf7,#fff);border:1px solid var(--amber-line);border-radius:var(--radius);padding:24px;margin:26px 0}
