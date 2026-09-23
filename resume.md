@@ -37,7 +37,7 @@ plugreports.com is a multilingual harm-reduction library (463 drug profiles, 26 
 - Repo is public. No secrets may be committed.
 
 ## Content stats
-463 drug profiles (67 with photos, 328 with formula placeholders) · 18 categories · 26 topics · 8 quit timelines · 7 busts (3 thin tiktok stubs are noindex) · 5 news · **61 mix pages** (26 deadly / 25 dangerous / 10 caution) · **70 vs pages** (10 groups: benzos/opioids/adhd/stimulants/cannabis/psychedelics/empathogens/dissociatives/downers/grey; 26 heroes with live photos; related supports https://url|Label external links) · hotlines 9 regions · pharmacies 6 · rehabs 6 · sentencing 9 regions. ES + 5 languages. ~830 sitemap URLs.
+463 drug profiles (67 with photos, 328 with formula placeholders) · 18 categories · 27 topics (28 in KV incl. admin-created) · 8 quit timelines · 7 busts (3 thin tiktok stubs are noindex) · 6 news · **61 mix pages** (26 deadly / 25 dangerous / 10 caution) · **70 vs pages** (10 groups: benzos/opioids/adhd/stimulants/cannabis/psychedelics/empathogens/dissociatives/downers/grey; 26 heroes with live photos; related supports https://url|Label external links) · hotlines 9 regions · pharmacies 6 · rehabs 6 · sentencing 9 regions. ES + 5 languages. ~830 sitemap URLs.
 
 ## SEO/GEO state (fixed 2026-09-21)
 - hreflang: real path-based bidirectional clusters + x-default → EN. No fake alternates.
@@ -55,6 +55,14 @@ plugreports.com is a multilingual harm-reduction library (463 drug profiles, 26 
 - Quora cadence STARTED 2026-09-23 (see quora-queue.md policy lessons — automated keyword moderation kills drug-slang/potency-comparison/fentanyl-in-title posts; policy+consumer framing survives). Reddit + backlink queue; Sterling sentencing follow-up Nov 25.
 - Contact mailbox `contact@plugreports.com` — Cloudflare Email Routing not yet set up by user.
 - Optional: IndexNow, Arabic/Portuguese i18n, R2 bucket, per-locale meta translations.
+
+## Ketamine guide + photo-consistency rollout (2026-09-23, deploy 76e1c3b4, pushes 0e0f82fafa + e1595e2644)
+- NEW topic `ketamine-nasal-spray` (markdown body, 8 H2 sections: Spravato-vs-street distinction, dosing trap, k-hole onset, ketamine cystitis/bladder damage, harm-reduction checklist; tag Important; related = ketamine, topics:nasal-spray-drug-use, topics:cocaine-nasal-spray, topics:mdma-nasal-spray, quit:ketamine; image /assets/img/topics-ketamine-nasal-spray.png). Fixes the dead `ketamine-nasal-spray` related link on mdma-nasal-spray (verified live: now resolves to /topics/ketamine-nasal-spray/).
+- NEW generated images (image_generation plugin, 1536x1024): public/assets/img/topics-ketamine-nasal-spray.png (amber spray bottle) + news-hayden-panettiere.png (candle memorial); hayden news item gained image field. NOTE: KV hayden item has an admin-set image URL (plugreports.com/media/news/hayden-panettiere-fentanyl-toxicology.jpeg) — KV wins over seed by design.
+- Photo consistency (v16, sw pr-v16): every breaking slide ALWAYS renders an img (fallback /assets/img/og.png); home/index cards render a .thumb-ph gradient-letter placeholder when no image (build.py card() + news/busts/topics index builders; hydrate.js phThumb helper in newsCard/bustCard/topicCard; CSS .thumb.thumb-ph). Verified live: all 5 breaking slides have imgs; home shows 13 placeholder + 11 image thumbs.
+- ENVIRONMENT INCIDENT: build.py corrupted again mid-session (chunk splice, SyntaxError line 863; local file had ballooned to 4182 lines vs real 1691). Recovered by downloading main's build.py (sha bdd01800) and re-applying ONLY this turn's edits (all earlier edits were already on main). Confirms: main is the source of truth; diff line counts before trusting local files.
+- PUSH GOTCHA: push2.py EXCLUDES image extensions (.png/.jpg/...) from its walk — new images never reach GitHub through it. Push binaries separately via blobs API (base64) + tree + commit + PATCH ref (done in e1595e2644).
+- KV seeded: topics (28 items), news (7 items) via seed.py merge.
 
 ## Panettiere breaking news (2026-09-23, deploy fab73aac, push 39fd96eaf8)
 - Verified the X claim against NYT/AP/BBC/Guardian/PBS before publishing: Hayden Panettiere, 36, died Aug 16 2026 in Greenville SC; coroner ruled Sept 22 — toxic effects of fentanyl + 4-ANPP + alprazolam + methocarbamol + quetiapine, manner accident; pressed pills + straw fentanyl-positive; released from Malibu rehab weeks before; Hickerson gave 2× Narcan; DEA tracing supply; police investigation still open.
