@@ -1168,13 +1168,112 @@ def build_suggest():
       "Help keep plugreports accurate: report wrong info, outdated hotlines, missing busts or new substances.", body))
 
 # ------------------------------------------------------------- meta files ----
+def build_data():
+    """Citable data asset: fentanyl adulterant tracker. Plain numbers + sources, built for journalist citation."""
+    tbl_rows = [
+        ("Xylazine (&ldquo;tranq&rdquo;)", "18,138", "#6", "Veterinary sedative",
+         "Necrotic skin wounds, hours-long blackouts, blood-pressure crashes",
+         "No — but give it anyway: fentanyl is almost always present too", "xylazine"),
+        ("Medetomidine (&ldquo;rhino tranq&rdquo;)", "8,980", "#10", "Veterinary sedative, 100–200&times; xylazine&rsquo;s potency",
+         "ICU-grade withdrawal, profound sedation, dangerously slow heart rate",
+         "No — same fentanyl caveat", "medetomidine"),
+        ("BTMPS (Tinuvin 770)", "8,138", "#11", "Industrial plastic UV stabilizer",
+         "Calcium-channel blocker, no antidote; the &ldquo;bug spray&rdquo; smell tell",
+         "No — no antidote exists", "btmps"),
+        ("para-Fluorofentanyl", "3,535 <span class='mini'>6,708 all isomers</span>", "#16", "Fentanyl analogue",
+         "Full opioid overdose risk; routinely co-detected with the adulterants above",
+         "Yes — naloxone works", "para-fluorofentanyl"),
+        ("Heroin", "27,286", "#5", "Classic opioid",
+         "Still co-reported with fentanyl in thousands of exhibits",
+         "Yes", "heroin"),
+        ("Cocaine &amp; methamphetamine", "195,317 / 323,404", "#2 / #1", "Stimulants",
+         "Not adulterants of fentanyl — but ~1 in 4 cocaine and ~1 in 8 meth exhibits now test positive for it",
+         "Yes", "cocaine"),
+    ]
+    trs = "".join(
+        f'<tr><td><b>{name}</b></td><td>{reports}</td><td>{rank}</td><td>{what}</td><td>{why}</td>'
+        f'<td>{nal}</td><td><a href="/drugs/{slug}/">Profile &rarr;</a></td></tr>'
+        for name, reports, rank, what, why, nal, slug in tbl_rows)
+    jsonld = {
+      "@context": "https://schema.org", "@type": "Dataset",
+      "name": "Fentanyl Adulterant Tracker — substances co-detected with fentanyl in US forensic laboratories",
+      "description": "Yearly forensic-laboratory report counts (DEA NFLIS-Drug 2025) for fentanyl and its most common adulterants — xylazine, medetomidine, BTMPS and para-fluorofentanyl — with trend and regional data from CDC and the DEA National Drug Threat Assessment.",
+      "creator": {"@type": "Organization", "name": "plugreports", "url": SITE},
+      "dateModified": TODAY, "license": "https://plugreports.com/about/",
+      "isAccessibleForFree": True,
+      "variableMeasured": ["Xylazine", "Medetomidine", "BTMPS", "para-Fluorofentanyl", "Fentanyl"],
+      "temporalCoverage": "2023/2025",
+      "spatialCoverage": {"@type": "Country", "name": "United States"},
+    }
+    body = (
+      '<div class="wrap"><div style="max-width:960px;padding:26px 0">'
+      '<span class="kicker">Data &middot; updated September 2026</span>'
+      '<h1 style="font-size:clamp(28px,4vw,42px);margin-top:10px">Fentanyl Adulterant Tracker</h1>'
+      '<p class="lede" style="color:#667085">What is actually being mixed into the US fentanyl supply, in plain numbers. '
+      'Every figure below comes from the DEA&rsquo;s NFLIS forensic-laboratory system, the CDC, or peer-reviewed research — '
+      'with the source named and dated. Free to cite; please link back.</p>'
+      '<div class="callout red"><b>Emergency note first</b>'
+      'Xylazine, medetomidine and BTMPS are <b>not opioids</b> — naloxone (Narcan) does not reverse them. '
+      'But because fentanyl is almost always present in the same sample, <b>give naloxone anyway, every time</b>, and call emergency services.</div>'
+      '<div class="stat-grid">'
+      '<div class="stat red"><b>132,210</b><span>fentanyl reports (NFLIS 2025)</span></div>'
+      '<div class="stat"><b>18,138</b><span>xylazine reports</span></div>'
+      '<div class="stat"><b>8,980</b><span>medetomidine reports</span></div>'
+      '<div class="stat"><b>8,138</b><span>BTMPS reports</span></div>'
+      '<div class="stat"><b>69,973</b><span>US overdose deaths 2025 (provisional)</span></div>'
+      '</div>'
+      '<h2>The 2025 numbers</h2>'
+      '<p>NFLIS-Drug recorded <b>1,126,178 substance identifications</b> across 666,357 cases in 2025. '
+      'These are the substances most often found alongside fentanyl — the adulterants and co-reports that define the modern supply:</p>'
+      '<div class="figure"><table class="tbl"><thead><tr><th>Substance</th><th>2025 NFLIS reports</th><th>Rank</th>'
+      '<th>What it is</th><th>Why it matters</th><th>Naloxone?</th><th></th></tr></thead><tbody>'
+      + trs + '</tbody></table></div>'
+      '<h2>The story of 2025–26: medetomidine&rsquo;s takeover</h2>'
+      '<div class="callout amber"><b>Xylazine &rarr; medetomidine, in one city&rsquo;s data</b>'
+      'In Philadelphia, medetomidine went from <b>29% of street opioid samples (May 2024) to 90% (March 2026)</b> — '
+      'while xylazine fell from 97% to 28% over the same period. The same substitution pattern is now appearing in other cities.</div>'
+      '<ul class="ticks">'
+      '<li><b>Medetomidine NFLIS reports:</b> 247 (2023) &rarr; 2,616 (2024) &rarr; 8,233+ (2025) — a 950% jump, then another tripling.</li>'
+      '<li><b>CDC sentinel sites (Jul–Dec 2025):</b> 10 of 20 testing sites found medetomidine in roughly a third of opioid-positive samples; 8 sites found it in more than half. <b>98% of medetomidine-positive samples had fentanyl co-detected.</b></li>'
+      '<li><b>Regional split:</b> Northeast 74.2% of opioid-positive samples &middot; Midwest 56.2% &middot; South 30.1% &middot; West 3.8%.</li>'
+      '<li><b>New York City deaths:</b> 18 overdose deaths with medetomidine contributing in 2024 &rarr; <b>134 in 2025</b>.</li>'
+      '<li><b>BTMPS went from zero to top-12 in 18 months:</b> first detected June 2024 (Portland, Philadelphia); by 2025 it was the 11th most-reported substance in NFLIS — an industrial plastic stabilizer with no antidote.</li>'
+      '<li><b>Xylazine baseline:</b> 30% of DEA-seized fentanyl powder in 2023 contained xylazine (25% in 2022); identified in seized samples in every US state, DC and Puerto Rico by 2024.</li>'
+      '</ul>'
+      '<h2>Context</h2>'
+      '<p>US drug overdose deaths fell for a third straight year in 2025 — an estimated <b>69,973 deaths (provisional, &minus;14%)</b>, '
+      'with opioid-involved deaths down from 55,296 to <b>44,564</b>. The adulterant problem is the reason these deaths are harder to reverse: '
+      'an increasing share of the supply contains sedatives and industrial chemicals that naloxone was never designed to touch.</p>'
+      '<h2>Methodology &amp; sources</h2>'
+      '<ul class="ticks">'
+      '<li><b>DEA NFLIS-Drug</b> — 2025 annual drug-case and report counts (nflis.deadiversion.usdoj.gov).</li>'
+      '<li><b>DEA 2025 National Drug Threat Assessment</b> — top-10 substances mixed with fentanyl, 2019 vs 2024; xylazine seizure geography; cocaine/meth co-detection rates.</li>'
+      '<li><b>CDC Health Alert Network (April 2026)</b> and CDC Overdose Prevention situation summary — medetomidine sentinel-site data and NFLIS trend counts.</li>'
+      '<li><b>CDC NCHS (May 2026)</b> — provisional 2025 overdose death estimates.</li>'
+      '<li><b>JAMA research letter (March 2025)</b> — BTMPS in the illicit fentanyl supply across nine US locations.</li>'
+      '<li><b>Washington/Baltimore HIDTA bulletin (April 2025)</b> — BTMPS spread and combination patterns.</li>'
+      '</ul>'
+      '<div class="callout gray"><b>How to cite this page</b>'
+      'plugreports.com — &ldquo;Fentanyl Adulterant Tracker&rdquo;, updated September 2026. '
+      'Primary sources: DEA NFLIS-Drug 2025, DEA 2025 National Drug Threat Assessment, CDC HAN April 2026, JAMA March 2025. '
+      'URL: https://plugreports.com/data/fentanyl-adulterants/</div>'
+      '<p style="margin-top:18px">Related: <a href="/topics/fentanyl-numbers/">Fentanyl in numbers — the full guide</a> &middot; '
+      '<a href="/drugs/fentanyl/">Fentanyl profile</a> &middot; <a href="/drugs/medetomidine/">Medetomidine profile</a> &middot; '
+      '<a href="/drugs/xylazine/">Xylazine profile</a> &middot; <a href="/hotlines/">Overdose hotlines by region</a></p>'
+      '</div></div>')
+    w("data/fentanyl-adulterants/index.html", shell(
+      "data/fentanyl-adulterants/", "Fentanyl Adulterant Tracker — NFLIS 2025 data: xylazine, medetomidine, BTMPS",
+      "Live data page: what is being mixed into the US fentanyl supply in 2025–26 — NFLIS report counts for xylazine, medetomidine, BTMPS and para-fluorofentanyl, with CDC and DEA sources, updated September 2026.",
+      body, jsonld=jsonld))
+
+
 def build_meta():
     from data_es import ES_DRUGS as _ESD
     ES_DRUG_KEYS = list(_ESD.keys())
     B = TODAY  # build date — lastmod fallback when an item has no date of its own
     urls = [("", B), ("news/", B), ("busts/", B), ("topics/", B), ("quit/", B),
             ("hotlines/", B), ("sentencing/", B), ("pharmacies/", B), ("rehabs/", B),
-            ("about/", B), ("suggest/", B), ("drugs/", B), ("categories/", B)]
+            ("about/", B), ("suggest/", B), ("drugs/", B), ("categories/", B), ("data/fentanyl-adulterants/", B)]
     urls += [(f"categories/{k}/", B) for k in CATEGORIES]
     urls += [("es/", B), ("es/hotlines/", B), ("es/categories/", B)]
     urls += [(f"es/drugs/{sl}/", DRUG_BY_SLUG[sl].get("lastUpdated", B)) for sl in ES_DRUG_KEYS if sl in DRUG_BY_SLUG]
@@ -1460,7 +1559,7 @@ def main():
     build_drugs(es=True); build_hotlines(es=True); build_index(es=True)
     for _ln in LANG_LIST:
         build_lang_drug_pages(_ln); build_lang_hotlines(_ln); build_lang_home(_ln); build_lang_categories(_ln)
-    build_about(); build_suggest(); build_meta()
+    build_about(); build_suggest(); build_data(); build_meta()
     manifest = {"drugs":[d["slug"] for d in DRUGS], "news":[n["slug"] for n in NEWS],
                 "busts":[b["slug"] for b in BUSTS], "topics":[t["slug"] for t in TOPICS],
                 "categories":[k for k in CATEGORIES],
