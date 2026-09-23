@@ -102,7 +102,7 @@ def help_links(drugs=None, extra=None, related=None):
     known = {x["slug"] for x in DRUGS}
     chips = "".join(f'<a href="/drugs/{d}/">{rel_card(d)}</a>' for d in (drugs or []) if d in known)
     for r in (related or []):
-        chips += f'<a href="/{resolve_slug(r)}/">{rel_card(r)}</a>'
+        chips += rel_link(r)
     chips += '<a href="/hotlines/"><span class="mini" style="background:#dc2626">&#128222;</span><span>Hotlines — help now</span></a>'
     chips += '<a href="/pharmacies/"><span class="mini" style="background:#3b82f6">Rx</span><span>Find a verified pharmacy</span></a>'
     chips += '<a href="/quit/"><span class="mini" style="background:#16a34a">&#8987;</span><span>Quitting — day by day</span></a>'
@@ -155,7 +155,7 @@ def rel_card(slug):
 NAV = [
  ("/", "Home", "home"), ("/categories/opioids/", "Drug Library", "drugs"),
  ("/news/", "News", "news"), ("/busts/", "Busts", "busts"), ("/topics/", "Guides", "topics"),
- ("/quit/", "Quitting", "quit"), ("/mix/", "Mixing", "mix"), ("/vs/", "Vs", "vs"), ("/hotlines/", "Hotlines", "hotline"),
+ ("/quit/", "Quitting", "quit"), ("/mix/", "Mixing", "mix"), ("/vs/", "Vs", "vs"), ("/data/", "Data", "data"), ("/hotlines/", "Hotlines", "hotline"),
  ("/sentencing/", "Sentencing", "sentencing"), ("/pharmacies/", "Pharmacies", "pharmacies"),
  ("/rehabs/", "Rehabs", "rehabs"), ("/about/", "About", "about"),
 ]
@@ -223,10 +223,10 @@ def shell(path, title, desc, body, jsonld=None, canonical=None, extra_head="", o
     if SETTINGS.get("bing"): ld += f'<meta name="msvalidate.01" content="{esc(SETTINGS["bing"])}">'
     if SETTINGS.get("clarity"): ld += '<script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","' + esc(SETTINGS["clarity"]) + '")</script>'
     if SETTINGS.get("ga"): ld += '<script async src="https://www.googletagmanager.com/gtag/js?id=' + esc(SETTINGS["ga"]) + '"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date());gtag("config","' + esc(SETTINGS["ga"]) + '")</script>' 
-    if path.split("/")[0] in ("busts","news","drugs","topics","quit","mix","hotlines","pharmacies","rehabs","sentencing","index.html"):
-        ld += '<script src="/assets/js/hydrate.js?v=13" defer></script>'
+    if path.split("/")[0] in ("busts","news","drugs","topics","quit","mix","vs","categories","hotlines","pharmacies","rehabs","sentencing","index.html"):
+        ld += '<script src="/assets/js/hydrate.js?v=14" defer></script>'
         if path == "index.html":
-            ld += '<script src="/assets/js/breaking.js?v=13" defer></script>'
+            ld += '<script src="/assets/js/breaking.js?v=14" defer></script>'
     return f"""<!DOCTYPE html>
 <html lang="{lang}">
 <head>
@@ -251,7 +251,7 @@ def shell(path, title, desc, body, jsonld=None, canonical=None, extra_head="", o
 <link rel="icon" href="/assets/img/logo.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Source+Serif+4:opsz,wght@8..60,600;8..60,800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/css/style.css?v=13">
+<link rel="stylesheet" href="/assets/css/style.css?v=14">
 {extra_head}{ld}
 </head>
 <body>
@@ -275,9 +275,9 @@ def shell(path, title, desc, body, jsonld=None, canonical=None, extra_head="", o
 <button data-lang="en">EN</button><button data-lang="es">ES</button><button data-lang="zh">中文</button>
 <button data-lang="hi">हिन्दी</button><button data-lang="ar">عربي</button><button data-lang="pt">PT</button>
 <button data-lang="ru">RU</button><button data-lang="ja">日本語</button><button data-lang="de">DE</button><button data-lang="fr">FR</button></div></div>
-<div><h4>Library</h4><a href="/categories/opioids/">Opioids</a><a href="/categories/stimulants/">Stimulants</a><a href="/categories/benzodiazepines/">Benzodiazepines</a><a href="/categories/psychedelics/">Psychedelics</a><a href="/categories/empathogens/">Empathogens</a><a href="/categories/cannabinoids/">Synthetic cannabinoids</a><a href="/mix/">Mixing dangers</a></div>
+<div><h4>Library</h4><a href="/categories/opioids/">Opioids</a><a href="/categories/stimulants/">Stimulants</a><a href="/categories/benzodiazepines/">Benzodiazepines</a><a href="/categories/psychedelics/">Psychedelics</a><a href="/categories/empathogens/">Empathogens</a><a href="/categories/cannabinoids/">Synthetic cannabinoids</a><a href="/mix/">Mixing dangers</a><a href="/vs/">Vs comparisons</a></div>
 <div><h4>Help</h4><a href="/hotlines/">Hotlines</a><a href="/rehabs/">Rehab centers</a><a href="/pharmacies/">Verified pharmacies</a><a href="/quit/">Quitting, day by day</a><a href="/sentencing/">Sentencing explained</a></div>
-<div><h4>Updates</h4><a href="/news/">Drug news</a><a href="/busts/">Busts & seizures</a><a href="/topics/">Guides</a><a href="/suggest/">Suggest a correction</a><a href="/rss.xml">RSS feed</a><a href="/about/">About & editorial policy</a></div>
+<div><h4>Updates</h4><a href="/news/">Drug news</a><a href="/busts/">Busts & seizures</a><a href="/topics/">Guides</a><a href="/data/">Data &amp; trackers</a><a href="/suggest/">Suggest a correction</a><a href="/rss.xml">RSS feed</a><a href="/about/">About & editorial policy</a></div>
 </div>
 <div class="social-row" id="socialrow" style="display:flex;gap:12px;flex-wrap:wrap;margin-top:26px">
 <a id="soc-reddit" href="{esc(SETTINGS.get("reddit",""))}" target="_blank" rel="noopener" class="soc-btn"><span style="color:#ff4500">&#9679;</span> Reddit</a>
@@ -294,7 +294,7 @@ def shell(path, title, desc, body, jsonld=None, canonical=None, extra_head="", o
 <p data-i18n="ageBody">This site contains educational information about drugs and harm reduction. It is not medical or legal advice. You must be of legal age or accessing with intent to help yourself or someone else.</p>
 <div class="row"><button class="btn btn-red" data-gate-yes data-i18n="ageYes">I understand — enter</button>
 <a class="btn btn-ghost" href="https://www.google.com" data-i18n="ageNo">Leave</a></div></div></div>
-<script src="/assets/js/app.js?v=13"></script>
+<script src="/assets/js/app.js?v=14"></script>
 </body></html>"""
 
 def breadcrumb_ld(parts):
@@ -1077,6 +1077,13 @@ def build_sentencing():
         secs.append(f'''<div class="legal-doc" style="margin-bottom:22px"><span class="seal">INFO<br>ONLY</span>
 <h2 style="margin-top:0">{esc(s["region"])}</h2><p style="color:#667085">{esc(s["summary"])}</p>
 <table class="tbl"><thead><tr>{head}</tr></thead><tbody>{rows}</tbody></table></div>''')
+    sent_rel, _seen = [], set()
+    for s in SENTENCING:
+        for r in (s.get("related") or []):
+            if r not in _seen:
+                _seen.add(r); sent_rel.append(r)
+    sent_rel_html = ('<div class="related print-hide"><h2>You may also want to know about</h2><div class="rel-grid" data-sent-rel>'
+                     + "".join(rel_link(r) for r in sent_rel) + '</div></div>') if sent_rel else '<div class="rel-grid" data-sent-rel></div>'
     body = f"""<div class="wrap"><div style="padding-top:26px">
 <span class="kicker">Legal information</span><h1 style="font-size:clamp(28px,4vw,42px);margin-top:10px">Drug sentencing, explained</h1>
 <p class="lede" style="color:#667085;max-width:68ch">What possession and trafficking actually cost across the USA, Canada, the UK/EU, Australia and Africa — and why <b>calling 911 during an overdose is always worth it</b> (Good Samaritan protections).</p>
@@ -1086,6 +1093,7 @@ def build_sentencing():
 <a href="/topics/sentencing-explained/"><span class="mini" style="background:#b45309">&#128218;</span><span>Full sentencing guide</span></a>
 <a href="/topics/talk-to-your-kid/"><span class="mini" style="background:#16a34a">&#128218;</span><span>Talking to your kids</span></a>
 <a href="/hotlines/"><span class="mini" style="background:#dc2626">&#9742;</span><span>Hotlines</span></a></div></div>
+{sent_rel_html}
 </div></div>"""
     w("sentencing/index.html", shell("sentencing/index.html", "Drug Possession Sentences by Country — US, Canada, UK/EU, Australia, Africa | plugreports",
       clip("Drug sentencing tables: possession and trafficking penalties per region, Good Samaritan laws, mandatory minimums, and what to do if arrested."), body))
@@ -1113,7 +1121,7 @@ def build_directory(name, items, singular, title, desc, thumb):
 <div class="callout green" style="margin-top:18px"><b>In crisis right now?</b>Skip the directory — call your emergency number or a <a href="/hotlines/">hotline</a> first.</div>
 <div class="related print-hide"><h2>You may also want to know about</h2><div class="rel-grid">
 {f'<a href="/drugs/{qslug}/"><span class="mini" style="background:#d97706">{esc(qname[0])}</span><span>About {esc(qname)}</span></a>' if qslug else ''}
-{''.join(f'<a href="/{resolve_slug(r)}/">{rel_card(r)}</a>' for r in (it.get("related") or []))}
+{''.join(rel_link(r) for r in (it.get("related") or []))}
 <a href="/hotlines/"><span class="mini" style="background:#dc2626">&#9742;</span><span>Hotlines</span></a>
 <a href="/quit/"><span class="mini" style="background:#16a34a">&#8987;</span><span>Quitting — day by day</span></a>
 <a href="/rehabs/"><span class="mini" style="background:#16a34a">&#10010;</span><span>All rehab centers</span></a>
@@ -1267,13 +1275,117 @@ def build_data():
       body, jsonld=jsonld))
 
 
+def build_data_top():
+    """Citable data asset: top 15 substances in NFLIS 2025 — the demand-side counterpart to the adulterant tracker."""
+    TOTAL = 1126178  # NFLIS 2025 total reports
+    top15 = [
+        (1, "Methamphetamine", 323404, "Stimulant", "The #1 most-identified drug in US drug cases for over a decade; dominates the West and Midwest.", "methamphetamine"),
+        (2, "Cocaine", 195317, "Stimulant", "Powder and crack; about 1 in 4 cocaine exhibits now also contains fentanyl.", "cocaine"),
+        (3, "Cannabinoids (unspecified)", 143207, "Cannabinoid", "Mostly marijuana — this count reflects how often cannabis appears in drug cases, not danger.", "weed"),
+        (4, "Fentanyl", 132210, "Synthetic opioid", "The driver of the overdose crisis; found in ~1 in 8 meth and ~1 in 4 cocaine exhibits.", "fentanyl"),
+        (5, "Heroin", 27286, "Opioid", "Largely displaced by fentanyl, but still co-reported in thousands of exhibits.", "heroin"),
+        (6, "Xylazine (&ldquo;tranq&rdquo;)", 18138, "Veterinary sedative", "The wound-causing fentanyl adulterant; detected in every US state, DC and Puerto Rico by 2024.", "xylazine"),
+        (7, "Fentanyl analogues (unspecified)", 16543, "Synthetic opioid", "Illicit fentanyl variants sold as heroin or pressed into fake pills — part of the fentanyl family.", "fentanyl"),
+        (8, "Delta-9-THC", 11580, "Cannabinoid", "The impairing form of THC — counted mostly in driving and impairment cases.", "weed"),
+        (9, "Oxycodone", 10128, "Opioid", "The most-counterfeited prescription pill; most &ldquo;oxy&rdquo; bought on the street is fentanyl.", "oxycodone"),
+        (10, "Medetomidine", 8980, "Veterinary sedative", "The fastest-rising substance on the list: 247 reports in 2023 &rarr; 8,980 in 2025.", "medetomidine"),
+        (11, "BTMPS (Tinuvin 770)", 8138, "Industrial chemical", "An industrial plastic stabilizer with no antidote; first detected in the supply in June 2024.", "btmps"),
+        (12, "Buprenorphine", 7632, "Opioid (treatment)", "The leading opioid-addiction medication; also diverted and misused.", "suboxone"),
+        (13, "Alprazolam", 7015, "Benzodiazepine", "The most-abused prescription benzo; fake &ldquo;Xanax&rdquo; bars usually contain fentanyl or research-chemical benzos.", "alprazolam"),
+        (14, "Hydrocodone", 6956, "Opioid", "Vicodin-type painkiller; commonly counterfeited with fentanyl.", "hydrocodone"),
+        (15, "4-ANPP", 6792, "Fentanyl precursor", "A chemical marker of illicit fentanyl production — its presence means clandestine synthesis.", "fentanyl"),
+    ]
+    trs = "".join(
+        f'<tr><td>#{r}</td><td><b>{name}</b></td><td>{n:,}</td><td>{n/TOTAL*100:.2f}%</td>'
+        f'<td>{cls}</td><td>{why}</td><td><a href="/drugs/{slug}/">Profile &rarr;</a></td></tr>'
+        for r, name, n, cls, why, slug in top15)
+    jsonld = {
+      "@context": "https://schema.org", "@type": "Dataset",
+      "name": "Top 15 substances identified in US forensic laboratories, NFLIS 2025",
+      "description": "DEA NFLIS-Drug 2025 annual report counts for the 15 most frequently identified substances in US forensic drug cases, with plain-English context and links to harm-reduction profiles.",
+      "creator": {"@type": "Organization", "name": "plugreports", "url": SITE},
+      "dateModified": TODAY, "isAccessibleForFree": True,
+      "variableMeasured": [t[1] for t in top15], "temporalCoverage": "2025",
+      "spatialCoverage": {"@type": "Country", "name": "United States"},
+    }
+    body = (
+      '<div class="wrap"><div style="max-width:960px;padding:26px 0">'
+      '<span class="kicker">Data &middot; updated September 2026</span>'
+      '<h1 style="font-size:clamp(28px,4vw,42px);margin-top:10px">Top 15 Substances in US Drug Cases, 2025</h1>'
+      '<p class="lede" style="color:#667085">The 15 most frequently identified substances in American forensic laboratories last year, '
+      'from the DEA&rsquo;s NFLIS-Drug system — with plain-English context for every entry. Free to cite; please link back.</p>'
+      '<div class="stat-grid">'
+      '<div class="stat red"><b>1,126,178</b><span>total lab reports (2025)</span></div>'
+      '<div class="stat"><b>666,357</b><span>drug cases analyzed</span></div>'
+      '<div class="stat"><b>323,404</b><span>#1 methamphetamine reports</span></div>'
+      '<div class="stat"><b>148,753</b><span>fentanyl + analogue reports</span></div>'
+      '</div>'
+      '<div class="callout gray"><b>How to read this list</b>'
+      'NFLIS counts laboratory identifications in actual drug cases — seizures, driving stops, overdose deaths. '
+      'It measures what is in the supply and in front of law enforcement, <b>not</b> how many people use a drug. '
+      'Cannabis ranks high because it is common in cases, not because it is dangerous.</div>'
+      '<h2>The 2025 top 15</h2>'
+      '<div class="figure"><table class="tbl"><thead><tr><th>#</th><th>Substance</th><th>2025 reports</th>'
+      '<th>Share of all reports</th><th>Class</th><th>Why it matters</th><th></th></tr></thead><tbody>'
+      + trs + '</tbody></table></div>'
+      '<h2>What stands out in 2025</h2>'
+      '<ul class="ticks">'
+      '<li><b>Stimulants are half the map:</b> methamphetamine + cocaine = 518,721 reports — 46% of everything counted. The stimulant supply is now more fentanyl-contaminated than the opioid supply in some regions.</li>'
+      '<li><b>The fentanyl family is 155,515 reports (13.8%)</b> once you add analogues and 4-ANPP — and every member of that family is one overdose away from being in a death case.</li>'
+      '<li><b>Two veterinary sedatives and a plastic stabilizer sit in the top 15.</b> Xylazine, medetomidine and BTMPS are not drugs of choice — they are adulterants, and naloxone does not reverse them.</li>'
+      '<li><b>Prescription pills on this list are mostly fakes.</b> Most &ldquo;oxycodone&rdquo;, &ldquo;Xanax&rdquo; and &ldquo;hydrocodone&rdquo; bought on the street is pressed fentanyl — which is why those three names appear in overdose data far out of proportion to their prescriptions.</li>'
+      '<li><b>Context:</b> US drug overdose deaths fell to an estimated 69,973 in 2025 (&minus;14%), the third straight annual decline — but opioid-involved deaths still killed an estimated 44,564 people.</li>'
+      '</ul>'
+      '<h2>Methodology &amp; sources</h2>'
+      '<ul class="ticks">'
+      '<li><b>DEA NFLIS-Drug</b> — 2025 annual top-25 drug counts (nflis.deadiversion.usdoj.gov), retrieved September 2026.</li>'
+      '<li><b>DEA 2025 National Drug Threat Assessment</b> — fentanyl co-detection rates in cocaine/methamphetamine exhibits; xylazine geography.</li>'
+      '<li><b>CDC NCHS (May 2026)</b> — provisional 2025 overdose death estimates.</li>'
+      '<li>Percentages are share of the 1,126,178 total 2025 NFLIS reports. &ldquo;Fentanyl family&rdquo; = fentanyl + unspecified analogues + 4-ANPP.</li>'
+      '</ul>'
+      '<div class="callout gray"><b>How to cite this page</b>'
+      'plugreports.com — &ldquo;Top 15 Substances in US Drug Cases, 2025&rdquo;, updated September 2026. '
+      'Primary source: DEA NFLIS-Drug 2025 annual data. URL: https://plugreports.com/data/top-substances-2025/</div>'
+      '<p style="margin-top:18px">Related: <a href="/data/fentanyl-adulterants/">Fentanyl Adulterant Tracker</a> &middot; '
+      '<a href="/topics/fentanyl-numbers/">Fentanyl in numbers</a> &middot; <a href="/drugs/">Full drug library</a></p>'
+      '</div></div>')
+    w("data/top-substances-2025/index.html", shell(
+      "data/top-substances-2025/", "Top 15 Substances in US Drug Cases 2025 — NFLIS Data | plugreports",
+      "The 15 most-identified substances in US forensic labs in 2025 (DEA NFLIS): methamphetamine, cocaine, fentanyl, xylazine, medetomidine, BTMPS and more — with context and sources, updated September 2026.",
+      body, jsonld=jsonld))
+
+
+def build_data_hub():
+    body = (
+      '<div class="wrap"><div style="max-width:960px;padding:26px 0">'
+      '<span class="kicker">Data</span>'
+      '<h1 style="font-size:clamp(28px,4vw,42px);margin-top:10px">plugreports Data</h1>'
+      '<p class="lede" style="color:#667085">Plain-number trackers built for journalists, educators and researchers. '
+      'Every figure is sourced and dated. Free to cite — please link back.</p>'
+      '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:24px">'
+      '<a class="card" href="/data/fentanyl-adulterants/"><h3>Fentanyl Adulterant Tracker</h3>'
+      '<p>What is actually being mixed into the US fentanyl supply in 2025–26 — xylazine, medetomidine, BTMPS and para-fluorofentanyl, with NFLIS and CDC counts.</p>'
+      '<div class="foot">Open the tracker &rarr;</div></a>'
+      '<a class="card" href="/data/top-substances-2025/"><h3>Top 15 Substances, 2025</h3>'
+      '<p>The 15 most-identified substances in US forensic laboratories last year, with share-of-total and plain-English context for each.</p>'
+      '<div class="foot">Open the ranking &rarr;</div></a>'
+      '</div>'
+      '<p style="margin-top:22px;color:#667085;font-size:14px">Using our data? '
+      '<a href="/about/">Editorial policy & sources</a> &middot; <a href="/suggest/">Report a correction</a></p>'
+      '</div></div>')
+    w("data/index.html", shell(
+      "data/", "Data & Trackers — Sourced Drug-Supply Numbers | plugreports",
+      "Free, citable data trackers from plugreports: the fentanyl adulterant tracker and the NFLIS top-15 substance ranking, with dated DEA/CDC sources.",
+      body))
+
+
 def build_meta():
     from data_es import ES_DRUGS as _ESD
     ES_DRUG_KEYS = list(_ESD.keys())
     B = TODAY  # build date — lastmod fallback when an item has no date of its own
     urls = [("", B), ("news/", B), ("busts/", B), ("topics/", B), ("quit/", B),
             ("hotlines/", B), ("sentencing/", B), ("pharmacies/", B), ("rehabs/", B),
-            ("about/", B), ("suggest/", B), ("drugs/", B), ("categories/", B), ("data/fentanyl-adulterants/", B)]
+            ("about/", B), ("suggest/", B), ("drugs/", B), ("categories/", B), ("data/", B), ("data/fentanyl-adulterants/", B), ("data/top-substances-2025/", B)]
     urls += [(f"categories/{k}/", B) for k in CATEGORIES]
     urls += [("es/", B), ("es/hotlines/", B), ("es/categories/", B)]
     urls += [(f"es/drugs/{sl}/", DRUG_BY_SLUG[sl].get("lastUpdated", B)) for sl in ES_DRUG_KEYS if sl in DRUG_BY_SLUG]
@@ -1544,7 +1656,7 @@ def build_indexes():
     w("drugs/index.html", shell("drugs/index.html",
         "Drugs A–Z — All Substances: Street Names, Effects, Overdose Signs | plugreports",
         clip("Complete A-Z index of street drugs, pharmaceuticals, and grey-market substances: street names, effects, overdose signs, street prices and legal status."),
-        "<div class=\"wrap\"><section class=\"sec-head\" style=\"padding-top:30px\"><div><span class=\"kicker amber\">A-Z Index</span><h1 style=\"font-family:var(--font-ed);font-size:clamp(28px,4vw,44px)\">All <span style=\"background:linear-gradient(92deg,#f59e0b,#dc2626);-webkit-background-clip:text;background-clip:text;color:transparent\">" + str(len(DRUGS)) + " substances</span>, A to Z</h1><p>Tap any substance for effects, risks, overdose signs and street info.</p></div></section><div class=\"rail\" style=\"grid-template-rows:none;overflow:visible\">" + tiles + "</div></div>", jsonld=az_ld))
+        "<div class=\"wrap\"><section class=\"sec-head\" style=\"padding-top:30px\"><div><span class=\"kicker amber\">A-Z Index</span><h1 style=\"font-family:var(--font-ed);font-size:clamp(28px,4vw,44px)\">All <span style=\"background:linear-gradient(92deg,#f59e0b,#dc2626);-webkit-background-clip:text;background-clip:text;color:transparent\">" + str(len(DRUGS)) + " substances</span>, A to Z</h1><p>Tap any substance for effects, risks, overdose signs and street info.</p></div></section><div class=\"az-grid\">" + tiles + "</div></div>", jsonld=az_ld))
 
 def main():
     build_index(); build_categories(); build_categories_es(); build_drugs(); build_news(); build_busts()
@@ -1559,7 +1671,7 @@ def main():
     build_drugs(es=True); build_hotlines(es=True); build_index(es=True)
     for _ln in LANG_LIST:
         build_lang_drug_pages(_ln); build_lang_hotlines(_ln); build_lang_home(_ln); build_lang_categories(_ln)
-    build_about(); build_suggest(); build_data(); build_meta()
+    build_about(); build_suggest(); build_data(); build_data_top(); build_data_hub(); build_meta()
     manifest = {"drugs":[d["slug"] for d in DRUGS], "news":[n["slug"] for n in NEWS],
                 "busts":[b["slug"] for b in BUSTS], "topics":[t["slug"] for t in TOPICS],
                 "categories":[k for k in CATEGORIES],
@@ -1569,7 +1681,7 @@ def main():
     w("_static.json", json.dumps(manifest))
     w("_dynamic.html", shell("_dynamic.html", "plugreports",
       "Live content", '<div class="wrap" id="dyn" style="padding:44px 20px;min-height:50vh"><p>Loading\u2026</p></div>',
-      extra_head='<script src="/assets/js/render.js?v=13" defer></script>', canonical=SITE + "/"))
+      extra_head='<script src="/assets/js/render.js?v=14" defer></script>', canonical=SITE + "/"))
     print(f"Built {len(DRUGS)} drug pages, {len(CATEGORIES)} categories, {len(TOPICS)} topics, "
           f"{len(QUIT_SPECS)} quit pages, {len(NEWS)} news, {len(BUSTS)} busts, {len(MIX)} mix pages into {PUB}")
 
