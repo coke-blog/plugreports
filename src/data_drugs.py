@@ -3,7 +3,7 @@
 
 DRUGS = [
 # ---------------- OPIOIDS ----------------
-dict(slug="heroin", name="Heroin", aliases=["Dope", "H", "Smack", "Sugar brown", "Brown", "Junk"],
+dict(slug="heroin", image="https://plugreports.com/media/drugs/heroin.jpeg", name="Heroin", aliases=["Dope", "H", "Smack", "Sugar brown", "Brown", "Junk"],
  category="opioids", schedule="Schedule I (US)",
  appearance="White/off-white powder (US) or brown base powder ('sugar brown'); black tar (Mexico)",
  effects=["Rapid intense euphoria ('rush')", "Warmth, heavy limbs", "Pain relief, drowsiness ('nodding')"],
@@ -13,7 +13,7 @@ dict(slug="heroin", name="Heroin", aliases=["Dope", "H", "Smack", "Sugar brown",
  legalStatus="Illegal — Schedule I in the US; Class A (UK); controlled everywhere listed",
  lastUpdated="2026-09-12", sources=["NIDA","DEA","EMCDDA"]),
 
-dict(slug="fentanyl", name="Fentanyl", aliases=["Apache", "China Girl", "Dance Fever", "Tango & Cash"],
+dict(slug="fentanyl", image="https://plugreports.com/media/drugs/fentanyl.webp", name="Fentanyl", aliases=["Apache", "China Girl", "Dance Fever", "Tango & Cash"],
  category="opioids", schedule="Schedule II (US, pharmaceutical)",
  appearance="White powder, pressed pills, counterfeit oxycodone — often invisible when mixed into other drugs",
  effects=["Extreme euphoria", "Drowsiness", "Pain relief"],
@@ -53,7 +53,7 @@ dict(slug="furanylfentanyl", name="Furanylfentanyl (Fu-F)", aliases=["Fu-F", "FU
  legalStatus="Schedule I (US); controlled in EU/UK/Canada/Australia",
  lastUpdated="2026-09-12", sources=["DEA","EMCDDA","NPS-AD"]),
 
-dict(slug="methoxyacetylfentanyl", name="Methoxyacetylfentanyl", aliases=["MAF"],
+dict(slug="methoxyacetylfentanyl", image="https://plugreports.com/media/drugs/methoxyacetylfentanyl.webp", name="Methoxyacetylfentanyl", aliases=["MAF"],
  category="opioids", schedule="Schedule I (US, 2018)",
  appearance="White/off-white powder",
  effects=["Powerful opioid sedation and euphoria"],
@@ -63,7 +63,7 @@ dict(slug="methoxyacetylfentanyl", name="Methoxyacetylfentanyl", aliases=["MAF"]
  legalStatus="Schedule I (US); controlled across EU, UK, Canada, Australia",
  lastUpdated="2026-09-12", sources=["DEA","EMCDDA"]),
 
-dict(slug="etonitazene", name="Etonitazene", aliases=["Etazene", "EZ"],
+dict(slug="etonitazene", image="https://plugreports.com/media/drugs/etonitazene.jpeg", name="Etonitazene", aliases=["Etazene", "EZ"],
  category="opioids", schedule="Schedule I (US, 2023)",
  appearance="White/yellow/off-white powder, pills, or e-liquid for vaping",
  effects=["Intense opioid euphoria at microgram doses"],
@@ -103,7 +103,7 @@ dict(slug="morphine-60mg", image="https://plugreports.com/media/drugs/morphine-6
  legalStatus="Rx-only, Schedule II; felony without prescription",
  lastUpdated="2026-09-12", sources=["NIDA","DEA"]),
 
-dict(slug="hydromorphone", name="Hydromorphone (Dilaudid 8 mg)", aliases=["Dilaudid", "D", "Dillies", "8s"],
+dict(slug="hydromorphone", image="https://plugreports.com/media/drugs/hydromorphone.png", name="Hydromorphone (Dilaudid 8 mg)", aliases=["Dilaudid", "D", "Dillies", "8s"],
  category="opioids", schedule="Schedule II (US)",
  appearance="Small triangular white tablets ('8mg triangles'); clear injectable liquid",
  effects=["Rapid euphoria, warm sedation — 5× morphine potency"],
@@ -123,7 +123,7 @@ dict(slug="oxycodone", image="https://plugreports.com/media/drugs/oxycodone.png"
  legalStatus="Rx-only, Schedule II; felony without prescription",
  lastUpdated="2026-09-12", sources=["NIDA","DEA","CDC"]),
 
-dict(slug="oxycontin", name="OxyContin", aliases=["OC", "Oxy", "Hillbilly Heroin"],
+dict(slug="oxycontin", image="https://plugreports.com/media/drugs/oxycontin.jpeg", name="OxyContin", aliases=["OC", "Oxy", "Hillbilly Heroin"],
  category="opioids", schedule="Schedule II (US)",
  appearance="Round ER tablets (OC imprint); reformulated 2010 to deter crushing",
  effects=["Long-duration pain relief and euphoria"],
@@ -133,7 +133,7 @@ dict(slug="oxycontin", name="OxyContin", aliases=["OC", "Oxy", "Hillbilly Heroin
  legalStatus="Rx-only, Schedule II; felony without prescription",
  lastUpdated="2026-09-12", sources=["FDA","NIDA"]),
 
-dict(slug="codeine-30-500", name="Codeine 30/500 mg (co-codamol)", aliases=["T3s", "Syrup", "Lean (with promethazine)"],
+dict(slug="codeine-30-500", image="https://plugreports.com/media/drugs/codeine-30-500.jpg", name="Codeine 30/500 mg (co-codamol)", aliases=["T3s", "Syrup", "Lean (with promethazine)"],
  category="opioids", schedule="Schedule V / Rx (US varies); OTC+pharmacy elsewhere",
  appearance="White tablets (30 mg codeine / 500 mg paracetamol); purple/clear syrup",
  effects=["Mild euphoria, relaxation, cough suppression"],
@@ -153,7 +153,7 @@ dict(slug="hydrocodone", image="https://plugreports.com/media/drugs/hydrocodone.
  legalStatus="Rx-only, Schedule II; felony without prescription",
  lastUpdated="2026-09-12", sources=["DEA","FDA"]),
 
-dict(slug="vicoprofen", name="Hydrocodone–Ibuprofen (Vicoprofen)", aliases=["Vicoprofen", "Ibu-hydro"],
+dict(slug="vicoprofen", image="https://plugreports.com/media/drugs/vicoprofen.jpg", name="Hydrocodone–Ibuprofen (Vicoprofen)", aliases=["Vicoprofen", "Ibu-hydro"],
  category="opioids", schedule="Schedule II (US)",
  appearance="White oblong tablets (7.5 mg hydro / 200 mg ibuprofen)",
  effects=["Pain relief, mild euphoria"],
@@ -266,7 +266,7 @@ dict(slug="nitrazepam", name="Nitrazepam (Nipam 5 mg)", aliases=["Nipam", "Mogad
  legalStatus="Rx-only; controlled in all target regions",
  lastUpdated="2026-09-12", sources=["EMCDDA","NHS"]),
 
-dict(slug="bromazepam", name="Bromazepam (Lexotan 6 mg)", aliases=["Lexotan", "Bromaz", "Lexotanil"],
+dict(slug="bromazepam", image="https://plugreports.com/media/drugs/bromazepam.png", name="Bromazepam (Lexotan 6 mg)", aliases=["Lexotan", "Bromaz", "Lexotanil"],
  category="benzodiazepines", schedule="Schedule IV (US) / controlled EU",
  appearance="Pink/red or white tablets (3/6 mg), 'Lexotanil 6' imprint",
  effects=["Anxiety relief, calm, moderate sedation"],
@@ -478,7 +478,7 @@ dict(slug="ketalar", image="https://plugreports.com/media/drugs/ketalar.jpg", na
  legalStatus="Rx/hospital-only, Schedule III; felony without prescription",
  lastUpdated="2026-09-12", sources=["FDA","NIDA"]),
 
-dict(slug="2f-dck", name="2F-DCK (2-fluorodeschloroketamine)", aliases=["2F-K", "2FDCK"],
+dict(slug="2f-dck", image="https://plugreports.com/media/drugs/2f-dck.jpeg", name="2F-DCK (2-fluorodeschloroketamine)", aliases=["2F-K", "2FDCK"],
  category="dissociatives", schedule="Analogue prosecutions (US); scheduled Germany/UK/others",
  appearance="White/off-white crystals or powder",
  effects=["Ketamine-like dissociation, slightly longer duration"],
@@ -491,7 +491,7 @@ dict(slug="2f-dck", name="2F-DCK (2-fluorodeschloroketamine)", aliases=["2F-K", 
 
 DRUGS += [
 # ---------------- STIMULANTS ----------------
-dict(slug="cocaine", name="Cocaine", aliases=["Coke", "Blow", "Snow", "Charlie", "Yayo", "Peruvian/Colombian"],
+dict(slug="cocaine", image="https://plugreports.com/media/drugs/cocaine.jpeg", name="Cocaine", aliases=["Coke", "Blow", "Snow", "Charlie", "Yayo", "Peruvian/Colombian"],
  category="stimulants", schedule="Schedule II (US)",
  appearance="White crystalline powder (HCl) or off-white 'base'/crack rocks; shiny 'fishscale' = high purity HCl",
  effects=["Euphoria, confidence, energy", "Numbing (local anesthetic)", "Suppressed appetite and sleep"],
@@ -501,7 +501,7 @@ dict(slug="cocaine", name="Cocaine", aliases=["Coke", "Blow", "Snow", "Charlie",
  legalStatus="Schedule II (US); Class A (UK); illegal for non-medical use everywhere listed",
  lastUpdated="2026-09-12", sources=["NIDA","DEA","EMCDDA"]),
 
-dict(slug="speed", name="Speed (amphetamine paste)", aliases=["Amphetamine", "Base", "Paste", "Sulph", "Whizz"],
+dict(slug="speed", image="https://plugreports.com/media/drugs/speed.jpg", name="Speed (amphetamine paste)", aliases=["Amphetamine", "Base", "Paste", "Sulph", "Whizz"],
  category="stimulants", schedule="Schedule II (US, as amphetamine)",
  appearance="Damp white/yellowish paste or dry white powder; damp = high purity base",
  effects=["Energy, alertness, talkativeness", "Appetite suppression", "Euphoria at higher doses"],
@@ -582,7 +582,7 @@ dict(slug="4-fa", name="4-FA (4-fluoroamphetamine)", aliases=["4-FMP", "Palladiu
  legalStatus="Analogue Act (US); controlled NL/UK/DE/others — check locally",
  lastUpdated="2026-09-12", sources=["EMCDDA","TripSit"]),
 
-dict(slug="mephedrone", name="Mephedrone (4-MMC)", aliases=["4-MMC", "Meow Meow", "M-Cat", "Drone", "Bubbles", "meohedrone"],
+dict(slug="mephedrone", image="https://plugreports.com/media/drugs/mephedrone-youth.jpeg", name="Mephedrone (4-MMC)", aliases=["4-MMC", "Meow Meow", "M-Cat", "Drone", "Bubbles", "meohedrone"],
  category="stimulants", schedule="Schedule I (US, 2011); Class B UK",
  appearance="White/off-white crystals or powder (crystals = '4-MMC crystals')",
  effects=["Euphoria, empathy, energy, strong urge to redose"],
@@ -745,7 +745,7 @@ dict(slug="beta-pvp", name="β-PVP (beta-pyrrolidinovalerophenone)", aliases=["�
 
 DRUGS += [
 # ---------------- EMPATHOGENS ----------------
-dict(slug="mdma", name="MDMA", aliases=["Ecstasy (in pill form)", "Molly (powder)", "E", "X", "Adam"],
+dict(slug="mdma", image="https://plugreports.com/media/drugs/mdma.jpg", name="MDMA", aliases=["Ecstasy (in pill form)", "Molly (powder)", "E", "X", "Adam"],
  category="empathogens", schedule="Schedule I (US)",
  appearance="White/off-white crystals or powder ('Molly'); pressed pills with logos ('XTC')",
  effects=["Euphoria, empathy, emotional closeness", "Energy, enhanced senses", "Music/social enhancement"],
@@ -755,7 +755,7 @@ dict(slug="mdma", name="MDMA", aliases=["Ecstasy (in pill form)", "Molly (powder
  legalStatus="Schedule I (US); Class A UK; controlled everywhere listed",
  lastUpdated="2026-09-12", sources=["NIDA","DEA","EMCDDA"]),
 
-dict(slug="molly", name="Molly (MDMA powder)", aliases=["Molly", "Mandy (UK)", "Moon rocks"],
+dict(slug="molly", image="https://plugreports.com/media/drugs/molly.jpeg", name="Molly (MDMA powder)", aliases=["Molly", "Mandy (UK)", "Moon rocks"],
  category="empathogens", schedule="Schedule I (US)",
  appearance="White/cream/purple-tinged crystalline powder or 'rocks'",
  effects=["Same as MDMA — euphoria, empathy, energy"],
@@ -765,7 +765,7 @@ dict(slug="molly", name="Molly (MDMA powder)", aliases=["Molly", "Mandy (UK)", "
  legalStatus="Same as MDMA — Schedule I / Class A / controlled",
  lastUpdated="2026-09-12", sources=["NIDA","DEA"]),
 
-dict(slug="xtc-pills", name="XTC Pills (ecstasy tablets)", aliases=["E pills", "Beans", "Rolls", "Disco biscuits"],
+dict(slug="xtc-pills", image="https://plugreports.com/media/drugs/xtc-pills.jpeg", name="XTC Pills (ecstasy tablets)", aliases=["E pills", "Beans", "Rolls", "Disco biscuits"],
  category="empathogens", schedule="Schedule I (US)",
  appearance="Pressed tablets, every color/logo — Superman, Rolex, Tesla, skulls",
  effects=["4–6 h euphoria, empathy, energy"],
@@ -786,7 +786,7 @@ dict(slug="5-apb", name="5-APB", aliases=["Benzo Fury (with 6-APB blends)"],
  lastUpdated="2026-09-12", sources=["EMCDDA","TripSit"]),
 
 # ---------------- PSYCHEDELICS ----------------
-dict(slug="dmt", name="DMT (dimethyltryptamine)", aliases=["The Spirit Molecule", "Deems", "Dimitri", "Businessman's trip"],
+dict(slug="dmt", image="https://plugreports.com/media/drugs/dmt.jpg", name="DMT (dimethyltryptamine)", aliases=["The Spirit Molecule", "Deems", "Dimitri", "Businessman's trip"],
  category="psychedelics", schedule="Schedule I (US)",
  appearance="White/yellow crystalline powder; also in ayahuasca plant brews",
  effects=["5–20 min intense visual hallucinations, entity encounters", "Altered sense of reality/time", "Euphoria or terror"],
@@ -806,7 +806,7 @@ dict(slug="peyote", name="Peyote (mescaline cactus)", aliases=["Lophophora willi
  legalStatus="Schedule I (US) with NAC religious exemption; controlled in most target regions",
  lastUpdated="2026-09-12", sources=["NIDA","EMCDDA"]),
 
-dict(slug="mescaline", name="Mescaline powder", aliases=["Mesc", "San Pedro extract"],
+dict(slug="mescaline", image="https://plugreports.com/media/drugs/mescaline.jpg", name="Mescaline powder", aliases=["Mesc", "San Pedro extract"],
  category="psychedelics", schedule="Schedule I (US)",
  appearance="White/off-white crystalline powder (extracted) or brownish raw powder",
  effects=["Same as peyote — 8–12 h visuals, euphoria, introspection"],
@@ -816,7 +816,7 @@ dict(slug="mescaline", name="Mescaline powder", aliases=["Mesc", "San Pedro extr
  legalStatus="Schedule I (US); Class A UK; controlled everywhere listed",
  lastUpdated="2026-09-12", sources=["NIDA","EMCDDA","Erowid"]),
 
-dict(slug="2c-b", name="2C-B", aliases=["Nexus", "Bees", "2's"],
+dict(slug="2c-b", image="https://plugreports.com/media/drugs/2c-b.jpeg", name="2C-B", aliases=["Nexus", "Bees", "2's"],
  category="psychedelics", schedule="Schedule I (US, since 1995)",
  appearance="White/off-white powder or small pressed pills (often pink/purple)",
  effects=["MDMA-like euphoria at low doses + LSD-like visuals at higher doses, 4–8 h"],
@@ -826,7 +826,7 @@ dict(slug="2c-b", name="2C-B", aliases=["Nexus", "Bees", "2's"],
  legalStatus="Schedule I (US); controlled everywhere listed",
  lastUpdated="2026-09-12", sources=["EMCDDA","NIDA","Erowid"]),
 
-dict(slug="4-aco-dmt", name="4-AcO-DMT (psilacetin)", aliases=["4-Acetoxy-DMT", "Synthetic shrooms"],
+dict(slug="4-aco-dmt", image="https://plugreports.com/media/drugs/4-aco-dmt.jpg", name="4-AcO-DMT (psilacetin)", aliases=["4-Acetoxy-DMT", "Synthetic shrooms"],
  category="psychedelics", schedule="Analogue prosecutions (US); controlled Italy/UK-PSA",
  appearance="White/beige powder or fumarate crystals; pressed pellets",
  effects=["Psilocybin-like trip, 4–6 h — visuals, laughter, introspection"],
@@ -934,7 +934,7 @@ dict(slug="potassium-cyanide", name="Potassium Cyanide (KCN)", aliases=["KCN", "
 ]
 
 DRUGS += [
-dict(slug="xylazine", name="Xylazine (Tranq)", aliases=["Tranq", "Tranq dope", "Rompun (vet brand)"],
+dict(slug="xylazine", image="https://plugreports.com/media/drugs/xylazine.png", name="Xylazine (Tranq)", aliases=["Tranq", "Tranq dope", "Rompun (vet brand)"],
  category="opioids", schedule="Not a controlled drug — veterinary anesthetic, adulterant",
  appearance="No street form of its own — found mixed into fentanyl/heroin (white/beige powder) or pills",
  effects=["Heavy sedation, slow breathing", "Blackouts lasting hours", "Severe skin wounds (eschar) at injection sites"],
@@ -946,7 +946,7 @@ dict(slug="xylazine", name="Xylazine (Tranq)", aliases=["Tranq", "Tranq dope", "
 ]
 
 DRUGS += [
-dict(slug="weed", name="Cannabis (Weed)", aliases=["Weed", "Marijuana", "Pot", "Bud", "Grass", "Mary Jane", "Ganja", "Hash", "THC"],
+dict(slug="weed", image="https://plugreports.com/media/drugs/weed.jpg", name="Cannabis (Weed)", aliases=["Weed", "Marijuana", "Pot", "Bud", "Grass", "Mary Jane", "Ganja", "Hash", "THC"],
  category="cannabinoids", schedule="Schedule I (US federal) — legal or decriminalized in many states & countries",
  appearance="Dried green/brown flower buds; hash/resin; oils & wax (concentrates); edibles; vape cartridges",
  effects=["Relaxation, euphoria ('high')", "Altered senses, time perception", "Increased appetite ('munchies')"],
@@ -1076,7 +1076,7 @@ dict(slug="opium", name="Opium", aliases=["Raw opium", "Poppy latex", "Afyon", "
  streetPrice="~$30–$100+ per gram (rare outside source regions)",
  legalStatus="Illegal almost everywhere; tincture of opium is Schedule II Rx in US",
  lastUpdated="2026-09-14", sources=["NIDA","UNODC"],
- image="https://plugreports.com/media/drugs/opium.jpeg",
+ image="https://plugreports.com/media/drugs/opium.jpg",
  related=["heroin","morphine-60mg","codeine-30-500"]),
 
 dict(slug="phentermine", name="Phentermine (Adipex-P)", aliases=["Adipex", "Ionamin", "Duromine"],
@@ -1957,7 +1957,7 @@ dict(slug="steroid-blends", name="Steroid blend products", aliases=["Cut Stack",
 ]
 
 DRUGS += [
-dict(slug="poppers", name="Poppers (Alkyl Nitrites)", aliases=["Amyl nitrite", "Amyl", "Rush", "Jungle Juice", "Liquid Gold", "Isobutyl nitrite"],
+dict(slug="poppers", image="https://plugreports.com/media/drugs/poppers.png", name="Poppers (Alkyl Nitrites)", aliases=["Amyl nitrite", "Amyl", "Rush", "Jungle Juice", "Liquid Gold", "Isobutyl nitrite"],
  category="depressants", schedule="Legal to possess (UK, much of EU); Rx-only pharmaceutical amyl in US; regulated variously",
  appearance="Small amber/blue bottles (10–30 mL) of volatile liquid; sold as 'room odorizer', 'leather cleaner', 'video head cleaner'",
  effects=["Instant head-rush warmth and euphoria (10–30 seconds)", "Muscle relaxation — especially smooth muscle", "Enhanced skin sensation; disinhibition", "Briefly drops blood pressure, dilates blood vessels"],
@@ -1967,7 +1967,7 @@ dict(slug="poppers", name="Poppers (Alkyl Nitrites)", aliases=["Amyl nitrite", "
  legalStatus="Possession largely legal (UK, EU, AU); amyl nitrite Rx-only in US but butyl/isobutyl variants sold openly; sales for human consumption banned in some places — sold as 'cleaners'",
  lastUpdated="2026-09-16", sources=["EMCDDA","NHS","PubMed"],
  related=["weed","mdma","topics:talk-to-your-kid","pharmacies"]),
-dict(slug="thc-vapes", name="THC Vapes & Carts", aliases=["Weed vape", "THC cart", "Dab pen", "Cannabis vape", "510 carts"],
+dict(slug="thc-vapes", image="https://plugreports.com/media/drugs/thc-vapes.png", name="THC Vapes & Carts", aliases=["Weed vape", "THC cart", "Dab pen", "Cannabis vape", "510 carts"],
  category="cannabinoids", schedule="Schedule I (US federal, where cannabis illegal); legal-market versions in legal states/countries",
  appearance="510-thread cartridges (clear oil, various colors), disposable pens, pod systems; black-market carts often darker/thicker",
  effects=["Fast onset (2–5 min) — cleaner high than smoking for many", "Discreet, low odor", "Precise dosing on legal devices"],
@@ -1977,7 +1977,7 @@ dict(slug="thc-vapes", name="THC Vapes & Carts", aliases=["Weed vape", "THC cart
  legalStatus="Varies with cannabis law — illegal carts sold everywhere regardless; EVALI risk applies to all unregulated carts",
  lastUpdated="2026-09-16", sources=["CDC","FDA","NIDA"],
  related=["weed","4f-adb","topics:talk-to-your-kid"]),
-dict(slug="thc-edibles", name="Cannabis Edibles (THC/CBD)", aliases=["Edibles", "Gummies", "THC chocolate", "Cannabis-infused food", "CBD edibles"],
+dict(slug="thc-edibles", image="https://plugreports.com/media/drugs/thc-edibles.jpg", name="Cannabis Edibles (THC/CBD)", aliases=["Edibles", "Gummies", "THC chocolate", "Cannabis-infused food", "CBD edibles"],
  category="cannabinoids", schedule="Follows local cannabis law; unregulated market where illegal",
  appearance="Gummies, chocolates, baked goods, drinks; legal-market labeled dosing (5–10 mg), black-market often unlabeled or 50–100 mg+",
  effects=["Slow onset (30 min–2 h), long duration (4–8 h)", "Body-heavy high, stronger than smoking at equivalent dose", "CBD versions: relaxation without the high (at real doses)"],
@@ -1987,7 +1987,7 @@ dict(slug="thc-edibles", name="Cannabis Edibles (THC/CBD)", aliases=["Edibles", 
  legalStatus="Legal in cannabis-legal jurisdictions with labeling rules; illegal elsewhere — but universally available",
  lastUpdated="2026-09-16", sources=["CDC","NIDA","Poison Control"],
  related=["weed","thc-vapes","topics:talk-to-your-kid"]),
-dict(slug="psilocybin-mushrooms", name="Psilocybin Mushrooms (Shrooms)", aliases=["Magic mushrooms", "Shrooms", "Psilocybe", "Gold caps", "Liberty Caps"],
+dict(slug="psilocybin-mushrooms", image="https://plugreports.com/media/drugs/psilocybin-mushrooms.jpg", name="Psilocybin Mushrooms (Shrooms)", aliases=["Magic mushrooms", "Shrooms", "Psilocybe", "Gold caps", "Liberty Caps"],
  category="psychedelics", schedule="Schedule I (US); Class A (UK); decriminalized in some US cities/states, legal in Jamaica/Brazil/parts of NA",
  appearance="Dried whole mushrooms (golden-brown caps, blue-stem bruising), or ground into chocolate/tea; 'magic truffles' (sclerotia) in NL",
  effects=["4–6 hour psychedelic trip: visual patterns, altered thinking, euphoria or introspection", "Enhanced senses, time distortion", "'Mystical' experiences at sufficient doses"],
@@ -2287,7 +2287,7 @@ dict(slug="amanita-muscaria", name="Amanita Muscaria (Fly Agaric Mushrooms)", al
  legalStatus="Unregulated federal US; legal most states/countries (Louisiana restricted); 'legal high' marketing",
  lastUpdated="2026-09-17", sources=["NIDA","EMCDDA","Poison Control"],
  related=["psilocybin-mushrooms","dmt","topics:talk-to-your-kid"]),
-dict(slug="k2-spice", name="K2 / Spice (Synthetic Cannabinoids)", aliases=["Spice", "K2", "Synthetic weed", "Scooby Snax", "Mojo", "Kronic"],
+dict(slug="k2-spice", image="https://plugreports.com/media/drugs/k2-spice.jpg", name="K2 / Spice (Synthetic Cannabinoids)", aliases=["Spice", "K2", "Synthetic weed", "Scooby Snax", "Mojo", "Kronic"],
  category="cannabinoids", schedule="Schedule I (various compounds); perpetually shifting formulas",
  appearance="Herbal material sprayed with synthetic cannabinoids — sold as 'incense', 'potpourri'; also vape carts and edibles",
  effects=["Cannabis-like high but FAR stronger and unpredictable", "Sedation, euphoria, or extreme anxiety"],
@@ -2311,7 +2311,7 @@ dict(slug="devils-breath", name="Scopolamine (Devil's Breath / Burundanga)", ali
 
 DRUGS += [
 # ================= YOUTH STIMULANTS & ADDICTIVE =================
-dict(slug="mephedrone-youth", name="Mephedrone (M-Cat / Meow Meow)", aliases=["M-Cat", "Meow meow", "4-MMC", "Drone", "Bubbles"],
+dict(slug="mephedrone-youth", image="https://plugreports.com/media/drugs/mephedrone-youth.jpeg", name="Mephedrone (M-Cat / Meow Meow)", aliases=["M-Cat", "Meow meow", "4-MMC", "Drone", "Bubbles"],
  category="stimulants", schedule="Schedule I (US); Class B (UK)",
  appearance="White/off-white powder or crystals; '4-MMC' crystal shards; capsules",
  effects=["Euphoria, empathy, energy — MDMA-cocaine hybrid", "Strong urge to redose"],
@@ -3069,7 +3069,7 @@ dict(slug="mdmb-fubinaca", name="MDMB-FUBINACA", aliases=["MDMB-FUBINACA", "FUB-
  legalStatus="Analogue US; controlled EU",
  lastUpdated="2026-09-17", sources=["EMCDDA","DEA"],
  related=["ab-chfuppyca","app-chminaca","5f-adbica"]),
-dict(slug="cannabis-oil-rso", name="Rick Simpson Oil (RSO / Phoenix Tears)", aliases=["RSO", "Phoenix Tears", "Cannabis oil", "FECO"],
+dict(slug="cannabis-oil-rso", image="https://plugreports.com/media/drugs/cannabis-oil-rso.jpeg", name="Rick Simpson Oil (RSO / Phoenix Tears)", aliases=["RSO", "Phoenix Tears", "Cannabis oil", "FECO"],
  category="cannabinoids", schedule="Follows local cannabis law; unregulated where illegal",
  appearance="Dark black/brown thick cannabis extract; sold in syringes",
  effects=["Heavy sedating high — full-spectrum THC extract", "Cancer-patient community use"],
@@ -3089,7 +3089,7 @@ dict(slug="dabs-shatter", name="Dabs / Shatter / Wax (THC Concentrates)", aliase
  legalStatus="Follows cannabis law; home BHO production illegal most places (explosion hazard)",
  lastUpdated="2026-09-17", sources=["NIDA","CDC"],
  related=["weed","thc-vapes","topics:talk-to-your-kid"]),
-dict(slug="cbd-flower", name="CBD Flower / Hemp Bud", aliases=["CBD bud", "Hemp flower", "CBD weed"],
+dict(slug="cbd-flower", image="https://plugreports.com/media/drugs/cbd-flower.png", name="CBD Flower / Hemp Bud", aliases=["CBD bud", "Hemp flower", "CBD weed"],
  category="cannabinoids", schedule="Federally legal US (<0.3% Delta-9 THC); state patchwork",
  appearance="Looks/smells identical to cannabis flower — legal-sale grey zone",
  effects=["Relaxation without strong high (if truly low-THC)", "Some products carry real THC anyway"],
@@ -3129,7 +3129,7 @@ dict(slug="thcb", name="THC-B (Tetrahydrocannabutol)", aliases=["THC-B", "THCB"]
  legalStatus="Federally unscheduled; banned some states",
  lastUpdated="2026-09-17", sources=["FDA"],
  related=["thcp","hhc","delta-8-thc"]),
-dict(slug="delta-10-thc", name="Delta-10 THC", aliases=["Delta-10", "D10"],
+dict(slug="delta-10-thc", image="https://plugreports.com/media/drugs/delta-10-thc.jpg", name="Delta-10 THC", aliases=["Delta-10", "D10"],
  category="cannabinoids", schedule="Federally unscheduled; banned some states",
  appearance="Vapes/gummies — minor cannabinoid, often synthetic-ish production",
  effects=["Milder, more sativa-like high than Delta-9"],
@@ -3203,7 +3203,7 @@ dict(slug="cigarettes", name="Cigarettes", aliases=["Cigs", "Smokes", "Fags", "C
  legalStatus="Legal adult product; sale to minors banned everywhere; plain packaging in UK/AU/France",
  lastUpdated="2026-09-17", sources=["WHO","CDC","NIDA"],
  related=["nicotine-vapes","snus","quit:heroin","topics:talk-to-your-kid"]),
-dict(slug="nicotine-vapes", name="Nicotine E-Cigarettes & Disposables", aliases=["Vapes", "E-cigs", "Elf Bar", "Esco Bar", "Puff Bar", "JUUL"],
+dict(slug="nicotine-vapes", image="https://plugreports.com/media/drugs/nicotine-vapes.webp", name="Nicotine E-Cigarettes & Disposables", aliases=["Vapes", "E-cigs", "Elf Bar", "Esco Bar", "Puff Bar", "JUUL"],
  category="tobacco", schedule="Legal 18/21+; FDA authorization required (most disposables unapproved)",
  appearance="Colorful disposables (Elf Bar, Esco Bar), pod systems, mods; candy/fruit flavors",
  effects=["Fast nicotine: the same 10-second brain hit as cigarettes", "Smooth high-nicotine salts — easy to inhale deeply, easy to overuse"],
@@ -3263,7 +3263,7 @@ dict(slug="bidis-kreteks", name="Bidis & Kreteks (Clove Cigarettes)", aliases=["
  legalStatus="Kreteks banned as cigarettes US (sold as filtered cigars); bidis face import restrictions",
  lastUpdated="2026-09-17", sources=["CDC","WHO","FDA"],
  related=["cigarettes","cigars","topics:talk-to-your-kid"]),
-dict(slug="nicotine-replacement", name="Nicotine Replacement (Gum, Patch, Lozenge)", aliases=["NRT", "Nicorette", "Nicotine patch", "Quit smoking aids"],
+dict(slug="nicotine-replacement", image="https://plugreports.com/media/drugs/nicotine-replacement.webp", name="Nicotine Replacement (Gum, Patch, Lozenge)", aliases=["NRT", "Nicorette", "Nicotine patch", "Quit smoking aids"],
  category="tobacco", schedule="OTC (US/EU) — no prescription needed",
  appearance="Gum (2/4 mg), transdermal patches (7–21 mg), lozenges, sprays, inhalers (Rx some places)",
  effects=["Steady controlled nicotine — kills cravings and withdrawal without smoke", "The most-proven quit-smoking tool: doubles quit success"],

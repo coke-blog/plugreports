@@ -1196,7 +1196,7 @@ dict(slug="snake-venom-creams", name="Syn-Ake & 'Snake Venom' Cosmetics", aliase
 ]
 
 BATCH += [
-dict(slug="numbrino", name="Numbrino (Cocaine HCl 4% Nasal Solution)", aliases=["Numbrino", "Cocaine nasal solution", "Cocaine hydrochloride spray", "Legal cocaine"],
+dict(slug="numbrino", image="https://plugreports.com/media/drugs/numbrino.webp", name="Numbrino (Cocaine HCl 4% Nasal Solution)", aliases=["Numbrino", "Cocaine nasal solution", "Cocaine hydrochloride spray", "Legal cocaine"],
  category="stimulants", schedule="Schedule II (US) — approved pharmaceutical; dispensed to clinics/hospitals, not to patients",
  appearance="Single-use 4 mL bottles of 4% (40 mg/mL) clear solution, NDC 0527-1961; box labeled 'FOR TOPICAL USE ONLY. NOT FOR INJECTION OR OPHTHALMIC USE'",
  effects=["Local anesthesia of the nasal mucosa plus vasoconstriction — numbs the nose and stops bleeding during ENT procedures", "Applied by a clinician on soaked cotton/pads or sprayed; patients are monitored"],

@@ -50,7 +50,7 @@ BUSTS = [
 NEWS = [
 dict(slug="hayden-panettiere-fentanyl-toxicology", country="USA", title="Hayden Panettiere died from fentanyl and prescription-drug mix, coroner rules", date="2026-09-23", tag="Alert",
   views=850,
-  image="/assets/img/news-hayden-panettiere.png",
+  image="https://plugreports.com/media/news/hayden-panettiere-fentanyl-toxicology.jpeg",
   summary="A South Carolina coroner has ruled that actor Hayden Panettiere died from the toxic effects of fentanyl, its manufacturing byproduct 4-ANPP, Xanax (alprazolam), a muscle relaxer and an antipsychotic. The 36-year-old 'Heroes' and 'Nashville' star was found unresponsive in a Greenville apartment on August 16. Her death was ruled an accident — and police say their investigation is not over.",
   markdown="""## The coroner's ruling, in plain terms
 On September 22 the Greenville County Coroner's Office released the toxicology findings. The cause of death: the combined toxic effects of five substances — **fentanyl**, **4-ANPP** (a chemical used in fentanyl manufacturing; its presence almost always means illicitly made fentanyl, not a hospital prescription), **alprazolam** (the benzodiazepine sold as Xanax), **methocarbamol** (a prescription muscle relaxer) and **quetiapine** (the sedating antipsychotic sold as Seroquel). The manner of death was ruled an accident, and the coroner has administratively closed its case.
@@ -97,7 +97,7 @@ dict(slug="sterling-nitrous-driving-case", country="United Kingdom", image="http
         "Drug-checking services in several EU cities report nitazenes in pills sold as oxycodone 80 mg. Naloxone reverses them, but multiple doses are often needed.",
         "See our full nitazene explainer and the etonitazene / isotodesnitazene profiles."],
   sources=["EMCDDA EU Early Warning System","NIDA"], drugsInvolved=["etonitazene","isotodesnitazene"]),
- dict(slug="xylazine-beyond-us", title="Xylazine ('Tranq') confirmed in drug supply outside North America", date="2026-09-02", tag="Adulterant",
+ dict(slug="xylazine-beyond-us", image="https://plugreports.com/media/drugs/xylazine.png", title="Xylazine ('Tranq') confirmed in drug supply outside North America", date="2026-09-02", tag="Adulterant",
   summary="First confirmed lab detections of xylazine-adulterated fentanyl in the UK and EU supply. Wound-care and naloxone-limit guidance is being updated by harm-reduction services.",
   body=["Xylazine is a veterinary tranquilizer — not an opioid — so naloxone does not reverse it, though you should still give naloxone for suspected fentanyl co-exposure.",
         "Its hallmark is necrotic skin wounds far from injection sites. Wounds need medical care even when small.",
@@ -346,7 +346,7 @@ QUIT_SPECS = {
 # Block types: p, h2, h3, ul, ol, quote, callout(color,title,text), stats[(n,label)],
 # table(headers+rows), figure(html, caption), timeline, checklist, related[slugs], links[urls]
 TOPICS = [
- dict(slug="what-is-xylazine", title="What is Xylazine (Tranq) and why it's terrifying first responders", date="2026-09-11", read="6 min",
+ dict(slug="what-is-xylazine", image="https://plugreports.com/media/drugs/xylazine.png", title="What is Xylazine (Tranq) and why it's terrifying first responders", date="2026-09-11", read="6 min",
   desc="The veterinary sedative being cut into fentanyl — the wounds, the blackouts, and why naloxone doesn't fix it.",
   blocks=[
    ("p","Xylazine is a veterinary anesthetic approved for horses and cattle. It is <b>not an opioid, not a human medicine, and has no approved antidote</b> for human overdose. Since roughly 2020 it has spread through the US fentanyl supply; by 2023 the DEA found it in about a quarter of tested fentanyl powder, and detections have since been confirmed in Canada, the UK and continental Europe."),

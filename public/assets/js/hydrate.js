@@ -565,6 +565,8 @@ function initBreaking() {
   var CATCOL = {opioids:'#dc2626', stimulants:'#d97706', benzodiazepines:'#7c3aed', sedatives:'#0f766e',
     depressants:'#1d4ed8', dissociatives:'#0891b2', empathogens:'#be185d', psychedelics:'#4d7c0f',
     cannabinoids:'#57534e', performance:'#b45309', hazardous:'#111827'};
+  function esc(s) { var d = document.createElement('div'); d.textContent = s == null ? '' : s; return d.innerHTML; }
+  function chip(t, cls) { return '<span class="chip ' + (cls || '') + '">' + esc(t) + '</span>'; }
   function renderHome() {
     Promise.all(['news', 'busts', 'topics', 'quit', 'hotlines', 'drugs', 'categories', 'settings'].map(function (t) {
       return fetch('/api/public/content?type=' + t).then(function (r) { return r.json(); }).catch(function () { return {items: []}; });
@@ -655,6 +657,6 @@ function initBreaking() {
       function importantCard(it) { return topicCard(it); }
       pane('important', important, importantCard);
       pane('topics', topics, topicCard);
-    }).catch(function () {});
+    }).catch(function (e) { if (window.console) console.error('renderHome hydration failed:', e); });
   }
 
