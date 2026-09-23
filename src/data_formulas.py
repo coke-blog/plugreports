@@ -313,3 +313,10 @@ FORMULAS = {
 }
 FORMULAS.update({"dmaa": "C₇H₁₇N", "dmha": "C₈H₁₉N"})
 FORMULAS.update({"tirzepatide": "C₂₂₅H₃₄₂N₄₆O₆₈", "retatrutide": "C₂₂₁H₃₄₂N₄₆O₆₈", "phenazolam": "C₁₇H₁₂BrClN₄", "etonitazepyne": "C₂₃H₂₅N₅O₂", "para-fluorofentanyl": "C₂₂H₂₈FN₂O", "btmps": "C₂₈H₅₆N₂O₄", "o-dsmt": "C₁₅H₂₁NO₂", "bupropion": "C₁₃H₁₈ClNO"})
+
+FORMULAS.update({
+ "nalmefene": "C₂₁H₂₅NO₃", "methocarbamol": "C₁₁H₁₅NO₅", "tizanidine": "C₉H₈ClN₅S",
+ "amitriptyline": "C₂₀H₂₃N", "clonidine": "C₉H₉Cl₂N₃", "lofexidine": "C₁₁H₁₂Cl₂N₂O",
+ "butane-huffing": "C₄H₁₀", "flunitrazolam": "C₁₇H₁₂FN₅", "fluclotizolam": "C₁₇H₁₂ClFN₄S",
+ "5-mapb": "C₁₂H₁₅NO", "6-mapb": "C₁₂H₁₅NO", "mitragynine": "C₂₃H₃₀N₂O₄",
+})

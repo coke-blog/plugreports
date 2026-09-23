@@ -44,6 +44,8 @@
 
 ## (B) Missing Substances
 
+> **UPDATE 2026-09-23: P2 items 15–24 are DONE** — all 17 profiles (nalmefene, methocarbamol, tizanidine, amitriptyline, clonidine, lofexidine, butane-huffing, flunitrazolam, fluclotizolam, thcjd, thch, hhc-o, dipyanone, 5-mapb, 6-mapb, mitragynine, kratom-extracts) are live at 463 total profiles.
+
 Priorities: **P0** = major active harm trend and/or very high search demand; **P1** = significant trend or search gap; **P2** = worth adding for completeness.
 
 | # | Substance | Why it matters (source) | Priority | Suggested category |

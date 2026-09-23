@@ -16,7 +16,7 @@ RELATED_OVERRIDES = {
   "adderall":        {"related": ["adderall-xr", "ritalin", "topics:spot-pressed-pills"]},
   "oxycodone":       {"related": ["oxycontin", "fentanyl", "topics:spot-pressed-pills"]},
   "suboxone":        {"related": ["subutex", "methadone", "quit:heroin"]},
-  "etonitazene":     {"related": ["isotodesnitazene", "fentanyl", "topics:nitazenes-new-opioids"]},
+  "etonitazene":     {"related": ["isotodesnitazene", "fentanyl", "dipyanone", "topics:nitazenes-new-opioids"]},
   "isotodesnitazene":{"related": ["etonitazene", "fentanyl", "topics:nitazenes-new-opioids"]},
   "ghb":             {"related": ["gbl", "quit:ghb"]},
   "flubromazolam":   {"related": ["alprazolam", "clonazolam", "bromazolam", "news:counterfeit-xanax-update"]},
