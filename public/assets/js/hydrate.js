@@ -7,8 +7,15 @@
   var type = seg[0] || '';
   if (!/^(drugs|busts|news|topics|quit|hotlines|pharmacies|rehabs|sentencing|categories|vs|mix)$/.test(type)) return;
   if (seg.length === 2) { fetch('/api/view', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({type: type, slug: seg[1]})}).catch(function(){}); }
-  fetch('/api/public/content?type=' + (type === 'categories' ? 'drugs' : type)).then(function (r) { return r.json(); }).then(function (d) {
+  var topicSlugs = {};
+  var mainFetch = fetch('/api/public/content?type=' + (type === 'categories' ? 'drugs' : type)).then(function (r) { return r.json(); });
+  var topicsFetch = type === 'topics' ? Promise.resolve(null) :
+    fetch('/api/public/content?type=topics').then(function (r) { return r.json(); }).catch(function () { return null; });
+  Promise.all([mainFetch, topicsFetch]).then(function (res) {
+    var d = res[0];
     var all = (d.items || []);
+    if (type === 'topics') all.forEach(function (x) { if (x && x.slug) topicSlugs[x.slug] = 1; });
+    if (res[1] && res[1].items) res[1].items.forEach(function (x) { if (x && x.slug) topicSlugs[x.slug] = 1; });
     if (seg.length === 2 && type !== 'categories') {
       var hit = all.find(function (x) { return x && x.slug === seg[1]; });
       if (hit && hit.unpublished) return renderGone();
@@ -57,6 +64,9 @@
     }
     var p = target.split(':');
     var SECTIONS = ['busts','news','drugs','topics','quit','categories','hotlines','pharmacies','rehabs','sentencing','mix','suggest','about'];
+    if (p.length === 1 && SECTIONS.indexOf(target) === -1 && topicSlugs[target]) {
+      return '<a href="/topics/' + esc(target) + '/"><span class="mini" style="background:#b45309">&#128218;</span><span>' + esc(target.replace(/-/g, ' ')) + '</span></a>';
+    }
     var href = '/' + (p.length > 1 ? p[0] + '/' + p[1] : (SECTIONS.indexOf(target) > -1 ? target : 'drugs/' + entry)) + '/';
     var lbl = custom || (p.length > 1 ? p[1] : target).replace(/-/g, ' ');
     return '<a href="' + href + '"><span class="mini" style="background:#d97706">' + esc((lbl[0] || '?').toUpperCase()) + '</span><span>' + esc(lbl) + '</span></a>';
@@ -326,22 +336,35 @@ function initBreaking() {
       if (t === 'checklist') return '<ul class="checklist">' + b[1].map(function (x) { return '<li>' + x + '</li>'; }).join('') + '</ul>';
       if (t === 'timeline') return '<div class="timeline">' + b[1].map(function (x, i) {
         return '<div class="tl-item' + (i === 1 ? ' red' : '') + '"><h4>' + esc(x[0]) + ' &mdash; ' + esc(x[1]) + '</h4><p>' + esc(x[2]) + '</p></div>'; }).join('') + '</div>';
+      if (t === 'related') return '<div class="related print-hide"><h2>You may also want to know about</h2><div class="rel-grid">' +
+        (b[1] || []).map(chipEntry).join('') + '</div></div>';
       return '';
     }).join('');
   }
 
+  function dedupeGrid(rg) {
+    var seen = {}, dup = [];
+    Array.prototype.forEach.call(rg.querySelectorAll('a[href]'), function(a) {
+      if (seen[a.getAttribute('href')]) dup.push(a); else seen[a.getAttribute('href')] = 1;
+    });
+    dup.forEach(function(a) { a.parentNode.removeChild(a); });
+  }
   function renderTopic(it) {
     setH1(it.title);
     var articles = document.querySelectorAll('article.article');
     var body = articles[articles.length - 1]; if (!body) return;
     if (it.image) setDetailImage(it.image);
+    var rel = (it.related || []).map(chipEntry).join('');
+    var defs = it.relatedNoDefaults ? '' :
+      '<a href="/hotlines/"><span class="mini" style="background:#dc2626">&#128222;</span><span>Hotlines — help now</span></a>' +
+      '<a href="/quit/"><span class="mini" style="background:#16a34a">&#8987;</span><span>Quitting — day by day</span></a>';
     body.innerHTML = (it.markdown ? mdRender(it.markdown) : renderBlocks(it.blocks)) +
       '<div class="related print-hide"><h2>Drugs mentioned &amp; help</h2><div class="rel-grid">' +
       ((it.drugsInvolved || []).map(function (d) {
         return '<a href="/drugs/' + d + '/"><span class="mini" style="background:#d97706">' + esc((d[0] || '?').toUpperCase()) + '</span><span>' + esc(d.replace(/-/g, ' ')) + '</span></a>';
-      }).join('')) +
-      '<a href="/hotlines/"><span class="mini" style="background:#dc2626">&#128222;</span><span>Hotlines — help now</span></a>' +
-      '<a href="/quit/"><span class="mini" style="background:#16a34a">&#8987;</span><span>Quitting — day by day</span></a></div></div>';
+      }).join('')) + rel + defs + '</div></div>';
+    var rg = body.querySelector('.related .rel-grid');
+    if (rg) dedupeGrid(rg);
   }
 
   function renderQuit(it) {
@@ -354,6 +377,18 @@ function initBreaking() {
       return '<div class="tl-item' + (i === 1 ? ' red' : '') + '"><h4>' + esc(x[0]) + ' &mdash; ' + esc(x[1]) + '</h4><p>' + esc(x[2]) + '</p></div>'; }).join('');
     var cl = document.querySelector('ul.checklist');
     if (cl && Array.isArray(it.tips)) cl.innerHTML = it.tips.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('');
+    if (Array.isArray(it.related)) {
+      var rg = document.querySelector('article .related .rel-grid') || document.querySelector('.related .rel-grid');
+      if (rg) {
+        rg.innerHTML = '<a href="/topics/what-actually-happens-when-you-quit/"><span class="mini" style="background:#b45309">&#128218;</span><span>The master quitting explainer</span></a>' +
+          (it.slug ? '<a href="/drugs/' + esc(it.slug) + '/"><span class="mini" style="background:#d97706">' + esc((it.name || it.slug || '?')[0].toUpperCase()) + '</span><span>About ' + esc(it.name || it.slug) + '</span></a>' : '') +
+          it.related.map(chipEntry).join('') +
+          (it.relatedNoDefaults ? '' :
+          '<a href="/hotlines/"><span class="mini" style="background:#dc2626">&#9742;</span><span>Hotlines</span></a>' +
+          '<a href="/rehabs/"><span class="mini" style="background:#16a34a">&#10010;</span><span>Verified rehab centers</span></a>');
+        dedupeGrid(rg);
+      }
+    }
   }
 
   function renderMix(it) {
