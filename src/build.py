@@ -1537,6 +1537,8 @@ def build_lang_drug_pages(lang):
     from data_i18n import LANGS
     pack = LANGS[lang]
     TR, CATS_T = pack["drugs"], pack["cats"]
+    L = pack.get("labels", {})
+    lb = lambda k, fb: L.get(k, fb)
     for slug, o in TR.items():
         d = DRUG_BY_SLUG[slug]
         c = CATEGORIES[d["category"]]
@@ -1545,13 +1547,13 @@ def build_lang_drug_pages(lang):
         rel = related_drugs(d)
         relhtml = "".join(f'<a href="/{lang}/drugs/{r["slug"]}/">{rel_card(r["slug"])}</a>' for r in rel[:4] if r["slug"] in TR) or "".join(f'<a href="/drugs/{r["slug"]}/">{rel_card(r["slug"])}</a>' for r in rel[:4])
         rows = "".join(f'<div class="fact"><b>{k}</b><span>{v}</span></div>' for k, v in [
-            ("Also known as", esc(", ".join(d["aliases"]))),
-            ("Category", f'<span class="cat-dot" style="background:{c["color"]}"></span>{esc(cat_name)}'),
-            ("Schedule / class", esc(o.get("schedule", d["schedule"]))),
-            ("Appearance", esc(o.get("appearance", d["appearance"]))),
-            ("Street price", esc(o.get("streetPrice", d["streetPrice"]))),
-            ("Legal status", esc(o.get("legalStatus", d["legalStatus"]))),
-            ("Last updated", esc(d["lastUpdated"]))])
+            (lb("aka", "Also known as"), esc(", ".join(d["aliases"]))),
+            (lb("cat", "Category"), f'<span class="cat-dot" style="background:{c["color"]}"></span>{esc(cat_name)}'),
+            (lb("sched", "Schedule / class"), esc(o.get("schedule", d["schedule"]))),
+            (lb("appr", "Appearance"), esc(o.get("appearance", d["appearance"]))),
+            (lb("sp", "Street price"), esc(o.get("streetPrice", d["streetPrice"]))),
+            (lb("ls", "Legal status"), esc(o.get("legalStatus", d["legalStatus"]))),
+            (lb("lu", "Last updated"), esc(d["lastUpdated"]))])
         body = f"""
 <div class="wrap">
 <div class="ptop">
@@ -1560,48 +1562,52 @@ def build_lang_drug_pages(lang):
 <span class="glyph" style="background:{c['grad']}">{esc(d['name'][0])}</span>
 <div><span class="kicker" style="background:{c['grad']};color:#fff;border:0">{esc(cat_name)}</span>
 <h1 style="margin-top:10px">{esc(d['name'])}</h1>
-<p class="alias">Street names: <b>{esc(", ".join(d["aliases"]))}</b></p></div></section>
-<div class="callout red print-hide"><b>Overdose? Act now.</b> Call emergency services. Give naloxone for opioid-like signs. <a href="/{lang}/hotlines/">Hotlines</a></div>
-<div class="panel"><h2><span class="ic" style="background:{c['color']};color:#fff">&#9889;</span>What it does</h2>
+<p class="alias">{lb("aka", "Also known as")}: <b>{esc(", ".join(d["aliases"]))}</b></p></div></section>
+<div class="callout red print-hide"><b>{lb("od_b", "Overdose? Act now.")}</b> {lb("od_t", "Call emergency services. Give naloxone for opioid-like signs.")} <a href="/{lang}/hotlines/">{lb("hot_k", "Hotlines")}</a></div>
+<div class="panel"><h2><span class="ic" style="background:{c['color']};color:#fff">&#9889;</span>{lb("wd", "What it does")}</h2>
 <ul class="ticks">{''.join(f"<li>{esc(e)}</li>" for e in o["effects"])}</ul>
-<h2 style="margin-top:22px"><span class="ic" style="background:#dc2626;color:#fff">&#9888;</span>Key risks</h2>
+<h2 style="margin-top:22px"><span class="ic" style="background:#dc2626;color:#fff">&#9888;</span>{lb("kr", "Key risks")}</h2>
 <ul class="ticks red">{''.join(f"<li>{esc(r)}</li>" for r in o["risks"])}</ul>
-<h2 style="margin-top:22px"><span class="ic" style="background:#111827;color:#fff">&#10010;</span>Overdose signs</h2>
+<h2 style="margin-top:22px"><span class="ic" style="background:#111827;color:#fff">&#10010;</span>{lb("od", "Overdose signs")}</h2>
 <ul class="ticks red">{''.join(f"<li>{esc(x)}</li>" for x in o["overdoseSigns"])}</ul></div>
 </div>
 <aside class="ptop-rail">
 {pimg}
-<div class="panel"><h2><span class="ic" style="background:{c['color']};color:#fff">&#128203;</span>Quick facts</h2>{rows}
-<div style="margin-top:14px"><span class="chip green">Sources: {esc(", ".join(d["sources"]))}</span></div></div>
+<div class="panel"><h2><span class="ic" style="background:{c['color']};color:#fff">&#128203;</span>{lb("qf", "Quick facts")}</h2>{rows}
+<div style="margin-top:14px"><span class="chip green">{lb("src", "Sources")}: {esc(", ".join(d["sources"]))}</span></div></div>
 </aside>
 </div>
-<div class="related print-hide"><h2>You may also want to know about</h2>
+<div class="related print-hide"><h2>{lb("rel", "You may also want to know about")}</h2>
 <div class="rel-grid">{relhtml}
-<a href="/hotlines/"><span class="mini" style="background:#dc2626">&#9742;</span><span>Hotlines</span></a></div></div>
+<a href="/{lang}/hotlines/"><span class="mini" style="background:#dc2626">&#9742;</span><span>{lb("hot_k", "Hotlines")}</span></a></div></div>
 </div>"""
-        title = f"{d['name']}: effects, overdose signs, street price & help | plugreports"
+        M = LANGS[lang].get("meta", {})
+        title = M.get("drug_title", "{name}: effects, overdose signs, street price & help | plugreports").format(name=d['name'], cat=cat_name)
         out = f"{lang}/drugs/{slug}/index.html"
-        w(out, shell(out, title, f"{d['name']} — {cat_name}. Effects, overdose signs, street price and harm-reduction info.", body,
+        w(out, shell(out, title, M.get("drug_desc", "{name} — {cat}. Effects, overdose signs, street price and harm-reduction info.").format(name=d['name'], cat=cat_name), body,
                      lang=lang, canonical=f"{SITE}/{lang}/drugs/{slug}/", alts=drug_alts(slug)))
 
 def build_lang_hotlines(lang):
     from data_i18n import LANGS
     pack = LANGS[lang]
     REG_T, HL = pack["regions"], pack["hotlines"]
+    L = pack.get("labels", {})
+    lb = lambda k, fb: L.get(k, fb)
     secs = []
     for region, items in HL.items():
         rname = REG_T.get(region, region)
         cards = "".join(f"""<div class="hl-card"><h3>{esc(it[1])}</h3>
 <div class="num">{esc(it[0])}</div><div class="who">{esc(it[2])}</div>
-{f'<a class="call-btn" href="tel:{it[3]}">&#128222; Call</a>' if it[3] else '<span class="chip" style="margin-top:12px">Text / online</span>'}</div>""" for it in items)
+{f'<a class="call-btn" href="tel:{it[3]}">&#128222; {lb("call", "Call")}</a>' if it[3] else f'<span class="chip" style="margin-top:12px">{lb("call_text", "Text / online")}</span>'}</div>""" for it in items)
         secs.append(f'<section class="hl-region"><span class="kicker amber">{esc(rname)}</span><div class="hl-grid">{cards}</div></section>')
     body = f"""<div class="wrap"><div style="padding-top:26px">
-<span class="kicker">Help directory</span><h1 style="font-size:clamp(28px,4vw,42px);margin-top:10px">Hotlines</h1>
+<span class="kicker">{lb("hot_kick", "Help directory")}</span><h1 style="font-size:clamp(28px,4vw,42px);margin-top:10px">{lb("hot_h1", "Hotlines")}</h1>
 {''.join(secs)}
-<div class="callout red"><b>Overdose right now?</b>Call your local emergency number FIRST.</div>
+<div class="callout red"><b>{lb("od_b", "Overdose right now?")}</b>{lb("hot_emerg", "Call your local emergency number FIRST.")}</div>
 </div></div>"""
     out = f"{lang}/hotlines/index.html"
-    w(out, shell(out, f"Drug overdose & crisis hotlines | plugreports ({lang})", "Verified overdose and crisis helplines.", body,
+    M = LANGS[lang].get("meta", {})
+    w(out, shell(out, M.get("hot_title", f"Drug overdose & crisis hotlines | plugreports ({lang})"), M.get("hot_desc", "Verified overdose and crisis helplines."), body,
                  lang=lang, canonical=f"{SITE}/{lang}/hotlines/", alts=hotline_alts()))
 
 def build_lang_home(lang):
@@ -1624,7 +1630,8 @@ def build_lang_home(lang):
 <div class="sec-head"><div><span class="kicker">{esc(H['hk'])}</span><h2>{esc(H['hh'])}</h2><p>{esc(H['hp'])}</p></div><a class="btn btn-red" href="/{lang}/hotlines/">{esc(H['hb'])}</a></div>
 </div></section>"""
     out = f"{lang}/index.html"
-    w(out, shell(out, f"plugreports — drug information library ({lang})", clip(H['lede']), body,
+    M = LANGS[lang].get("meta", {})
+    w(out, shell(out, M.get("home_title", f"plugreports — drug information library ({lang})"), clip(M.get("home_desc", H['lede'])), body,
                  lang=lang, canonical=f"{SITE}/{lang}/", alts=home_alts()))
 
 def build_lang_categories(lang):
@@ -1638,7 +1645,8 @@ def build_lang_categories(lang):
         cards = "".join(f'<a class="card" href="/{lang}/drugs/{d["slug"]}/"><h3>{esc(d["name"])}</h3><div class="foot">{esc(CT.get(k, c["name"]))} &rarr;</div></a>' for d in items)
         body = f'<div class="wrap"><section class="cat-hero" style="background:{c["grad"]}"><span class="kicker" style="background:rgba(255,255,255,.15);color:#fff;border:0">{len(items)}</span><h1>{esc(CT.get(k, c["name"]))}</h1><p>{esc(c["tagline"])}</p></section><div class="cards">{cards}</div></div>'
         out = f"{lang}/categories/{k}/index.html"
-        w(out, shell(out, f"{CT.get(k, c['name'])} | plugreports", clip(c["tagline"]), body,
+        M = LANGS[lang].get("meta", {})
+        w(out, shell(out, M.get("cat_title", "{cat} | plugreports").format(cat=CT.get(k, c['name'])), clip(M.get("cat_desc", c["tagline"])).format(cat=CT.get(k, c['name'])), body,
                      lang=lang, canonical=f"{SITE}/{lang}/categories/{k}/", alts=cat_alts(k)))
 
 def build_indexes():
