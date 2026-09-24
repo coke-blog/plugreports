@@ -3,6 +3,14 @@
 # and MUST be completed with verified details before publishing. Never invent bust facts.
 
 BUSTS = [
+ dict(slug="bust-fsb-moscow-cocaine-zelensky-brand", tag="Alert", country="Russia", title="FSB seizes 311 kg of Latin America-to-EU cocaine near Moscow; agency video shows bricks branded with Zelensky image", date="2026-09-24",
+  confirmed=True, views=300, image="/assets/img/bust-fsb-zelensky-cocaine.jpg",
+  location="Moscow Region, Russia", agency="FSB (Federal Security Service), Public Relations Centre",
+  sourceUrl="https://tass.ru/proisshestviya/28146043",
+  summary="Russia's FSB says it caught a 24-year-old Russian citizen red-handed in the Moscow Region with 311.6 kilograms of cocaine, accusing him of organising an international channel smuggling especially large quantities from Latin America to the European Union. Video released by the agency shows officers stopping a car, handcuffing the suspect and laying out bags of bricks — some bearing a photo of Ukrainian President Volodymyr Zelensky with dollar signs over the eyes and a '2026' caption. The branding detail comes from the FSB's own footage: similar Zelensky-branded cocaine imagery circulated online in July 2026 and was debunked as a manipulated fake, so the motif's provenance cannot be independently verified. The seizure itself is confirmed by the FSB Public Relations Centre and reported by TASS, RIA Novosti and international outlets.",
+  sentencing="Russia: drug trafficking on an especially large scale (Article 228.1, part 5) carries 15 to 20 years, up to life imprisonment; the suspect is in pre-trial detention.",
+  drugsInvolved=["cocaine"],
+  related=["cocaine","topics:cocaine-purity-and-cuts","topics:drug-busts-this-week","news:hayden-panettiere-fentanyl-toxicology"]),
  dict(slug="bust-river-grove-cocaine-339", tag="Alert", country="USA", title="DEA seizes 339.5 lbs of cocaine ($15.2M) and $700K cash in River Grove, Illinois", date="2026-09-18",
   confirmed=True, views=400, image="https://plugreports.com/media/drugs/bust-river-grove-cocaine.png",
   location="River Grove, Illinois (Chicago suburbs), USA", agency="DEA Chicago Field Division + ~10 partner agencies",
