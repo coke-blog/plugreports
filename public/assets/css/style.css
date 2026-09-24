@@ -386,3 +386,12 @@ table.vs-table thead th.vs-corner{background:transparent;border-color:transparen
 .vs-group h2{font-size:22px}
 .vs-group-sub{color:var(--muted);font-size:14.5px;margin:6px 0 14px}
 @media(max-width:640px){.vs-hero{grid-template-columns:1fr;gap:14px;padding:20px 14px}.vs-badge{margin:0 auto;order:2}.vs-side.right{order:3}}
+
+/* RTL (Arabic) */
+html[dir="rtl"] body{text-align:right}
+html[dir="rtl"] .ptop{direction:rtl}
+html[dir="rtl"] .crumbs,html[dir="rtl"] .hero{text-align:right}
+html[dir="rtl"] .hl-card{text-align:right}
+html[dir="rtl"] .tick li,html[dir="rtl"] .ticks li{padding-right:30px;padding-left:0}
+html[dir="rtl"] .tick li::before,html[dir="rtl"] .ticks li::before{left:auto;right:0}
+html[dir="rtl"] .pill-nav a{direction:ltr}

@@ -35,7 +35,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PUB  = os.path.join(ROOT, "public")
 SITE = "https://plugreports.com"
 TODAY = datetime.date.today().isoformat()  # actual build date — used for sitemap/lastmod fallback
-LANG_LIST = ("de", "hi", "no", "pl", "fr")
+LANG_LIST = ("de", "hi", "no", "pl", "fr", "pt", "ar")
 
 def esc(s): return html.escape(str(s), quote=True)
 def clip(s, n=155):
@@ -229,8 +229,9 @@ def shell(path, title, desc, body, jsonld=None, canonical=None, extra_head="", o
         ld += '<script src="/assets/js/hydrate.js?v=16" defer></script>'
         if path == "index.html":
             ld += '<script src="/assets/js/breaking.js?v=16" defer></script>'
+    rtl = ' dir="rtl"' if lang == "ar" else ""
     return f"""<!DOCTYPE html>
-<html lang="{lang}">
+<html lang="{lang}"{rtl}>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -1530,7 +1531,7 @@ def build_categories_es():
 
 
 
-LANG_LIST = ("de", "hi", "no", "pl", "fr")
+LANG_LIST = ("de", "hi", "no", "pl", "fr", "pt", "ar")
 
 def build_lang_drug_pages(lang):
     from data_i18n import LANGS
