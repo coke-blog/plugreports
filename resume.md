@@ -56,6 +56,13 @@ plugreports.com is a multilingual harm-reduction library (463 drug profiles, 26 
 - Contact mailbox `contact@plugreports.com` — Cloudflare Email Routing not yet set up by user.
 - Optional: IndexNow, Arabic/Portuguese i18n, R2 bucket, per-locale meta translations.
 
+## Arabic + Portuguese i18n (2026-09-24, deploy 1b3b66a7, push 2fa0b53f9a)
+- NEW locales `/pt/` and `/ar/` (LANG_LIST += pt, ar): home hero, hotlines (pt: Portugal 1414/112 + Brazil 188/136; ar: UAE 8004673/998 + Saudi 937/920033114), 18 category names, 9 region names, 8 drug profiles each (same core set as de/fr/hi/no/pl: fentanyl, heroin, cocaine, meth, mdma, weed, ketamine, alprazolam).
+- Arabic is RTL: shell() emits `dir="rtl"` for lang=="ar" (src/build.py — rtl var before <html> tag), plus an RTL CSS block in style.css (text-align, .ptop direction, ticks padding swap, pill-nav stays LTR). app.js lang switcher already handles `dir = (l==='ar')?'rtl':'ltr'`.
+- Packs appended to src/data_i18n.py via `LANGS.update({...})` at file end.
+- Sitemap 835 URLs; hreflang clusters include ar/pt on home/hotlines/drug pages.
+- NOTE: locale drug page `<title>`/meta-desc stay English (matches existing packs); localized meta is the known roadmap leftover.
+
 ## FSB Moscow cocaine bust (2026-09-24, deploy c429ab11, pushes ffa5ff420d + e8e22f47af)
 - New bust `bust-fsb-moscow-cocaine-zelensky-brand` (tag Alert → leads breaking slider): FSB seized 311.6 kg cocaine in Moscow Region from Russian citizen b.2001, alleged LatAm→EU channel. Zelensky-image branding is attributed to FSB's own video with explicit caveat (July 2026 Romanian-customs version was a debunked fake). Sources: FSB PR Centre via TASS/RIA + Caliber.Az. Image: user-uploaded TASS still → /assets/img/bust-fsb-zelensky-cocaine.jpg (pushed separately — push2.py skips image exts).
 - /tmp wiped again; push2.py recreated (same spec: EXCLUDE image exts, MAX_SIZE 1.5MB, state /tmp/push2_state.json, clear uploaded+remote before every push).
