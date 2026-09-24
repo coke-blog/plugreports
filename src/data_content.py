@@ -56,6 +56,47 @@ BUSTS = [
 ]
 
 NEWS = [
+dict(slug="fish-scale-vs-wash-cocaine", tag="Explainer", country="Worldwide", image="https://plugreports.com/media/drugs/cocaine.jpeg",
+ title="Fish scale cocaine and 'wash': what dealers actually mean", date="2026-09-25", read="6 min",
+ views=400,
+ summary="Two words dominate cocaine listings right now: 'fish scale' and 'wash'. One describes a look, the other a cleaning process — and neither means what most buyers think it means. Here is what both terms actually refer to, and what they can and cannot tell you about what you are holding.",
+ markdown="""## What is fish scale cocaine?
+'Fish scale' is not a different drug, a different plant or a different synthesis. It is a **description of appearance**: cocaine hydrochloride that forms flat, pearly, iridescent flakes — like the skin of a fish. Hold a chunk up to the light and it shimmers slightly, breaking apart in thin layers rather than powdering into dust.
+
+The look comes from how the cocaine was crystallized and handled. When cocaine HCl is properly precipitated, dried and minimally processed, it keeps that flaky, shimmering structure. Powdery, matte 'coke' is usually the same material after it has been crushed, re-pressed, or stepped on — each hand it passes through grinds the crystals down and mixes in whatever the dealer used to stretch it.
+
+So fish scale is traditionally read as a **purity signal**: shimmering flakes suggest the brick was not heavily re-rocked or cut at the last mile. That is all it is — a suggestion.
+
+## What fish scale does NOT tell you
+A shiny surface can be manufactured. Common tricks include:
+- **Boric acid or other shimmer powders** dusted over low-grade re-pressed cocaine to imitate the pearlescent look.
+- **Oil or wax coatings** that give dull powder a greasy sheen and false 'fish scale' gloss.
+- **Cosmetic cuts** like benzocaine or lidocaine that numbs the gums on contact — the classic street 'purity test' that proves nothing except that a local-anesthetic cut is present.
+
+There is no visual test for cocaine purity. None. A lab or a drug-checking service is the only way to know, and even they will tell you appearance correlates weakly with actual purity.
+
+## What is 'wash' cocaine?
+'Wash' refers to a **cleaning process**, not a product. Two meanings circulate, and dealers blur them on purpose:
+
+**1. Acetone washing (the real one).** Cocaine dissolves in acetone; most common cuts — glucose, mannitol, creatine, baking soda, starch — do not. So the powder is stirred into acetone, the undissolved filler is filtered out, and the cocaine is recovered as the solvent evaporates. Done carefully, this removes the bulk cutting agents and returns a smaller amount of noticeably purer material. Ethanol and chloroform washes work on different cut profiles.
+
+**2. Marketing slang.** On listings, 'washed' increasingly just means 'trust me, bro' — a word pasted onto ordinary coke to justify a higher price, the same way 'fish scale' and 'pure Peruvian flake' are used.
+
+## What washing can and cannot remove
+- It **removes** most powdered bulking agents (sugars, starches, salts).
+- It **mostly fails on levamisole**, the cattle-dewormer cut found in a large share of seized cocaine. Levamisole dissolves in the same solvents as cocaine, so it survives the wash. This matters because levamisole is linked to agranulocytosis — a collapse of white blood cells — and necrotic skin lesions.
+- It **does not remove** caffeine well, and it does nothing about the cocaine itself: a washed product is simply a more concentrated version of the same cardiovascular stress, the same vasoconstriction, the same overdose risk per milligram — now with fewer milligrams per line and a strong temptation to take bigger ones.
+
+## The honest bottom line
+- **Fish scale is a look, not a certificate.** Shimmer can be faked; dull powder can be pure.
+- **Washed cocaine is still cocaine** — concentrated, still cut with whatever dissolves alongside it (often levamisole), and still capable of stopping a heart on a bad day.
+- **The only real tests are chemical or chromatographic.** Reagent kits tell you cocaine is present; they do not tell you how much. Fentanyl strips are cheap and worth running on any powder — fentanyl in cocaine is uncommon but repeatedly documented, and it kills first-time users.
+- **Never mix with alcohol.** Cocaine plus ethanol forms cocaethylene in the liver — a longer-lasting, more cardiotoxic compound that is implicated in most cocaine deaths where alcohol was also present.
+- **Watch the heat.** Cocaine is strongly heat-sensitive; overheating plus vasoconstriction is the classic summer-collapse scenario. Hydrate with water, take breaks, and know that chest pain, severe headache or one-sided weakness after a line is a 911 moment, not a wait-and-see moment.
+
+If you use cocaine regularly, our [cocaine purity and cuts explainer](/topics/cocaine-purity-and-cuts/) goes deeper on levamisole and the re-rock trade, and the [cocaine profile](/drugs/cocaine/) covers overdose signs, street price and what quitting actually feels like day by day.""",
+ sources=["EMCDDA drug-checking reports","NIDA","DEA Intelligence Program"], drugsInvolved=["cocaine"],
+ related=["topics:cocaine-purity-and-cuts","cocaine","topics:what-actually-happens-when-you-quit"]),
 dict(slug="hayden-panettiere-fentanyl-toxicology", country="USA", title="Hayden Panettiere died from fentanyl and prescription-drug mix, coroner rules", date="2026-09-23", tag="Alert",
   views=850,
   image="https://plugreports.com/media/news/hayden-panettiere-fentanyl-toxicology.jpeg",
