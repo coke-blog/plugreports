@@ -587,6 +587,8 @@ Complete machine-readable drug records: [llms-full.txt](https://plugreports.com/
 - [/news/counterfeit-xanax-update/](https://plugreports.com/news/counterfeit-xanax-update/) Counterfeit 'Xanax bars' increasingly contain flubromazolam or fentanyl
 
 ## Busts & seizures
+- [/busts/bust-adelaide-highgate-trafficking/](https://plugreports.com/busts/bust-adelaide-highgate-trafficking/) Adelaide police seize 3 kg cocaine, $72,595 cash, ketamine, MDMA in Highgate trafficking raid
+- [/busts/bust-argentina-mdma-52kg-record/](https://plugreports.com/busts/bust-argentina-mdma-52kg-record/) Largest MDMA seizure in Argentine history: 52 kg of max-purity ecstasy hidden in a van from Belgium
 - [/busts/bust-vancouver-cocaine-328kg-tshirts/](https://plugreports.com/busts/bust-vancouver-cocaine-328kg-tshirts/) Vancouver's largest-ever cocaine seizure: 328.55 kg in duffle bags inside a T-shirt shipping container
 - [/busts/bust-fsb-moscow-cocaine-zelensky-brand/](https://plugreports.com/busts/bust-fsb-moscow-cocaine-zelensky-brand/) FSB seizes 311 kg of Latin America-to-EU cocaine near Moscow; agency video shows bricks branded with Zelensky image
 - [/busts/bust-river-grove-cocaine-339/](https://plugreports.com/busts/bust-river-grove-cocaine-339/) DEA seizes 339.5 lbs of cocaine ($15.2M) and $700K cash in River Grove, Illinois

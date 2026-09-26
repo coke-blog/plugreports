@@ -330,9 +330,9 @@ def build_index(es=False):
     important = [t for t in TOPICS if t.get('tag') == 'Important'] or [t for t in TOPICS if 'nasal-spray' in t['slug']]
     importantcards = "".join(card(f"/topics/{t['slug']}/", f'<span class="chip red">&#9888; IMPORTANT</span><span class="chip">{esc(t.get("read",""))}</span>', t["title"], t["desc"], "Read now", t.get("image")) for t in important)
     topiccards = "".join(card(f"/topics/{t['slug']}/", f'<span class="chip red">GUIDE</span><span class="chip">{esc(t["read"])}</span>', t["title"], t["desc"], "Read guide", t.get("image")) for t in TOPICS[:6])
-    alerts = [dict(n) for n in NEWS if n.get("tag") == "Alert"] + [dict(b) for b in BUSTS if b.get("tag") == "Alert"]
+    alerts = [dict(n, _type="news") for n in NEWS if n.get("tag") == "Alert"] + [dict(b, _type="busts") for b in BUSTS if b.get("tag") == "Alert"]
     alerts.sort(key=lambda x: x.get("date",""), reverse=True)
-    alerts = alerts[:5] or NEWS[:1]
+    alerts = alerts[:5] or [dict(NEWS[0], _type="news")]
     breaking = ""
     if alerts:
         slides = []
@@ -343,7 +343,7 @@ def build_index(es=False):
             slides.append(f"""<div class="b-slide{' on' if i==0 else ''}">{bimg}<div><div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">{cchip}<span class="b-date">{esc(al["date"])}</span></div>
 <h2>{esc(al["title"])}</h2>
 <p>{esc(al["summary"][:170])}&hellip;</p>
-<a class="btn btn-red" href="/news/{al["slug"]}/">Read the full story &rarr;</a></div></div>""")
+<a class="btn btn-red" href="/{al['_type']}/{al["slug"]}/">Read the full story &rarr;</a></div></div>""")
         dots = "".join(f'<button class="b-dot{" on" if i==0 else ""}" data-i="{i}" aria-label="Slide {i+1}"></button>' for i in range(len(slides)))
         breaking = f"""<section class="breaking" id="breaking"><div class="wrap">
 <div class="b-top"><span class="b-chip">&#9889; BREAKING</span><div class="b-dots">{dots}</div></div>
