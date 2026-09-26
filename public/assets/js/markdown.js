@@ -10,6 +10,8 @@ window.MD = (function () {
     s = s.replace(/\*\*([^*]+)\*\*/g, '<b>$1</b>');
     s = s.replace(/\*([^*\n]+)\*/g, '<i>$1</i>');
     s = s.replace(/\[([^\]]+)\]\((https?:[^)\s]+)\)/g, '<a href="$2" rel="noopener">$1</a>');
+    // internal links: [text](/path/) or [text](path/)
+    s = s.replace(/\[([^\]]+)\]\(((?!https?:)[^)\s]+)\)/g, '<a href="$2">$1</a>');
     return s;
   }
   var CALLOUT = { warning: 'amber', danger: 'red', red: 'red', tip: 'green', success: 'green', note: 'amber' };

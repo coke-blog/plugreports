@@ -41,9 +41,11 @@
     document.title = (it.seoTitle || (it.name || it.title) + ' | plugreports');
     var md = it.seoDesc || it.summary || it.desc;
     if (md) { var m = document.querySelector('meta[name="description"]'); if (m) m.setAttribute('content', md); }
-    if (it.markdown && (type === 'topics' || type === 'news')) {
+    if (it.markdown && (type === 'topics' || type === 'news' || type === 'data')) {
       document.getElementById('dyn').innerHTML = '<article class="article" style="max-width:820px;margin:0 auto;padding-top:26px">' +
-        (type === 'topics' ? '<span class="kicker amber">GUIDE</span>' : '<span class="kicker">' + esc(it.tag || 'NEWS') + '</span>') +
+        (type === 'topics' ? '<span class="kicker amber">GUIDE</span>'
+          : type === 'data' ? '<span class="kicker">DATA' + (it.region ? ' · ' + esc(it.region) : '') + (it.read ? ' · ' + esc(it.read) + ' read' : '') + '</span>'
+          : '<span class="kicker">' + esc(it.tag || 'NEWS') + '</span>') +
         '<h1 style="margin-top:12px">' + esc(it.title) + '</h1>' +
         '<div class="byline"><span>' + esc(it.date || '') + '</span></div>' +
         (it.image ? '<img class="detail-img" src="' + esc(it.image) + '" loading="lazy">' : '') +
@@ -58,6 +60,7 @@
     else if (type === 'busts') html = bustPage(it);
     else if (type === 'news') html = newsPage(it);
     else if (type === 'topics') html = topicPage(it);
+    else if (type === 'data') html = dataPage(it);
     else if (type === 'pharmacies' || type === 'rehabs') html = centerPage(it, type);
     else if (type === 'quit') html = quitPage(it);
     else if (type === 'vs') html = vsPage(it);
@@ -155,6 +158,15 @@
         if (t === 'timeline') return '<div class="timeline">' + b[1].map(function (x, i) { return '<div class="tl-item' + (i === 1 ? ' red' : '') + '"><h4>' + esc(x[0]) + ' — ' + esc(x[1]) + '</h4><p>' + esc(x[2]) + '</p></div>'; }).join('') + '</div>';
         return '';
       }).join('');
+  }
+
+  function dataPage(it) {
+    return '<span class="kicker">DATA' + (it.region ? ' · ' + esc(it.region) : '') + '</span>' +
+      '<h1 style="margin-top:12px">' + esc(it.title) + '</h1>' +
+      '<div class="byline"><span>Updated ' + esc(it.date || '') + '</span></div>' +
+      (it.image ? '<img class="detail-img" src="' + esc(it.image) + '" loading="lazy">' : '') +
+      '<p class="lede">' + esc(it.desc || '') + '</p>' +
+      (it.sources && it.sources.length ? '<h2>Sources</h2><ul>' + it.sources.map(function (s) { return '<li>' + esc(s) + '</li>'; }).join('') + '</ul>' : '');
   }
 
   function centerPage(it, type) {

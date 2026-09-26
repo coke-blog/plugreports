@@ -1,3 +1,43 @@
+def data_markdown(pg):
+    """Full-page Markdown version of a data page (used for KV/admin editing)."""
+    L = []
+    L.append("> **Read this first** — no country anywhere measures meth use per city directly. "
+             "This ranking combines the strongest available proxies — wastewater analysis, forensic-lab reporting, "
+             "treatment admissions and police seizures — and is directional, not a precise league table. "
+             "Positions in the middle of the list should be read as a band.")
+    L.append("")
+    L.append("## Headline numbers")
+    for n, l in pg["stats"]:
+        L.append(f"- **{n}** — {l}")
+    L.append("")
+    L.append("## How this ranking works")
+    L.append(pg["intro"])
+    L.append("")
+    L.append("## The ranking")
+    L.append("")
+    L.append("| # | City | Why it ranks here |")
+    L.append("|---|------|-------------------|")
+    for r, c, note in pg["cities"]:
+        L.append(f"| {r} | **{c}** | {note} |")
+    L.append("")
+    L.append("## Also worth knowing")
+    L.append(pg["notes"])
+    L.append("")
+    L.append("## Methodology")
+    L.append(pg["method"])
+    L.append("")
+    L.append("## Sources")
+    for s in pg["sources"]:
+        L.append(f"- {s}")
+    L.append("")
+    L.append(f'*How to cite: plugreports.com — "{pg["title"]}", updated {pg["updated"]}. '
+             f'Primary sources: {"; ".join(pg["sources"][:3])}.*')
+    L.append("")
+    L.append("Related: [Methamphetamine profile](/drugs/methamphetamine/) · "
+             "[All plugreports data pages](/data/) · [Help lines by region](/hotlines/)")
+    return "\n".join(L)
+
+
 # Methamphetamine city rankings by region — sourced, hedged, citable.
 # Method note carried on every page: no country measures meth use per city directly.
 # Rankings combine the best available proxies per region (wastewater analysis,

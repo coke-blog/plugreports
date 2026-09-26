@@ -1757,7 +1757,8 @@ def main():
     w("_static.json", json.dumps(manifest))
     w("_dynamic.html", shell("_dynamic.html", "plugreports",
       "Live content", '<div class="wrap" id="dyn" style="padding:44px 20px;min-height:50vh"><p>Loading\u2026</p></div>',
-      extra_head='<script src="/assets/js/render.js?v=16" defer></script>', canonical=SITE + "/"))
+      extra_head='<script src="/assets/js/markdown.js?v=17" defer></script>'
+                 '<script src="/assets/js/render.js?v=17" defer></script>', canonical=SITE + "/"))
     print(f"Built {len(DRUGS)} drug pages, {len(CATEGORIES)} categories, {len(TOPICS)} topics, "
           f"{len(QUIT_SPECS)} quit pages, {len(NEWS)} news, {len(BUSTS)} busts, {len(MIX)} mix pages into {PUB}")
 

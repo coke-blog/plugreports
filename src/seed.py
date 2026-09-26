@@ -51,6 +51,7 @@ if __name__ == "__main__":
     from data_content import (BUSTS, NEWS, TOPICS, QUIT_SPECS,
                               HOTLINES, PHARMACIES, REHABS, SENTENCING)
     from data_related import RELATED_OVERRIDES
+    from data_meth_cities import METH_CITY_PAGES, data_markdown
     try:
         from data_mix import MIX
     except Exception:
@@ -78,6 +79,12 @@ if __name__ == "__main__":
         "sentencing": [dict(s, slug=s.get("slug") or slugify(s["region"])) for s in SENTENCING],
         # mix items already match the admin shape (slug,a,b,aSlug,bSlug,level,title,...)
         "mix": MIX,
+        # data pages: admin-editable Markdown mirror of the static data builds
+        "data": [dict(slug=pg["slug"], title=pg["title"], image=pg.get("image"),
+                      region=pg["region"], date=pg["updated"], read=pg["read"],
+                      desc=pg["desc"], markdown=data_markdown(pg),
+                      sources=pg["sources"], related=["methamphetamine"])
+                 for pg in METH_CITY_PAGES],
         "vs": VS,
     }
     types = sys.argv[1:] or list(seeds.keys())
