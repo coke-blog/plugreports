@@ -502,6 +502,7 @@ Complete machine-readable drug records: [llms-full.txt](https://plugreports.com/
 
 ## Guides & explainers
 - [/topics/what-is-xylazine/](https://plugreports.com/topics/what-is-xylazine/) What is Xylazine (Tranq) and why it's terrifying first responders
+- [/topics/fish-scale-vs-wash-cocaine/](https://plugreports.com/topics/fish-scale-vs-wash-cocaine/) Fish scale cocaine and 'wash': what dealers actually mean
 - [/topics/cocaine-purity-and-cuts/](https://plugreports.com/topics/cocaine-purity-and-cuts/) What is cocaine actually cut with? Purity explained
 - [/topics/fentanyl-numbers/](https://plugreports.com/topics/fentanyl-numbers/) Fentanyl: the numbers nobody tells you
 - [/topics/spot-pressed-pills/](https://plugreports.com/topics/spot-pressed-pills/) How to spot pressed pills: real vs fake
@@ -578,7 +579,6 @@ Complete machine-readable drug records: [llms-full.txt](https://plugreports.com/
 - [/sentencing/](https://plugreports.com/sentencing/) Latin America (selected)
 
 ## News
-- [/news/fish-scale-vs-wash-cocaine/](https://plugreports.com/news/fish-scale-vs-wash-cocaine/) Fish scale cocaine and 'wash': what dealers actually mean
 - [/news/hayden-panettiere-fentanyl-toxicology/](https://plugreports.com/news/hayden-panettiere-fentanyl-toxicology/) Hayden Panettiere died from fentanyl and prescription-drug mix, coroner rules
 - [/news/sterling-nitrous-driving-case/](https://plugreports.com/news/sterling-nitrous-driving-case/) Raheem Sterling pleads guilty to driving on nitrous oxide before £270k Lamborghini crash
 - [/news/nitazenes-spreading-eu/](https://plugreports.com/news/nitazenes-spreading-eu/) Nitazenes now detected in 12 European monitoring systems
@@ -587,6 +587,7 @@ Complete machine-readable drug records: [llms-full.txt](https://plugreports.com/
 - [/news/counterfeit-xanax-update/](https://plugreports.com/news/counterfeit-xanax-update/) Counterfeit 'Xanax bars' increasingly contain flubromazolam or fentanyl
 
 ## Busts & seizures
+- [/busts/bust-vancouver-cocaine-328kg-tshirts/](https://plugreports.com/busts/bust-vancouver-cocaine-328kg-tshirts/) Vancouver's largest-ever cocaine seizure: 328.55 kg in duffle bags inside a T-shirt shipping container
 - [/busts/bust-fsb-moscow-cocaine-zelensky-brand/](https://plugreports.com/busts/bust-fsb-moscow-cocaine-zelensky-brand/) FSB seizes 311 kg of Latin America-to-EU cocaine near Moscow; agency video shows bricks branded with Zelensky image
 - [/busts/bust-river-grove-cocaine-339/](https://plugreports.com/busts/bust-river-grove-cocaine-339/) DEA seizes 339.5 lbs of cocaine ($15.2M) and $700K cash in River Grove, Illinois
 - [/busts/bust-texas-cabbage-meth/](https://plugreports.com/busts/bust-texas-cabbage-meth/) 2,000+ lbs of meth found packed inside cabbage shipment in South Texas

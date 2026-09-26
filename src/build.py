@@ -1373,6 +1373,24 @@ def build_data_hub():
       '<a class="card" href="/data/top-substances-2025/"><h3>Top 15 Substances, 2025</h3>'
       '<p>The 15 most-identified substances in US forensic laboratories last year, with share-of-total and plain-English context for each.</p>'
       '<div class="foot">Open the ranking &rarr;</div></a>'
+      '<a class="card" href="/data/meth-cities-usa/"><h3>Meth Cities: USA</h3>'
+      '<p>The 10 US cities with the most methamphetamine use — Phoenix to Nashville — from NFLIS, treatment and HIDTA data.</p>'
+      '<div class="foot">Open the ranking &rarr;</div></a>'
+      '<a class="card" href="/data/meth-cities-europe/"><h3>Meth Cities: Europe</h3>'
+      '<p>Europe&rsquo;s meth belt measured in sewage: the SCORE/EUDA wastewater ranking, Czechia to Türkiye.</p>'
+      '<div class="foot">Open the ranking &rarr;</div></a>'
+      '<a class="card" href="/data/meth-cities-australia/"><h3>Meth Cities: Australia</h3>'
+      '<p>Perth, Darwin and the regional towns that out-consume the capitals — from the ACIC national wastewater program.</p>'
+      '<div class="foot">Open the ranking &rarr;</div></a>'
+      '<a class="card" href="/data/meth-cities-canada/"><h3>Meth Cities: Canada</h3>'
+      '<p>Why Winnipeg, Edmonton and the prairies lead Canada&rsquo;s meth map.</p>'
+      '<div class="foot">Open the ranking &rarr;</div></a>'
+      '<a class="card" href="/data/meth-cities-middle-east/"><h3>Meth Cities: Middle East</h3>'
+      '<p>Iran and Israel&rsquo;s meth markets, and the Afghan pipeline flooding east.</p>'
+      '<div class="foot">Open the ranking &rarr;</div></a>'
+      '<a class="card" href="/data/meth-cities-africa/"><h3>Meth Cities: Africa</h3>'
+      '<p>Cape Town&rsquo;s &lsquo;tik&rsquo; epidemic and the rising markets behind it.</p>'
+      '<div class="foot">Open the ranking &rarr;</div></a>'
       '</div>'
       '<p style="margin-top:22px;color:#667085;font-size:14px">Using our data? '
       '<a href="/about/">Editorial policy & sources</a> &middot; <a href="/suggest/">Report a correction</a></p>'
@@ -1383,13 +1401,59 @@ def build_data_hub():
       body))
 
 
+def build_meth_cities():
+    from data_meth_cities import METH_CITY_PAGES
+    for pg in METH_CITY_PAGES:
+        stat_html = "".join(f'<div class="stat"><b>{esc(n)}</b><span>{esc(l)}</span></div>' for n, l in pg["stats"])
+        rows = "".join(
+            f'<tr><td style="white-space:nowrap"><b>{esc(rank)}</b></td><td><b>{esc(city)}</b></td><td>{note}</td></tr>'
+            for rank, city, note in pg["cities"])
+        others = "".join(f'<a class="card" href="/data/{o["slug"]}/"><h3>{esc(o["region"])}</h3>'
+                         f'<p>{esc(o["desc"][:110])}&hellip;</p><div class="foot">Open ranking &rarr;</div></a>'
+                         for o in METH_CITY_PAGES if o["slug"] != pg["slug"])
+        body = (
+          '<div class="wrap"><div style="max-width:960px;padding:26px 0">'
+          f'<span class="kicker">Data &middot; updated {esc(pg["updated"])} &middot; {esc(pg["read"])} read</span>'
+          f'<h1 style="font-size:clamp(28px,4vw,42px);margin-top:10px">{esc(pg["title"])}</h1>'
+          f'<p class="lede" style="color:#667085">{esc(pg["desc"])}</p>'
+          f'<div class="stat-grid">{stat_html}</div>'
+          f'<h2>How this ranking works</h2><p>{esc(pg["intro"])}</p>'
+          '<div class="callout amber"><b>Read this first</b>No country anywhere measures meth use per city directly. '
+          'This ranking combines the strongest available proxies — wastewater analysis, forensic-lab reporting, '
+          'treatment admissions and police seizures — and is directional, not a precise league table. '
+          'Positions in the middle of each list should be read as a band.</div>'
+          f'<div class="figure"><table class="tbl"><thead><tr><th>#</th><th>City</th><th>Why it ranks here</th></tr></thead><tbody>{rows}</tbody></table></div>'
+          f'<h2>Also worth knowing</h2><p>{esc(pg["notes"])}</p>'
+          f'<h2>Methodology</h2><p>{esc(pg["method"])}</p>'
+          '<h2>Sources</h2><ul class="ticks">'
+          + "".join(f'<li>{esc(s)}</li>' for s in pg["sources"]) + '</ul>'
+          '<div class="callout gray"><b>How to cite this page</b>'
+          f'plugreports.com — &ldquo;{esc(pg["title"])}&rdquo;, updated {esc(pg["updated"])}. '
+          f'Sources: {esc("; ".join(pg["sources"][:3]))}. '
+          f'URL: https://plugreports.com/data/{pg["slug"]}/</div>'
+          '<p style="margin-top:18px">Related: <a href="/drugs/methamphetamine/">Methamphetamine profile — effects, overdose signs & street price</a> &middot; '
+          '<a href="/data/">All plugreports data pages</a> &middot; <a href="/hotlines/">Help lines by region</a></p>'
+          f'<h2 style="margin-top:26px">The other regional rankings</h2><div class="cards">{others}</div>'
+          '</div></div>')
+        jsonld = {"@context":"https://schema.org","@type":"Dataset",
+          "name":pg["title"],"description":pg["desc"],
+          "creator":{"@type":"Organization","name":"plugreports","url":SITE},
+          "dateModified":TODAY,"license":f"{SITE}/about/","isAccessibleForFree":True,
+          "spatialCoverage":{"@type":"Place","name":pg["region"]}}
+        w(f"data/{pg['slug']}/index.html", shell(
+          f"data/{pg['slug']}/", f"{pg['title']} | plugreports Data",
+          clip(pg["desc"]), body, jsonld=jsonld))
+
+
 def build_meta():
     from data_es import ES_DRUGS as _ESD
     ES_DRUG_KEYS = list(_ESD.keys())
     B = TODAY  # build date — lastmod fallback when an item has no date of its own
     urls = [("", B), ("news/", B), ("busts/", B), ("topics/", B), ("quit/", B),
             ("hotlines/", B), ("sentencing/", B), ("pharmacies/", B), ("rehabs/", B),
-            ("about/", B), ("suggest/", B), ("drugs/", B), ("categories/", B), ("data/", B), ("data/fentanyl-adulterants/", B), ("data/top-substances-2025/", B)]
+            ("about/", B), ("suggest/", B), ("drugs/", B), ("categories/", B), ("data/", B), ("data/fentanyl-adulterants/", B), ("data/top-substances-2025/", B),
+            ("data/meth-cities-usa/", B), ("data/meth-cities-canada/", B), ("data/meth-cities-europe/", B),
+            ("data/meth-cities-australia/", B), ("data/meth-cities-middle-east/", B), ("data/meth-cities-africa/", B)]
     urls += [(f"categories/{k}/", B) for k in CATEGORIES]
     urls += [("es/", B), ("es/hotlines/", B), ("es/categories/", B)]
     urls += [(f"es/drugs/{sl}/", DRUG_BY_SLUG[sl].get("lastUpdated", B)) for sl in ES_DRUG_KEYS if sl in DRUG_BY_SLUG]
@@ -1683,7 +1747,7 @@ def main():
     build_drugs(es=True); build_hotlines(es=True); build_index(es=True)
     for _ln in LANG_LIST:
         build_lang_drug_pages(_ln); build_lang_hotlines(_ln); build_lang_home(_ln); build_lang_categories(_ln)
-    build_about(); build_suggest(); build_data(); build_data_top(); build_data_hub(); build_meta()
+    build_about(); build_suggest(); build_data(); build_data_top(); build_data_hub(); build_meth_cities(); build_meta()
     manifest = {"drugs":[d["slug"] for d in DRUGS], "news":[n["slug"] for n in NEWS],
                 "busts":[b["slug"] for b in BUSTS], "topics":[t["slug"] for t in TOPICS],
                 "categories":[k for k in CATEGORIES],
