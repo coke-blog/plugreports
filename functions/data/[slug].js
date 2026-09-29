@@ -1,13 +1,14 @@
+import { dynamicResponse } from '../_seo.js';
 export async function onRequestGet({request, env, params}) {
   const url = new URL(request.url);
   // 1) published KV item wins — admin edits always take precedence over the
   //    static build copy (same precedence rule as the other content types)
   if (env.CONTENT) {
     const items = JSON.parse(await env.CONTENT.get('content:data') || '[]');
-    if (items.some(x => x.slug === params.slug && !x.unpublished)) {
-      const shell = await env.ASSETS.fetch(new Request(url.origin + '/_dynamic'));
-      if (shell.status === 200) return new Response(shell.body, {
-        headers: {'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-cache'}});
+    const _it = items.find(x => x.slug === params.slug && !x.unpublished);
+    if (_it) {
+      const _r = await dynamicResponse(env, url.origin, 'data', _it);
+      if (_r) return _r;
     }
   }
   // 2) static build-time page for anything not in KV

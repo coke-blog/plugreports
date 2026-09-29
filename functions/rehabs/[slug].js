@@ -1,3 +1,4 @@
+import { dynamicResponse } from '../_seo.js';
 export async function onRequestGet({request, env, params}) {
   const url = new URL(request.url);
   const mf = await env.ASSETS.fetch(new Request(url.origin + '/_static.json'));
@@ -7,10 +8,10 @@ export async function onRequestGet({request, env, params}) {
   }
   if (env.CONTENT) {
     const items = JSON.parse(await env.CONTENT.get('content:rehabs') || '[]');
-    if (items.some(x => x.slug === params.slug && !x.unpublished)) {
-      const shell = await env.ASSETS.fetch(new Request(url.origin + '/_dynamic'));
-      if (shell.status === 200) return new Response(shell.body, {
-        headers: {'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-cache'}});
+    const _it = items.find(x => x.slug === params.slug && !x.unpublished);
+    if (_it) {
+      const _r = await dynamicResponse(env, url.origin, 'rehabs', _it);
+      if (_r) return _r;
     }
   }
   return new Response('Not found', {status: 404});

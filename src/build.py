@@ -247,7 +247,7 @@ def shell(path, title, desc, body, jsonld=None, canonical=None, extra_head="", o
 <meta property="og:image" content="{ogimage or (SITE + "/assets/img/og.png")}">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta name="twitter:card" content="summary">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#f59e0b">
 <meta name="robots" content="{robots or 'max-image-preview:large'}">
 <link rel="manifest" href="/manifest.webmanifest">
@@ -1465,7 +1465,7 @@ def build_meth_cities():
           "spatialCoverage":{"@type":"Place","name":pg["region"]}}
         w(f"data/{pg['slug']}/index.html", shell(
           f"data/{pg['slug']}/", f"{pg['title']} | plugreports Data",
-          clip(pg["desc"]), body, jsonld=jsonld))
+          clip(pg["desc"]), body, jsonld=jsonld, ogimage=pg.get("image")))
 
 
 def build_meta():
@@ -1783,7 +1783,8 @@ def main():
     w("_dynamic.html", shell("_dynamic.html", "plugreports",
       "Live content", '<div class="wrap" id="dyn" style="padding:44px 20px;min-height:50vh"><p>Loading\u2026</p></div>',
       extra_head='<script src="/assets/js/markdown.js?v=17" defer></script>'
-                 '<script src="/assets/js/render.js?v=17" defer></script>', canonical=SITE + "/"))
+                 '<script src="/assets/js/render.js?v=17" defer></script>', canonical=SITE + "/",
+      robots="noindex"))
     print(f"Built {len(DRUGS)} drug pages, {len(CATEGORIES)} categories, {len(TOPICS)} topics, "
           f"{len(QUIT_SPECS)} quit pages, {len(NEWS)} news, {len(BUSTS)} busts, {len(MIX)} mix pages into {PUB}")
 

@@ -3654,3 +3654,7 @@ dict(slug="kratom-extracts", name="Kratom Shots & Extracts (OPMS-style)", aliase
  related=["kratom", "mitragynine", "7-hydroxymitragynine"]),
 ]
 DRUGS += P2_GAPS_3
+
+# 2026-09-29 expansion: 100 additional profiles (gaps + societal areas)
+from data_drugs_expansion import DRUGS_EXPANSION
+DRUGS += DRUGS_EXPANSION

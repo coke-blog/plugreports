@@ -6,7 +6,7 @@ Complete machine-readable drug records: [llms-full.txt](https://plugreports.com/
 
 ## Key pages
 - [/hotlines/](https://plugreports.com/hotlines/) Verified overdose & crisis hotlines, 9 regions
-- [/drugs/](https://plugreports.com/drugs/) A-Z index of all 463 substance profiles
+- [/drugs/](https://plugreports.com/drugs/) A-Z index of all 563 substance profiles
 - [/categories/](https://plugreports.com/categories/) Browse by category
 - [/news/](https://plugreports.com/news/) Drug news & alerts
 - [/busts/](https://plugreports.com/busts/) Busts & seizures tracker
@@ -17,7 +17,7 @@ Complete machine-readable drug records: [llms-full.txt](https://plugreports.com/
 - [/rehabs/](https://plugreports.com/rehabs/) Verified rehab centers
 - [/about/](https://plugreports.com/about/) Mission & editorial policy
 
-## Drug library (463 profiles)
+## Drug library (563 profiles)
 ### Opioids
 - [/drugs/heroin/](https://plugreports.com/drugs/heroin/) Heroin — aka Dope, H, Smack
 - [/drugs/fentanyl/](https://plugreports.com/drugs/fentanyl/) Fentanyl — aka Apache, China Girl, Dance Fever
@@ -78,6 +78,29 @@ Complete machine-readable drug records: [llms-full.txt](https://plugreports.com/
 - [/drugs/dipyanone/](https://plugreports.com/drugs/dipyanone/) Dipyanone — aka Dipyanon, DPP (diphenylpropylamine opioid)
 - [/drugs/mitragynine/](https://plugreports.com/drugs/mitragynine/) Mitragynine (Kratom's Main Alkaloid) — aka Mitragynine, Kratom alkaloid, MG
 - [/drugs/kratom-extracts/](https://plugreports.com/drugs/kratom-extracts/) Kratom Shots & Extracts (OPMS-style) — aka Kratom shot, OPMS, Kratom extract
+- [/drugs/butyrylfentanyl/](https://plugreports.com/drugs/butyrylfentanyl/) Butyrylfentanyl — aka BF, Butyryl fent
+- [/drugs/cyclopropylfentanyl/](https://plugreports.com/drugs/cyclopropylfentanyl/) Cyclopropylfentanyl — aka CPF, Cyclopropyl fent
+- [/drugs/valerylfentanyl/](https://plugreports.com/drugs/valerylfentanyl/) Valerylfentanyl — aka VF, Valeryl fent
+- [/drugs/acrylfentanyl/](https://plugreports.com/drugs/acrylfentanyl/) Acrylfentanyl — aka Acryl fent, Acryloylfentanyl
+- [/drugs/ocfentanil/](https://plugreports.com/drugs/ocfentanil/) Ocfentanil — aka OCF, Ocfentanyl
+- [/drugs/etonitazepipne/](https://plugreports.com/drugs/etonitazepipne/) Etonitazepipne (N-Pyrrolidino Etonitazene) — aka NPE, Pyrrolidino-nitazene
+- [/drugs/butonitazene/](https://plugreports.com/drugs/butonitazene/) Butonitazene — aka Butonitazene HCl, Buto
+- [/drugs/etodesnitazene/](https://plugreports.com/drugs/etodesnitazene/) Etodesnitazene (Etazene) — aka Etazene, Desnitro-etonitazene
+- [/drugs/metodesnitazene/](https://plugreports.com/drugs/metodesnitazene/) Metodesnitazene — aka Metazene, Desnitro-metonitazene
+- [/drugs/cychlorphine/](https://plugreports.com/drugs/cychlorphine/) Cychlorphine — aka Cychlorphine HCl, N-propionitrile chlorphine
+- [/drugs/u-48800/](https://plugreports.com/drugs/u-48800/) U-48800 — aka U-48800 HCl, U4 analog
+- [/drugs/ap-238/](https://plugreports.com/drugs/ap-238/) AP-238 — aka AP-238 HCl, Bucinnazine analog
+- [/drugs/pentazocine/](https://plugreports.com/drugs/pentazocine/) Pentazocine (Talwin) — aka Talwin, Ts (with Ritalin = 'T's and blues')
+- [/drugs/nalbuphine/](https://plugreports.com/drugs/nalbuphine/) Nalbuphine (Nubain) — aka Nubain, Nubain injection
+- [/drugs/levorphanol/](https://plugreports.com/drugs/levorphanol/) Levorphanol (Levo-Dromoran) — aka Levo-Dromoran, Levorphan
+- [/drugs/dextropropoxyphene/](https://plugreports.com/drugs/dextropropoxyphene/) Dextropropoxyphene (Darvon / Darvocet) — aka Darvon, Darvocet (with APAP), Proxyphene
+- [/drugs/tilidine/](https://plugreports.com/drugs/tilidine/) Tilidine (Valoron) — aka Valoron, Tilidin, Tili
+- [/drugs/ketobemidone/](https://plugreports.com/drugs/ketobemidone/) Ketobemidone (Ketogan) — aka Ketogan, Ketobemidon
+- [/drugs/sublocade/](https://plugreports.com/drugs/sublocade/) Sublocade (Buprenorphine Depot Injection) — aka Sublocade, Monthly bupe shot, Buvidal (EU/AU)
+- [/drugs/mitragynine-pseudoindoxyl/](https://plugreports.com/drugs/mitragynine-pseudoindoxyl/) Mitragynine Pseudoindoxyl — aka MP, 7-OH metabolite analog, Pseudoindoxyl kratom
+- [/drugs/dextromoramide/](https://plugreports.com/drugs/dextromoramide/) Dextromoramide (Palfium) — aka Palfium, Dextromoramide tartrate
+- [/drugs/dipipanone/](https://plugreports.com/drugs/dipipanone/) Dipipanone (Diconal) — aka Diconal, Dipipanone-cyclizine
+- [/drugs/nurofen-plus/](https://plugreports.com/drugs/nurofen-plus/) Codeine–Ibuprofen (Nurofen Plus) Abuse — aka Nurofen Plus, Co-codaprin, Co-codamol OTC variants
 ### Stimulants
 - [/drugs/cocaine/](https://plugreports.com/drugs/cocaine/) Cocaine — aka Coke, Blow, Snow
 - [/drugs/speed/](https://plugreports.com/drugs/speed/) Speed (amphetamine paste) — aka Amphetamine, Base, Paste
@@ -150,6 +173,18 @@ Complete machine-readable drug records: [llms-full.txt](https://plugreports.com/
 - [/drugs/dmaa/](https://plugreports.com/drugs/dmaa/) DMAA — aka 1,3-DMAA, Geranium extract, Methylhexanamine
 - [/drugs/dmha/](https://plugreports.com/drugs/dmha/) DMHA — aka 2-Aminoisoheptane, Octodrine, Juglans regia extract
 - [/drugs/bupropion/](https://plugreports.com/drugs/bupropion/) Bupropion (Wellbutrin / Zyban) — aka Wellbutrin, Zyban, Budeprion
+- [/drugs/methcathinone/](https://plugreports.com/drugs/methcathinone/) Methcathinone (Cat / Ephedrone) — aka Cat, Ephedrone, Jeff
+- [/drugs/2-mmc/](https://plugreports.com/drugs/2-mmc/) 2-MMC — aka 2-Methylmethcathinone, 2MMC
+- [/drugs/3-fma/](https://plugreports.com/drugs/3-fma/) 3-FMA (3-Fluoromethamphetamine) — aka 3-FMA, 3-Fluorometh
+- [/drugs/isopropylphenidate/](https://plugreports.com/drugs/isopropylphenidate/) Isopropylphenidate (IPH) — aka IPH, Isopropyl Ritalin
+- [/drugs/amfepramone/](https://plugreports.com/drugs/amfepramone/) Amfepramone (Diethylpropion / Tenuate) — aka Tenuate, Diethylpropion, Amfepramon
+- [/drugs/dexmethylphenidate/](https://plugreports.com/drugs/dexmethylphenidate/) Dexmethylphenidate (Focalin) — aka Focalin, Focalin XR, Dex-MPH
+- [/drugs/levo-methamphetamine/](https://plugreports.com/drugs/levo-methamphetamine/) Levo-Methamphetamine (OTC Nasal Inhalers) — aka Vicks inhaler, Levmetamfetamine, L-meth
+- [/drugs/naphyrone/](https://plugreports.com/drugs/naphyrone/) Naphyrone (NRG-1) — aka NRG-1, Naphthylpyrovalerone, Energy-1
+- [/drugs/2-dpmp/](https://plugreports.com/drugs/2-dpmp/) 2-DPMP (Desoxypipradrol / Ivory Wave) — aka 2-DPMP, D2PM, Ivory Wave
+- [/drugs/mdai/](https://plugreports.com/drugs/mdai/) MDAI — aka MDAI, 6,7-Methylenedioxy-2-aminoindane
+- [/drugs/cocaethylene/](https://plugreports.com/drugs/cocaethylene/) Cocaethylene (Cocaine + Alcohol) — aka Cocaethylene, Coke and booze metabolite
+- [/drugs/pre-workout-supplements/](https://plugreports.com/drugs/pre-workout-supplements/) Pre-Workout Stimulant Blends — aka Pre-workout, Jack3d-style blends, DMAA/DMHA powders
 ### Benzodiazepines
 - [/drugs/diazepam-drug/](https://plugreports.com/drugs/diazepam-drug/) Diazepam — aka Valium, Bensedine, Apaurine (blue valium)
 - [/drugs/alprazolam/](https://plugreports.com/drugs/alprazolam/) Alprazolam (Xanax 2 mg) — aka Xanax, Bars, Pfizer LongBars
@@ -178,6 +213,17 @@ Complete machine-readable drug records: [llms-full.txt](https://plugreports.com/
 - [/drugs/phenazolam/](https://plugreports.com/drugs/phenazolam/) Phenazolam (Clobromazolam) — aka Clobromazolam, Phenazo, Designer long-tail benzo
 - [/drugs/flunitrazolam/](https://plugreports.com/drugs/flunitrazolam/) Flunitrazolam — aka FNTZ, Flunitraz, Designer triazolo benzo
 - [/drugs/fluclotizolam/](https://plugreports.com/drugs/fluclotizolam/) Fluclotizolam — aka Fluclotiz, Fluclo, Designer thienodiazepine
+- [/drugs/desalkylgidazepam/](https://plugreports.com/drugs/desalkylgidazepam/) Desalkylgidazepam (Bromonordiazepam) — aka Bromonordiazepam, Desalkyl-gidazepam
+- [/drugs/adinazolam/](https://plugreports.com/drugs/adinazolam/) Adinazolam (Deracyn) — aka Deracyn, Adinazolam mesylate
+- [/drugs/deschloroetizolam/](https://plugreports.com/drugs/deschloroetizolam/) Deschloroetizolam — aka Etizolam metabolite RC, DCE
+- [/drugs/metizolam/](https://plugreports.com/drugs/metizolam/) Metizolam (Desmethyletizolam) — aka Desmethyletizolam, Metiz
+- [/drugs/flubrotizolam/](https://plugreports.com/drugs/flubrotizolam/) Flubrotizolam — aka Flubrotizolam 0.5 mg, FANAX substitute
+- [/drugs/nimetazepam/](https://plugreports.com/drugs/nimetazepam/) Nimetazepam (Erimin-5) — aka Erimin-5, Erimin, Happy 5
+- [/drugs/brotizolam/](https://plugreports.com/drugs/brotizolam/) Brotizolam (Lendormin) — aka Lendormin, Brotiz
+- [/drugs/flurazepam/](https://plugreports.com/drugs/flurazepam/) Flurazepam (Dalmane) — aka Dalmane, Fluraz
+- [/drugs/clorazepate/](https://plugreports.com/drugs/clorazepate/) Clorazepate (Tranxene) — aka Tranxene, Clorazepate dipotassium
+- [/drugs/gidazepam/](https://plugreports.com/drugs/gidazepam/) Gidazepam — aka Gidazepam HCl, Gidazepamum
+- [/drugs/tofisopam/](https://plugreports.com/drugs/tofisopam/) Tofisopam (Grandaxin) — aka Grandaxin, Tofizopam
 ### Sedatives & Hypnotics
 - [/drugs/zolpidem/](https://plugreports.com/drugs/zolpidem/) Zolpidem (Ambien/Stilnox) — aka Ambien, Stilnox, Z-drugs
 - [/drugs/secobarbital/](https://plugreports.com/drugs/secobarbital/) Secobarbital (Seconal) — aka Seconal, Reds, Red devils
@@ -212,6 +258,10 @@ Complete machine-readable drug records: [llms-full.txt](https://plugreports.com/
 - [/drugs/amitriptyline/](https://plugreports.com/drugs/amitriptyline/) Amitriptyline & Tricyclics (Elavil) — aka Elavil, Amitriptyline 10/25/50, TCA
 - [/drugs/clonidine/](https://plugreports.com/drugs/clonidine/) Clonidine (Catapres) — aka Catapres, Kapvay, Clonodine (misspelling)
 - [/drugs/lofexidine/](https://plugreports.com/drugs/lofexidine/) Lofexidine (Lucemyra) — aka Lucemyra, Lofexidine, The official detox pill
+- [/drugs/phenobarbital/](https://plugreports.com/drugs/phenobarbital/) Phenobarbital — aka Phenobarb, Luminal, Barbs
+- [/drugs/chloral-hydrate/](https://plugreports.com/drugs/chloral-hydrate/) Chloral Hydrate — aka Mickey Finn, Knockout drops, Chloral
+- [/drugs/glutethimide/](https://plugreports.com/drugs/glutethimide/) Glutethimide (Doriden) — aka Doriden, Gluteth, Loads (with codeine)
+- [/drugs/mecloqualone/](https://plugreports.com/drugs/mecloqualone/) Mecloqualone — aka Mecloqualone, Nubarene, Casfen
 ### GHB / GBL
 - [/drugs/ghb/](https://plugreports.com/drugs/ghb/) GHB (gamma-hydroxybutyrate) — aka G, Liquid ecstasy, Grievous Bodily Harm
 - [/drugs/ghb-liquid/](https://plugreports.com/drugs/ghb-liquid/) GHB Liquid — aka G liquid, Liquid G
@@ -228,6 +278,10 @@ Complete machine-readable drug records: [llms-full.txt](https://plugreports.com/
 - [/drugs/1-4-bdo/](https://plugreports.com/drugs/1-4-bdo/) 1,4-Butanediol (1,4-BDO) — aka BDO, 1,4-B, One Four
 - [/drugs/f-phenibut/](https://plugreports.com/drugs/f-phenibut/) F-Phenibut (Fluorophenibut) — aka F-Phenibut, 4F-Phenibut, Fluorobut
 - [/drugs/baclofen/](https://plugreports.com/drugs/baclofen/) Baclofen (Lioresal) — aka Lioresal, GABA-B agonist, The phenibut cousin
+- [/drugs/bootleg-alcohol/](https://plugreports.com/drugs/bootleg-alcohol/) Bootleg & Methanol-Adulterated Alcohol — aka Bootleg liquor, Methanol poisoning, Tainted alcohol
+- [/drugs/disulfiram/](https://plugreports.com/drugs/disulfiram/) Disulfiram (Antabuse) — aka Antabuse, Disulfiram, Esperal
+- [/drugs/mouthwash-abuse/](https://plugreports.com/drugs/mouthwash-abuse/) Mouthwash & Hand-Sanitizer Drinking — aka Mouthwash drinking, Sanitizer drinking, Listerine abuse
+- [/drugs/orphenadrine/](https://plugreports.com/drugs/orphenadrine/) Orphenadrine (Norflex) Abuse — aka Norflex, Orphenadrine citrate, Disipal
 ### Dissociatives
 - [/drugs/ketamine/](https://plugreports.com/drugs/ketamine/) Ketamine — aka K, Special K, Kit Kat
 - [/drugs/ketalar/](https://plugreports.com/drugs/ketalar/) Ketalar (ketamine injection) — aka Ketalar, Vials, K vials
@@ -242,6 +296,16 @@ Complete machine-readable drug records: [llms-full.txt](https://plugreports.com/
 - [/drugs/memantine/](https://plugreports.com/drugs/memantine/) Memantine (Namenda) — aka Namenda, NMDA antagonist, The week-long disso
 - [/drugs/ketamine-nasal-spray/](https://plugreports.com/drugs/ketamine-nasal-spray/) Ketamine Nasal Spray (Gray-Market & Compounded) — aka K nasal spray, Ketamine spray, Compounded ketamine
 - [/drugs/pcp/](https://plugreports.com/drugs/pcp/) Phencyclidine (PCP) — aka Angel dust, Sherm, Shermans
+- [/drugs/3-ho-pcp/](https://plugreports.com/drugs/3-ho-pcp/) 3-HO-PCP — aka 3-Hydroxyphencyclidine, 3-HO
+- [/drugs/3-meo-pce/](https://plugreports.com/drugs/3-meo-pce/) 3-MeO-PCE — aka 3-Methoxyeticyclidine, MXE analog
+- [/drugs/o-pce/](https://plugreports.com/drugs/o-pce/) O-PCE (2-Oxo-PCE) — aka O-PCE, Eticyclidone, MXE successor
+- [/drugs/tiletamine/](https://plugreports.com/drugs/tiletamine/) Tiletamine (Telazol component) — aka Tiletamine, Telazol (with zolazepam), Cat tranquilizer
+- [/drugs/diphenidine/](https://plugreports.com/drugs/diphenidine/) Diphenidine (DPD) — aka Diphenidine, DPD, 1,2-DEP
+- [/drugs/ephenidine/](https://plugreports.com/drugs/ephenidine/) Ephenidine — aka Ephenidine, NEDPA
+- [/drugs/deschloroketamine/](https://plugreports.com/drugs/deschloroketamine/) Deschloroketamine (DCK) — aka DCK, 2-Oxo-PCM, DXE
+- [/drugs/dimenhydrinate/](https://plugreports.com/drugs/dimenhydrinate/) Dimenhydrinate (Dramamine) Abuse — aka Dramamine, Dime, Gravol (Canada)
+- [/drugs/trihexyphenidyl/](https://plugreports.com/drugs/trihexyphenidyl/) Trihexyphenidyl (Artane) Abuse — aka Artane, Trihex, Benzhexol
+- [/drugs/pheniramine/](https://plugreports.com/drugs/pheniramine/) Pheniramine (Avil) Abuse — aka Avil, Pheniramine maleate, Avil injection
 ### Empathogens
 - [/drugs/mdma/](https://plugreports.com/drugs/mdma/) MDMA — aka Ecstasy (in pill form), Molly (powder), E
 - [/drugs/molly/](https://plugreports.com/drugs/molly/) Molly (MDMA powder) — aka Molly, Mandy (UK), Moon rocks
@@ -299,6 +363,12 @@ Complete machine-readable drug records: [llms-full.txt](https://plugreports.com/
 - [/drugs/absinthe/](https://plugreports.com/drugs/absinthe/) Absinthe (Wormwood / Thujone) — aka Absinthe, The Green Fairy, Wormwood spirit
 - [/drugs/changa/](https://plugreports.com/drugs/changa/) Changa (DMT Smoking Blend) — aka Changa, Xanga, DMT changa
 - [/drugs/voacanga/](https://plugreports.com/drugs/voacanga/) Voacanga africana — aka Voacanga, African iboga cousin, Voacangine
+- [/drugs/5-meo-dipt/](https://plugreports.com/drugs/5-meo-dipt/) 5-MeO-DiPT (Foxy / Foxy Methoxy) — aka Foxy, Foxy Methoxy, 5-MeO-DiPT
+- [/drugs/4-ho-mipt/](https://plugreports.com/drugs/4-ho-mipt/) 4-HO-MiPT (Miprocin) — aka Miprocin, 4-HO-MiPT
+- [/drugs/bufo-venom/](https://plugreports.com/drugs/bufo-venom/) Bufo / Toad Venom (5-MeO-DMT) — aka Bufo, Toad, Bufo alvarius venom
+- [/drugs/shroom-bars/](https://plugreports.com/drugs/shroom-bars/) 'Mushroom' Gummies & Chocolate Bars (Gas-Station Edibles) — aka Shroom bars, Magic mushroom gummies, PolkaDot-style bars
+- [/drugs/2c-e/](https://plugreports.com/drugs/2c-e/) 2C-E — aka 2C-E, Europa, Aquarust
+- [/drugs/2c-i/](https://plugreports.com/drugs/2c-i/) 2C-I — aka 2C-I, Infinity
 ### Cannabinoids
 - [/drugs/4f-adb/](https://plugreports.com/drugs/4f-adb/) 4F-ADB — aka 4F-MDMB-BUTINACA
 - [/drugs/5f-adbica/](https://plugreports.com/drugs/5f-adbica/) 5F-ADB / 5F-ADBICA — aka 5F-MDMB-PICA, 5F-ADBICA
@@ -341,6 +411,15 @@ Complete machine-readable drug records: [llms-full.txt](https://plugreports.com/
 - [/drugs/thcjd/](https://plugreports.com/drugs/thcjd/) THCjd — aka THC-JD, Tetrahydrocannabijorol, The next hemp cannabinoid
 - [/drugs/thch/](https://plugreports.com/drugs/thch/) THCh — aka THC-H, Tetrahydrocannabihexol, Hexyl-THC
 - [/drugs/hhc-o/](https://plugreports.com/drugs/hhc-o/) HHC-O (HHC Acetate) — aka HHC-O, HHC-O acetate, Hexahydrocannabinol-O
+- [/drugs/jwh-018/](https://plugreports.com/drugs/jwh-018/) JWH-018 — aka JWH-018, 1-pentyl-3-(1-naphthoyl)indole, Original Spice chemical
+- [/drugs/ur-144/](https://plugreports.com/drugs/ur-144/) UR-144 — aka UR-144, KM-X1, Abbott cyclopropyl cannabinoid
+- [/drugs/am-2201/](https://plugreports.com/drugs/am-2201/) AM-2201 — aka AM-2201, Fluorinated JWH-018
+- [/drugs/xlr-11/](https://plugreports.com/drugs/xlr-11/) XLR-11 (5F-UR-144) — aka XLR-11, 5F-UR-144
+- [/drugs/5f-adb/](https://plugreports.com/drugs/5f-adb/) 5F-ADB (5F-MDMB-PINACA) — aka 5F-ADB, 5F-MDMB-PINACA
+- [/drugs/amb-fubinaca/](https://plugreports.com/drugs/amb-fubinaca/) AMB-FUBINACA — aka AMB-FUBINACA, FUB-AMB, Zombie drug (2016 NYC)
+- [/drugs/ab-fubinaca/](https://plugreports.com/drugs/ab-fubinaca/) AB-FUBINACA — aka AB-FUBINACA, AB-FUB
+- [/drugs/mdmb-4en-pinaca/](https://plugreports.com/drugs/mdmb-4en-pinaca/) MDMB-4en-PINACA — aka MDMB-4en-PINACA, 4en-PINACA
+- [/drugs/cbg/](https://plugreports.com/drugs/cbg/) CBG (Cannabigerol) — aka CBG, Cannabigerol, Mother cannabinoid
 ### Performance & Grey-Market Pharma
 - [/drugs/aicar/](https://plugreports.com/drugs/aicar/) AICAR (Acadesine) — aka AICA ribonucleotide, GW501516's twin (grey market)
 - [/drugs/clenbuterol/](https://plugreports.com/drugs/clenbuterol/) Clenbuterol HCl — aka Clen, Spiropent
@@ -364,6 +443,9 @@ Complete machine-readable drug records: [llms-full.txt](https://plugreports.com/
 - [/drugs/yohimbine/](https://plugreports.com/drugs/yohimbine/) Yohimbine — aka Yohimbe, Yohimbine HCl, Aphrodyne
 - [/drugs/st-johns-wort/](https://plugreports.com/drugs/st-johns-wort/) St John's Wort (Hypericum) — aka SJW, Hypericum perforatum, Amber
 - [/drugs/5-htp/](https://plugreports.com/drugs/5-htp/) 5-HTP (5-Hydroxytryptophan) — aka 5-HTP, Oxitriptan, Griffonia extract
+- [/drugs/epo-doping/](https://plugreports.com/drugs/epo-doping/) EPO (Erythropoietin) Doping — aka EPO, Eprex, Procrit
+- [/drugs/meldonium/](https://plugreports.com/drugs/meldonium/) Meldonium (Mildronate) — aka Mildronate, Meldonium, Sharapova drug
+- [/drugs/diuretics-abuse/](https://plugreports.com/drugs/diuretics-abuse/) Diuretic Abuse (Weight-Cut & Eating-Disorder) — aka Water pills, Furosemide, Lasix
 ### Hazardous Substances
 - [/drugs/potassium-cyanide/](https://plugreports.com/drugs/potassium-cyanide/) Potassium Cyanide (KCN) — aka KCN, Cyanide salts
 - [/drugs/air-duster/](https://plugreports.com/drugs/air-duster/) Air Duster (Computer Duster / Canned Air) — aka Dusting, Duster, Canned air
@@ -386,6 +468,17 @@ Complete machine-readable drug records: [llms-full.txt](https://plugreports.com/
 - [/drugs/california-poppy/](https://plugreports.com/drugs/california-poppy/) California Poppy (Eschscholzia californica) — aka Cal poppy, Eschscholzia, Cup of gold
 - [/drugs/btmps/](https://plugreports.com/drugs/btmps/) BTMPS (Tinuvin 770) — aka Tinuvin 770, HALS-770, Bis(2,2,6,6-tetramethyl-4-piperidyl) sebacate
 - [/drugs/butane-huffing/](https://plugreports.com/drugs/butane-huffing/) Butane & Lighter-Fluid Huffing — aka Butane, Lighter gas, Butane huffing
+- [/drugs/chroming/](https://plugreports.com/drugs/chroming/) Chroming (Aerosol Paint Huffing) — aka Chroming, Paint huffing, Spray huffing
+- [/drugs/phenacetin/](https://plugreports.com/drugs/phenacetin/) Phenacetin (Cocaine Cutting Agent) — aka Phenacetin, Supercut, Cocaine adulterant
+- [/drugs/benzo-dope/](https://plugreports.com/drugs/benzo-dope/) Benzo-Dope (Fentanyl + Benzodiazepine) — aka Benzo dope, Benzofentanyl, Down (Canada)
+- [/drugs/kush-drug/](https://plugreports.com/drugs/kush-drug/) Kush (West African Synthetic Drug) — aka Kush, Kush (Sierra Leone), K2-kush
+- [/drugs/nyaope/](https://plugreports.com/drugs/nyaope/) Nyaope / Whoonga (South African Street Heroin) — aka Nyaope, Whoonga, Sugars
+- [/drugs/paco-basuco/](https://plugreports.com/drugs/paco-basuco/) Paco / Basuco (Cocaine Paste) — aka Paco, Basuco, PBC (pasta base)
+- [/drugs/speedball/](https://plugreports.com/drugs/speedball/) Speedball (Heroin + Cocaine) — aka Speedball, Snowball, Powerballing
+- [/drugs/goofball/](https://plugreports.com/drugs/goofball/) Goofball (Meth + Heroin/Fentanyl) — aka Goofball, Meth-fent mix, Speedball 2.0
+- [/drugs/bath-salts/](https://plugreports.com/drugs/bath-salts/) 'Bath Salts' (Synthetic Cathinone Umbrella) — aka Bath salts, Plant food, Jewelry cleaner
+- [/drugs/paracetamol/](https://plugreports.com/drugs/paracetamol/) Paracetamol / Acetaminophen Overdose — aka Paracetamol, Acetaminophen, Tylenol
+- [/drugs/ether-abuse/](https://plugreports.com/drugs/ether-abuse/) Diethyl Ether Drinking & Huffing — aka Ether, Ethyl ether, Ether drinking (Eastern Europe)
 ### Steroids & Anabolics
 - [/drugs/testosterone/](https://plugreports.com/drugs/testosterone/) Testosterone (injections & gels) — aka Test, Test C, Test E
 - [/drugs/trenbolone/](https://plugreports.com/drugs/trenbolone/) Trenbolone — aka Tren, Tri-Tren, Parabolan
@@ -435,6 +528,7 @@ Complete machine-readable drug records: [llms-full.txt](https://plugreports.com/
 - [/drugs/sildenafil/](https://plugreports.com/drugs/sildenafil/) Sildenafil (Viagra) — aka Viagra, Kamagra, Cenforce
 - [/drugs/vardenafil/](https://plugreports.com/drugs/vardenafil/) Vardenafil (Levitra) — aka Levitra, Staxyn, Vilitra
 - [/drugs/dapoxetine/](https://plugreports.com/drugs/dapoxetine/) Dapoxetine & combo pills — aka Priligy, Super Kamagra, Extra Super P-Force
+- [/drugs/rhino-pills/](https://plugreports.com/drugs/rhino-pills/) Gas-Station Sex Pills ('Rhino' & Knockoffs) — aka Rhino pills, Black Mamba, Gas station boner pills
 ### Weight Loss & Metabolic Meds
 - [/drugs/t3-liothyronine/](https://plugreports.com/drugs/t3-liothyronine/) Liothyronine (T3) — aka T3, Cytomel, Thyroxyl
 - [/drugs/t4-levothyroxine/](https://plugreports.com/drugs/t4-levothyroxine/) Levothyroxine (T4) — aka T4, Synthroid, Eltroxin
@@ -450,6 +544,9 @@ Complete machine-readable drug records: [llms-full.txt](https://plugreports.com/
 - [/drugs/semaglutide/](https://plugreports.com/drugs/semaglutide/) Semaglutide (Ozempic / Wegovy / Rybelsus) — aka Ozempic, Wegovy, Rybelsus
 - [/drugs/tirzepatide/](https://plugreports.com/drugs/tirzepatide/) Tirzepatide (Mounjaro / Zepbound) — aka Mounjaro, Zepbound, GIP/GLP-1
 - [/drugs/retatrutide/](https://plugreports.com/drugs/retatrutide/) Retatrutide ('Reta') — aka Reta, LY3437943, Triple G
+- [/drugs/dnp/](https://plugreports.com/drugs/dnp/) DNP (2,4-Dinitrophenol) — aka DNP, Dinitrophenol, Dinosan
+- [/drugs/synephrine/](https://plugreports.com/drugs/synephrine/) Synephrine (Bitter Orange) — aka Bitter orange, p-Synephrine, Citrus aurantium
+- [/drugs/5-amino-1mq/](https://plugreports.com/drugs/5-amino-1mq/) 5-Amino-1MQ — aka 5-Amino-1MQ, NNMT inhibitor, 5A1MQ
 ### Hair Loss & Hormone Meds
 - [/drugs/hgh/](https://plugreports.com/drugs/hgh/) Somatropin (Human Growth Hormone) — aka HGH, Somatropin, Genotropin-style pens
 - [/drugs/finasteride/](https://plugreports.com/drugs/finasteride/) Finasteride (Propecia/Proscar) — aka Propecia, Proscar, Finax
@@ -499,6 +596,9 @@ Complete machine-readable drug records: [llms-full.txt](https://plugreports.com/
 - [/drugs/nicotine-replacement/](https://plugreports.com/drugs/nicotine-replacement/) Nicotine Replacement (Gum, Patch, Lozenge) — aka NRT, Nicorette, Nicotine patch
 - [/drugs/nasal-snuff/](https://plugreports.com/drugs/nasal-snuff/) Nasal Snuff (Dry Tobacco Snuff) — aka Snuff, Poschl, Toque
 - [/drugs/rape-snuff/](https://plugreports.com/drugs/rape-snuff/) Rapé / Hapé (Amazonian Snuff) — aka Rapé, Hape, Hapé
+- [/drugs/gutka/](https://plugreports.com/drugs/gutka/) Gutka & Paan Masala — aka Gutka, Gutkha, Paan masala
+- [/drugs/dokha/](https://plugreports.com/drugs/dokha/) Dokha — aka Dokha, Medwakh tobacco, Arabic pipe tobacco
+- [/drugs/iqos-htp/](https://plugreports.com/drugs/iqos-htp/) Heated Tobacco (IQOS / HEETS) — aka IQOS, HEETS, Heat-not-burn
 
 ## Guides & explainers
 - [/topics/what-is-xylazine/](https://plugreports.com/topics/what-is-xylazine/) What is Xylazine (Tranq) and why it's terrifying first responders
