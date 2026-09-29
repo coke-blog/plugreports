@@ -1391,6 +1391,24 @@ def build_data_hub():
       '<a class="card" href="/data/meth-cities-africa/"><h3>Meth Cities: Africa</h3>'
       '<p>Cape Town&rsquo;s &lsquo;tik&rsquo; epidemic and the rising markets behind it.</p>'
       '<div class="foot">Open the ranking &rarr;</div></a>'
+      '<a class="card" href="/data/cocaine-cities-usa/"><h3>Cocaine Cities: USA</h3>'
+      '<p>NYC, Miami, LA and the state data behind America&rsquo;s cocaine map.</p>'
+      '<div class="foot">Open the ranking &rarr;</div></a>'
+      '<a class="card" href="/data/cocaine-cities-europe/"><h3>Cocaine Cities: Europe</h3>'
+      '<p>Antwerp, Amsterdam, Zurich, Barcelona — Europe&rsquo;s cocaine capitals measured in sewage.</p>'
+      '<div class="foot">Open the ranking &rarr;</div></a>'
+      '<a class="card" href="/data/cocaine-cities-australia/"><h3>Cocaine Cities: Australia</h3>'
+      '<p>Sydney, Melbourne, Darwin — the capitals run on cocaine, the regions on meth.</p>'
+      '<div class="foot">Open the ranking &rarr;</div></a>'
+      '<a class="card" href="/data/cocaine-cities-canada/"><h3>Cocaine Cities: Canada</h3>'
+      '<p>Toronto, Vancouver, Montreal — cocaine follows the ports and the money.</p>'
+      '<div class="foot">Open the ranking &rarr;</div></a>'
+      '<a class="card" href="/data/cocaine-cities-middle-east/"><h3>Cocaine Cities: Middle East</h3>'
+      '<p>Beirut, Dubai, Tel Aviv — a small market growing fast.</p>'
+      '<div class="foot">Open the ranking &rarr;</div></a>'
+      '<a class="card" href="/data/cocaine-cities-africa/"><h3>Cocaine Cities: Africa</h3>'
+      '<p>Lagos lands it, Johannesburg buys it — the world&rsquo;s fastest-growing corridor.</p>'
+      '<div class="foot">Open the ranking &rarr;</div></a>'
       '</div>'
       '<p style="margin-top:22px;color:#667085;font-size:14px">Using our data? '
       '<a href="/about/">Editorial policy & sources</a> &middot; <a href="/suggest/">Report a correction</a></p>'
@@ -1403,22 +1421,27 @@ def build_data_hub():
 
 def build_meth_cities():
     from data_meth_cities import METH_CITY_PAGES
-    for pg in METH_CITY_PAGES:
+    from data_cocaine_cities import COCAINE_CITY_PAGES
+    groups = [(METH_CITY_PAGES, "methamphetamine", "Methamphetamine profile — effects, overdose signs & street price"),
+              (COCAINE_CITY_PAGES, "cocaine", "Cocaine profile — effects, overdose signs & street price")]
+    for PAGES, DRUG, DRUG_LABEL in groups:
+     for pg in PAGES:
         stat_html = "".join(f'<div class="stat"><b>{esc(n)}</b><span>{esc(l)}</span></div>' for n, l in pg["stats"])
         rows = "".join(
             f'<tr><td style="white-space:nowrap"><b>{esc(rank)}</b></td><td><b>{esc(city)}</b></td><td>{note}</td></tr>'
             for rank, city, note in pg["cities"])
         others = "".join(f'<a class="card" href="/data/{o["slug"]}/"><h3>{esc(o["region"])}</h3>'
                          f'<p>{esc(o["desc"][:110])}&hellip;</p><div class="foot">Open ranking &rarr;</div></a>'
-                         for o in METH_CITY_PAGES if o["slug"] != pg["slug"])
+                         for o in PAGES if o["slug"] != pg["slug"])
         body = (
           '<div class="wrap"><div style="max-width:960px;padding:26px 0">'
           f'<span class="kicker">Data &middot; updated {esc(pg["updated"])} &middot; {esc(pg["read"])} read</span>'
           f'<h1 style="font-size:clamp(28px,4vw,42px);margin-top:10px">{esc(pg["title"])}</h1>'
           f'<p class="lede" style="color:#667085">{esc(pg["desc"])}</p>'
-          f'<div class="stat-grid">{stat_html}</div>'
+          + (f'<img class="detail-img" src="{esc(pg["image"])}" alt="" loading="lazy">' if pg.get("image") else "")
+          + f'<div class="stat-grid">{stat_html}</div>'
           f'<h2>How this ranking works</h2><p>{esc(pg["intro"])}</p>'
-          '<div class="callout amber"><b>Read this first</b>No country anywhere measures meth use per city directly. '
+          f'<div class="callout amber"><b>Read this first</b>No country anywhere measures {"meth" if DRUG == "methamphetamine" else DRUG} use per city directly. '
           'This ranking combines the strongest available proxies — wastewater analysis, forensic-lab reporting, '
           'treatment admissions and police seizures — and is directional, not a precise league table. '
           'Positions in the middle of each list should be read as a band.</div>'
@@ -1431,7 +1454,7 @@ def build_meth_cities():
           f'plugreports.com — &ldquo;{esc(pg["title"])}&rdquo;, updated {esc(pg["updated"])}. '
           f'Sources: {esc("; ".join(pg["sources"][:3]))}. '
           f'URL: https://plugreports.com/data/{pg["slug"]}/</div>'
-          '<p style="margin-top:18px">Related: <a href="/drugs/methamphetamine/">Methamphetamine profile — effects, overdose signs & street price</a> &middot; '
+          f'<p style="margin-top:18px">Related: <a href="/drugs/{DRUG}/">{DRUG_LABEL}</a> &middot; '
           '<a href="/data/">All plugreports data pages</a> &middot; <a href="/hotlines/">Help lines by region</a></p>'
           f'<h2 style="margin-top:26px">The other regional rankings</h2><div class="cards">{others}</div>'
           '</div></div>')
@@ -1453,7 +1476,9 @@ def build_meta():
             ("hotlines/", B), ("sentencing/", B), ("pharmacies/", B), ("rehabs/", B),
             ("about/", B), ("suggest/", B), ("drugs/", B), ("categories/", B), ("data/", B), ("data/fentanyl-adulterants/", B), ("data/top-substances-2025/", B),
             ("data/meth-cities-usa/", B), ("data/meth-cities-canada/", B), ("data/meth-cities-europe/", B),
-            ("data/meth-cities-australia/", B), ("data/meth-cities-middle-east/", B), ("data/meth-cities-africa/", B)]
+            ("data/meth-cities-australia/", B), ("data/meth-cities-middle-east/", B), ("data/meth-cities-africa/", B),
+            ("data/cocaine-cities-usa/", B), ("data/cocaine-cities-canada/", B), ("data/cocaine-cities-europe/", B),
+            ("data/cocaine-cities-australia/", B), ("data/cocaine-cities-middle-east/", B), ("data/cocaine-cities-africa/", B)]
     urls += [(f"categories/{k}/", B) for k in CATEGORIES]
     urls += [("es/", B), ("es/hotlines/", B), ("es/categories/", B)]
     urls += [(f"es/drugs/{sl}/", DRUG_BY_SLUG[sl].get("lastUpdated", B)) for sl in ES_DRUG_KEYS if sl in DRUG_BY_SLUG]

@@ -52,6 +52,7 @@ if __name__ == "__main__":
                               HOTLINES, PHARMACIES, REHABS, SENTENCING)
     from data_related import RELATED_OVERRIDES
     from data_meth_cities import METH_CITY_PAGES, data_markdown
+    from data_cocaine_cities import COCAINE_CITY_PAGES
     try:
         from data_mix import MIX
     except Exception:
@@ -82,9 +83,14 @@ if __name__ == "__main__":
         # data pages: admin-editable Markdown mirror of the static data builds
         "data": [dict(slug=pg["slug"], title=pg["title"], image=pg.get("image"),
                       region=pg["region"], date=pg["updated"], read=pg["read"],
-                      desc=pg["desc"], markdown=data_markdown(pg),
+                      desc=pg["desc"], markdown=data_markdown(pg, "methamphetamine"),
                       sources=pg["sources"], related=["methamphetamine"])
-                 for pg in METH_CITY_PAGES],
+                 for pg in METH_CITY_PAGES]
+              + [dict(slug=pg["slug"], title=pg["title"], image=pg.get("image"),
+                      region=pg["region"], date=pg["updated"], read=pg["read"],
+                      desc=pg["desc"], markdown=data_markdown(pg, "cocaine"),
+                      sources=pg["sources"], related=["cocaine"])
+                 for pg in COCAINE_CITY_PAGES],
         "vs": VS,
     }
     types = sys.argv[1:] or list(seeds.keys())

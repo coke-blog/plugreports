@@ -1,7 +1,9 @@
-def data_markdown(pg):
+def data_markdown(pg, drug="methamphetamine"):
     """Full-page Markdown version of a data page (used for KV/admin editing)."""
+    drug_word = "meth" if drug == "methamphetamine" else drug
+    drug_label = "Methamphetamine" if drug == "methamphetamine" else drug.capitalize()
     L = []
-    L.append("> **Read this first** — no country anywhere measures meth use per city directly. "
+    L.append(f"> **Read this first** — no country anywhere measures {drug_word} use per city directly. "
              "This ranking combines the strongest available proxies — wastewater analysis, forensic-lab reporting, "
              "treatment admissions and police seizures — and is directional, not a precise league table. "
              "Positions in the middle of the list should be read as a band.")
@@ -33,7 +35,7 @@ def data_markdown(pg):
     L.append(f'*How to cite: plugreports.com — "{pg["title"]}", updated {pg["updated"]}. '
              f'Primary sources: {"; ".join(pg["sources"][:3])}.*')
     L.append("")
-    L.append("Related: [Methamphetamine profile](/drugs/methamphetamine/) · "
+    L.append(f"Related: [{drug_label} profile](/drugs/{drug}/) · "
              "[All plugreports data pages](/data/) · [Help lines by region](/hotlines/)")
     return "\n".join(L)
 
