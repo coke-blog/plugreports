@@ -66,7 +66,7 @@ const PALETTE=['#0ea5e9','#8b5cf6','#ec4899','#f43f5e','#14b8a6','#f59e0b','#84c
 const CATS=["opioids","stimulants","benzodiazepines","sedatives","depressants","dissociatives","empathogens","psychedelics","cannabinoids","performance","hazardous"];
 const RELND={k:'relatedNoDefaults',l:'Hide default cards (Fentanyl numbers / Quitting / Hotlines)',t:'checkbox'};
 const SEO=[{k:'seoTitle',l:'SEO title (optional — overrides auto-generated)',t:'text'},{k:'seoDesc',l:'SEO description (optional)',t:'textarea'}];
-const REL={k:'related',l:'You may also want to know about — drug slug, type:slug (topics:x), or https://link|Label',t:'csv',ph:'heroin, topics:nitazenes-new-opioids, https://nida.nih.gov|NIDA'};
+const REL={k:'related',l:'You may also want to know about — internal: drug slug or type:slug (topics:x) · external resource: https://link or https://link|Label (opens in new tab)',t:'csv',ph:'heroin, topics:nitazenes-new-opioids, https://nida.nih.gov|NIDA'};
 const SCHEMAS={
  categories:[{k:'name',l:'Category name',t:'text',req:1,ph:'Steroids & PEDs'},{k:'slug',l:'Slug',t:'text',auto:1},
   {k:'color',l:'Color',t:'select',opts:PALETTE},{k:'grad',l:'Gradient CSS (optional)',t:'text',ph:'linear-gradient(135deg,#1e40af,#3b82f6)'},
@@ -138,7 +138,7 @@ const SCHEMAS={
   {k:'poster',l:'Poster image (shown before play)',t:'image'},
   {k:'duration',l:'Duration (m:ss — auto-filled on upload)',t:'text',ph:'0:07'},
   {k:'desc',l:'Caption / description',t:'textarea',cls:'tall',ph:'What the clip shows + a reminder that appearance never proves purity'},
-  {k:'drug',l:'Related drug slug (links the full profile)',t:'text',ph:'cocaine'},
+  {k:'drug',l:'Read-more link — drug slug, type:slug, or external https://url (add |Label to name it)',t:'text',ph:'cocaine · topics:spot-pressed-pills · or https://nida.nih.gov/…|NIDA guide'},
   {k:'featured',l:'Show in homepage video slider',t:'checkbox'},
   {k:'uploaded',l:'Upload date (auto-filled on upload)',t:'text',ph:'2026-09-30'}],
 };

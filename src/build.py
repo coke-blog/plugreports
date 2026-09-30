@@ -232,7 +232,7 @@ def shell(path, title, desc, body, jsonld=None, canonical=None, extra_head="", o
         if path == "index.html":
             ld += '<script src="/assets/js/breaking.js?v=16" defer></script>'
     if path.split("/")[0] in ("index.html", "watch"):
-        ld += '<script src="/assets/js/videos.js?v=1" defer></script>'
+        ld += '<script src="/assets/js/videos.js?v=2" defer></script>'
     rtl = ' dir="rtl"' if lang == "ar" else ""
     return f"""<!DOCTYPE html>
 <html lang="{lang}"{rtl}>

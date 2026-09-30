@@ -13,10 +13,25 @@
       return (j.items || []).filter(v => v && v.video);
     } catch (e) { return []; }
   }
+  /* "drug" field accepts a library slug (cocaine), or an external resource
+     * as https://url or https://url|Label — rendered as a new-tab read-more link. */
+  function relLink(raw) {
+    const parts = String(raw).split('|');
+    const target = parts[0].trim(), custom = (parts[1] || '').trim();
+    if (/^https?:\/\//.test(target)) {
+      const lab = custom || target.replace(/^https?:\/\//, '').split('/')[0];
+      return '<a href="' + escV(target) + '" target="_blank" rel="noopener">' + escV(lab) + ' &#8599;</a>';
+    }
+    if (/^[a-z]+:[\w-]+$/.test(target)) {
+      const p = target.split(':');
+      return '<a href="/' + escV(p[0]) + '/' + escV(p[1]) + '/">' + (custom ? escV(custom) : escV(p[1].replace(/-/g, ' '))) + ' &rarr;</a>';
+    }
+    return '<a href="/drugs/' + escV(target) + '/">' + (custom ? escV(custom) : 'Full ' + escV(target.replace(/-/g, ' ')) + ' profile') + ' &rarr;</a>';
+  }
   function card(v) {
     const poster = v.poster ? ' poster="' + escV(v.poster) + '"' : '';
     const dur = v.duration ? '<span class="chip" style="position:absolute;bottom:8px;right:8px;background:rgba(0,0,0,.72);color:#fff;border:0;z-index:2">' + escV(v.duration) + '</span>' : '';
-    const prof = v.drug ? '<a href="/drugs/' + escV(v.drug) + '/">Full ' + escV(String(v.drug).replace(/-/g, ' ')) + ' profile &rarr;</a>' : '';
+    const prof = v.drug ? relLink(v.drug) : '';
     return '<div class="vcard"><div class="vwrap"><video controls preload="none" playsinline' + poster +
       ' aria-label="' + escV(v.title) + '"><source src="' + escV(v.video) + '" type="video/mp4"></video>' + dur + '</div>' +
       '<h3>' + escV(v.title) + '</h3>' +
