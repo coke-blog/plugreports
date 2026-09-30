@@ -1031,3 +1031,21 @@ LANGS["ar"]["labels"] = dict(wd="ماذا يفعل", kr="المخاطر الرئ
  od_b="جرعة زائدة؟ تحرّك الآن.", od_t="اتصل بخدمات الطوارئ. أعطِ النالوكسون عند علامات الأفيونيات.",
  rel="قد تود أيضاً معرفة", hot_k="مساعدة", hot_h1="خطوط المساعدة", hot_kick="دليل المساعدة",
  call="اتصال")
+
+# --- machine-translated expansion pack (merged at import; admin/KV edits still win) ---
+try:
+    from data_i18n_expansion import LANGS_MT
+    for _ln, _d in LANGS_MT.items():
+        if _ln in LANGS:
+            LANGS[_ln].setdefault("drugs", {}).update(_d)
+except Exception:
+    pass
+
+# --- machine-translated expansion pack 2 (2026-09-30: ~50% of remaining profiles) ---
+try:
+    from data_i18n_expansion2 import LANGS_MT2
+    for _ln, _d in LANGS_MT2.items():
+        if _ln in LANGS:
+            LANGS[_ln].setdefault("drugs", {}).update(_d)
+except Exception:
+    pass

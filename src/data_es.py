@@ -223,3 +223,17 @@ ES_DRUGS.update({
   streetPrice="~$5–$20 por dosis",
   legalStatus="Lista I (ilícito) en EE. UU.; ilegal sin receta en todas las regiones."),
 })
+
+# --- machine-translated expansion pack (merged at import; admin/KV edits still win) ---
+try:
+    from data_i18n_expansion import ES_DRUGS_MT
+    ES_DRUGS.update(ES_DRUGS_MT)
+except Exception:
+    pass
+
+# --- machine-translated expansion pack 2 (2026-09-30: ~50% of remaining profiles) ---
+try:
+    from data_i18n_expansion2 import ES_DRUGS_MT2
+    ES_DRUGS.update(ES_DRUGS_MT2)
+except Exception:
+    pass
