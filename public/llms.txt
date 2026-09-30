@@ -836,8 +836,5 @@ Complete machine-readable drug records: [llms-full.txt](https://plugreports.com/
 - [/vs/vapes-vs-cigarettes/](https://plugreports.com/vs/vapes-vs-cigarettes/) Vapes vs Cigarettes
 - [/vs/snus-vs-cigarettes/](https://plugreports.com/vs/snus-vs-cigarettes/) Snus vs Cigarettes
 
-## Watch — identification videos (3)
-- [/watch/](https://plugreports.com/watch/) Hub — short clips showing what street drugs actually look like
-- [/watch/cocaine-powder/](https://plugreports.com/watch/cocaine-powder/) What does cocaine powder look like? (video, 0:05)
-- [/watch/heroin-powder/](https://plugreports.com/watch/heroin-powder/) What does heroin look like? (video, 0:05)
-- [/watch/mdma-crystals/](https://plugreports.com/watch/mdma-crystals/) What do MDMA crystals look like? (video, 0:05)
+## Watch — identification videos
+- [/watch/](https://plugreports.com/watch/) Hub — short real clips showing what street drugs actually look like (loaded live from the admin video library)

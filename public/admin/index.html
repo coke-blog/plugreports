@@ -133,9 +133,17 @@ const SCHEMAS={
  sentencing:[{k:'region',l:'Region',t:'text',req:1},{k:'slug',l:'Slug',t:'text',auto:1},
   {k:'summary',l:'Summary',t:'textarea',cls:'tall'},
   {k:'table',l:'Table rows',t:'table',hint:'one per line: Cell | Cell (first line = header)'},REL,RELND].concat(SEO),
+ videos:[{k:'title',l:'Video title',t:'text',req:1,ph:'Pure Colombian cocaine — up close'},{k:'slug',l:'Slug',t:'text',auto:1},
+  {k:'video',l:'Video file (mp4/webm, keep under ~3 MB)',t:'video'},
+  {k:'poster',l:'Poster image (shown before play)',t:'image'},
+  {k:'duration',l:'Duration (m:ss — auto-filled on upload)',t:'text',ph:'0:07'},
+  {k:'desc',l:'Caption / description',t:'textarea',cls:'tall',ph:'What the clip shows + a reminder that appearance never proves purity'},
+  {k:'drug',l:'Related drug slug (links the full profile)',t:'text',ph:'cocaine'},
+  {k:'featured',l:'Show in homepage video slider',t:'checkbox'},
+  {k:'uploaded',l:'Upload date (auto-filled on upload)',t:'text',ph:'2026-09-30'}],
 };
-const ICONS={drugs:['💊','#dc2626'],categories:['🗂️','#f59e0b'],busts:['🚨','#b45309'],news:['📰','#dc2626'],topics:['📖','#4338ca'],data:['📊','#0f766e'],mix:['⚗️','#b45309'],vs:['VS','#0f766e'],quit:['⏳','#16a34a'],hotlines:['☎️','#dc2626'],pharmacies:['Rx','#3b82f6'],rehabs:['➕','#16a34a'],sentencing:['⚖️','#111827'],settings:['⚙️','#667085'],suggestions:['📥','#0ea5e9']};
-const ACC=[{label:'Content',items:['drugs','categories','busts','news','topics','data','mix','vs','quit']},{label:'Directories',items:['hotlines','pharmacies','rehabs']},{label:'Site',items:['sentencing','settings','suggestions']}];
+const ICONS={drugs:['💊','#dc2626'],categories:['🗂️','#f59e0b'],busts:['🚨','#b45309'],news:['📰','#dc2626'],topics:['📖','#4338ca'],data:['📊','#0f766e'],mix:['⚗️','#b45309'],vs:['VS','#0f766e'],quit:['⏳','#16a34a'],hotlines:['☎️','#dc2626'],pharmacies:['Rx','#3b82f6'],rehabs:['➕','#16a34a'],sentencing:['⚖️','#111827'],videos:['🎬','#dc2626'],settings:['⚙️','#667085'],suggestions:['📥','#0ea5e9']};
+const ACC=[{label:'Content',items:['drugs','categories','busts','news','topics','data','mix','vs','quit','videos']},{label:'Directories',items:['hotlines','pharmacies','rehabs']},{label:'Site',items:['sentencing','settings','suggestions']}];
 let token=sessionStorage.getItem('pr-token'),cur='drugs',jsonMode=false,openAcc=0;
 async function api(p,opt={}){opt.headers=Object.assign({'Content-Type':'application/json',Authorization:'Bearer '+token},opt.headers);
  const r=await fetch('/api/'+p,opt);if(r.status===401){logout();throw new Error('session expired')}
@@ -187,6 +195,11 @@ function renderField(f,it){const v=it[f.k];let h='';
      <input placeholder="Search gallery by slug or title…" oninput="gallerySearch('${f.k}',this.value)" style="width:min(280px,90%)">
      <div id="galres_${f.k}" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;max-height:230px;overflow:auto"></div>
    </div>`;
+ else if(f.t==='video')h=`<input type="text" id="f_${f.k}" value="${esc(v||'')}" placeholder="upload an mp4, or paste a /media/ URL" style="width:min(50%,300px)" onchange="videoPrev('${f.k}')">
+   <input type="file" id="f_${f.k}_file" accept="video/mp4,video/webm" style="display:inline;width:auto">
+   <button class="btn x sm" onclick="uploadVideoField('${f.k}')">Upload</button>
+   <span class="hint">— uploads to /media/videos/&lt;slug&gt;.mp4; duration & date auto-fill</span>
+   <div id="vprev_${f.k}" style="margin-top:8px">${v?`<video src="${esc(v)}" controls preload="metadata" style="max-width:280px;max-height:220px;border-radius:10px;background:#000"></video>`:''}</div>`;
  else if(f.t==='category')h=`<select id="f_category"></select> <button type="button" class="btn g sm" onclick="toggleNewCat()">+ New</button>
    <span id="catnew" hidden> <input id="f_newcat" placeholder="New category name" style="width:220px">
    <button type="button" class="btn x sm" onclick="saveNewCat()">Add</button></span>
@@ -271,6 +284,22 @@ async function uploadField(k){const f=document.getElementById('f_'+k+'_file').fi
  const r=await fetch('/api/admin/upload?name='+encodeURIComponent(name),{method:'POST',headers:{'Content-Type':f.type,Authorization:'Bearer '+token},body:f});
  const j=await r.json();if(!j.ok)return msg(j.error||'Upload failed',0);
  document.getElementById('f_'+k).value=j.url;msg('Uploaded: '+j.url)}
+function videoPrev(k){const box=document.getElementById('vprev_'+k);if(!box)return;const u=val(k);
+ box.innerHTML=u?`<video src="${esc(u)}" controls preload="metadata" style="max-width:280px;max-height:220px;border-radius:10px;background:#000"></video>`:''}
+async function uploadVideoField(k){const f=document.getElementById('f_'+k+'_file').files[0];if(!f)return msg('Pick a video file first',0);
+ if(f.size>20*1024*1024)return msg('Video too large — 20 MB max. Compress it first (aim for under 3 MB).',0);
+ const slug=val('slug')||slugify(val('title')||'clip');
+ const name='videos/'+slug+'.'+(f.name.split('.').pop().toLowerCase());
+ msg('Uploading video…');
+ const r=await fetch('/api/admin/upload?name='+encodeURIComponent(name),{method:'POST',headers:{'Content-Type':f.type,Authorization:'Bearer '+token},body:f});
+ const j=await r.json();if(!j.ok)return msg(j.error||'Upload failed',0);
+ document.getElementById('f_'+k).value=j.url;videoPrev(k);
+ const dEl=document.getElementById('f_duration');
+ if(dEl&&!dEl.value){const vv=document.createElement('video');vv.preload='metadata';vv.src=j.url;
+  vv.onloadedmetadata=()=>{const s=Math.round(vv.duration||0);if(s>0)dEl.value=Math.floor(s/60)+':'+String(s%60).padStart(2,'0');};}
+ const uEl=document.getElementById('f_uploaded');
+ if(uEl&&!uEl.value)uEl.value=new Date().toISOString().slice(0,10);
+ msg('Uploaded: '+j.url+' — tick “Show in homepage video slider” to feature it on the homepage.')}
 let GAL_CACHE=[];
 async function toggleGallery(k){
  const box=document.getElementById('gal_'+k);box.hidden=!box.hidden;
