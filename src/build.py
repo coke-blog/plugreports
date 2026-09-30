@@ -22,6 +22,10 @@ try:
     from data_vs import VS, VS_CATS
 except Exception:
     VS, VS_CATS = [], {}
+try:
+    from data_videos import VIDEOS
+except Exception:
+    VIDEOS = []
 
 def _apply_overrides():
     for d in DRUGS: d.update(RELATED_OVERRIDES.get("drugs", {}).get(d["slug"], {}))
@@ -155,7 +159,8 @@ def rel_card(slug):
 NAV = [
  ("/", "Home", "home"), ("/categories/opioids/", "Drug Library", "drugs"),
  ("/news/", "News", "news"), ("/busts/", "Busts", "busts"), ("/topics/", "Guides", "topics"),
- ("/quit/", "Quitting", "quit"), ("/mix/", "Mixing", "mix"), ("/vs/", "Vs", "vs"), ("/data/", "Data", "data"), ("/hotlines/", "Hotlines", "hotline"),
+ ("/quit/", "Quitting", "quit"), ("/mix/", "Mixing", "mix"), ("/vs/", "Vs", "vs"), ("/data/", "Data", "data"),
+ ("/watch/", "Watch", "watch"), ("/hotlines/", "Hotlines", "hotline"),
  ("/sentencing/", "Sentencing", "sentencing"), ("/pharmacies/", "Pharmacies", "pharmacies"),
  ("/rehabs/", "Rehabs", "rehabs"), ("/about/", "About", "about"),
 ]
@@ -280,7 +285,7 @@ def shell(path, title, desc, body, jsonld=None, canonical=None, extra_head="", o
 <button data-lang="ru">RU</button><button data-lang="ja">日本語</button><button data-lang="de">DE</button><button data-lang="fr">FR</button></div></div>
 <div><h4>Library</h4><a href="/categories/opioids/">Opioids</a><a href="/categories/stimulants/">Stimulants</a><a href="/categories/benzodiazepines/">Benzodiazepines</a><a href="/categories/psychedelics/">Psychedelics</a><a href="/categories/empathogens/">Empathogens</a><a href="/categories/cannabinoids/">Synthetic cannabinoids</a><a href="/mix/">Mixing dangers</a><a href="/vs/">Vs comparisons</a></div>
 <div><h4>Help</h4><a href="/hotlines/">Hotlines</a><a href="/rehabs/">Rehab centers</a><a href="/pharmacies/">Verified pharmacies</a><a href="/quit/">Quitting, day by day</a><a href="/sentencing/">Sentencing explained</a></div>
-<div><h4>Updates</h4><a href="/news/">Drug news</a><a href="/busts/">Busts & seizures</a><a href="/topics/">Guides</a><a href="/data/">Data &amp; trackers</a><a href="/suggest/">Suggest a correction</a><a href="/rss.xml">RSS feed</a><a href="/about/">About & editorial policy</a></div>
+<div><h4>Updates</h4><a href="/news/">Drug news</a><a href="/busts/">Busts & seizures</a><a href="/topics/">Guides</a><a href="/data/">Data &amp; trackers</a><a href="/watch/">Watch — videos</a><a href="/suggest/">Suggest a correction</a><a href="/rss.xml">RSS feed</a><a href="/about/">About & editorial policy</a></div>
 </div>
 <div class="social-row" id="socialrow" style="display:flex;gap:12px;flex-wrap:wrap;margin-top:26px">
 <a id="soc-reddit" href="{esc(SETTINGS.get("reddit",""))}" target="_blank" rel="noopener" class="soc-btn"><span style="color:#ff4500">&#9679;</span> Reddit</a>
@@ -304,6 +309,29 @@ def breadcrumb_ld(parts):
     return {"@context":"https://schema.org","@type":"BreadcrumbList",
             "itemListElement":[{"@type":"ListItem","position":i+1,"name":n,"item":f"{SITE}{u}"}
                                for i,(n,u) in enumerate(parts)]}
+
+def _iso_duration(dur):
+    """'0:05' -> 'PT5S' (ISO 8601) for VideoObject JSON-LD."""
+    try:
+        m, _, s = str(dur).partition(":")
+        m, s = int(m), int(s)
+        return "PT" + (f"{m}M" if m else "") + f"{s}S"
+    except Exception:
+        return "PT5S"
+
+def video_embed(drug_slug, es=False):
+    """Inline <video> block for a drug profile rail when a clip exists."""
+    if es: return None, ""
+    v = next((x for x in VIDEOS if x.get("drug") == drug_slug), None)
+    if not v: return None, ""
+    html_ = (f'<video controls preload="none" poster="{esc(v["poster"])}" playsinline '
+             f'style="width:100%;border-radius:16px;border:1px solid var(--line);box-shadow:var(--shadow);margin-top:12px;background:#0b0f19;aspect-ratio:16/9" '
+             f'aria-label="{esc(v["title"])}">'
+             f'<source src="{esc(v["video"])}" type="video/mp4">'
+             f'Your browser cannot play this clip — <a href="{esc(v["video"])}">download it</a>.</video>'
+             f'<a href="/watch/{v["slug"]}/" style="display:block;font-size:12.5px;color:var(--muted);margin-top:6px">'
+             f'&#9654; {esc(v["title"])} ({esc(v["duration"])}) — full watch page</a>')
+    return v, html_
 
 # ------------------------------------------------------------------ index ----
 def build_index(es=False):
@@ -483,6 +511,7 @@ def build_drugs(es=False):
         app_ = o.get("appearance", d["appearance"]); pr = o.get("streetPrice", d["streetPrice"])
         lg = o.get("legalStatus", d["legalStatus"]); sch = o.get("schedule", d["schedule"])
         pimg, img_rel = pimg_html(d, c, app_)
+        vid, vid_html = video_embed(d["slug"], es=es)
         rel = related_drugs(d)
         rel_entries = d.get("related") or []
         if rel_entries:
@@ -557,6 +586,7 @@ def build_drugs(es=False):
 </div>
 <aside class="ptop-rail">
 {pimg}
+{vid_html}
 <div class="panel"><h2><span class="ic" style="background:{c['color']};color:#fff">&#128203;</span>Quick facts</h2>{rows}
 <div style="margin-top:14px"><span class="chip green">Sources: {esc(", ".join(d["sources"]))}</span></div></div>
 </aside>
@@ -592,6 +622,13 @@ def build_drugs(es=False):
                   breadcrumb_ld([("Home","/"),(cat_name,f"/categories/{d['category']}/"),(d["name"],f"/drugs/{d['slug']}/")]),
                   {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
                       {"@type":"Question","name":q,"acceptedAnswer":{"@type":"Answer","text":a}} for q,a in faqs]}]
+            if vid:
+                ld.append({"@context":"https://schema.org","@type":"VideoObject",
+                           "name":vid["title"],"description":vid["desc"],
+                           "thumbnailUrl":vid["poster"],"uploadDate":vid.get("uploaded", TODAY),
+                           "duration":_iso_duration(vid["duration"]),
+                           "contentUrl":vid["video"],"embedUrl":f"{SITE}/watch/{vid['slug']}/",
+                           "publisher":PUBLISHER_LD})
             og = img_rel if img_rel.startswith("http") else (f"{SITE}/{img_rel}" if "drugs/" in img_rel else None)
             w(f"drugs/{d['slug']}/index.html", shell(f"drugs/{d['slug']}/index.html", title, desc, body, jsonld=ld, ogimage=og, alts=drug_alts(d["slug"])))
 
@@ -1409,6 +1446,42 @@ def build_data_hub():
       '<a class="card" href="/data/cocaine-cities-africa/"><h3>Cocaine Cities: Africa</h3>'
       '<p>Lagos lands it, Johannesburg buys it — the world&rsquo;s fastest-growing corridor.</p>'
       '<div class="foot">Open the ranking &rarr;</div></a>'
+      '<a class="card" href="/data/mdma-cities-usa/"><h3>MDMA Cities: USA</h3>'
+      '<p>Miami, Vegas, NYC — America&rsquo;s molly map follows the festival circuit.</p>'
+      '<div class="foot">Open the ranking &rarr;</div></a>'
+      '<a class="card" href="/data/mdma-cities-europe/"><h3>MDMA Cities: Europe</h3>'
+      '<p>Amsterdam, Eindhoven, Zurich — Europe&rsquo;s MDMA capitals measured in sewage.</p>'
+      '<div class="foot">Open the ranking &rarr;</div></a>'
+      '<a class="card" href="/data/mdma-cities-australia/"><h3>MDMA Cities: Australia</h3>'
+      '<p>Sydney and Melbourne lead the ACIC wastewater ranking — a summer-festival market.</p>'
+      '<div class="foot">Open the ranking &rarr;</div></a>'
+      '<a class="card" href="/data/mdma-cities-canada/"><h3>MDMA Cities: Canada</h3>'
+      '<p>Toronto, Montreal, Vancouver — clubs, festivals and domestic superlabs.</p>'
+      '<div class="foot">Open the ranking &rarr;</div></a>'
+      '<a class="card" href="/data/mdma-cities-middle-east/"><h3>MDMA Cities: Middle East</h3>'
+      '<p>Tel Aviv and Dubai anchor a small, fast-growing market — honestly hedged.</p>'
+      '<div class="foot">Open the ranking &rarr;</div></a>'
+      '<a class="card" href="/data/mdma-cities-africa/"><h3>MDMA Cities: Africa</h3>'
+      '<p>Cape Town, Johannesburg, Nairobi — the festival-driven frontier.</p>'
+      '<div class="foot">Open the ranking &rarr;</div></a>'
+      '<a class="card" href="/data/crack-cities-usa/"><h3>Crack Cities: USA</h3>'
+      '<p>Philadelphia, Baltimore, Detroit — 40 years in, the treatment data still names the same cities.</p>'
+      '<div class="foot">Open the ranking &rarr;</div></a>'
+      '<a class="card" href="/data/crack-cities-europe/"><h3>Crack Cities: Europe</h3>'
+      '<p>London, Birmingham, Dublin — plus Paris and Antwerp&rsquo;s fast-rising open scenes.</p>'
+      '<div class="foot">Open the ranking &rarr;</div></a>'
+      '<a class="card" href="/data/crack-cities-canada/"><h3>Crack Cities: Canada</h3>'
+      '<p>Vancouver&rsquo;s DTES, Toronto, Winnipeg — a market now entangled with fentanyl.</p>'
+      '<div class="foot">Open the ranking &rarr;</div></a>'
+      '<a class="card" href="/data/crack-cities-australia/"><h3>Crack Cities: Australia</h3>'
+      '<p>The honest outlier: crack never took hold in Australia — here&rsquo;s why.</p>'
+      '<div class="foot">Open the ranking &rarr;</div></a>'
+      '<a class="card" href="/data/crack-cities-middle-east/"><h3>Crack Cities: Middle East</h3>'
+      '<p>Nearly absent — the region&rsquo;s stimulant story is Captagon, not crack.</p>'
+      '<div class="foot">Open the ranking &rarr;</div></a>'
+      '<a class="card" href="/data/crack-cities-africa/"><h3>Crack Cities: Africa</h3>'
+      '<p>Johannesburg, Cape Town, Lagos — crack follows the cocaine corridors.</p>'
+      '<div class="foot">Open the ranking &rarr;</div></a>'
       '</div>'
       '<p style="margin-top:22px;color:#667085;font-size:14px">Using our data? '
       '<a href="/about/">Editorial policy & sources</a> &middot; <a href="/suggest/">Report a correction</a></p>'
@@ -1422,8 +1495,12 @@ def build_data_hub():
 def build_meth_cities():
     from data_meth_cities import METH_CITY_PAGES
     from data_cocaine_cities import COCAINE_CITY_PAGES
+    from data_mdma_cities import MDMA_CITY_PAGES
+    from data_crack_cities import CRACK_CITY_PAGES
     groups = [(METH_CITY_PAGES, "methamphetamine", "Methamphetamine profile — effects, overdose signs & street price"),
-              (COCAINE_CITY_PAGES, "cocaine", "Cocaine profile — effects, overdose signs & street price")]
+              (COCAINE_CITY_PAGES, "cocaine", "Cocaine profile — effects, overdose signs & street price"),
+              (MDMA_CITY_PAGES, "mdma", "MDMA profile — effects, overdose signs & street price"),
+              (CRACK_CITY_PAGES, "crack", "Crack cocaine profile — effects, overdose signs & street price")]
     for PAGES, DRUG, DRUG_LABEL in groups:
      for pg in PAGES:
         stat_html = "".join(f'<div class="stat"><b>{esc(n)}</b><span>{esc(l)}</span></div>' for n, l in pg["stats"])
@@ -1468,6 +1545,79 @@ def build_meth_cities():
           clip(pg["desc"]), body, jsonld=jsonld, ogimage=pg.get("image")))
 
 
+# ------------------------------------------------------------- watch pages ----
+def build_watch():
+    """Video library: /watch/ hub + one detail page per clip, with VideoObject JSON-LD."""
+    if not VIDEOS: return
+    def card(v):
+        return (f'<a class="card" href="/watch/{v["slug"]}/">'
+                f'<div class="thumb" style="position:relative">'
+                f'<img src="{esc(v["poster"])}" alt="{esc(v["title"])}" loading="lazy">'
+                f'<span style="position:absolute;inset:0;display:grid;place-items:center">'
+                f'<span style="width:46px;height:46px;border-radius:50%;background:rgba(220,38,38,.92);'
+                f'display:grid;place-items:center;color:#fff;font-size:17px;box-shadow:0 4px 14px rgba(0,0,0,.35)">&#9654;</span></span>'
+                f'<span class="chip" style="position:absolute;bottom:8px;right:8px;background:rgba(0,0,0,.72);color:#fff;border:0">{esc(v["duration"])}</span></div>'
+                f'<div class="meta"><span class="chip red">VIDEO</span><span class="chip">{esc(v["duration"])}</span></div>'
+                f'<h3>{esc(v["title"])}</h3><p>{esc(clip(v["desc"], 120))}</p>'
+                f'<div class="foot">Watch &rarr;</div></a>')
+    cards = "".join(card(v) for v in VIDEOS)
+    hub = ('<div class="wrap"><section class="sec-head" style="padding-top:30px"><div>'
+           '<span class="kicker">Video library</span>'
+           '<h1>Watch — what drugs actually look like</h1>'
+           '<p>Short, close-up identification clips. What a photo can&rsquo;t show — texture, clumping, shine — five seconds of video can. '
+           'But remember: <b>looks prove nothing about purity or safety</b>. Fentanyl is invisible in any of this. Always test.</p></div></section>'
+           '<div class="callout amber"><b>Why watch instead of just read?</b>'
+           'Most overdose deaths involve a substance the person could not identify. These clips give &ldquo;what does X look like&rdquo; a visual answer — '
+           'but never use appearance to judge safety. See <a href="/topics/spot-pressed-pills/">how to spot pressed pills</a> and keep '
+           '<a href="/hotlines/">a hotline</a> handy.</div>'
+           f'<div class="cards">{cards}</div>'
+           '<p style="margin-top:20px;color:#667085;font-size:14px">Clips are kept under 3&nbsp;MB on purpose so they load on any connection. '
+           'Have a better identification clip? <a href="/suggest/">Send it in</a>.</p></div>')
+    itemlist = {"@context":"https://schema.org","@type":"ItemList","name":"Drug identification videos",
+                "numberOfItems":len(VIDEOS),
+                "itemListElement":[{"@type":"ListItem","position":i+1,"name":v["title"],
+                                    "url":f"{SITE}/watch/{v['slug']}/"} for i,v in enumerate(VIDEOS)]}
+    w("watch/index.html", shell("watch/index.html",
+      "Watch — What Drugs Actually Look Like (Video Library) | plugreports",
+      clip(f"Short identification videos: what cocaine, heroin, MDMA and other street drugs actually look like up close — {len(VIDEOS)} clips, each linked to a full harm-reduction profile."),
+      hub, jsonld=[{"@context":"https://schema.org","@type":"CollectionPage","name":"Watch — drug identification videos"},
+                   itemlist, breadcrumb_ld([("Home","/"),("Watch","/watch/")])]))
+    for v in VIDEOS:
+        d = DRUG_BY_SLUG.get(v.get("drug") or "")
+        player = (f'<video controls preload="metadata" poster="{esc(v["poster"])}" playsinline '
+                  f'style="width:100%;border-radius:18px;border:1px solid var(--line);box-shadow:var(--shadow);background:#0b0f19;margin:18px 0 6px;aspect-ratio:16/9">'
+                  f'<source src="{esc(v["video"])}" type="video/mp4">'
+                  f'Your browser cannot play this clip — <a href="{esc(v["video"])}">download the mp4</a>.</video>')
+        others = "".join(card(x) for x in VIDEOS if x["slug"] != v["slug"])
+        prof = (f'<div class="related print-hide"><h2>Full profile &amp; help</h2><div class="rel-grid">'
+                f'<a href="/drugs/{d["slug"]}/">{rel_card(d["slug"])}</a>'
+                '<a href="/topics/spot-pressed-pills/"><span class="mini" style="background:#b45309">&#128218;</span><span>How to spot pressed pills</span></a>'
+                '<a href="/hotlines/"><span class="mini" style="background:#dc2626">&#9742;</span><span>Hotlines</span></a>'
+                '<a href="/quit/"><span class="mini" style="background:#16a34a">&#8987;</span><span>Quitting — day by day</span></a>'
+                '</div></div>') if d else ""
+        body = f"""<div class="wrap"><article class="article" style="padding-top:26px">
+<span class="kicker">VIDEO &middot; {esc(v['duration'])}</span>
+<h1 style="margin-top:12px">{esc(v['title'])}</h1>
+<div class="byline"><span>Updated {TODAY}</span><span>plugreports video library</span></div>
+{player}
+<p class="lede" style="font-size:17px">{esc(v['desc'])}</p>
+<div class="callout red"><b>Appearance proves nothing.</b>Two samples can look identical and differ a hundred-fold in strength — or one can be fentanyl. Only reagent kits and fentanyl test strips tell you anything real. <a href="/hotlines/">Hotlines</a></div>
+{prof}
+</article>
+{f'<section style="margin-top:26px"><h2 style="font-size:22px">More identification clips</h2><div class="cards" style="margin-top:14px">{others}</div></section>' if others else ''}
+</div>"""
+        ld = [{"@context":"https://schema.org","@type":"VideoObject",
+               "name":v["title"],"description":v["desc"],
+               "thumbnailUrl":v["poster"],"uploadDate":v.get("uploaded", TODAY),
+               "duration":_iso_duration(v["duration"]),
+               "contentUrl":v["video"],"embedUrl":f"{SITE}/watch/{v['slug']}/",
+               "publisher":PUBLISHER_LD,"isFamilyFriendly":True},
+              breadcrumb_ld([("Home","/"),("Watch","/watch/"),(v["title"],f"/watch/{v['slug']}/")])]
+        w(f"watch/{v['slug']}/index.html", shell(f"watch/{v['slug']}/index.html",
+          f"{v['title']} (video) | plugreports", clip(v["desc"]), body,
+          jsonld=ld, ogimage=v["poster"], ogtype="video.other"))
+
+
 def build_meta():
     from data_es import ES_DRUGS as _ESD
     ES_DRUG_KEYS = list(_ESD.keys())
@@ -1478,7 +1628,11 @@ def build_meta():
             ("data/meth-cities-usa/", B), ("data/meth-cities-canada/", B), ("data/meth-cities-europe/", B),
             ("data/meth-cities-australia/", B), ("data/meth-cities-middle-east/", B), ("data/meth-cities-africa/", B),
             ("data/cocaine-cities-usa/", B), ("data/cocaine-cities-canada/", B), ("data/cocaine-cities-europe/", B),
-            ("data/cocaine-cities-australia/", B), ("data/cocaine-cities-middle-east/", B), ("data/cocaine-cities-africa/", B)]
+            ("data/cocaine-cities-australia/", B), ("data/cocaine-cities-middle-east/", B), ("data/cocaine-cities-africa/", B),
+            ("data/mdma-cities-usa/", B), ("data/mdma-cities-canada/", B), ("data/mdma-cities-europe/", B),
+            ("data/mdma-cities-australia/", B), ("data/mdma-cities-middle-east/", B), ("data/mdma-cities-africa/", B),
+            ("data/crack-cities-usa/", B), ("data/crack-cities-canada/", B), ("data/crack-cities-europe/", B),
+            ("data/crack-cities-australia/", B), ("data/crack-cities-middle-east/", B), ("data/crack-cities-africa/", B)]
     urls += [(f"categories/{k}/", B) for k in CATEGORIES]
     urls += [("es/", B), ("es/hotlines/", B), ("es/categories/", B)]
     urls += [(f"es/drugs/{sl}/", DRUG_BY_SLUG[sl].get("lastUpdated", B)) for sl in ES_DRUG_KEYS if sl in DRUG_BY_SLUG]
@@ -1500,6 +1654,9 @@ def build_meta():
     if VS:
         urls += [("vs/", B)]
         urls += [(f"vs/{v['slug']}/", v.get("lastUpdated", B)) for v in VS]
+    if VIDEOS:
+        urls += [("watch/", B)]
+        urls += [(f"watch/{v['slug']}/", v.get("uploaded", B)) for v in VIDEOS]
     urls += [(f"pharmacies/{p['slug']}/", B) for p in PHARMACIES]
     urls += [(f"rehabs/{r['slug']}/", B) for r in REHABS]
     sm = "\n".join(f'<url><loc>{SITE}/{u}</loc><lastmod>{lm}</lastmod></url>' for u, lm in urls)
@@ -1561,6 +1718,10 @@ def build_meta():
         L += ["", f"## Vs — drug comparisons ({len(VS)})"]
         L.append(f"- [/vs/]({SITE}/vs/) Hub — {len(VS)} head-to-head comparisons in plain English")
         for v in VS: L.append(f"- [/vs/{v['slug']}/]({SITE}/vs/{v['slug']}/) {v['title']}")
+    if VIDEOS:
+        L += ["", f"## Watch — identification videos ({len(VIDEOS)})"]
+        L.append(f"- [/watch/]({SITE}/watch/) Hub — short clips showing what street drugs actually look like")
+        for v in VIDEOS: L.append(f"- [/watch/{v['slug']}/]({SITE}/watch/{v['slug']}/) {v['title']} (video, {v['duration']})")
     w("llms.txt", "\n".join(L) + "\n")
     # ---- llms-full.txt: complete compact drug records (GEO flagship artifact) ----
     F = ["# plugreports — full drug records",
@@ -1772,13 +1933,13 @@ def main():
     build_drugs(es=True); build_hotlines(es=True); build_index(es=True)
     for _ln in LANG_LIST:
         build_lang_drug_pages(_ln); build_lang_hotlines(_ln); build_lang_home(_ln); build_lang_categories(_ln)
-    build_about(); build_suggest(); build_data(); build_data_top(); build_data_hub(); build_meth_cities(); build_meta()
+    build_about(); build_suggest(); build_data(); build_data_top(); build_data_hub(); build_meth_cities(); build_watch(); build_meta()
     manifest = {"drugs":[d["slug"] for d in DRUGS], "news":[n["slug"] for n in NEWS],
                 "busts":[b["slug"] for b in BUSTS], "topics":[t["slug"] for t in TOPICS],
                 "categories":[k for k in CATEGORIES],
                 "pharmacies":[p["slug"] for p in PHARMACIES], "rehabs":[r["slug"] for r in REHABS],
                 "quit":[k for k in QUIT_SPECS], "mix":[m["slug"] for m in MIX],
-                "vs":[v["slug"] for v in VS]}
+                "vs":[v["slug"] for v in VS], "watch":[v["slug"] for v in VIDEOS]}
     w("_static.json", json.dumps(manifest))
     w("_dynamic.html", shell("_dynamic.html", "plugreports",
       "Live content", '<div class="wrap" id="dyn" style="padding:44px 20px;min-height:50vh"><p>Loading\u2026</p></div>',

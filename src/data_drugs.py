@@ -3658,3 +3658,38 @@ DRUGS += P2_GAPS_3
 # 2026-09-29 expansion: 100 additional profiles (gaps + societal areas)
 from data_drugs_expansion import DRUGS_EXPANSION
 DRUGS += DRUGS_EXPANSION
+
+# 2026-09-30 user-uploaded photos (KV media) — fill only profiles that have no image
+IMAGE_OVERRIDES_20260930 = {
+    "proviron": "https://plugreports.com/media/drugs/proviron.jpeg",
+    "anadrol": "https://plugreports.com/media/drugs/anadrol.jpeg",
+    "gbl": "https://plugreports.com/media/drugs/gbl.jpeg",
+    "anavar": "https://plugreports.com/media/drugs/anavar.jpeg",
+    "winstrol": "https://plugreports.com/media/drugs/winstrol.jpeg",
+    "boldenone": "https://plugreports.com/media/drugs/boldenone.jpeg",
+    "dianabol": "https://plugreports.com/media/drugs/dianabol.jpeg",
+    "trenbolone": "https://plugreports.com/media/drugs/trenbolone.jpeg",
+    "testosterone": "https://plugreports.com/media/drugs/testosterone.jpeg",
+    "o-dsmt": "https://plugreports.com/media/drugs/o-dsmt.jpeg",
+    "tramadol": "https://plugreports.com/media/drugs/tramadol.jpeg",
+    "4-mmc-crystals": "https://plugreports.com/media/drugs/4-mmc-crystals.jpeg",
+    "ghb-liquid": "https://plugreports.com/media/drugs/ghb-liquid.jpeg",
+    "melanotan-2": "https://plugreports.com/media/drugs/melanotan-2.jpeg",
+    "clonazepam": "https://plugreports.com/media/drugs/clonazepam.jpeg",
+    "eutylone": "https://plugreports.com/media/drugs/eutylone.jpeg",
+    "salvia-divinorum": "https://plugreports.com/media/drugs/salvia-divinorum.jpeg",
+    "peyote": "https://plugreports.com/media/drugs/peyote.jpeg",
+    "pseudoephedrine": "https://plugreports.com/media/drugs/pseudoephedrine.jpeg",
+    "lsd": "https://plugreports.com/media/drugs/lsd.jpeg",
+    "methylone": "https://plugreports.com/media/drugs/methylone.jpeg",
+    "4-mar": "https://plugreports.com/media/drugs/4-mar.jpeg",
+    "duragesic": "https://plugreports.com/media/drugs/duragesic.jpeg",
+    "wild-dagga": "https://plugreports.com/media/drugs/wild-dagga.jpeg",
+    "subutex": "https://plugreports.com/media/drugs/subutex.jpeg",
+    "meclonazepam": "https://plugreports.com/media/drugs/meclonazepam.jpeg",
+    "temazepam": "https://plugreports.com/media/drugs/temazepam.jpeg",
+    "lorazepam": "https://plugreports.com/media/drugs/lorazepam.jpeg",
+}
+for _d in DRUGS:
+    if _d["slug"] in IMAGE_OVERRIDES_20260930 and not _d.get("image"):
+        _d["image"] = IMAGE_OVERRIDES_20260930[_d["slug"]]

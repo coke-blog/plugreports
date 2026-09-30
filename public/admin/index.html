@@ -180,7 +180,7 @@ function renderField(f,it){const v=it[f.k];let h='';
    <textarea id="f_${f.k}" class="tall" style="font-family:ui-monospace,monospace" placeholder="## Heading&#10;&#10;Write **bold**, lists, tables and callouts.">${esc(v==null?'':v)}</textarea>
    <div id="f_${f.k}_prev" class="msg ok" hidden style="max-width:720px"></div>`;}
  else if(f.t==='image')h=`<input type="text" id="f_${f.k}" value="${esc(v||'')}" placeholder="upload, pick from gallery, or paste URL" style="width:min(50%,300px)">
-   <input type="file" id="f_${f.k}_file" accept="image/*" style="display:inline;width:auto">
+   <input type="file" id="f_${f.k}_file" accept="image/*,video/mp4,video/webm" style="display:inline;width:auto">
    <button class="btn x sm" onclick="uploadField('${f.k}')">Upload</button>
    <button type="button" class="btn a sm" onclick="toggleGallery('${f.k}')">📷 Gallery</button>
    <div id="gal_${f.k}" hidden style="margin-top:8px">

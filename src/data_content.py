@@ -1395,3 +1395,134 @@ Spraying ketamine does not sanitize it. It removes the one rough dose-gauge user
   drugsInvolved=["ketamine"],
   related=["ketamine","topics:nasal-spray-drug-use","topics:cocaine-nasal-spray","topics:mdma-nasal-spray","quit:ketamine"]),
 ]
+
+# 2026-09-30 — regional drug-crisis landing pages (Kush / Paco / Nyaope)
+TOPICS += [
+ dict(slug="kush-west-africa", tag="Crisis", title="Kush in West Africa: how a mystery drug swept Sierra Leone, Liberia and Guinea", date="2026-09-30", read="9 min",
+  desc="Kush went from unknown to national emergency in under three years. What lab tests actually found in it, why it is so cheap, and why naloxone sometimes works and sometimes doesn't.",
+  markdown="""## A drug that appeared out of nowhere
+
+Around 2022, a new street drug called **kush** began flooding Sierra Leone, then Liberia, Guinea and the Gambia. By 2024 Sierra Leone's president had declared a **national emergency**. Videos of young users frozen in bent-over, statue-like poses spread across social media — and behind the viral clips was a real mortality crisis: treatment centers reported users dying in their twenties, and graveyards in Freetown reported surges in young male burials.
+
+Kush is **not** cannabis, despite the name. It is a greenish-brown herbal smoking mix sold in tiny wraps for the equivalent of **20 cents to a dollar** — priced for the poorest users in some of the world's poorest countries.
+
+## What is actually in it?
+
+Here is the honest answer: **it depends on the batch, and that is the danger.** Laboratory testing of seized kush samples (supported by UNODC and international partners) has found:
+
+- **Synthetic cannabinoids** (spice-family chemicals) in many samples
+- **Nitazene-class synthetic opioids** — drugs many times stronger than fentanyl — in others
+- **Tramadol** and other pharmaceuticals in some batches
+- Persistent rumors of ground human bone or formaldehyde have **not** been confirmed by laboratory testing
+
+So "kush" is a brand, not a substance. Two wraps bought from the same street can be chemically different drugs. That is why reports from hospitals are confusing: some overdoses respond to **naloxone** (the opioid antidote) and some don't — because only some batches contain opioids.
+
+## Why it spread so fast
+
+- **Price.** At under a dollar a wrap, kush undercuts every other escape on offer.
+- **Unemployment.** Youth unemployment in Sierra Leone is among the highest in the world; kush sells an hour of oblivion to people with nothing to lose.
+- **Supply chains.** The chemicals are mail-ordered or container-shipped from abroad and sprayed onto local plant material — production requires no farms, no labs, no chemistry skills.
+- **Weak treatment infrastructure.** Sierra Leone has a handful of functioning rehab facilities for a crisis measured in tens of thousands of users.
+
+## What it does to users
+
+The frozen "zombie" posture seen in videos is consistent with **potent synthetic opioid or cannabinoid intoxication**. Longer-term, treatment centers report rapid physical deterioration: weight loss, skin sores, organ damage, and a withdrawal syndrome severe enough that users describe smoking just to feel normal. Overdose deaths, falls, and traffic accidents involving intoxicated users are routinely reported.
+
+## The harm-reduction reality
+
+There is no safe way to use a drug whose contents change batch to batch. For families and communities dealing with kush:
+
+- **If someone is unresponsive and breathing slowly, treat it as an opioid overdose**: naloxone if available, recovery position, emergency help — many batches contain nitazenes.
+- **Do not assume a batch is "safe"** because a previous one was tolerated.
+- **Withdrawal can be severe** — medical support matters, and demand for it exceeds supply across the region.
+
+*Sources: UNODC World Drug Report and West Africa threat reporting; Sierra Leone government national-emergency declaration (2024); BBC, AFP and Reuters investigations (2023–25); laboratory analysis reported by international partners.*
+
+Related: [Kush drug profile](/drugs/kush-drug/) · [Nitazenes explained](/drugs/etonitazene/) · [Synthetic cannabinoids (Spice/K2)](/drugs/k2-spice/) · [Help lines by region](/hotlines/)""",
+  drugsInvolved=["kush-drug","etonitazene","k2-spice","tramadol"],
+  related=["kush-drug","etonitazene","isotonitazene","k2-spice","tramadol","topics:fish-scale-vs-wash-cocaine"]),
+
+ dict(slug="paco-basuco-latin-america", tag="Crisis", title="Paco & Basuco: the cocaine paste devastating Latin America's poorest neighborhoods", date="2026-09-30", read="9 min",
+  desc="Paco (basuco, oxi) is crude, smokable cocaine paste sold for less than a dollar a hit. Why it spread across Argentina, Brazil and Colombia — and why it is harder on the body than crack.",
+  markdown="""## The cheapest high in the cocaine economy
+
+**Paco** (Argentina, Uruguay), **basuco** (Colombia) and **oxi** (Brazil) are regional names for the same thing: **cocaine base paste** — a crude intermediate product of cocaine manufacturing, packed with leftover solvents and chemicals, smoked rather than snorted.
+
+Where crack cocaine is at least washed and processed, paco is the **unwashed residue**: cocaine base still carrying kerosene, sulfuric acid, calcium carbonate and whatever else was used in the jungle lab. It sells for **$0.50–$2 per hit** — deliberately priced below crack, and catastrophically affordable.
+
+## How it conquered the slums
+
+Paco exploded in Argentina's **villas miserias** (shantytowns) in the early 2000s, after the country's economic collapse made even cheap drugs unaffordable — except this one. The pattern repeated across the region:
+
+- **Colombia**: basuco has been entrenched in cities like Medellín, Cali and Bogotá since the 1990s — the domestic byproduct of being the world's cocaine producer.
+- **Brazil**: oxi ("oxidized") appeared in Amazon border states around 2005 and spread along river and road trafficking routes.
+- **Argentina/Uruguay**: paco became the signature drug of urban poverty, with consumption visible on the streets of Buenos Aires.
+
+The economics are brutal: producer countries sit on mountains of paste, and selling the waste product to their own poorest citizens is more profitable than discarding it.
+
+## Why it is worse than crack
+
+- **Solvent and acid residues** burn the lungs, mouth and throat with every hit — chronic users develop destroyed dentition, respiratory damage and chemical burns.
+- **The high lasts 1–5 minutes** — shorter than crack — driving binges that can run for days and consume every peso a user has.
+- **Rapid severe addiction**: treatment providers describe paco dependence as among the fastest-developing and hardest to treat they see.
+- **Violence and psychosis** arrive early — the paranoia and aggression of stimulant binges, in neighborhoods with no treatment infrastructure.
+
+## What use looks like
+
+A hit is smoked in a makeshift pipe, often shared. Users describe an overwhelming rush followed within minutes by an equally overwhelming need for another hit. Binge users stop eating and sleeping; weight loss is dramatic and fast. Many users are teenagers; outreach workers report users as young as 10–12 in the worst-affected neighborhoods.
+
+## The harm-reduction reality
+
+- **The pipe burns are the least of it** — the chemical residues are the poison. There is no "safer" way to smoke a solvent-contaminated product.
+- **Stimulant overdose is real**: chest pain, seizures, hyperthermia and psychotic breaks need medical help, not restraint.
+- **Argentina and Brazil run community-based treatment models** (including therapeutic communities and substitution-free outpatient programs) — access is patchy but exists.
+- Recovery is possible and common with support; the drug's grip is fast, but so is the body's recovery once use stops.
+
+*Sources: UNODC World Drug Report; OAS/CICAD hemispheric drug reports; Argentine SEDRONAR reporting; Brazilian Fiocruz research; Inter-American Drug Abuse Control Commission.*
+
+Related: [Paco/basuco drug profile](/drugs/paco-basuco/) · [Crack cocaine](/drugs/crack/) · [Cocaine](/drugs/cocaine/) · [Coca leaf vs cocaine](/drugs/coca-leaf/) · [Help lines by region](/hotlines/)""",
+  drugsInvolved=["paco-basuco","crack","cocaine","coca-leaf"],
+  related=["paco-basuco","crack","cocaine","speedball","topics:fish-scale-vs-wash-cocaine"]),
+
+ dict(slug="nyaope-south-africa", tag="Crisis", title="Nyaope (Whoonga): South Africa's township heroin economy", date="2026-09-30", read="9 min",
+  desc="A $2 street heroin blend smoked with cannabis has hooked a generation of South African township youth. What's in it, why it's smoked not injected, and the treatment gap it exposed.",
+  markdown="""## Heroin, repackaged for the poor
+
+**Nyaope** (also called **whoonga**, **sugars** or **ungah**) is South Africa's street heroin: a brownish powder sold in small plastic "straws" for around **R30–R50 ($2–3)**. It is low-grade heroin stretched with bulking agents — over the years analysts have found everything from paracetamol and caffeine to rat poison and household cleaners in samples. (A persistent claim that it contains **antiretroviral HIV medication** has been investigated and repeatedly debunked by researchers — the myth likely grew from desperate users stealing anything.)
+
+What makes nyaope distinctive is **how** it is used: the powder is sprinkled into a cannabis joint or cigarette and **smoked**, not injected. That made heroin culturally accessible in townships where needles carried stigma — and it spread like fire.
+
+## How it took hold
+
+- **Geography.** South Africa sits on the Indian Ocean heroin route: Afghan opiates land on the Mozambican and Tanzanian coasts and move overland to Johannesburg, Durban and Cape Town.
+- **Price.** At a few dollars a straw, nyaope undercut every other hard drug in the township economy.
+- **Unemployment.** Youth unemployment above 40% created a generation with time, despair and easy access.
+- **The early 2000s Durban explosion** spread inland to Gauteng's townships within years; today nyaope is entrenched in every major metro.
+
+## The pattern of use
+
+Smoking delivers heroin to the blood in seconds — dependence develops fast. Users report needing a hit within hours of waking just to stop withdrawal ("the pains"): stomach cramps, sweating, bone aches, vomiting. A day's habit means finding money for several straws, every day, without fail. That daily imperative drives the crime and survival economies around the drug: petty theft, sex work, and the infamous "Bluetooth" myth (sharing blood after injecting — a real but marginal practice that headlines exaggerated).
+
+## The health toll
+
+- **Overdose**: unknown purity plus occasional fentanyl-adulterated batches make respiratory depression a constant risk.
+- **Respiratory damage** from smoking cut powder daily.
+- **HIV/TB**: South Africa's twin epidemics intersect with nyaope through survival sex and shared pipes, not (as the myth claims) through ARV ingredients.
+- **Malnutrition and homelessness**: the binge-buying cycle consumes everything.
+
+## The treatment gap — and a rare success story
+
+South Africa's public treatment system was built for alcohol and cannabis, not opioids. For years, opioid substitution therapy (methadone/buprenorphine) was nearly impossible to access outside private care. The nyaope crisis forced change: **Tshwane (Pretoria) launched a publicly funded OST program** that has shown strong retention and harm reduction, and community organizations now run needle-syringe and naloxone-adjacent services in several metros. Coverage remains a fraction of need.
+
+## The harm-reduction reality
+
+- **Withdrawal is miserable but not usually fatal** — the danger is relapse after tolerance drops: the same dose that was normal last month can kill after two weeks clean.
+- **Opioid overdose**: unresponsive, slow or stopped breathing, pinpoint pupils — naloxone reverses it; South African harm-reduction organizations distribute it.
+- **Substitution treatment works**: methadone or buprenorphine stabilizes users far better than detox-and-pray. If a public clinic can't help, organizations like TB HIV Care and OUT LGBT Well-being run programs in major metros.
+
+*Sources: UNODC World Drug Report and Southern Africa reporting; South African Medical Research Council; SA Community Epidemiology Network on Drug Use (SACENDU); Tshwane OST program evaluations.*
+
+Related: [Nyaope/whoonga drug profile](/drugs/nyaope/) · [Heroin](/drugs/heroin/) · [Methadone](/drugs/methadone/) · [Naloxone (Narcan)](/drugs/naloxone/) · [Help lines by region](/hotlines/)""",
+  drugsInvolved=["nyaope","heroin","methadone","naloxone"],
+  related=["nyaope","heroin","methadone","naloxone","suboxone","weed"]),
+]

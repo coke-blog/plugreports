@@ -629,6 +629,9 @@ Complete machine-readable drug records: [llms-full.txt](https://plugreports.com/
 - [/topics/gulf-travel-drug-laws/](https://plugreports.com/topics/gulf-travel-drug-laws/) Traveling to the Gulf? The drug laws that catch tourists and expats
 - [/topics/nasal-spray-drug-use/](https://plugreports.com/topics/nasal-spray-drug-use/) Nasal Spray Drug Use: the fastest-growing consumption method nobody teaches you about
 - [/topics/ketamine-nasal-spray/](https://plugreports.com/topics/ketamine-nasal-spray/) Ketamine Nasal Spray: the Spravato confusion, the dosing trap, and the bladder damage nobody warns you about
+- [/topics/kush-west-africa/](https://plugreports.com/topics/kush-west-africa/) Kush in West Africa: how a mystery drug swept Sierra Leone, Liberia and Guinea
+- [/topics/paco-basuco-latin-america/](https://plugreports.com/topics/paco-basuco-latin-america/) Paco & Basuco: the cocaine paste devastating Latin America's poorest neighborhoods
+- [/topics/nyaope-south-africa/](https://plugreports.com/topics/nyaope-south-africa/) Nyaope (Whoonga): South Africa's township heroin economy
 
 ## Quitting, day by day
 - [/quit/heroin/](https://plugreports.com/quit/heroin/) Quitting Heroin — day-by-day withdrawal timeline
@@ -832,3 +835,9 @@ Complete machine-readable drug records: [llms-full.txt](https://plugreports.com/
 - [/vs/viagra-vs-cialis/](https://plugreports.com/vs/viagra-vs-cialis/) Viagra vs Cialis
 - [/vs/vapes-vs-cigarettes/](https://plugreports.com/vs/vapes-vs-cigarettes/) Vapes vs Cigarettes
 - [/vs/snus-vs-cigarettes/](https://plugreports.com/vs/snus-vs-cigarettes/) Snus vs Cigarettes
+
+## Watch — identification videos (3)
+- [/watch/](https://plugreports.com/watch/) Hub — short clips showing what street drugs actually look like
+- [/watch/cocaine-powder/](https://plugreports.com/watch/cocaine-powder/) What does cocaine powder look like? (video, 0:05)
+- [/watch/heroin-powder/](https://plugreports.com/watch/heroin-powder/) What does heroin look like? (video, 0:05)
+- [/watch/mdma-crystals/](https://plugreports.com/watch/mdma-crystals/) What do MDMA crystals look like? (video, 0:05)

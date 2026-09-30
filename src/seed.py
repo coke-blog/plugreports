@@ -53,6 +53,8 @@ if __name__ == "__main__":
     from data_related import RELATED_OVERRIDES
     from data_meth_cities import METH_CITY_PAGES, data_markdown
     from data_cocaine_cities import COCAINE_CITY_PAGES
+    from data_mdma_cities import MDMA_CITY_PAGES
+    from data_crack_cities import CRACK_CITY_PAGES
     try:
         from data_mix import MIX
     except Exception:
@@ -90,7 +92,17 @@ if __name__ == "__main__":
                       region=pg["region"], date=pg["updated"], read=pg["read"],
                       desc=pg["desc"], markdown=data_markdown(pg, "cocaine"),
                       sources=pg["sources"], related=["cocaine"])
-                 for pg in COCAINE_CITY_PAGES],
+                 for pg in COCAINE_CITY_PAGES]
+              + [dict(slug=pg["slug"], title=pg["title"], image=pg.get("image"),
+                      region=pg["region"], date=pg["updated"], read=pg["read"],
+                      desc=pg["desc"], markdown=data_markdown(pg, "mdma"),
+                      sources=pg["sources"], related=["mdma"])
+                 for pg in MDMA_CITY_PAGES]
+              + [dict(slug=pg["slug"], title=pg["title"], image=pg.get("image"),
+                      region=pg["region"], date=pg["updated"], read=pg["read"],
+                      desc=pg["desc"], markdown=data_markdown(pg, "crack"),
+                      sources=pg["sources"], related=["crack"])
+                 for pg in CRACK_CITY_PAGES],
         "vs": VS,
     }
     types = sys.argv[1:] or list(seeds.keys())
