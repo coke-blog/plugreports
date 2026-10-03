@@ -34,7 +34,7 @@
     const prof = v.drug ? relLink(v.drug) : '';
     return '<div class="vcard"><div class="vwrap"><video controls preload="none" playsinline' + poster +
       ' aria-label="' + escV(v.title) + '"><source src="' + escV(v.video) + '" type="video/mp4"></video>' + dur + '</div>' +
-      '<h3>' + escV(v.title) + '</h3>' +
+      '<h3><a href="/watch/' + escV(v.slug) + '/" style="color:inherit;text-decoration:none">' + escV(v.title) + '</a></h3>' +
       (v.desc ? '<p>' + escV(v.desc) + '</p>' : '') + prof + '</div>';
   }
   function wirePause(root) {

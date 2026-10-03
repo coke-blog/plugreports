@@ -22,6 +22,10 @@ try:
     from data_vs import VS, VS_CATS
 except Exception:
     VS, VS_CATS = [], {}
+try:
+    from data_topics_fr import FR_TOPICS
+except Exception:
+    FR_TOPICS = {}
 
 
 def _apply_overrides():
@@ -232,7 +236,7 @@ def shell(path, title, desc, body, jsonld=None, canonical=None, extra_head="", o
         if path == "index.html":
             ld += '<script src="/assets/js/breaking.js?v=16" defer></script>'
     if path.split("/")[0] in ("index.html", "watch"):
-        ld += '<script src="/assets/js/videos.js?v=2" defer></script>'
+        ld += '<script src="/assets/js/videos.js?v=3" defer></script>'
     rtl = ' dir="rtl"' if lang == "ar" else ""
     return f"""<!DOCTYPE html>
 <html lang="{lang}"{rtl}>
@@ -733,6 +737,42 @@ def md_inline(x):
     x = re.sub(r"\[([^\]]+)\]\((/[^)\s]*|https?://[^)\s]+)\)", _lnk, x)
     return x
 
+def fetch_videos_build():
+    """Snapshot of the admin-managed video library from the live public API,
+    used to bake video SEO (detail pages, JSON-LD, video sitemap) into the
+    static build. Falls back to [] so offline builds never break."""
+    import urllib.request as _ur
+    try:
+        req = _ur.Request(SITE + "/api/public/content?type=videos", headers={
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36"})
+        return json.load(_ur.urlopen(req, timeout=25)).get("items") or []
+    except Exception:
+        return []
+
+VIDEOS_BUILD = fetch_videos_build()
+VIDEO_BY_SLUG = {v.get("slug"): v for v in VIDEOS_BUILD if v.get("slug")}
+
+def _iso_dur(d):
+    m = re.match(r"^\s*(\d+):(\d+)", str(d or ""))
+    return f"PT{int(m.group(1))}M{int(m.group(2))}S" if m else "PT0M10S"
+
+def video_ld(v, page_url):
+    return {"@context": "https://schema.org", "@type": "VideoObject",
+            "name": v.get("title", ""), "description": clip(v.get("desc") or v.get("title") or "", 200),
+            "thumbnailUrl": v.get("poster") or f"{SITE}/assets/img/og.png",
+            "uploadDate": v.get("uploaded") or TODAY,
+            "duration": _iso_dur(v.get("duration")),
+            "contentUrl": v.get("video", ""), "embedUrl": page_url}
+
+def video_embed(v, caption_link=True):
+    cap = (f'<figcaption style="font-size:13px;color:var(--muted);margin-top:8px">{esc(v.get("title",""))}'
+           f' · <a href="/watch/{esc(v.get("slug",""))}/">Watch page</a></figcaption>') if caption_link else ""
+    return ('<figure class="vembed" style="margin:18px 0">'
+            '<div style="position:relative;border-radius:14px;overflow:hidden;background:#0b0f19">'
+            f'<video controls playsinline preload="none" poster="{esc(v.get("poster") or "")}" '
+            f'src="{esc(v.get("video") or "")}" style="display:block;width:100%;max-height:480px"></video></div>'
+            f'{cap}</figure>')
+
 def md_render(src):
     lines = str(src or "").split("\n"); out = []; i = 0
     CAL = {"warning":"amber","danger":"red","red":"red","tip":"green","success":"green","note":"amber"}
@@ -797,18 +837,28 @@ def build_topics():
         if links:
             inner += '<div class="related print-hide"><h2>Full day-by-day guides</h2><div class="rel-grid">' + "".join(
                 f'<a href="/{u}/">{rel_card(u.split("/")[-1])}</a>' for u in links) + "</div></div>"
+        vemb, vld = "", None
+        if t.get("video") and t["video"] in VIDEO_BY_SLUG:
+            _vv = VIDEO_BY_SLUG[t["video"]]
+            vemb = video_embed(_vv)
+            vld = video_ld(_vv, f"{SITE}/topics/{t['slug']}/")
         body = f"""<div class="wrap"><article class="article" style="padding-top:26px">
 <span class="kicker amber">GUIDE · {esc(t['read'])} read</span>
 <h1 style="margin-top:12px">{esc(t['title'])}</h1>
 <div class="byline"><span>Updated {esc(t['date'])}</span><span>Reviewed against NIDA / DEA / EMCDDA sources</span>
-<span><a href="/suggest/">Suggest a correction</a></span></div>{f'<img class="detail-img" src="{esc(t["image"])}" alt="" loading="lazy">' if t.get("image") else ""}</article>
+<span><a href="/suggest/">Suggest a correction</a></span></div>{vemb if vemb else (f'<img class="detail-img" src="{esc(t["image"])}" alt="" loading="lazy">' if t.get("image") else "")}</article>
 <article class="article">{inner}</article></div>"""
         ld = {"@context":"https://schema.org","@type":"Article","headline":t["title"],
               "image":t.get("image") or f"{SITE}/assets/img/og.png",
               "datePublished":t["date"],"dateModified":t["date"],
               "author":{"@type":"Organization","name":"plugreports"},
               "publisher":PUBLISHER_LD,"mainEntityOfPage":f"{SITE}/topics/{t['slug']}/"}
-        w(f"topics/{t['slug']}/index.html", shell(f"topics/{t['slug']}/index.html", f"{t['title']} | plugreports", clip(t["desc"]), body, jsonld=ld, ogtype="article"))
+        _en_url = f"{SITE}/topics/{t['slug']}/"
+        _alts = {"en": _en_url, "x-default": _en_url}
+        if t["slug"] in FR_TOPICS:
+            _alts["fr"] = f"{SITE}/fr/topics/{t['slug']}/"
+        _xh = (f'<script type="application/ld+json">{json.dumps(vld, ensure_ascii=False)}</script>') if vld else ""
+        w(f"topics/{t['slug']}/index.html", shell(f"topics/{t['slug']}/index.html", f"{t['title']} | plugreports", clip(t["desc"]), body, jsonld=ld, ogtype="article", alts=_alts, extra_head=_xh))
 
 def build_quit():
     cards = "".join(f'''<a class="card" href="/quit/{k}/"><div class="meta">
@@ -1551,9 +1601,17 @@ def build_meth_cities():
 
 # ------------------------------------------------------------- watch pages ----
 def build_watch():
-    """Video library hub at /watch/ — the clip grid hydrates client-side from the
-    admin-managed video library (/api/public/content?type=videos), so clips
-    uploaded in /admin appear here and in the homepage slider without a rebuild."""
+    """Video library at /watch/ — server-rendered from a build-time snapshot of the
+    admin-managed library (fetch_videos_build), with one SEO detail page per clip
+    (VideoObject JSON-LD + og:video), so clips rank in video/AI search without
+    JS execution. Client-side hydration still overlays admin edits on the hub."""
+    def vcard(v):
+        poster = v.get("poster") or ""
+        return (f'<a class="vcard" href="/watch/{esc(v["slug"])}/" style="text-decoration:none;color:inherit;display:block">'
+                f'<div class="vwrap"><video preload="none" playsinline poster="{esc(poster)}" src="{esc(v.get("video",""))}"></video></div>'
+                f'<h3>{esc(v.get("title",""))}</h3><p>{esc(clip(v.get("desc") or "", 110))}</p>'
+                f'<span style="color:#b45309;font-size:12.5px;font-weight:600">Watch clip &rarr;</span></a>')
+    cards = "".join(vcard(v) for v in VIDEOS_BUILD) or '<p style="color:#667085">Loading clips&hellip;</p>'
     hub = ('<div class="wrap"><section class="sec-head" style="padding-top:30px"><div>'
            '<span class="kicker">Video library</span>'
            '<h1>Watch — what drugs actually look like</h1>'
@@ -1563,7 +1621,7 @@ def build_watch():
            'Most overdose deaths involve a substance the person could not identify. These clips give &ldquo;what does X look like&rdquo; a visual answer — '
            'but never use appearance to judge safety. See <a href="/topics/spot-pressed-pills/">how to spot pressed pills</a> and keep '
            '<a href="/hotlines/">a hotline</a> handy.</div>'
-           '<div id="watchgrid"><p style="color:#667085">Loading clips&hellip;</p></div>'
+           f'<div id="watchgrid">{cards}</div>'
            '<p style="margin-top:20px;color:#667085;font-size:14px">Clips are kept small on purpose so they load on any connection. '
            'Have an identification clip to share? <a href="/suggest/">Send it in</a>.</p></div>')
     gridcss = (
@@ -1578,8 +1636,36 @@ def build_watch():
       "Watch — What Drugs Actually Look Like (Video Library) | plugreports",
       clip("Short identification videos: what cocaine, heroin, MDMA and other street drugs actually look like up close — real clips linked to full harm-reduction profiles."),
       hub, jsonld=[{"@context":"https://schema.org","@type":"CollectionPage","name":"Watch — drug identification videos"},
-                   breadcrumb_ld([("Home","/"),("Watch","/watch/")])],
+                   breadcrumb_ld([("Home","/"),("Watch","/watch/")]),
+                   {"@context":"https://schema.org","@type":"ItemList",
+                    "itemListElement":[{"@type":"ListItem","position":i+1,
+                                        "url":f"{SITE}/watch/{v['slug']}/",
+                                        "item":video_ld(v, f"{SITE}/watch/{v['slug']}/")}
+                                       for i, v in enumerate(VIDEOS_BUILD)]}],
       extra_head=f"<style>{gridcss}</style>"))
+    for v in VIDEOS_BUILD:
+        slug = v["slug"]; url = f"{SITE}/watch/{slug}/"
+        drug = (v.get("drug") or "").strip()
+        rel = rel_link(drug) if drug and not drug.startswith("http") else ""
+        body = ('<div class="wrap"><article class="article" style="padding-top:26px">'
+                '<span class="kicker">VIDEO · IDENTIFICATION</span>'
+                f'<h1 style="margin-top:12px">{esc(v.get("title",""))}</h1>'
+                f'<div class="byline"><span>Uploaded {esc(v.get("uploaded") or "")}</span><span>Clip length {esc(v.get("duration") or "")}</span></div>'
+                + video_embed(v, caption_link=False)
+                + f'<p>{esc(v.get("desc") or "")}</p>'
+                '<div class="callout amber"><b>Looks prove nothing</b>Purity and contamination are invisible to the eye — test every new batch, '
+                'use fentanyl strips, never use alone (Canada: NORS 1-888-688-6677), and keep naloxone close.</div>'
+                + (f'<div class="related print-hide"><h2>Full profile &amp; help</h2><div class="rel-grid">{rel}'
+                   f'<a href="/hotlines/"><span class="mini" style="background:#dc2626">&#128222;</span><span>Hotlines — help now</span></a></div></div>' if True else "")
+                + '<p style="margin-top:18px"><a href="/watch/">&larr; All identification clips</a></p></article></div>')
+        xh = (f'<meta property="og:video" content="{esc(v.get("video",""))}">'
+              f'<meta property="og:video:secure_url" content="{esc(v.get("video",""))}">'
+              f'<meta property="og:video:type" content="video/mp4">')
+        w(f"watch/{slug}/index.html", shell(f"watch/{slug}/index.html",
+          f"{v.get('title','Video')} — Video | plugreports", clip(v.get("desc") or v.get("title") or ""),
+          body, jsonld=[video_ld(v, url),
+                        breadcrumb_ld([("Home","/"),("Watch","/watch/"),(v.get("title","Video"), f"/watch/{slug}/")])],
+          ogtype="video.other", ogimage=v.get("poster"), extra_head=xh))
 
 
 def build_meta():
@@ -1619,10 +1705,23 @@ def build_meta():
         urls += [("vs/", B)]
         urls += [(f"vs/{v['slug']}/", v.get("lastUpdated", B)) for v in VS]
     urls += [("watch/", B)]
+    urls += [(f"watch/{v['slug']}/", v.get("uploaded") or B) for v in VIDEOS_BUILD]
+    _vid_xml = {}
+    for v in VIDEOS_BUILD:
+        if not v.get("video"): continue
+        _dur = re.match(r"^\s*(\d+):(\d+)", str(v.get("duration") or ""))
+        _secs = int(_dur.group(1))*60 + int(_dur.group(2)) if _dur else 10
+        _vid_xml[f"watch/{v['slug']}/"] = (
+            f'<video:video><video:thumbnail_loc>{esc(v.get("poster") or SITE + "/assets/img/og.png")}</video:thumbnail_loc>'
+            f'<video:title>{esc(v.get("title",""))}</video:title>'
+            f'<video:description>{esc(clip(v.get("desc") or v.get("title") or "", 200))}</video:description>'
+            f'<video:content_loc>{esc(v["video"])}</video:content_loc>'
+            f'<video:duration>{_secs}</video:duration>'
+            f'<video:publication_date>{esc(v.get("uploaded") or B)}</video:publication_date></video:video>')
     urls += [(f"pharmacies/{p['slug']}/", B) for p in PHARMACIES]
     urls += [(f"rehabs/{r['slug']}/", B) for r in REHABS]
-    sm = "\n".join(f'<url><loc>{SITE}/{u}</loc><lastmod>{lm}</lastmod></url>' for u, lm in urls)
-    w("sitemap.xml", f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{sm}\n</urlset>')
+    sm = "\n".join(f'<url><loc>{SITE}/{u}</loc><lastmod>{lm}</lastmod>{_vid_xml.get(u, "")}</url>' for u, lm in urls)
+    w("sitemap.xml", f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">\n{sm}\n</urlset>')
     w("robots.txt",
       "# plugreports.com crawler policy\n"
       "# AI/LLM crawlers are intentionally ALLOWED: this is a public harm-reduction dataset\n"
@@ -1880,10 +1979,47 @@ def build_indexes():
         clip("Complete A-Z index of street drugs, pharmaceuticals, and grey-market substances: street names, effects, overdose signs, street prices and legal status."),
         "<div class=\"wrap\"><section class=\"sec-head\" style=\"padding-top:30px\"><div><span class=\"kicker amber\">A-Z Index</span><h1 style=\"font-family:var(--font-ed);font-size:clamp(28px,4vw,44px)\">All <span style=\"background:linear-gradient(92deg,#f59e0b,#dc2626);-webkit-background-clip:text;background-clip:text;color:transparent\">" + str(len(DRUGS)) + " substances</span>, A to Z</h1><p>Tap any substance for effects, risks, overdose signs and street info.</p></div></section><div class=\"az-grid\">" + tiles + "</div></div>", jsonld=az_ld))
 
+def build_fr_topics():
+    """French versions of the Canada Tier-1 topics (Canada is bilingual — these
+    pages intercept the same purchase-intent searches in French). EN slugs kept
+    so hreflang pairs stay 1:1 and admin/CMS mapping stays intact."""
+    if not FR_TOPICS: return
+    cards = "".join(
+      f'<a class="card" href="/fr/topics/{s}/"><div class="meta"><span class="chip red">GUIDE</span>'
+      f'<span class="chip">{esc(TOPIC_BY_SLUG[s]["read"])}</span></div>'
+      f'<h3>{esc(fr["title"])}</h3><p>{esc(fr["desc"])}</p><div class="foot">Lire le guide &rarr;</div></a>'
+      for s, fr in FR_TOPICS.items() if s in TOPIC_BY_SLUG)
+    w("fr/topics/index.html", shell("fr/topics/index.html",
+      "Guides — Canada : cocaïne et méthamphétamine en ligne | plugreports",
+      clip("Guides en français : acheter de la cocaïne ou de la méthamphétamine en ligne au Canada — arnaques, lois, risques et aide disponible."),
+      '<div class="wrap"><section class="sec-head" style="padding-top:30px"><div><span class="kicker amber">Guides</span>'
+      '<h1>Guides &amp; analyses</h1><p>Versions françaises de nos guides les plus importants pour le Canada.</p></div></section>'
+      f'<div class="cards">{cards}</div></div>', lang="fr",
+      alts={"fr": f"{SITE}/fr/topics/", "en": f"{SITE}/topics/", "x-default": f"{SITE}/topics/"}))
+    for slug, fr in FR_TOPICS.items():
+        t = TOPIC_BY_SLUG.get(slug)
+        if not t: continue
+        inner = md_render(fr["markdown"])
+        inner += help_links(t.get("drugsInvolved") or [], related=t.get("related"))
+        en_url = f"{SITE}/topics/{slug}/"; fr_url = f"{SITE}/fr/topics/{slug}/"
+        vemb = video_embed(VIDEO_BY_SLUG[t["video"]]) if t.get("video") and t["video"] in VIDEO_BY_SLUG else ""
+        body = f"""<div class="wrap"><article class="article" style="padding-top:26px">
+<span class="kicker amber">GUIDE · {esc(t['read'])} de lecture</span>
+<h1 style="margin-top:12px">{esc(fr['title'])}</h1>
+<div class="byline"><span>Mis à jour {esc(t['date'])}</span><span><a href="{en_url}">English version</a></span></div>{vemb}</article>
+<article class="article">{inner}</article></div>"""
+        ld = {"@context":"https://schema.org","@type":"Article","headline":fr["title"],
+              "inLanguage":"fr","datePublished":t["date"],"dateModified":t["date"],
+              "author":{"@type":"Organization","name":"plugreports"},
+              "publisher":PUBLISHER_LD,"mainEntityOfPage":fr_url}
+        w(f"fr/topics/{slug}/index.html", shell(f"fr/topics/{slug}/index.html", f"{fr['title']} | plugreports",
+          clip(fr["desc"]), body, jsonld=ld, ogtype="article", lang="fr",
+          alts={"fr": fr_url, "en": en_url, "x-default": en_url}))
+
 def main():
     build_index(); build_categories(); build_categories_es(); build_drugs(); build_news(); build_busts()
     build_indexes()
-    build_topics(); build_quit(); build_mix(); build_vs(); build_hotlines(); build_sentencing()
+    build_topics(); build_fr_topics(); build_quit(); build_mix(); build_vs(); build_hotlines(); build_sentencing()
     build_directory("pharmacies", PHARMACIES, "verified pharmacy",
         "Verified Online Pharmacies — USA, Canada, UK, EU & Worldwide | plugreports",
         "How to verify a licensed online pharmacy in your country — NABP & PharmacyChecker (US/CA), GPhC (UK), EU safety logo, and how to spot counterfeit pill mills before you buy medication online.", "&#128138;")

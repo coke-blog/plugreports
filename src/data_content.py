@@ -1531,7 +1531,7 @@ Related: [Nyaope/whoonga drug profile](/drugs/nyaope/) · [Heroin](/drugs/heroin
 # ── Canada interception pages (Tier 1) ────────────────────────────────────────
 TOPICS += [
  dict(slug="buying-cocaine-online-canada", tag="Canada", title="Buying cocaine online in Canada: what the ads don't tell you", date="2026-10-03", read="7 min",
-  image="https://plugreports.com/media/drugs/cocaine.jpeg",
+  image="https://plugreports.com/media/drugs/cocaine.jpeg", video="cocaine-for-sale-in-canada",
   desc="Sites and social ads offering cocaine for sale in Canada promise tested product and discreet delivery. Here is what actually happens — the scams, the contamination, the law — and where to get help instead.",
   markdown="""Searches like **"buy cocaine online Canada"** and **"cocaine for sale Canada"** are typed thousands of times a month. In early 2026, CBC/Radio-Canada journalists found open-web shops — ordinary websites, not dark web — advertising cocaine on Facebook and Instagram, taking payment by Interac e-transfer, and promising discreet delivery through Canada Post.
 
@@ -1594,7 +1594,7 @@ Related: [Cocaine](/drugs/cocaine/) · [Crack](/drugs/crack/) · [Fentanyl](/dru
 
 TOPICS += [
  dict(slug="buying-meth-online-canada", tag="Canada", title="Buying meth online in Canada: what the ads don't tell you", date="2026-10-03", read="7 min",
-  image="https://plugreports.com/media/drugs/methamphetamine.jpeg",
+  image="https://plugreports.com/media/drugs/methamphetamine.jpeg", video="what-meth-looks-like",
   desc="Canadian sites and social ads selling crystal meth promise purity and discreet shipping. The reality: scams, superlab-strength product, fentanyl contamination, and real legal exposure. Plus where to get actual help.",
   markdown="""**"Buy crystal meth online Canada"** is searched every day — and since early 2026, open-web shops advertising exactly that have been running paid ads on Facebook and Instagram, as CBC/Radio-Canada documented. They take e-transfers, promise discreet Canada Post delivery, and display reviews.
 
@@ -1647,7 +1647,7 @@ Related: [Methamphetamine](/drugs/methamphetamine/) · [Fentanyl](/drugs/fentany
 
 TOPICS += [
  dict(slug="cocaine-ads-instagram-facebook", tag="Canada", title="'Cocaine for sale' ads on Instagram and Facebook: what's really going on", date="2026-10-03", read="6 min",
-  image="https://plugreports.com/media/drugs/cocaine.jpeg",
+  image="https://plugreports.com/media/drugs/cocaine.jpeg", video="pure-colombian-cocaine",
   desc="Cocaine ads are running openly on Meta's platforms in Canada. How these operations work, why the reviews are fake, how to spot them — and what to do if you or someone you love got pulled in.",
   markdown="""It sounds made up, but it is documented: in early 2026, CBC/Radio-Canada found **open-web shops advertising cocaine and other drugs through paid ads on Facebook and Instagram**, targeting Canadian users. Not the dark web — regular websites, promoted posts, sometimes in your feed between a restaurant and a mattress sale.
 
