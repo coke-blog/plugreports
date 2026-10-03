@@ -725,6 +725,12 @@ def md_inline(x):
     x = _html.escape(str(x), quote=False)
     x = re.sub(r"\*\*([^*]+)\*\*", r"<b>\1</b>", x)
     x = re.sub(r"\*([^*\n]+)\*", r"<i>\1</i>", x)
+    def _lnk(m):
+        label, url = m.group(1), m.group(2)
+        if url.startswith("http"):
+            return f'<a href="{url}" target="_blank" rel="noopener">{label}</a>'
+        return f'<a href="{url}">{label}</a>'
+    x = re.sub(r"\[([^\]]+)\]\((/[^)\s]*|https?://[^)\s]+)\)", _lnk, x)
     return x
 
 def md_render(src):

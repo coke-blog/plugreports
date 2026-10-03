@@ -1526,3 +1526,201 @@ Related: [Nyaope/whoonga drug profile](/drugs/nyaope/) · [Heroin](/drugs/heroin
   drugsInvolved=["nyaope","heroin","methadone","naloxone"],
   related=["nyaope","heroin","methadone","naloxone","suboxone","weed"]),
 ]
+
+
+# ── Canada interception pages (Tier 1) ────────────────────────────────────────
+TOPICS += [
+ dict(slug="buying-cocaine-online-canada", tag="Canada", title="Buying cocaine online in Canada: what the ads don't tell you", date="2026-10-03", read="7 min",
+  image="https://plugreports.com/media/drugs/cocaine.jpeg",
+  desc="Sites and social ads offering cocaine for sale in Canada promise tested product and discreet delivery. Here is what actually happens — the scams, the contamination, the law — and where to get help instead.",
+  markdown="""Searches like **"buy cocaine online Canada"** and **"cocaine for sale Canada"** are typed thousands of times a month. In early 2026, CBC/Radio-Canada journalists found open-web shops — ordinary websites, not dark web — advertising cocaine on Facebook and Instagram, taking payment by Interac e-transfer, and promising discreet delivery through Canada Post.
+
+If you are weighing up one of these sites right now, this page is for you. Not to lecture — to lay out what those ads leave out.
+
+:::warning In crisis right now?
+Overdose or emergency: **911**. Suicide crisis, call or text **9-8-8**. Using alone and want someone on the line: National Overdose Response Service **1-888-688-6677**.
+
+## How these sites actually work
+
+The pattern CBC documented is consistent across these operations:
+
+- **Polished storefronts** with product photos, reviews and "customer support" — designed to look like a legal cannabis dispensary.
+- **Payment by e-transfer or crypto** — methods with no chargeback and no buyer protection. Once the money leaves, it is gone.
+- **Claims of lab testing and "safe delivery"** — marketing copy, not verified by anyone.
+- **Whack-a-mole domains** — when one site is reported or seized, the same operation reappears under a new name, sometimes within days.
+
+## The three ways this usually ends
+
+| What the ad implies | What actually happens |
+|---|---|
+| "Discreet, guaranteed delivery" | Canada Post pulled **5,662 illegal items** from the mail stream in 2024. Intercepted packages can mean a police knock, not a refund. |
+| "Tested, high purity" | Nobody independent tests it. Street cocaine in Canada is routinely cut, and the national supply is increasingly contaminated with fentanyl — a fatal risk for someone with no opioid tolerance. |
+| "Trusted vendor, real reviews" | Reviews are trivially faked. The most common outcome reported to police is simple: pay, receive nothing, and have no one to complain to. The scammer now has your name, address and phone number. |
+
+And the quiet outcome number four: **it arrives, it works, and the habit gets an express lane.** A gram-a-weekend pattern at Canadian street prices runs to roughly **C$6,000–10,000 a year** — see the [city-by-city data](/data/cocaine-cities-canada/).
+
+## What the law actually says (2026)
+
+- **Possession** of cocaine is a crime under the Controlled Drugs and Substances Act (s.4(1)), everywhere in Canada. BC's limited decriminalization pilot **expired on January 31, 2026** and was not renewed — there is no province where buying cocaine is legal.
+- **Ordering by mail can be treated as importation** (s.6), a far more serious charge than simple possession.
+- **The Good Samaritan Drug Overdose Act** protects you from simple-possession charges when you call 911 during an overdose — yours or someone else's. Never let legal fear delay that call.
+
+More detail: [cocaine charges and penalties in Canada](/sentencing/) — including what first-offence diversion looks like in practice.
+
+:::danger If you already ordered
+Do not accept or pick up unexpected or mis-addressed packages. If police contact you about a delivery, say nothing and get legal advice before responding — many provinces have duty counsel or legal aid lines. And if something did arrive: treat the contents as unknown potency, because they are.
+
+## If the search was really about needing something
+
+A lot of late-night "buy cocaine online" searches are, underneath, "I need to not feel like this." That is treatable, and in Canada much of it is free:
+
+- **BC:** Alcohol & Drug Information Referral **1-800-663-1441**
+- **Alberta:** Addiction Helpline **1-866-332-2322**
+- **Ontario:** ConnexOntario **1-866-531-2600** (or text CONNEX to 247247)
+- **Quebec:** Drogue: aide et référence **1-800-265-2626** (French, 24/7)
+- **Everywhere:** 811 health line can connect you to local services; Hope for Wellness (Indigenous support) **1-855-242-3310**
+
+Quitting cocaine has a known, survivable timeline — the worst of withdrawal is measured in days, not months: [what happens when you quit cocaine, day by day](/quit/cocaine/).
+
+:::tip If you are going to use anyway
+Start with a fraction of your usual amount with any new supply. Never use alone — or call NORS **1-888-688-6677** while you do. Carry naloxone (free at Canadian pharmacies): cocaine laced with fentanyl does not announce itself, and naloxone will not hurt if it was "only" cocaine. Do not mix with alcohol — the combination forms cocaethylene, which is significantly harder on the heart.
+
+*Sources: CBC/Radio-Canada investigation into online drug shops (January 2026); Canada Post mail-interdiction figures (2024); Public Health Agency of Canada opioid- and stimulant-related harms data; Controlled Drugs and Substances Act; Health Canada.*
+
+Related: [Cocaine](/drugs/cocaine/) · [Crack](/drugs/crack/) · [Fentanyl](/drugs/fentanyl/) · [Cocaine purity and cuts](/topics/cocaine-purity-and-cuts/) · [Fish scale vs wash](/topics/fish-scale-vs-wash-cocaine/) · [Cocaine use by Canadian city](/data/cocaine-cities-canada/) · [Quitting cocaine](/quit/cocaine/) · [Help lines](/hotlines/)""",
+  drugsInvolved=["cocaine","crack","fentanyl"],
+  related=["cocaine","crack","fentanyl","quit:cocaine","topics:cocaine-purity-and-cuts","topics:fish-scale-vs-wash-cocaine"]),
+]
+
+TOPICS += [
+ dict(slug="buying-meth-online-canada", tag="Canada", title="Buying meth online in Canada: what the ads don't tell you", date="2026-10-03", read="7 min",
+  image="https://plugreports.com/media/drugs/methamphetamine.jpeg",
+  desc="Canadian sites and social ads selling crystal meth promise purity and discreet shipping. The reality: scams, superlab-strength product, fentanyl contamination, and real legal exposure. Plus where to get actual help.",
+  markdown="""**"Buy crystal meth online Canada"** is searched every day — and since early 2026, open-web shops advertising exactly that have been running paid ads on Facebook and Instagram, as CBC/Radio-Canada documented. They take e-transfers, promise discreet Canada Post delivery, and display reviews.
+
+Here is what those pages leave out.
+
+:::warning In crisis right now?
+Overdose or emergency: **911**. Suicide crisis, call or text **9-8-8**. Using alone: National Overdose Response Service **1-888-688-6677** — someone stays on the line.
+
+## Canada's meth is not what it was
+
+Two things have changed the risk picture, and neither is in the ads:
+
+- **Superlab supply.** Canadian meth now comes largely from industrial-scale labs (domestic and Mexican cartel-linked), and it is extraordinarily pure — often 90%+. Purity that high makes dosing unpredictable and sharply raises the risk of stimulant psychosis: paranoia, hallucinations, and days without sleep that can end in hospital or police cells.
+- **Contamination.** Canada's street stimulant supply is increasingly crossed with fentanyl and other opioids. Stimulant-involved toxicity deaths in Canada more than **doubled between 2018 and 2024**. A meth user with no opioid tolerance is exactly who fentanyl kills fastest.
+
+Statistics Canada's wastewater testing (released September 2026) shows how heavy the supply has become: **Prince Albert, Saskatchewan recorded the highest meth levels in the country — roughly nine times Toronto's per-capita load**, with Saskatoon, Edmonton and Moncton also elevated. See the [meth city rankings](/data/meth-cities-canada/).
+
+## How the online part goes wrong
+
+| The promise | The reality |
+|---|---|
+| "Guaranteed stealth delivery" | Canada Post removed **5,662 illegal items** from the mail in 2024. Interception can mean a controlled delivery and an arrest — or nothing at all. |
+| "Premium shards, lab tested" | No lab tests it. You get whatever the batch was — including fentanyl cross-contamination from shared surfaces and scales. |
+| "Trusted Canadian vendor" | Pay by e-transfer and there is no refund mechanism, no complaint channel, and no recourse. Many of these shops simply never ship. The operator keeps your money — and your address. |
+
+## The legal side, briefly
+
+Methamphetamine is Schedule I under the Controlled Drugs and Substances Act. **Possession is a crime everywhere in Canada** (BC's decriminalization pilot expired January 31, 2026). Ordering through the mail can be prosecuted as importation — a much heavier charge. Full breakdown: [drug sentencing in Canada](/sentencing/).
+
+One protection worth knowing: the **Good Samaritan Drug Overdose Act** shields you from simple-possession charges when you call 911 at an overdose. Use it.
+
+## If what you actually need is a way out
+
+Meth dependence is treatable, and Canadian public options are free or nearly free:
+
+- **BC** 1-800-663-1441 · **Alberta** 1-866-332-2322 · **Saskatchewan** 811 · **Manitoba** (AFM) 1-855-662-6605 · **Ontario** ConnexOntario 1-866-531-2600 · **Quebec** 1-800-265-2626 (French, 24/7) · **Atlantic & territories** via 811
+- **Crystal Meth Anonymous** holds meetings across Canada; SMART Recovery runs online meetings.
+
+Meth withdrawal is brutal but not dangerous in the way alcohol or benzo withdrawal is — it is mostly exhaustion, depression and craving, and it has a shape: [what happens when you quit meth, day by day](/quit/meth/).
+
+:::tip If you are going to use anyway
+Test a new batch with a tiny amount first. Never use alone — or call NORS **1-888-688-6677**. Carry naloxone (free at pharmacies) because of fentanyl cross-contamination. Sleep and food are not optional: most meth emergencies are sleep-deprivation psychosis, not overdose. And do not mix with opioids or alcohol.
+
+*Sources: CBC/Radio-Canada (January 2026); Statistics Canada, Canadian Wastewater Survey (September 2026); Public Health Agency of Canada, opioid- and stimulant-related harms; Canada Post interdiction figures (2024); Controlled Drugs and Substances Act.*
+
+Related: [Methamphetamine](/drugs/methamphetamine/) · [Fentanyl](/drugs/fentanyl/) · [Meth use by Canadian city](/data/meth-cities-canada/) · [Quitting meth](/quit/meth/) · [What actually happens when you quit](/topics/what-actually-happens-when-you-quit/) · [Help lines](/hotlines/)""",
+  drugsInvolved=["methamphetamine","fentanyl"],
+  related=["methamphetamine","fentanyl","quit:meth","topics:what-actually-happens-when-you-quit"]),
+]
+
+TOPICS += [
+ dict(slug="cocaine-ads-instagram-facebook", tag="Canada", title="'Cocaine for sale' ads on Instagram and Facebook: what's really going on", date="2026-10-03", read="6 min",
+  image="https://plugreports.com/media/drugs/cocaine.jpeg",
+  desc="Cocaine ads are running openly on Meta's platforms in Canada. How these operations work, why the reviews are fake, how to spot them — and what to do if you or someone you love got pulled in.",
+  markdown="""It sounds made up, but it is documented: in early 2026, CBC/Radio-Canada found **open-web shops advertising cocaine and other drugs through paid ads on Facebook and Instagram**, targeting Canadian users. Not the dark web — regular websites, promoted posts, sometimes in your feed between a restaurant and a mattress sale.
+
+If you have seen one of these ads, here is what is actually behind it.
+
+## Why Meta lets it happen (and why it keeps happening)
+
+Meta's ad review is largely automated. Sellers rotate through thousands of throwaway accounts and domain names; when one ad account is banned — often after reporting by journalists or watchdogs like LegitScript — the same operators are back under new names, sometimes within hours. The storefront sites look like legal cannabis dispensaries on purpose: clean design, product photography, "lab tested" badges, five-star reviews. Every element is costume.
+
+## The red flags, all of which these sites share
+
+- **Payment only by e-transfer, crypto or gift cards** — no credit cards, because card networks would kill the account and buyers could charge back.
+- **Reviews you cannot verify** — screenshots of praise are graphics anyone can make; there is no independent review layer for an illegal shop.
+- **"Discreet shipping guaranteed"** — no illegal seller can guarantee anything. Canada Post pulled **5,662 illegal items** from the mail stream in 2024 alone.
+- **A domain that is weeks old** — look it up. Legitimate businesses have history; these storefronts are disposable by design.
+- **"Customer support" on WhatsApp or Telegram** — so the trail vanishes when the account does.
+
+## What buyers actually report
+
+Across police reports and journalism on these operations, outcomes cluster into three: the package never arrives and the "support" chat goes silent; the package arrives containing something of unknown identity and strength — increasingly including fentanyl contamination, in a country where stimulant-involved toxicity deaths **more than doubled between 2018 and 2024**; or the package is intercepted and the legal problem begins. In every case the buyer has handed their **name, home address and payment details** to a criminal operation — data that gets reused for fraud or sold on.
+
+## What you can do
+
+- **Report the ad** (tap the three dots → Report ad → illegal products). It feels pointless; at scale it is how these accounts get killed.
+- **If you paid and got scammed**, report to your bank and the Canadian Anti-Fraud Centre (**1-888-495-8501**). You will not get in trouble for reporting a fraud.
+- **If you ordered and are now anxious about it**, that anxiety is worth listening to. [What the law actually says](/topics/buying-cocaine-online-canada/) — and what your options are.
+
+## If the ad found you because you were already looking
+
+Targeted ads work because they find people at a specific moment. If cocaine has been on your mind enough that an algorithm noticed, that is information. Help in Canada is confidential and mostly free: **BC** 1-800-663-1441 · **Ontario** 1-866-531-2600 · **Quebec** 1-800-265-2626 (French) · everywhere else via **811**. And if you are thinking about stopping: [quitting cocaine, day by day](/quit/cocaine/).
+
+*Sources: CBC/Radio-Canada investigation into drug ads on Meta platforms (January 2026); LegitScript reporting on rogue online drug sellers; Canada Post interdiction figures (2024); Public Health Agency of Canada.*
+
+Related: [Buying cocaine online in Canada](/topics/buying-cocaine-online-canada/) · [Cocaine](/drugs/cocaine/) · [Cocaine purity and cuts](/topics/cocaine-purity-and-cuts/) · [Fentanyl](/drugs/fentanyl/) · [Help lines](/hotlines/)""",
+  drugsInvolved=["cocaine","fentanyl"],
+  related=["cocaine","fentanyl","topics:buying-cocaine-online-canada","topics:cocaine-purity-and-cuts","quit:cocaine"]),
+]
+
+TOPICS += [
+ dict(slug="dark-web-drugs-canada-risks", tag="Canada", title="Buying drugs on the dark web from Canada: the risks nobody lists", date="2026-10-03", read="8 min",
+  desc="Dark-web markets promise anonymity and quality. The record shows exit scams, police honeypots, intercepted mail and contaminated product. What actually happens to Canadian buyers — and the help that exists.",
+  markdown="""Search long enough for drugs online and you end up here: forums and videos explaining dark-web markets, Tor, Monero, "stealth shipping." The pitch is that this is the *safe*, *professional* way to buy. The record says otherwise. This is the part the how-to guides skip.
+
+## The market itself is the first risk
+
+Dark-web drug markets have a business model with a built-in ending: the **exit scam**. Markets hold buyer funds in escrow — and eventually the operators vanish with all of it. It has happened to the biggest markets ever run, repeatedly, including markets that were household names on the dark web for years. There is no warning and no recourse; regulars lose everything in escrow overnight.
+
+The second ending is worse: **police get there first.** Canadian, US, and European agencies have run coordinated takedowns for over a decade — and have repeatedly kept seized markets *running for weeks* as honeypots, quietly logging buyers' addresses before announcing anything. Buyers who believed they were invisible have been arrested years later, from data harvested during operations they never knew were compromised.
+
+## The mail is not a loophole
+
+Every dark-web order ends the same way: a physical package moving through the physical mail. Canada Post works with the RCMP and the Canada Border Services Agency, uses X-ray and detector-dog screening, and removed **5,662 illegal items** from the mail stream in 2024. An intercepted package can lead to a **controlled delivery** — police deliver it themselves, and knock after it is accepted. "I never opened it" is a weaker defence than forums claim; ordering is itself evidence.
+
+And the anonymity tooling fails in boring ways: buyers reuse usernames, pay with traceable crypto bought on regulated Canadian exchanges, or get home-delivered to their real address. Most dark-web drug arrests in Canada are not technical feats — they are ordinary police work following ordinary mistakes.
+
+## The product problem does not disappear
+
+Vendor ratings feel like quality control. They are not. Ratings are gameable, vendors batch-swap product, and no buyer can test for fentanyl contamination by looking at a photo. Canada's street supply is increasingly crossed with potent opioids, and stimulant-involved toxicity deaths **more than doubled from 2018 to 2024** — many of those deaths were people who thought they were using only cocaine or only meth. More on what is actually in street cocaine: [purity and cuts](/topics/cocaine-purity-and-cuts/).
+
+## The legal picture
+
+In Canada, buying drugs online is not a grey zone: possession (CDSA s.4), trafficking (s.5), and importation by mail (s.6) are all criminal — importation especially so. BC's decriminalization pilot **expired January 31, 2026**; there is no legal purchase anywhere in the country. What *is* protected: calling **911** at an overdose — the Good Samaritan Drug Overdose Act shields everyone at the scene from simple-possession charges.
+
+:::tip If you are going to use anyway
+Whatever the source, treat the contents as unknown: tiny test amount, never alone (or call NORS **1-888-688-6677**), naloxone within reach — free at Canadian pharmacies — and no mixing with opioids, benzos or alcohol.
+
+## If this search was really about something else
+
+People rarely learn Tor for a one-time experiment. If you are sourcing drugs seriously enough to be here, the habit is already organizing your life — and that is the moment where help works best, not worst. Confidential and free: **BC** 1-800-663-1441 · **Alberta** 1-866-332-2322 · **Ontario** 1-866-531-2600 · **Quebec** 1-800-265-2626 (French) · nationwide via **811**. Timelines for stopping: [quitting cocaine](/quit/cocaine/) · [quitting meth](/quit/meth/).
+
+*Sources: RCMP and Canada Post mail-interdiction reporting (2024); Public Health Agency of Canada stimulant-harms data; Europol/FBI coordinated takedown disclosures; Health Canada.*
+
+Related: [Buying cocaine online in Canada](/topics/buying-cocaine-online-canada/) · [Buying meth online in Canada](/topics/buying-meth-online-canada/) · [Cocaine](/drugs/cocaine/) · [Methamphetamine](/drugs/methamphetamine/) · [Fentanyl](/drugs/fentanyl/) · [Sentencing in Canada](/sentencing/) · [Help lines](/hotlines/)""",
+  drugsInvolved=["cocaine","methamphetamine","fentanyl"],
+  related=["cocaine","methamphetamine","fentanyl","topics:buying-cocaine-online-canada","topics:buying-meth-online-canada","quit:cocaine","quit:meth"]),
+]
