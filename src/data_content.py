@@ -1540,6 +1540,7 @@ If you are weighing up one of these sites right now, this page is for you. Not t
 :::warning In crisis right now?
 Overdose or emergency: **911**. Suicide crisis, call or text **9-8-8**. Using alone and want someone on the line: National Overdose Response Service **1-888-688-6677**.
 
+:::
 ## How these sites actually work
 
 The pattern CBC documented is consistent across these operations:
@@ -1570,6 +1571,7 @@ More detail: [cocaine charges and penalties in Canada](/sentencing/) — includi
 :::danger If you already ordered
 Do not accept or pick up unexpected or mis-addressed packages. If police contact you about a delivery, say nothing and get legal advice before responding — many provinces have duty counsel or legal aid lines. And if something did arrive: treat the contents as unknown potency, because they are.
 
+:::
 ## If the search was really about needing something
 
 A lot of late-night "buy cocaine online" searches are, underneath, "I need to not feel like this." That is treatable, and in Canada much of it is free:
@@ -1585,6 +1587,7 @@ Quitting cocaine has a known, survivable timeline — the worst of withdrawal is
 :::tip If you are going to use anyway
 Start with a fraction of your usual amount with any new supply. Never use alone — or call NORS **1-888-688-6677** while you do. Carry naloxone (free at Canadian pharmacies): cocaine laced with fentanyl does not announce itself, and naloxone will not hurt if it was "only" cocaine. Do not mix with alcohol — the combination forms cocaethylene, which is significantly harder on the heart.
 
+:::
 *Sources: CBC/Radio-Canada investigation into online drug shops (January 2026); Canada Post mail-interdiction figures (2024); Public Health Agency of Canada opioid- and stimulant-related harms data; Controlled Drugs and Substances Act; Health Canada.*
 
 Related: [Cocaine](/drugs/cocaine/) · [Crack](/drugs/crack/) · [Fentanyl](/drugs/fentanyl/) · [Cocaine purity and cuts](/topics/cocaine-purity-and-cuts/) · [Fish scale vs wash](/topics/fish-scale-vs-wash-cocaine/) · [Cocaine use by Canadian city](/data/cocaine-cities-canada/) · [Quitting cocaine](/quit/cocaine/) · [Help lines](/hotlines/)""",
@@ -1603,6 +1606,7 @@ Here is what those pages leave out.
 :::warning In crisis right now?
 Overdose or emergency: **911**. Suicide crisis, call or text **9-8-8**. Using alone: National Overdose Response Service **1-888-688-6677** — someone stays on the line.
 
+:::
 ## Canada's meth is not what it was
 
 Two things have changed the risk picture, and neither is in the ads:
@@ -1638,6 +1642,7 @@ Meth withdrawal is brutal but not dangerous in the way alcohol or benzo withdraw
 :::tip If you are going to use anyway
 Test a new batch with a tiny amount first. Never use alone — or call NORS **1-888-688-6677**. Carry naloxone (free at pharmacies) because of fentanyl cross-contamination. Sleep and food are not optional: most meth emergencies are sleep-deprivation psychosis, not overdose. And do not mix with opioids or alcohol.
 
+:::
 *Sources: CBC/Radio-Canada (January 2026); Statistics Canada, Canadian Wastewater Survey (September 2026); Public Health Agency of Canada, opioid- and stimulant-related harms; Canada Post interdiction figures (2024); Controlled Drugs and Substances Act.*
 
 Related: [Methamphetamine](/drugs/methamphetamine/) · [Fentanyl](/drugs/fentanyl/) · [Meth use by Canadian city](/data/meth-cities-canada/) · [Quitting meth](/quit/meth/) · [What actually happens when you quit](/topics/what-actually-happens-when-you-quit/) · [Help lines](/hotlines/)""",
@@ -1714,6 +1719,7 @@ In Canada, buying drugs online is not a grey zone: possession (CDSA s.4), traffi
 :::tip If you are going to use anyway
 Whatever the source, treat the contents as unknown: tiny test amount, never alone (or call NORS **1-888-688-6677**), naloxone within reach — free at Canadian pharmacies — and no mixing with opioids, benzos or alcohol.
 
+:::
 ## If this search was really about something else
 
 People rarely learn Tor for a one-time experiment. If you are sourcing drugs seriously enough to be here, the habit is already organizing your life — and that is the moment where help works best, not worst. Confidential and free: **BC** 1-800-663-1441 · **Alberta** 1-866-332-2322 · **Ontario** 1-866-531-2600 · **Quebec** 1-800-265-2626 (French) · nationwide via **811**. Timelines for stopping: [quitting cocaine](/quit/cocaine/) · [quitting meth](/quit/meth/).

@@ -1,7 +1,8 @@
 def data_markdown(pg, drug="methamphetamine"):
     """Full-page Markdown version of a data page (used for KV/admin editing)."""
-    drug_word = "meth" if drug == "methamphetamine" else drug
-    drug_label = "Methamphetamine" if drug == "methamphetamine" else drug.capitalize()
+    drug_word = {"methamphetamine": "meth", "nicotine-vapes": "vaping"}.get(drug, drug)
+    drug_label = {"methamphetamine": "Methamphetamine", "nicotine-vapes": "Nicotine vapes",
+                  "weed": "Weed (cannabis)"}.get(drug, drug.capitalize())
     L = []
     L.append(f"> **Read this first** — no country anywhere measures {drug_word} use per city directly. "
              "This ranking combines the strongest available proxies — wastewater analysis, forensic-lab reporting, "

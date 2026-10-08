@@ -1049,3 +1049,12 @@ try:
             LANGS[_ln].setdefault("drugs", {}).update(_d)
 except Exception:
     pass
+
+# --- machine-translated expansion pack 3 (2026-10-08: ~25% of remaining profiles) ---
+try:
+    from data_i18n_expansion3 import LANGS_MT3
+    for _ln, _d in LANGS_MT3.items():
+        if _ln in LANGS:
+            LANGS[_ln].setdefault("drugs", {}).update(_d)
+except Exception:
+    pass

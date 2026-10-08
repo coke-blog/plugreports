@@ -237,3 +237,10 @@ try:
     ES_DRUGS.update(ES_DRUGS_MT2)
 except Exception:
     pass
+
+# --- machine-translated expansion pack 3 (2026-10-08: ~25% of remaining profiles) ---
+try:
+    from data_i18n_expansion3 import ES_DRUGS_MT3
+    ES_DRUGS.update(ES_DRUGS_MT3)
+except Exception:
+    pass

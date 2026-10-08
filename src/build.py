@@ -52,10 +52,19 @@ def rfc822(iso):
     try: dt = datetime.datetime.strptime(str(iso)[:10], "%Y-%m-%d").replace(hour=12, tzinfo=datetime.timezone.utc)
     except Exception: dt = datetime.datetime.now(datetime.timezone.utc)
     return format_datetime(dt)
+PAGE_INDEX = []  # every generated HTML page: (url_path, title, lang) — emitted as pageindex.json for the admin page finder
+
 def w(path, content):
     fp = os.path.join(PUB, path)
     os.makedirs(os.path.dirname(fp), exist_ok=True)
     with open(fp, "w", encoding="utf-8") as f: f.write(content)
+    if path.endswith("index.html"):
+        import re as _re
+        _t = _re.search(r"<title>(.*?)</title>", content, _re.S)
+        _l = _re.search(r'<html lang="([a-z]{2})"', content)
+        url = "/" + path[:-len("index.html")]
+        PAGE_INDEX.append({"p": url, "t": (_t.group(1).split("|")[0].strip() if _t else url),
+                           "l": (_l.group(1) if _l else "en")})
     return path
 
 def slugify(s):
@@ -305,6 +314,7 @@ def shell(path, title, desc, body, jsonld=None, canonical=None, extra_head="", o
 <p data-i18n="ageBody">This site contains educational information about drugs and harm reduction. It is not medical or legal advice. You must be of legal age or accessing with intent to help yourself or someone else.</p>
 <div class="row"><button class="btn btn-red" data-gate-yes data-i18n="ageYes">I understand — enter</button>
 <a class="btn btn-ghost" href="https://www.google.com" data-i18n="ageNo">Leave</a></div></div></div>
+<script src="/assets/js/pagelinks.js?v=1"></script>
 <script src="/assets/js/app.js?v=16"></script>
 </body></html>"""
 
@@ -1536,13 +1546,49 @@ def build_data_hub():
       '<a class="card" href="/data/crack-cities-africa/"><h3>Crack Cities: Africa</h3>'
       '<p>Johannesburg, Cape Town, Lagos — crack follows the cocaine corridors.</p>'
       '<div class="foot">Open the ranking &rarr;</div></a>'
+      '<a class="card" href="/data/weed-cities-usa/"><h3>Weed Cities: USA</h3>'
+      '<p>Portland, Denver, Oklahoma City — use rates meet the world&rsquo;s densest dispensary maps.</p>'
+      '<div class="foot">Open the ranking &rarr;</div></a>'
+      '<a class="card" href="/data/weed-cities-canada/"><h3>Weed Cities: Canada</h3>'
+      '<p>Halifax beats Toronto and Vancouver — Statistics Canada measured the sewage.</p>'
+      '<div class="foot">Open the ranking &rarr;</div></a>'
+      '<a class="card" href="/data/weed-cities-europe/"><h3>Weed Cities: Europe</h3>'
+      '<p>Amsterdam, Ljubljana, Berlin — Europe&rsquo;s weed capitals measured in wastewater.</p>'
+      '<div class="foot">Open the ranking &rarr;</div></a>'
+      '<a class="card" href="/data/weed-cities-australia/"><h3>Weed Cities: Australia</h3>'
+      '<p>The regions out-smoke the capitals two-to-one — and Hobart leads the cities.</p>'
+      '<div class="foot">Open the ranking &rarr;</div></a>'
+      '<a class="card" href="/data/weed-cities-middle-east/"><h3>Weed Cities: Middle East</h3>'
+      '<p>Tel Aviv by use, Baalbek by production — hashish&rsquo;s ancient heartland.</p>'
+      '<div class="foot">Open the ranking &rarr;</div></a>'
+      '<a class="card" href="/data/weed-cities-africa/"><h3>Weed Cities: Africa</h3>'
+      '<p>Lagos, Cape Town, the Rif — the world&rsquo;s fastest-growing cannabis population.</p>'
+      '<div class="foot">Open the ranking &rarr;</div></a>'
+      '<a class="card" href="/data/vape-cities-usa/"><h3>Vape Cities: USA</h3>'
+      '<p>Oklahoma leads, Appalachia follows — vaping tracks the old smoking belt.</p>'
+      '<div class="foot">Open the ranking &rarr;</div></a>'
+      '<a class="card" href="/data/vape-cities-europe/"><h3>Vape Cities: Europe</h3>'
+      '<p>London, Manchester, Glasgow — Britain&rsquo;s 5.5 million vapers dominate Europe.</p>'
+      '<div class="foot">Open the ranking &rarr;</div></a>'
+      '<a class="card" href="/data/vape-cities-canada/"><h3>Vape Cities: Canada</h3>'
+      '<p>Youth rates near 30% in senior grades — a young person&rsquo;s map, flavor bans and all.</p>'
+      '<div class="foot">Open the ranking &rarr;</div></a>'
+      '<a class="card" href="/data/vape-cities-australia/"><h3>Vape Cities: Australia</h3>'
+      '<p>Prescription-only on paper, a A$1B black market in practice — 13.2M vapes seized in a year.</p>'
+      '<div class="foot">Open the ranking &rarr;</div></a>'
+      '<a class="card" href="/data/vape-cities-middle-east/"><h3>Vape Cities: Middle East</h3>'
+      '<p>Dubai&rsquo;s mall mega-stores, Cairo&rsquo;s post-2022 boom, Amman&rsquo;s smoking-belt conversion.</p>'
+      '<div class="foot">Open the ranking &rarr;</div></a>'
+      '<a class="card" href="/data/vape-cities-africa/"><h3>Vape Cities: Africa</h3>'
+      '<p>Cape Town&rsquo;s vape lounges, Lagos&rsquo;s disposable flood — the market follows the money.</p>'
+      '<div class="foot">Open the ranking &rarr;</div></a>'
       '</div>'
       '<p style="margin-top:22px;color:#667085;font-size:14px">Using our data? '
       '<a href="/about/">Editorial policy & sources</a> &middot; <a href="/suggest/">Report a correction</a></p>'
       '</div></div>')
     w("data/index.html", shell(
       "data/", "Data & Trackers — Sourced Drug-Supply Numbers | plugreports",
-      "Free, citable data trackers from plugreports: the fentanyl adulterant tracker and the NFLIS top-15 substance ranking, with dated DEA/CDC sources.",
+      "Free, citable data trackers from plugreports: the fentanyl adulterant tracker, NFLIS top-15 substances, and city rankings for meth, cocaine, MDMA, crack, weed and vaping across six regions — with dated sources.",
       body))
 
 
@@ -1551,10 +1597,14 @@ def build_meth_cities():
     from data_cocaine_cities import COCAINE_CITY_PAGES
     from data_mdma_cities import MDMA_CITY_PAGES
     from data_crack_cities import CRACK_CITY_PAGES
+    from data_weed_cities import WEED_CITY_PAGES
+    from data_vape_cities import VAPE_CITY_PAGES
     groups = [(METH_CITY_PAGES, "methamphetamine", "Methamphetamine profile — effects, overdose signs & street price"),
               (COCAINE_CITY_PAGES, "cocaine", "Cocaine profile — effects, overdose signs & street price"),
               (MDMA_CITY_PAGES, "mdma", "MDMA profile — effects, overdose signs & street price"),
-              (CRACK_CITY_PAGES, "crack", "Crack cocaine profile — effects, overdose signs & street price")]
+              (CRACK_CITY_PAGES, "crack", "Crack cocaine profile — effects, overdose signs & street price"),
+              (WEED_CITY_PAGES, "weed", "Weed profile — effects, risks & street price"),
+              (VAPE_CITY_PAGES, "nicotine-vapes", "Nicotine vapes profile — effects, risks & quitting")]
     for PAGES, DRUG, DRUG_LABEL in groups:
      for pg in PAGES:
         stat_html = "".join(f'<div class="stat"><b>{esc(n)}</b><span>{esc(l)}</span></div>' for n, l in pg["stats"])
@@ -1572,7 +1622,7 @@ def build_meth_cities():
           + (f'<img class="detail-img" src="{esc(pg["image"])}" alt="" loading="lazy">' if pg.get("image") else "")
           + f'<div class="stat-grid">{stat_html}</div>'
           f'<h2>How this ranking works</h2><p>{esc(pg["intro"])}</p>'
-          f'<div class="callout amber"><b>Read this first</b>No country anywhere measures {"meth" if DRUG == "methamphetamine" else DRUG} use per city directly. '
+          f'<div class="callout amber"><b>Read this first</b>No country anywhere measures {"meth" if DRUG == "methamphetamine" else ("vaping" if DRUG == "nicotine-vapes" else DRUG)} use per city directly. '
           'This ranking combines the strongest available proxies — wastewater analysis, forensic-lab reporting, '
           'treatment admissions and police seizures — and is directional, not a precise league table. '
           'Positions in the middle of each list should be read as a band.</div>'
@@ -1682,7 +1732,11 @@ def build_meta():
             ("data/mdma-cities-usa/", B), ("data/mdma-cities-canada/", B), ("data/mdma-cities-europe/", B),
             ("data/mdma-cities-australia/", B), ("data/mdma-cities-middle-east/", B), ("data/mdma-cities-africa/", B),
             ("data/crack-cities-usa/", B), ("data/crack-cities-canada/", B), ("data/crack-cities-europe/", B),
-            ("data/crack-cities-australia/", B), ("data/crack-cities-middle-east/", B), ("data/crack-cities-africa/", B)]
+            ("data/crack-cities-australia/", B), ("data/crack-cities-middle-east/", B), ("data/crack-cities-africa/", B),
+            ("data/weed-cities-usa/", B), ("data/weed-cities-canada/", B), ("data/weed-cities-europe/", B),
+            ("data/weed-cities-australia/", B), ("data/weed-cities-middle-east/", B), ("data/weed-cities-africa/", B),
+            ("data/vape-cities-usa/", B), ("data/vape-cities-canada/", B), ("data/vape-cities-europe/", B),
+            ("data/vape-cities-australia/", B), ("data/vape-cities-middle-east/", B), ("data/vape-cities-africa/", B)]
     urls += [(f"categories/{k}/", B) for k in CATEGORIES]
     urls += [("es/", B), ("es/hotlines/", B), ("es/categories/", B)]
     urls += [(f"es/drugs/{sl}/", DRUG_BY_SLUG[sl].get("lastUpdated", B)) for sl in ES_DRUG_KEYS if sl in DRUG_BY_SLUG]
@@ -2037,6 +2091,8 @@ def main():
                 "quit":[k for k in QUIT_SPECS], "mix":[m["slug"] for m in MIX],
                 "vs":[v["slug"] for v in VS]}
     w("_static.json", json.dumps(manifest))
+    # full page index (all languages) for the /admin page finder — pagelinks UI
+    w("pageindex.json", json.dumps(PAGE_INDEX, ensure_ascii=False, separators=(",", ":")))
     w("_dynamic.html", shell("_dynamic.html", "plugreports",
       "Live content", '<div class="wrap" id="dyn" style="padding:44px 20px;min-height:50vh"><p>Loading\u2026</p></div>',
       extra_head='<script src="/assets/js/markdown.js?v=17" defer></script>'
