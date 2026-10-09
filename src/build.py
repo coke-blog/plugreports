@@ -314,7 +314,7 @@ def shell(path, title, desc, body, jsonld=None, canonical=None, extra_head="", o
 <p data-i18n="ageBody">This site contains educational information about drugs and harm reduction. It is not medical or legal advice. You must be of legal age or accessing with intent to help yourself or someone else.</p>
 <div class="row"><button class="btn btn-red" data-gate-yes data-i18n="ageYes">I understand — enter</button>
 <a class="btn btn-ghost" href="https://www.google.com" data-i18n="ageNo">Leave</a></div></div></div>
-<script src="/assets/js/pagelinks.js?v=1"></script>
+<script src="/assets/js/pagelinks.js?v=2"></script>
 <script src="/assets/js/app.js?v=16"></script>
 </body></html>"""
 
@@ -553,9 +553,9 @@ def build_drugs(es=False):
             ("Last updated", esc(d["lastUpdated"]))])
         cat_rows = "".join(
             f'<tr><td><a href="/{("es/" if es and x["slug"] in ES_DRUGS else "")}drugs/{x["slug"]}/">{esc(x["name"])}</a></td>'
-            f'<td>{esc(x["schedule"].split("(")[0].strip())}</td>'
-            f'<td>{"; ".join(esc(e) for e in x["risks"][:2])}</td>'
-            f'<td>{esc(x["streetPrice"].split(";")[0].split("(")[0].strip())}</td></tr>'
+            f'<td>{esc(((ES_DRUGS.get(x["slug"], {}) if es else {}).get("schedule") or x["schedule"]).split("(")[0].strip())}</td>'
+            f'<td>{"; ".join(esc(e) for e in (((ES_DRUGS.get(x["slug"], {}) if es else {}).get("risks") or x["risks"])[:2]))}</td>'
+            f'<td>{esc((((ES_DRUGS.get(x["slug"], {}) if es else {}).get("streetPrice") or x["streetPrice"])).split(";")[0].split("(")[0].strip())}</td></tr>'
             for x in [d] + rel[:5])
         # --- FAQ (visible + FAQPage JSON-LD) ---
         od_a = "; ".join(od[:3])
@@ -612,9 +612,9 @@ def build_drugs(es=False):
 </div>
 
 <div class="panel"><h2>{cmp_head}</h2>
-<table class="tbl"><thead><tr><th>Substance</th><th>Class</th><th>Top risks</th><th>Street price</th></tr></thead>
+<table class="tbl"><thead><tr><th>{"Sustancia" if es else "Substance"}</th><th>{"Clase" if es else "Class"}</th><th>{"Principales riesgos" if es else "Top risks"}</th><th>{"Precio en la calle" if es else "Street price"}</th></tr></thead>
 <tbody>{cat_rows}</tbody></table>
-<div class="notice-strip">Street prices are regional estimates. Potency and cuts vary constantly.</div></div>
+<div class="notice-strip">{"Los precios en la calle son estimaciones regionales. La potencia y los cortes varían constantemente." if es else "Street prices are regional estimates. Potency and cuts vary constantly."}</div></div>
 
 {brands_html}
 {faq_panel}
@@ -1917,6 +1917,18 @@ def build_lang_drug_pages(lang):
             (lb("sp", "Street price"), esc(o.get("streetPrice", d["streetPrice"]))),
             (lb("ls", "Legal status"), esc(o.get("legalStatus", d["legalStatus"]))),
             (lb("lu", "Last updated"), esc(d["lastUpdated"]))])
+        def _cmp_row(x):
+            ox = TR.get(x["slug"], {})
+            link = f'/{lang}/drugs/{x["slug"]}/' if x["slug"] in TR else f'/drugs/{x["slug"]}/'
+            return (f'<tr><td><a href="{link}">{esc(x["name"])}</a></td>'
+                    f'<td>{esc((ox.get("schedule") or x["schedule"]).split("(")[0].strip())}</td>'
+                    f'<td>{"; ".join(esc(e) for e in (ox.get("risks") or x["risks"])[:2])}</td>'
+                    f'<td>{esc((ox.get("streetPrice") or x["streetPrice"]).split(";")[0].split("(")[0].strip())}</td></tr>')
+        cat_rows = "".join(_cmp_row(x) for x in [d] + rel[:5])
+        cmp_panel = f"""<div class="panel"><h2>{lb("cmp", "Category comparison")} — {esc(cat_name)}</h2>
+<table class="tbl"><thead><tr><th>{lb("cmp_sub", "Substance")}</th><th>{lb("cmp_cls", "Class")}</th><th>{lb("cmp_risk", "Top risks")}</th><th>{lb("cmp_price", "Street price")}</th></tr></thead>
+<tbody>{cat_rows}</tbody></table>
+<div class="notice-strip">{lb("cmp_note", "Street prices are regional estimates. Potency and cuts vary constantly.")}</div></div>"""
         body = f"""
 <div class="wrap">
 <div class="ptop">
@@ -1940,6 +1952,7 @@ def build_lang_drug_pages(lang):
 <div style="margin-top:14px"><span class="chip green">{lb("src", "Sources")}: {esc(", ".join(d["sources"]))}</span></div></div>
 </aside>
 </div>
+{cmp_panel}
 <div class="related print-hide"><h2>{lb("rel", "You may also want to know about")}</h2>
 <div class="rel-grid">{relhtml}
 <a href="/{lang}/hotlines/"><span class="mini" style="background:#dc2626">&#9742;</span><span>{lb("hot_k", "Hotlines")}</span></a></div></div>

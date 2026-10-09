@@ -69,12 +69,26 @@ def main():
     if not changed:
         print("nothing to push"); return
 
-    # Entries reference locally computed blob SHAs directly — the earlier run
-    # already uploaded every blob (ex.map completed), and blob SHAs are
-    # content-addressed, so no existence re-check is needed. Set VERIFY=1 to
-    # re-check/upload missing blobs via the API (costs one request per file).
+    # Entries reference locally computed blob SHAs. Modes:
+    #   (default)  assume blobs already exist on GitHub (after a completed upload run)
+    #   VERIFY=1   GET each blob first, POST only if missing (2 requests/file worst case)
+    #   UPLOAD=1   POST every changed blob unconditionally (1 request/file) — use this
+    #              for normal content pushes; still benefits from chunked trees below.
     entries = []
-    if os.environ.get("VERIFY"):
+    if os.environ.get("UPLOAD"):
+        def up(rel_data):
+            rel, data = rel_data
+            b = gh("POST", "/git/blobs", {"content": base64.b64encode(data).decode(), "encoding": "base64"})
+            return {"path": rel, "mode": "100644", "type": "blob", "sha": b["sha"]}
+
+        from concurrent.futures import ThreadPoolExecutor
+        with ThreadPoolExecutor(max_workers=8) as ex:
+            for i, e in enumerate(ex.map(up, changed)):
+                entries.append(e)
+                if (i + 1) % 200 == 0:
+                    print(f"  uploaded {i+1}/{len(changed)}", flush=True)
+        print(f"blobs uploaded: {len(entries)}", flush=True)
+    elif os.environ.get("VERIFY"):
         def ensure(rel_data):
             rel, data = rel_data
             sha = blob_sha(data)

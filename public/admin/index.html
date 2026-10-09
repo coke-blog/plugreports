@@ -423,15 +423,16 @@ function pagesSearch(){
  `<tr><td><button class="btn ${linked[p.p]?'a':'x'} sm" onclick="pageLinkEdit('${esc(p.p)}')">${linked[p.p]?'edit links':'+ links'}</button></td><td><span style="background:#f2f4f7;border-radius:6px;padding:1px 7px;font-size:11px;font-weight:700;margin-right:6px">${p.l}</span>${esc(p.p)}</td><td>${esc((p.t||'').slice(0,60))}</td></tr>`).join('')+'</table>';}
 function pageLinkEdit(path){
  const cur=(window._plinks||[]).find(x=>x.path===path);
- const it=cur?JSON.parse(JSON.stringify(cur)):{path:path,heading:'',links:[{label:'',url:''}]};
+ const it=cur?JSON.parse(JSON.stringify(cur)):{path:path,heading:'',links:[{label:'',url:'',kind:'link'}]};
  window._pledit=it;
  const host=document.getElementById('plinkEditor');
- host.innerHTML=`<div class="inline-editor" style="margin-top:14px"><h3>Support links — ${esc(path)}</h3>
- <div class="frow"><label>Box heading <span class="hint">— shown above the links; write it in the page's language</span></label>
+ host.innerHTML=`<div class="inline-editor" style="margin-top:14px"><h3>Support links &amp; images — ${esc(path)}</h3>
+ <div class="frow"><label>Box heading <span class="hint">— shown above the links/images; write it in the page's language</span></label>
  <input id="pl_heading" value="${esc(it.heading||'')}" placeholder="Support & help" style="width:min(480px,100%)"></div>
+ <p style="font-size:12.5px;color:#667085;margin:2px 0 8px">Row types: <b>Link</b> = text link in the support box · <b>Image</b> = photo grid inside the box (drug photos etc.) · <b>Header image</b> = full-width photo at the top of the page. Use /media/… URLs from the media library or any image URL.</p>
  <div id="pl_rows"></div>
- <button class="btn x sm" onclick="plAddRow()">+ Add link</button>
- <div style="margin-top:12px"><button class="btn g" onclick="plSave()">Save links</button>
+ <button class="btn x sm" onclick="plAddRow()">+ Add row</button>
+ <div style="margin-top:12px"><button class="btn g" onclick="plSave()">Save</button>
  ${cur?`<button class="btn" onclick="pageLinkDel('${esc(cur.slug)}')">Remove all</button>`:''}
  <a class="btn a sm" href="${esc(path)}" target="_blank" rel="noopener" style="text-decoration:none;display:inline-block">Open page &#8599;</a></div></div>`;
  plRenderRows();
@@ -440,16 +441,20 @@ function plRenderRows(){
  const it=window._pledit;
  document.getElementById('pl_rows').innerHTML=(it.links||[]).map((l,i)=>
  `<div style="display:flex;gap:6px;flex-wrap:wrap;margin:5px 0">
-  <input placeholder="Label (e.g. Línea de ayuda 24h)" value="${esc(l.label||'')}" oninput="window._pledit.links[${i}].label=this.value" style="width:min(280px,45%)">
-  <input placeholder="URL (/hotlines/ or https://…)" value="${esc(l.url||'')}" oninput="window._pledit.links[${i}].url=this.value" style="width:min(340px,50%)">
-  <button class="btn sm" onclick="window._pledit.links.splice(${i},1);plRenderRows()">&times;</button></div>`).join('')||'<p style="color:#98a2b3;font-size:12.5px;margin:6px 0">No links yet — add one.</p>';}
-function plAddRow(){window._pledit.links.push({label:'',url:''});plRenderRows();
+  <select onchange="window._pledit.links[${i}].kind=this.value" style="width:120px">
+   <option value="link" ${(!l.kind||l.kind==='link')?'selected':''}>Link</option>
+   <option value="image" ${l.kind==='image'?'selected':''}>Image</option>
+   <option value="header" ${l.kind==='header'?'selected':''}>Header image</option></select>
+  <input placeholder="Label / caption" value="${esc(l.label||'')}" oninput="window._pledit.links[${i}].label=this.value" style="width:min(260px,40%)">
+  <input placeholder="URL (/hotlines/, /media/…jpg or https://…)" value="${esc(l.url||'')}" oninput="window._pledit.links[${i}].url=this.value" style="width:min(340px,50%)">
+  <button class="btn sm" onclick="window._pledit.links.splice(${i},1);plRenderRows()">&times;</button></div>`).join('')||'<p style="color:#98a2b3;font-size:12.5px;margin:6px 0">No links or images yet — add one.</p>';}
+function plAddRow(){window._pledit.links.push({label:'',url:'',kind:'link'});plRenderRows();
  const rows=document.querySelectorAll('#pl_rows input');if(rows.length)rows[rows.length-2].focus();}
 async function plSave(){
  const it=window._pledit;
  it.heading=(document.getElementById('pl_heading').value||'').trim();
- it.links=(it.links||[]).map(l=>({label:(l.label||'').trim(),url:(l.url||'').trim()})).filter(l=>l.label&&l.url);
- if(!it.links.length)return msg('Add at least one link (label + URL) — or use Remove all to clear the page.',0);
+ it.links=(it.links||[]).map(l=>({label:(l.label||'').trim(),url:(l.url||'').trim(),kind:l.kind||'link'})).filter(l=>l.url&&(l.label||l.kind!=='link'));
+ if(!it.links.length)return msg('Add at least one row (URL, plus a label for links) — or use Remove all to clear the page.',0);
  const existing=(window._plinks||[]).find(x=>x.path===it.path);
  if(existing)it.slug=existing.slug;else it.slug=slugify(it.path);
  const r=await api('admin/content?type=pagelinks'+(existing?'&slug='+existing.slug:''),{method:existing?'PUT':'POST',body:JSON.stringify(it)});

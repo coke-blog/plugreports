@@ -1033,6 +1033,29 @@ LANGS["ar"]["labels"] = dict(wd="ماذا يفعل", kr="المخاطر الرئ
  call="اتصال")
 
 # --- machine-translated expansion pack (merged at import; admin/KV edits still win) ---
+
+# Category-comparison panel labels (added 2026-10-08): heading, table headers, notice strip.
+LANGS["de"]["labels"].update(cmp="Kategorie-Vergleich", cmp_sub="Substanz", cmp_cls="Klasse",
+ cmp_risk="Hauptrisiken", cmp_price="Straßenpreis",
+ cmp_note="Straßenpreise sind regionale Schätzungen. Wirkstoffgehalt und Streckmittel variieren ständig.")
+LANGS["fr"]["labels"].update(cmp="Comparaison de la catégorie", cmp_sub="Substance", cmp_cls="Classe",
+ cmp_risk="Risques principaux", cmp_price="Prix de rue",
+ cmp_note="Les prix de rue sont des estimations régionales. La pureté et les produits de coupe varient constamment.")
+LANGS["pl"]["labels"].update(cmp="Porównanie kategorii", cmp_sub="Substancja", cmp_cls="Klasa",
+ cmp_risk="Główne ryzyka", cmp_price="Cena uliczna",
+ cmp_note="Ceny uliczne są szacunkami regionalnymi. Moc i domieszki stale się zmieniają.")
+LANGS["no"]["labels"].update(cmp="Kategorisammenligning", cmp_sub="Stoff", cmp_cls="Klasse",
+ cmp_risk="Største risikoer", cmp_price="Gatepris",
+ cmp_note="Gatepriser er regionale estimater. Styrke og tilskjæring varierer hele tiden.")
+LANGS["hi"]["labels"].update(cmp="श्रेणी तुलना", cmp_sub="पदार्थ", cmp_cls="वर्ग",
+ cmp_risk="मुख्य जोखिम", cmp_price="स्ट्रीट कीमत",
+ cmp_note="स्ट्रीट कीमतें क्षेत्रीय अनुमान हैं। शुद्धता और मिलावट लगातार बदलती रहती हैं।")
+LANGS["pt"]["labels"].update(cmp="Comparação da categoria", cmp_sub="Substância", cmp_cls="Classe",
+ cmp_risk="Principais riscos", cmp_price="Preço de rua",
+ cmp_note="Os preços de rua são estimativas regionais. A potência e as misturas variam constantemente.")
+LANGS["ar"]["labels"].update(cmp="مقارنة الفئة", cmp_sub="المادة", cmp_cls="الصنف",
+ cmp_risk="أهم المخاطر", cmp_price="سعر الشارع",
+ cmp_note="أسعار الشارع تقديرات إقليمية. تتفاوت الفعالية والمواد المخلوطة باستمرار.")
 try:
     from data_i18n_expansion import LANGS_MT
     for _ln, _d in LANGS_MT.items():
