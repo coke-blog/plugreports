@@ -241,9 +241,12 @@ def shell(path, title, desc, body, jsonld=None, canonical=None, extra_head="", o
     if path.split("/")[0] in ("busts","news","topics"):
         ld += '<script src="/assets/js/markdown.js?v=16" defer></script>'
     if path.split("/")[0] in ("busts","news","drugs","topics","quit","mix","vs","categories","hotlines","pharmacies","rehabs","sentencing","index.html"):
-        ld += '<script src="/assets/js/hydrate.js?v=16" defer></script>'
+        ld += '<script src="/assets/js/hydrate.js?v=17" defer></script>'
         if path == "index.html":
             ld += '<script src="/assets/js/breaking.js?v=16" defer></script>'
+    _pp = path.split("/")
+    if _pp[0] in ("es","de","hi","no","pl","fr","pt","ar") and len(_pp) > 2 and _pp[1] == "drugs":
+        ld += '<script src="/assets/js/hydrate.js?v=17" defer></script>'  # lang drug pages: image-only hydration
     if path.split("/")[0] in ("index.html", "watch"):
         ld += '<script src="/assets/js/videos.js?v=3" defer></script>'
     rtl = ' dir="rtl"' if lang == "ar" else ""

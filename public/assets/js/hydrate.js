@@ -5,6 +5,32 @@
   var seg = location.pathname.split('/').filter(Boolean);
   if (seg.length === 0) { renderHome(); return; }
   var type = seg[0] || '';
+  /* Translated drug pages (/de/drugs/x/, /fr/drugs/x/ …): hydrate ONLY the featured
+     image from KV, so admin image edits reach every language. All translated text
+     stays from the static build (KV holds the English text). */
+  if (/^(es|de|hi|no|pl|fr|pt|ar)$/.test(type)) {
+    if (seg[1] === 'drugs' && seg[2]) {
+      fetch('/api/public/content?type=drugs', { credentials: 'omit' })
+        .then(function (r) { return r.json(); })
+        .then(function (d) {
+          var items = (d.items || []).filter(function (x) { return x && !x.unpublished; });
+          var it = items.find(function (x) { return x.slug === seg[2]; });
+          if (!it || !it.image) return;
+          var im = document.querySelector('img.pimg');
+          if (im) { if (im.getAttribute('src') !== it.image) im.src = it.image; return; }
+          var ph = document.querySelector('.pimg-formula');
+          if (ph) {
+            var ni = document.createElement('img');
+            ni.className = 'pimg'; ni.src = it.image; ni.alt = it.name || '';
+            ni.width = 510; ni.height = 383; ni.loading = 'lazy';
+            ni.setAttribute('style', 'border-radius:18px;border:1px solid var(--line);box-shadow:var(--shadow);object-fit:cover;max-height:340px');
+            ph.parentNode.replaceChild(ni, ph);
+          }
+        })
+        .catch(function () {});
+    }
+    return;
+  }
   if (!/^(drugs|busts|news|topics|quit|hotlines|pharmacies|rehabs|sentencing|categories|vs|mix)$/.test(type)) return;
   if (seg.length === 2) { fetch('/api/view', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({type: type, slug: seg[1]})}).catch(function(){}); }
   var topicSlugs = {};
