@@ -160,7 +160,7 @@ plugreports.com is a multilingual harm-reduction library (563 drug profiles, 31 
 - PUSH GOTCHA: push2.py EXCLUDES image extensions (.png/.jpg/...) from its walk — new images never reach GitHub through it. Push binaries separately via blobs API (base64) + tree + commit + PATCH ref (done in e1595e2644).
 - KV seeded: topics (28 items), news (7 items) via seed.py merge.
 
-## KV staleness fix — homepage counters (2026-10-17, deploy 1f93ac3f, push PENDING)
+## KV staleness fix — homepage counters (2026-10-17, deploy 1f93ac3f, push ca8c8bff5f)
 - User screenshot showed homepage hero stats 563/37+/43 while static HTML said 600/43+/44. Root cause: hydrate.js renderIndex rebuilds hero stats from **KV** (`/api/public/content`), and KV had never been re-seeded after the 600-drug + Middle East + translation deploys. Static builds are correct; KV is the live source of truth for hydrated pages.
 - **Rule: after EVERY deploy that adds/removes content items, run `CF_TOKEN=<deploy token works for KV> python3 src/seed.py` (merge-safe; KV wins on held keys, admin-created items survive).** Seeded all types: drugs 600, hotlines 10 regions/43 lines, topics 36+1, news 9+1 (the +1s are admin-created items filtered as unpublished by the public API — public counts read 600/10/36/9 ✓).
 - hydrate.js kicker region count now excludes "(more)"/"New Zealand" subregions (was showing 10; now 8, matching the static kicker). hydrate pin → v=18, sw.js cache → pr-v18.
