@@ -1081,3 +1081,21 @@ try:
             LANGS[_ln].setdefault("drugs", {}).update(_d)
 except Exception:
     pass
+
+# --- hand-written pack (2026-10-17): 14 high-risk opioid RCs, DE ---
+try:
+    from data_i18n_manual1 import LANGS_MANUAL
+    for _ln, _d in LANGS_MANUAL.items():
+        if _ln in LANGS:
+            LANGS[_ln].setdefault("drugs", {}).update(_d)
+except Exception:
+    pass
+
+# --- MT completion pack (2026-10-17): all remaining profiles, all languages ---
+try:
+    from data_i18n_expansion5 import LANGS_MT5
+    for _ln, _d in LANGS_MT5.items():
+        if _ln in LANGS:
+            LANGS[_ln].setdefault("drugs", {}).update(_d)
+except Exception:
+    pass

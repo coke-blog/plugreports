@@ -5,7 +5,7 @@
 Complete machine-readable drug records: [llms-full.txt](https://plugreports.com/llms-full.txt)
 
 ## Key pages
-- [/hotlines/](https://plugreports.com/hotlines/) Verified overdose & crisis hotlines, 10 regions
+- [/hotlines/](https://plugreports.com/hotlines/) Verified overdose & crisis hotlines, 8 regions
 - [/drugs/](https://plugreports.com/drugs/) A-Z index of all 600 substance profiles
 - [/categories/](https://plugreports.com/categories/) Browse by category
 - [/news/](https://plugreports.com/news/) Drug news & alerts

@@ -402,7 +402,7 @@ def build_index(es=False):
 <div class="hero-stats">
 <div class="st"><b>{len(DRUGS)}</b><span>drug profiles</span></div>
 <div class="st"><b>{len(CATEGORIES)}</b><span>categories</span></div>
-<div class="st"><b>20+</b><span>verified hotlines</span></div>
+<div class="st"><b>{sum(len(v) for v in HOTLINES.values())}+</b><span>verified hotlines</span></div>
 <div class="st"><b>{len(TOPICS)+len(QUIT_SPECS)}</b><span>guides & timelines</span></div></div></div></section>
 
 <section class="quotes"><div class="wrap"><div class="quote-grid">
@@ -1264,7 +1264,7 @@ def build_about():
 <div class="callout red" style="margin-top:22px"><b>Crisis?</b><a href="/hotlines/">Go to hotlines</a> — or call your local emergency number now.</div>
 </div></div>"""
     w("about/index.html", shell("about/index.html", "About plugreports — Harm-Reduction Mission & Editorial Policy",
-      clip("plugreports is an independent harm-reduction library: visual drug profiles, verified hotlines and rehabs, sourced busts and news for USA, Canada, Europe, Australia and Africa."), body))
+      clip("plugreports is an independent harm-reduction library: visual drug profiles, verified hotlines and rehabs, sourced busts and news for the USA, Canada, Europe, Australia, Africa, Asia, Latin America and the Middle East."), body))
 
 def build_suggest():
     body = """<div class="wrap"><div style="max-width:640px;padding:26px 0">
@@ -1895,7 +1895,7 @@ def build_meta():
          "",
          f"Complete machine-readable drug records: [llms-full.txt]({SITE}/llms-full.txt)", "",
          "## Key pages",
-         f"- [/hotlines/]({SITE}/hotlines/) Verified overdose & crisis hotlines, {len(HOTLINES)} regions",
+         f"- [/hotlines/]({SITE}/hotlines/) Verified overdose & crisis hotlines, {sum(1 for r in HOTLINES if '(more)' not in r and r != 'New Zealand')} regions",
          f"- [/drugs/]({SITE}/drugs/) A-Z index of all {len(DRUGS)} substance profiles",
          f"- [/categories/]({SITE}/categories/) Browse by category",
          f"- [/news/]({SITE}/news/) Drug news & alerts",

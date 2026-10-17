@@ -244,3 +244,17 @@ try:
     ES_DRUGS.update(ES_DRUGS_MT3)
 except Exception:
     pass
+
+# --- hand-written pack (2026-10-17): 14 high-risk opioid RCs, ES ---
+try:
+    from data_es_expansion2 import ES_DRUGS_F
+    ES_DRUGS.update(ES_DRUGS_F)
+except Exception:
+    pass
+
+# --- MT completion pack (2026-10-17): all remaining ES profiles ---
+try:
+    from data_i18n_expansion5 import ES_DRUGS_MT5
+    ES_DRUGS.update(ES_DRUGS_MT5)
+except Exception:
+    pass
