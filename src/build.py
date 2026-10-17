@@ -392,7 +392,7 @@ def build_index(es=False):
     body = f"""
 {breaking}
 <section class="hero"><div class="wrap">
-<span class="kicker">Harm-reduction library · {len(DRUGS)} substances · 5 regions</span>
+<span class="kicker">Harm-reduction library · {len(DRUGS)} substances · {sum(1 for r in HOTLINES if "(more)" not in r and r != "New Zealand")} regions</span>
 <h1>Know the drug.<br>Know the <span class="mark">risk</span>.<br>Know the way out.</h1>
 <p class="lede">plugreports is a visual directory of street drugs, adulterants, hotlines, busts and verified help — built so anyone can find clear, fast, life-saving information about any substance.</p>
 <div class="hero-cta">
@@ -434,8 +434,8 @@ def build_index(es=False):
 </div></section>
 
 <section class="sec"><div class="wrap">
-<div class="sec-head"><div><span class="kicker amber">Help</span><h2>Hotlines by <span class="grad">region</span></h2><p>Verified numbers across the USA, Canada, Europe, Australia and Africa.</p></div><a class="btn btn-red" href="/hotlines/">Full hotline directory</a></div>
-<div class="hl-grid">{''.join(f'<div class="hl-card"><h3>{esc(r)}</h3><div class="num">{esc(v[0][0])}</div><div class="who">{esc(v[0][1])}</div><a class="call-btn" href="tel:{v[0][3]}">Call now</a></div>' for r,v in list(HOTLINES.items())[:4])}
+<div class="sec-head"><div><span class="kicker amber">Help</span><h2>Hotlines by <span class="grad">region</span></h2><p>Verified numbers across the USA, Canada, Europe, Australia, Africa, Asia, Latin America and the Middle East — including the UAE's Hisn line (800 44).</p></div><a class="btn btn-red" href="/hotlines/">Full hotline directory</a></div>
+<div class="hl-grid">{''.join(f'<div class="hl-card"><h3>{esc(r)}</h3><div class="num">{esc(v[0][0])}</div><div class="who">{esc(v[0][1])}</div><a class="call-btn" href="tel:{v[0][3]}">Call now</a></div>' for r,v in (list(HOTLINES.items())[:3] + [("Middle East", HOTLINES["Middle East"])]))}
 </div></div></section>
 
 <section class="sec" style="background:linear-gradient(180deg,#fff, #fffdf5)"><div class="wrap">
@@ -461,7 +461,7 @@ def build_index(es=False):
 </div></section>"""
     if es:
         from data_es import ES_HOME as ESH
-        r = [("Harm-reduction library · " + str(len(DRUGS)) + " substances · 5 regions", ESH["kicker"]),
+        r = [("Harm-reduction library · " + str(len(DRUGS)) + " substances · " + str(sum(1 for rr in HOTLINES if "(more)" not in rr and rr != "New Zealand")) + " regions", ESH["kicker"]),
              ("Know the drug.<br>Know the <span class=\"mark\">risk</span>.<br>Know the way out.", ESH["h1"]),
              ("plugreports is a visual directory of street drugs, adulterants, hotlines, busts and verified help — built so anyone can find clear, fast, life-saving information about any substance.", ESH["lede"]),
              (">Get help now<", ">" + ESH["btn1"] + "<"), (">Browse the library<", ">" + ESH["btn2"] + "<"),
@@ -1149,13 +1149,13 @@ def build_hotlines(es=False):
     if es:
         body = f"""<div class="wrap"><div style="padding-top:26px">
 <span class="kicker">Directorio de ayuda</span><h1 style="font-size:clamp(28px,4vw,42px);margin-top:10px">Líneas de ayuda — ayuda en cualquier lugar</h1>
-<p class="lede" style="color:#667085;max-width:64ch">Números verificados de sobredosis, crisis y tratamiento en EE. UU., Canadá, Europa, Australia y África. Verifica siempre antes de depender de un número.</p>
+<p class="lede" style="color:#667085;max-width:64ch">Números verificados de sobredosis, crisis y tratamiento en EE. UU., Canadá, Europa, Australia, África, Asia, América Latina y Oriente Medio. Verifica siempre antes de depender de un número.</p>
 {''.join(secs)}
 <div class="callout red"><b>¿Sobredosis ahora?</b>Llama primero a tu número de emergencia local. Luego naloxona si la tienes. Luego respiración de rescate. El orden importa.</div>
 </div></div>"""
         w("es/hotlines/index.html", shell("es/hotlines/index.html",
           "Líneas de ayuda para sobredosis y adicción — EE. UU., Canadá, Europa, Australia, África | plugreports",
-          "Números verificados 24/7: emergencias, ayuda en sobredosis, crisis (988/112), referencias de tratamiento para las cinco regiones.",
+          "Números verificados 24/7: emergencias, ayuda en sobredosis, crisis (988/112), referencias de tratamiento para las ocho regiones.",
           body, lang="es", canonical=f"{SITE}/es/hotlines/", alts=hotline_alts()))
         return
     body = f"""<div class="wrap"><div style="padding-top:26px">
@@ -1252,7 +1252,7 @@ def build_about():
 <li><b>Visual-first drug profiles</b> — effects, risks, overdose signs and street reality in scannable panels, not paragraphs.</li>
 <li><b>Verified help directories</b> — hotlines, rehabs and pharmacies checked against official registries.</li>
 <li><b>Sourced news & busts</b> — supply trends and enforcement actions with named sources; nothing published as fact without verification.</li>
-<li><b>Five regions</b> — USA, Canada, Europe, Australia and Africa, with localized hotlines and sentencing info.</li></ul>
+<li><b>Seven regions</b> — USA, Canada, Europe, Australia, Africa, Asia and the Middle East, with localized hotlines and sentencing info.</li></ul>
 <h2>Editorial policy</h2>
 <ul class="ticks">
 <li>Content is compiled from NIDA, DEA, CDC, EMCDDA, WHO and peer-reviewed literature, and reviewed before publication.</li>

@@ -8,7 +8,7 @@ ES_CATS = {
  "performance":"Rendimiento y farmacia gris","hazardous":"Sustancias peligrosas"}
 
 ES_HOME = {
- "kicker":"Biblioteca de reducción de riesgos · 92 sustancias · 5 regiones",
+ "kicker":"Biblioteca de reducción de riesgos · 600 sustancias · 8 regiones",
  "h1":"Conoce la droga.<br>Conoce el <span class=\"mark\">riesgo</span>.<br>Conoce la salida.",
  "lede":"plugreports es un directorio visual de drogas de calle, adulterantes, líneas de ayuda, incautaciones y ayuda verificada — para que cualquier persona encuentre información clara, rápida y que salva vidas.",
  "btn1":"Ayuda ahora","btn2":"Explorar la biblioteca","btn3":"Dejarlo, día a día",

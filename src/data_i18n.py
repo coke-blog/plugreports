@@ -2,7 +2,7 @@
 # Each lang: home hero strings, category names, region names, top-8 drug translations, hotline labels.
 LANGS = {
 "de": dict(
- home=dict(kicker="Schadensminimierungs-Bibliothek · 100+ Substanzen · 9 Regionen",
+ home=dict(kicker="Schadensminimierungs-Bibliothek · 600 Substanzen · 8 Regionen",
   h1="Kenne die Droge.<br>Kenne das <span class=\"mark\">Risiko</span>.<br>Kenne den Ausweg.",
   lede="plugreports ist eine visuelle Bibliothek für Suchtmittel, Verunreinigungen, Hotlines und verifizierte Hilfe — damit jeder schnelle, klare, lebensrettende Informationen zu jeder Substanz findet.",
   b1="Jetzt Hilfe holen", b2="Bibliothek durchsuchen", b3="Aufhören, Tag für Tag",
@@ -63,7 +63,7 @@ LANGS = {
   streetPrice="~2–10 € pro 2-mg-Bar", legalStatus="Verschreibungspflichtig; illegal ohne Rezept"),
  }),
 "hi": dict(
- home=dict(kicker="हानि-न्यूनीकरण लाइब्रेरी · 100+ पदार्थ · 9 क्षेत्र",
+ home=dict(kicker="हानि-न्यूनीकरण लाइब्रेरी · 600 पदार्थ · 8 क्षेत्र",
   h1="दवा को जानें।<br><span class=\"mark\">जोखिम</span> को जानें।<br>रास्ता जानें।",
   lede="plugreports नशीली दवाओं, मिलावट, हेल्पलाइन और सत्यापित सहायता की एक दृश्य लाइब्रेरी है — ताकि कोई भी किसी भी पदार्थ के बारे में साफ़, तेज़, जीवन बचाने वाली जानकारी पा सके।",
   b1="अभी मदद लें", b2="लाइब्रेरी देखें", b3="छोड़ना, दिन-दर-दिन",
@@ -124,7 +124,7 @@ LANGS = {
   streetPrice="~₹50–200/टैबलेट", legalStatus="पर्ची दवा; बिना पर्ची अपराध"),
  }),
 "no": dict(
- home=dict(kicker="Skadereduserende bibliotek · 100+ stoffer · 9 regioner",
+ home=dict(kicker="Skadereduserende bibliotek · 600 stoffer · 8 regioner",
   h1="Kjenn rusmiddelet.<br>Kjenn <span class=\"mark\">risikoen</span>.<br>Kjenn veien ut.",
   lede="plugreports er et visuelt bibliotek over rusmidler, tilsetningsstoffer, hjelpetelefoner og verifisert hjelp — bygget slik at alle kan finne klar, rask, livreddende informasjon om ethvert stoff.",
   b1="Få hjelp nå", b2="Bla i biblioteket", b3="Slutte, dag for dag",
@@ -185,7 +185,7 @@ LANGS = {
   streetPrice="~20–80 kr per tablett", legalStatus="Reseptpliktig; ulovlig uten"),
  }),
 "pl": dict(
- home=dict(kicker="Biblioteka redukcji szkód · 100+ substancji · 9 regionów",
+ home=dict(kicker="Biblioteka redukcji szkód · 600 substancji · 8 regionów",
   h1="Poznaj narkotyk.<br>Poznaj <span class=\"mark\">ryzyko</span>.<br>Poznaj wyjście.",
   lede="plugreports to wizualna biblioteka narkotyków, domieszek, infolinii i zweryfikowanej pomocy — stworzona tak, aby każdy mógł znaleźć jasną, szybką, ratującą życie informację o każdej substancji.",
   b1="Pomoc teraz", b2="Przeglądaj bibliotekę", b3="Rzucanie, dzień po dniu",
@@ -246,7 +246,7 @@ LANGS = {
   streetPrice="~5–20 zł za tabletkę", legalStatus="Na receptę; bez recepty nielegalny"),
  }),
 "fr": dict(
- home=dict(kicker="Bibliothèque de réduction des risques · 100+ substances · 9 régions",
+ home=dict(kicker="Bibliothèque de réduction des risques · 600 substances · 8 régions",
   h1="Connaissez la drogue.<br>Connaissez le <span class=\"mark\">risque</span>.<br>Connaissez la sortie.",
   lede="plugreports est une bibliothèque visuelle des drogues, des adulterants, des lignes d'aide et de l'aide vérifiée — pour que chacun trouve une information claire, rapide et qui sauve des vies sur toute substance.",
   b1="Obtenir de l'aide", b2="Parcourir la bibliothèque", b3="Arrêter, jour après jour",
@@ -312,7 +312,7 @@ LANGS = {
 # Batch 2 (2026-09-24): pt + ar — top traffic sources Portugal/Brazil & MENA.
 LANGS.update({
 "pt": dict(
- home=dict(kicker="Biblioteca de redução de danos · 100+ substâncias · 9 regiões",
+ home=dict(kicker="Biblioteca de redução de danos · 600 substâncias · 8 regiões",
   h1="Conheça a droga.<br>Conheça o <span class=\"mark\">risco</span>.<br>Conheça a saída.",
   lede="O plugreports é uma biblioteca visual de substâncias, adulterantes, hotlines e ajuda verificada — para que qualquer pessoa encontre informação rápida, clara e que salva vidas sobre cada substância.",
   b1="Obter ajuda agora", b2="Explorar a biblioteca", b3="Parar, dia após dia",
@@ -373,7 +373,7 @@ LANGS.update({
   streetPrice="~2–8 USD por comprimido", legalStatus="Só com receita; ilegal sem"),
  }),
 "ar": dict(
- home=dict(kicker="مكتبة الحد من المخاطر · أكثر من 100 مادة · 9 مناطق",
+ home=dict(kicker="مكتبة الحد من المخاطر · 600 مادة · 8 مناطق",
   h1="اعرف المخدِّر.<br>اعرف <span class=\"mark\">الخطر</span>.<br>اعرف طريق الخروج.",
   lede="بلغ ريبورتس مكتبة مرئية للمواد المخدِّرة والشوائب وخطوط المساعدة والمساعدة الموثوقة — لتجد معلومات سريعة وواضحة ومنقذة للحياة عن كل مادة.",
   b1="احصل على مساعدة الآن", b2="تصفح المكتبة", b3="الإقلاع، يوماً بعد يوم",
