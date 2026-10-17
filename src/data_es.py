@@ -17,7 +17,7 @@ ES_HOME = {
  "hl_p":"Números verificados en EE. UU., Canadá, Europa, Australia y África.",
  "hl_btn":"Directorio completo de líneas de ayuda"}
 
-ES_REGIONS = {"USA":"EE. UU.","Canada":"Canadá","Europe":"Europa","Australia":"Australia","Africa":"África"}
+ES_REGIONS = {"USA":"EE. UU.","Canada":"Canadá","Europe":"Europa","Australia":"Australia","Africa":"África","Middle East":"Oriente Medio"}
 
 ES_HOTLINES = {
  "USA":[

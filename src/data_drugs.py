@@ -3693,3 +3693,7 @@ IMAGE_OVERRIDES_20260930 = {
 for _d in DRUGS:
     if _d["slug"] in IMAGE_OVERRIDES_20260930 and not _d.get("image"):
         _d["image"] = IMAGE_OVERRIDES_20260930[_d["slug"]]
+
+# 2026-10-17 expansion: 37 profiles to reach 600 (2022+ UNODC EWA / EUDA / WDR-2026 sourced)
+from data_drugs_600 import DRUGS_600
+DRUGS += DRUGS_600

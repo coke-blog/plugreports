@@ -1,5 +1,5 @@
 # plugreports — full drug records
-> 563 harm-reduction profiles, compiled from NIDA, DEA, EMCDDA, WHO and peer-reviewed literature. Street prices are regional estimates that change quickly. Educational information only — not medical advice. Canonical pages: https://plugreports.com/drugs/<slug>/
+> 600 harm-reduction profiles, compiled from NIDA, DEA, EMCDDA, WHO and peer-reviewed literature. Street prices are regional estimates that change quickly. Educational information only — not medical advice. Canonical pages: https://plugreports.com/drugs/<slug>/
 
 ## Heroin
 - url: https://plugreports.com/drugs/heroin/
@@ -7882,3 +7882,521 @@
 - legalStatus: Prescription-only; WADA-prohibited as masking agents
 - lastUpdated: 2026-09-29
 - sources: WADA, FDA, NHS
+
+## N-Pyrrolidino Isotonitazene (NPI)
+- url: https://plugreports.com/drugs/n-pyrrolidino-isotonitazene/
+- aliases: NPI, N-pyrro iso, Pyro isotonitazene
+- category: Opioids
+- schedule: Not scheduled federally (US) — prosecuted as fentanyl analogue; controlled EU/UK
+- appearance: Off-white to beige powder; pressed into counterfeit oxycodone and 'M30' pills
+- effects: Nitazene-class opioid — fentanyl-comparable potency; Sedation, heavy euphoria, 'nod'; Long duration vs fentanyl (4–8 h)
+- risks: THE most-reported new opioid in 2024 — detected in 10 countries (UNODC EWA); Active in the low-milligram range — dosing errors are fatal; Missed by many standard immunoassay screens; Frequently co-detected with xylazine/medetomidine in the same sample
+- overdoseSigns: Respiratory depression; Pinpoint pupils, unresponsive; Re-sedation after naloxone wears off
+- streetPrice: Sold as counterfeit pills (~$2–5 wholesale per fake tablet); powder by the gram
+- legalStatus: Analogue/fentanyl-related prosecutions (US); controlled under generic nitazene bans (EU/UK/CA)
+- lastUpdated: 2026-10-17
+- sources: UNODC EWA, EUDA, NPS-advisory
+
+## N-Propionitrile Chlorphine
+- url: https://plugreports.com/drugs/n-propionitrile-chlorphine/
+- aliases: NPC, Chlorphine propionitrile
+- category: Opioids
+- schedule: Not scheduled (US) — fentanyl-analogue prosecutions; EU member-state controls 2024–25
+- appearance: White/off-white powder; identified in powders and pressed tablets
+- effects: Nitazene-family opioid analgesia and sedation; High potency — fentanyl class
+- risks: Reported to UNODC from 8 countries in 2024 — one of the most widespread new nitazenes; Narrow overdose window; Standard opioid strips may not detect — lab confirmation needed; Often mixed into heroin or counterfeit pill supplies unannounced
+- overdoseSigns: Slowed/stopped breathing; Cyanosis; Unresponsive to voice/pain
+- streetPrice: Contaminant/adulterant pricing — rarely sold openly by name
+- legalStatus: Falls under fentanyl-analogue and nitazene generic bans in most reporting countries
+- lastUpdated: 2026-10-17
+- sources: UNODC EWA, EUDA
+
+## Spirochlorphine (R-6890)
+- url: https://plugreports.com/drugs/spirochlorphine/
+- aliases: R-6890, Spiro chlorphine
+- category: Opioids
+- schedule: Not scheduled (US) — analogue prosecutions; controlled several EU states 2024–25
+- appearance: White crystalline powder; found in 'heroin' samples and counterfeit pills
+- effects: Long-acting nitazene opioid — sedation and euphoria lasting 8+ hours; High potency, slow offset
+- risks: Detected in 5 countries in 2024 (UNODC EWA) — the 'long-legs' nitazene; Duration outlasts naloxone — repeat dosing and hospital monitoring required; Missed by routine screens; Withdrawal is prolonged and severe
+- overdoseSigns: Respiratory depression persisting for hours; Re-sedation; Bradycardia
+- streetPrice: Adulterant pricing; sold as or inside 'heroin' and pressed pills
+- legalStatus: Nitazene generic bans (EU/UK); fentanyl-analogue exposure (US)
+- lastUpdated: 2026-10-17
+- sources: UNODC EWA, EUDA, CFSRE
+
+## Protodesnitazene
+- url: https://plugreports.com/drugs/protodesnitazene/
+- aliases: Proto-desnitro, PDN
+- category: Opioids
+- schedule: Not scheduled (US); falling under nitazene controls 2025 (EU)
+- appearance: Off-white powder; identified as both a precursor and a street opioid
+- effects: Desnitro nitazene — opioid effects, generally weaker than parent nitazenes but unpredictable; Sedation, euphoria
+- risks: THE most-reported new psychoactive substance of 2025 — first detections in 4 countries (UNODC EWA); Desnitro analogues can re-nitrosate into more potent compounds; Unknown pharmacology in humans — no safety data exists; Signals continued nitazene supply-chain evolution after law-enforcement pressure
+- overdoseSigns: Respiratory depression; Pinpoint pupils; Sedation out of proportion to the dose
+- streetPrice: Precursor/wholesale pricing (~$100s/gram); end-user exposure via contamination
+- legalStatus: Newly controlled in several EU states under generic nitazene clauses
+- lastUpdated: 2026-10-17
+- sources: UNODC EWA, EUDA
+
+## Desnitroclonitazene
+- url: https://plugreports.com/drugs/desnitroclonitazene/
+- aliases: Clonazene, Desnitro clonitazene
+- category: Opioids
+- schedule: Not scheduled (US); EU notification 2024, member-state controls follow
+- appearance: White to off-white powder; seen in powders and tablets in Belgium/EU
+- effects: Nitazene opioid — analgesia, sedation; Potency between tramadol-class and fentanyl-class depending on sample
+- risks: First notified to the EU Early Warning System in 2024 (Belgium); Sold as a 'research chemical' with zero human safety data; Can be converted into clonitazene-class compounds; Standard drug panels miss it
+- overdoseSigns: Respiratory depression; Unresponsiveness; Bradycardia
+- streetPrice: RC-market pricing (~$40–100/gram wholesale equivalent)
+- legalStatus: EU notification 2024; national controls appearing 2025–26
+- lastUpdated: 2026-10-17
+- sources: EUDA, UNODC EWA
+
+## Fluetonitazene
+- url: https://plugreports.com/drugs/fluetonitazene/
+- aliases: Fluetono, Fluoro etonitazene
+- category: Opioids
+- schedule: Not scheduled federally (US) — analogue exposure; EU member-state controls 2024–25
+- appearance: Off-white powder; detected in counterfeit pill and powder samples
+- effects: Fluorinated etonitazene analogue — fentanyl-class opioid; Strong sedation, long legs
+- risks: EU/US detections from 2024 onward; Potency makes volumetric dosing errors fatal; Immunoassay false-negatives common; Co-detection with xylazine reported
+- overdoseSigns: Respiratory arrest; Cyanosis; Prolonged re-sedation
+- streetPrice: Counterfeit-pill supply pricing
+- legalStatus: Fentanyl-analogue prosecutions (US); nitazene generic bans (EU/UK)
+- lastUpdated: 2026-10-17
+- sources: UNODC EWA, EUDA, CFSRE
+
+## Isobutonitazene
+- url: https://plugreports.com/drugs/isobutonitazene/
+- aliases: Isobutono, iBu-nitazene
+- category: Opioids
+- schedule: Not scheduled (US); controlled several EU states 2024–25
+- appearance: White crystalline powder; found in 'oxycodone' counterfeit pills
+- effects: Branched-chain nitazene — opioid euphoria and sedation; High potency, rapid onset
+- risks: Emerging 2024 in EU and US drug-checking data; Sold in counterfeit pills with wildly uneven content — one pill can differ 10× from the next; Missed by standard opioid screens; Cluster overdoses reported where it entered local supplies
+- overdoseSigns: Pinpoint pupils, unresponsive; Slow or stopped breathing; Blue lips/fingertips
+- streetPrice: ~$1–3 per counterfeit pill wholesale; retail sold as 'oxycodone'
+- legalStatus: Nitazene generic bans (EU/UK/CA); analogue prosecutions (US)
+- lastUpdated: 2026-10-17
+- sources: UNODC EWA, EUDA, WEDINOS
+
+## N-Desethyl Protonitazene
+- url: https://plugreports.com/drugs/n-desethyl-protonitazene/
+- aliases: Desethyl proto, Norprotonitazene
+- category: Opioids
+- schedule: Not scheduled (US); EU notification 2024
+- appearance: Off-white powder; identified in post-mortem and seizure samples
+- effects: Protonitazene metabolite/analogue — active opioid; Potency near fentanyl class
+- risks: Notified to EU EWS 2024 — detected as both a metabolite and a marketed RC; Presence complicates toxicology: 'protonitazene' deaths may involve this more potent variant; No human safety data; Survives some immunoassays
+- overdoseSigns: Respiratory depression; Deep sedation; Bradycardia + hypotension
+- streetPrice: RC-market pricing
+- legalStatus: EU member-state controls 2025; US analogue exposure
+- lastUpdated: 2026-10-17
+- sources: EUDA, UNODC EWA
+
+## o-Methylfentanyl (ortho-Methylfentanyl)
+- url: https://plugreports.com/drugs/o-methylfentanyl/
+- aliases: 2-methylfentanyl, ortho methyl fent, China White (sold as)
+- category: Opioids
+- schedule: Schedule I (US, 2025 — emergency scheduling); controlled UK/EU analogues
+- appearance: White powder; pressed into counterfeit pills; sold as 'heroin' or 'fentanyl'
+- effects: Positional-isomer fentanyl — same opioid effects at similar potency; Sedation, euphoria, respiratory depression
+- risks: Top US designer-opioid trend of 2025 (Aegis laboratory data); Positional isomers can EVADE standard fentanyl immunoassays — a 'negative' strip does not clear it; Same 2-mg-lethal range as fentanyl; Drives cluster overdoses when it enters a pill supply
+- overdoseSigns: Pinpoint pupils; Respiratory arrest; Cyanosis, limp body
+- streetPrice: ~$20–40 per counterfeit pill
+- legalStatus: US Schedule I (2025 emergency order); UK/EU fentanyl-analogue generic bans
+- lastUpdated: 2026-10-17
+- sources: DEA, Aegis, UNODC EWA
+
+## N-Isopropylbutylone
+- url: https://plugreports.com/drugs/n-isopropylbutylone/
+- aliases: NiPB, Isopropyl butylone, iso-butylone
+- category: Stimulants
+- schedule: Not scheduled (US) — analogue exposure; EU notifications 2024
+- appearance: White/off-white crystalline powder; sold as 'crystal' or in capsules
+- effects: Cathinone-family stimulant — energy, talkativeness, mild euphoria; Shorter and less intense than mephedrone-class
+- risks: THE most-reported new stimulant NPS of 2024 — detections in 9 countries (UNODC EWA); Typical cathinone cardiovascular strain — tachycardia, BP spikes; Compulsive re-dosing pattern; Sold openly as a 'research chemical' with unknown human toxicology
+- overdoseSigns: Chest pain, racing heart; Overheating, sweating; Agitation, paranoia
+- streetPrice: RC-market: ~$20–60/gram equivalent
+- legalStatus: Analogue prosecutions possible (US); national controls spreading 2025–26 (EU)
+- lastUpdated: 2026-10-17
+- sources: UNODC EWA, EUDA
+
+## N-Cyclohexylpentylone
+- url: https://plugreports.com/drugs/n-cyclohexylpentylone/
+- aliases: CHP, Cyclohexyl pentylone
+- category: Stimulants
+- schedule: Not scheduled (US); EU notification 2024
+- appearance: White powder or crystals; capsule and powder form
+- effects: Pentylone-family cathinone stimulant; Noticeably serotonergic — mild empathogenic edge
+- risks: Reported to UNODC from 2 countries in 2024; Unknown long-term toxicity; cathinone-class compulsive use; Heat + exertion risk at parties; Frequently sold under wrong names by RC vendors
+- overdoseSigns: Tachycardia, hypertension; Hyperthermia; Serotonin-syndrome features if combined with other serotonergic drugs
+- streetPrice: RC-market pricing (~$30–70/gram)
+- legalStatus: EU member-state controls from 2025; US analogue exposure
+- lastUpdated: 2026-10-17
+- sources: UNODC EWA, EUDA
+
+## 3-Methyl-PHP (3-Me-PHP)
+- url: https://plugreports.com/drugs/3-methyl-php/
+- aliases: 3-Me-PHP, Methyl pyrrolidinohexanophenone
+- category: Stimulants
+- schedule: Not scheduled federally (US); controlled several EU states 2024–25
+- appearance: White to off-white powder/crystals; sold as 'PHP' family RC
+- effects: Pyrrolidinophenone cathinone — dopamine-heavy stimulation, long duration; Functional-seeming energy with a sharp comedown
+- risks: EU Early Warning System notification 2024; Same cardiovascular load as a-PHP family — insomnia, BP spikes, vasoconstriction; Strong compulsive redosing; Psychosis risk on multi-day binges
+- overdoseSigns: Chest pain, arrhythmia; Severe agitation, paranoia; Overheating
+- streetPrice: RC-market: ~$15–40/gram
+- legalStatus: EU national controls 2024–25; US analogue exposure
+- lastUpdated: 2026-10-17
+- sources: EUDA, UNODC EWA
+
+## Heptedrone (HEP)
+- url: https://plugreports.com/drugs/heptedrone/
+- aliases: HEP, N-heptyl cathinone, Hepta
+- category: Stimulants
+- schedule: Not scheduled (US); controlled in several EU states 2022–24
+- appearance: White crystalline powder; capsules and powder
+- effects: Extended-chain cathinone — stimulant with a longer, smoother profile than mephedrone; More serotonergic than short-chain cathinones
+- risks: Part of the 2022+ cathinone wave replacing banned 4-MMC/3-MMC analogues; Unknown human safety data; Cardiovascular strain with repeated use; Often mislabeled by vendors
+- overdoseSigns: Racing heart, chest pain; Overheating; Anxiety, panic
+- streetPrice: RC-market: ~$20–50/gram
+- legalStatus: EU national controls (2022–24); analogue prosecutions (US)
+- lastUpdated: 2026-10-17
+- sources: EUDA, TripSit
+
+## DCK (Deschloroketamine)
+- url: https://plugreports.com/drugs/dck/
+- aliases: DCK, 2'-Oxo-PCM, Dechloroketamine
+- category: Dissociatives
+- schedule: Not scheduled federally (US) — analogue exposure; controlled UK/several EU
+- appearance: White/off-white crystalline powder; sometimes sold as 'ketamine'
+- effects: Ketamine minus the 2-chloro group — dissociation, tranquility, anesthesia; Longer-acting than ketamine (2–4 h)
+- risks: An oddly persistent gap in the RC dissociative family — sold since ~2015 yet still circulating 2025; Bladder toxicity class risk with repeated use; Longer duration than ketamine — bad trips last hours; Often mis-sold as actual ketamine
+- overdoseSigns: Deep dissociation/unresponsiveness; Vomiting while semi-conscious (aspiration risk); Slowed breathing at high doses
+- streetPrice: ~$30–60/gram RC market; sold as 'K' at K prices
+- legalStatus: UK PSA analogue controlled; several EU national controls; US analogue exposure
+- lastUpdated: 2026-10-17
+- sources: TripSit, EUDA, Erowid
+
+## Fluorexetamine (2F-2-oxo-PCE / FXE)
+- url: https://plugreports.com/drugs/fluorexetamine/
+- aliases: FXE, 2F-2-oxo-PCE, Fluor ketamine
+- category: Dissociatives
+- schedule: Not scheduled federally (US); controlled in several EU states 2022+
+- appearance: White crystalline powder; sold as 'FXE' or passed as ketamine/2F-DCK
+- effects: Fluorinated PCE-class dissociative — warm, euphoric dissociation; Shorter than DCK, softer than 3-MeO-PCP
+- risks: The most prevalent dissociative in US drug-checking data 2023+ (CFSRE alert, May 2024); Frequently found where buyers expected ketamine or 2F-DCK; Bladder/urinary-tract risk with regular use; Depressive after-effects with repeated use
+- overdoseSigns: Heavy dissociation, immobility; Nausea/vomiting; Confusion, paranoia at high doses
+- streetPrice: ~$40–80/gram RC market
+- legalStatus: Several EU national controls; US analogue exposure
+- lastUpdated: 2026-10-17
+- sources: CFSRE, EUDA, TripSit
+
+## 3-Methyl-PCP (3-Me-PCP)
+- url: https://plugreports.com/drugs/3-me-pcp/
+- aliases: 3-Me-PCP, Methyl PCP
+- category: Dissociatives
+- schedule: Not scheduled federally (US) — PCP-analogue exposure; controlled several EU states 2022+
+- appearance: White to tan powder/crystals; sold as an RC dissociative
+- effects: PCP analogue with a 3-methyl group — dissociation, stimulation, euphoria; More stimulating and longer-acting than ketamine
+- risks: Major arylcyclohexylamine of the 2022+ RC market; Mania/psychosis risk at higher doses — the classic PCP-class danger; Strong impairment — accidents and risky behavior; Long duration (6–10 h) — a bad dose does not wear off quickly
+- overdoseSigns: Agitated delirium; Nystagmus, uncoordination; Extreme dissociation with stimulation
+- streetPrice: ~$30–70/gram RC market
+- legalStatus: EU national controls 2022+; US PCP-analogue prosecutions possible
+- lastUpdated: 2026-10-17
+- sources: EUDA, TripSit, Erowid
+
+## 3-Methyl-PCPy (3-Me-PCPy)
+- url: https://plugreports.com/drugs/3-me-pcpy/
+- aliases: 3-Me-PCPy, PCPy methyl
+- category: Dissociatives
+- schedule: Not scheduled (US); EU notification 2022+, national controls follow
+- appearance: White crystalline powder; RC pellets and powder
+- effects: Pyrrolidine PCP analogue — dissociation with cleaner stimulation; Shorter than 3-Me-PCP, 'functional' at low doses
+- risks: 2022+ RC market growth as other arylcyclohexylamines were banned; Same mania/psychosis class risk at high doses; Little human data; Sold mislabeled by vendors
+- overdoseSigns: Agitation, delusional thinking; Motor impairment; Anxiety spikes
+- streetPrice: ~$30–60/gram RC market
+- legalStatus: EU national controls spreading; US analogue exposure
+- lastUpdated: 2026-10-17
+- sources: EUDA, TripSit
+
+## MXPr (Methoxpropamine)
+- url: https://plugreports.com/drugs/mxpr/
+- aliases: MXPr, Methox propamine
+- category: Dissociatives
+- schedule: Not scheduled (US); controlled in some EU states
+- appearance: White powder; sold as an RC dissociative since ~2020
+- effects: Arylcyclohexylamine-class dissociative — marketed as an MXE successor; Warm dissociation, mild euphoria, music enhancement
+- risks: Sold since ~2020 and still circulating 2025 — the 'MXE-style' niche; Unknown human toxicology — no safety data; Bladder risk class; Depressive crashes with repeated use
+- overdoseSigns: Heavy sedation + dissociation; Vomiting; Confusion
+- streetPrice: ~$40–80/gram RC market
+- legalStatus: Some EU national controls; US analogue exposure
+- lastUpdated: 2026-10-17
+- sources: TripSit, Erowid, EUDA
+
+## DOC
+- url: https://plugreports.com/drugs/doc/
+- aliases: 2,5-dimethoxy-4-chloroamphetamine, DOC (psychedelic)
+- category: Psychedelics
+- schedule: Schedule I (US); controlled EU/UK
+- appearance: White powder; DOSES OF 2–4 mg fit on blotter — repeatedly mis-sold as LSD
+- effects: DOx-class psychedelic amphetamine — 12–24 hour trips; Strong visuals, intense body load, stimulation
+- risks: Found on blotter sold as 'LSD' across Europe and the Americas 2022+ — a 12-hour surprise for someone expecting 6; Bitter taste and numbness are the classic DOx warning signs; Vasoconstriction — the body load can be severe; Long duration means a bad experience lasts all day and night
+- overdoseSigns: Extreme agitation lasting 12+ h; Vasoconstriction, high BP; Hyperthermia
+- streetPrice: Blotter sold at LSD prices (~$5–15/tab)
+- legalStatus: Schedule I (US); Class A (UK); controlled EU
+- lastUpdated: 2026-10-17
+- sources: EUDA, TripSit, Erowid
+
+## DOB
+- url: https://plugreports.com/drugs/dob/
+- aliases: 2,5-dimethoxy-4-bromoamphetamine, Brolamfetamine, DOB (psychedelic)
+- category: Psychedelics
+- schedule: Schedule I (US); controlled EU/UK
+- appearance: White powder; active at 1–3 mg — fits on blotter and has been sold as LSD, with fatal results
+- effects: DOx-class psychedelic — 18–30 hour duration; Intense stimulation + visuals; 'speedy acid'
+- risks: INFAMOUS mis-sell risk: sold as LSD it has caused deaths and ER admissions worldwide — including recent 2022+ cases; Duration up to 30 h — the longest of any common psychedelic; Severe vasoconstriction at high doses; No quick 'off switch' — benzos only soften it
+- overdoseSigns: Agitated delirium, tachycardia; Hyperthermia; Vasoconstriction — limb pain, BP crisis
+- streetPrice: Blotter at LSD prices
+- legalStatus: Schedule I (US); Class A (UK); controlled EU
+- lastUpdated: 2026-10-17
+- sources: EUDA, TripSit, Erowid
+
+## 25B-NBOH
+- url: https://plugreports.com/drugs/25b-nboh/
+- aliases: 2C-B-NBOH, NBOH series
+- category: Psychedelics
+- schedule: Not scheduled federally (US) — analogue exposure; controlled several EU states + UK PSA
+- appearance: Blotter or micro-pellets; sub-milligram doses sold as 'legal LSD/NBOMe'
+- effects: NBOMe-family 5-HT2A psychedelic — visual, energetic, 6–10 h; Noticeably 'electric' body load
+- risks: Marketed as the 'legal successor' to banned NBOMes 2022+; Narrow safety margin — seizures and fatal overdoses documented in the NBOMe family; Sold on blotter indistinguishable from LSD; Vasoconstriction worse than classic psychedelics
+- overdoseSigns: Seizures; Agitation, hyperthermia; Arrhythmia
+- streetPrice: ~$3–10 per blotter tab
+- legalStatus: UK PSA controlled; several EU national controls; US analogue exposure
+- lastUpdated: 2026-10-17
+- sources: EUDA, TripSit
+
+## 25I-NBOH
+- url: https://plugreports.com/drugs/25i-nboh/
+- aliases: 2C-I-NBOH, NBOH-2C-I
+- category: Psychedelics
+- schedule: Not scheduled federally (US); UK PSA + several EU controls
+- appearance: Blotter, pellets, powder; active in the 500–1000 µg range
+- effects: NBOMe-family psychedelic — strong visuals, stimulation; 6–10 h duration
+- risks: Sold as 'legal acid' 2022+ after NBOMe bans; Same seizure/vasoconstriction family risk as NBOMes; Dosing errors at microgram scale are easy and serious; Bitter/metallic taste + tongue numbness = NOT LSD — spit it out
+- overdoseSigns: Seizures; Hyperthermia, agitation; Chest pain, arrhythmia
+- streetPrice: ~$3–10 per blotter tab
+- legalStatus: UK PSA controlled; EU national controls; US analogue exposure
+- lastUpdated: 2026-10-17
+- sources: EUDA, TripSit, Erowid
+
+## 4-AcO-MET
+- url: https://plugreports.com/drugs/4-aco-met/
+- aliases: 4-acetoxy-MET, Metacetin, Azomet
+- category: Psychedelics
+- schedule: Not scheduled federally (US) — analogue exposure; UK PSA; controlled several EU states
+- appearance: Off-white powder or pellets; 'psilacetin-family' RC
+- effects: Prodrug to 4-HO-MET — ~3–5 h mushroom-like psychedelic; Visual-forward, lighter headspace than psilocybin
+- risks: Popular RC psilocin analogue sold openly online; Unknown long-term safety; typical tryptamine acute risks (panic, accidents); Anxiety/paranoia at high doses; Sold in unevenly dosed pellets
+- overdoseSigns: Severe anxiety/panic; Confusion; Blood-pressure elevation
+- streetPrice: ~$40–80/gram powder; $5–15 per 20 mg pellet
+- legalStatus: UK PSA controlled; EU national controls; US analogue exposure
+- lastUpdated: 2026-10-17
+- sources: TripSit, Erowid, EUDA
+
+## 4-AcO-MiPT
+- url: https://plugreports.com/drugs/4-aco-mipt/
+- aliases: 4-acetoxy-MiPT
+- category: Psychedelics
+- schedule: Not scheduled federally (US) — analogue exposure; UK PSA
+- appearance: Off-white powder/pellets; rare tryptamine RC
+- effects: Prodrug to 4-HO-MiPT — 3–5 h psychedelic, warm and visual; Gentler than 4-AcO-DMT for many users
+- risks: Niche RC with almost no formal research — effects profile is anecdotal; Standard tryptamine psychological risks; Uneven dosing in grey-market pellets; No quality control anywhere in the supply chain
+- overdoseSigns: Panic, confusion; Nausea/vomiting; BP/heart-rate spikes
+- streetPrice: ~$50–100/gram; pellets $8–15
+- legalStatus: UK PSA; some EU controls; US analogue exposure
+- lastUpdated: 2026-10-17
+- sources: TripSit, Erowid
+
+## 5-MeO-MiPT ('Moxy')
+- url: https://plugreports.com/drugs/5-meo-mipt/
+- aliases: Moxy, 5-Methoxy-MiPT, The Molecule (vintage)
+- category: Psychedelics
+- schedule: Not scheduled federally (US) — analogue exposure; controlled several EU states
+- appearance: White/off-white powder, pellets, or inside pressed 'ecstasy-style' pills
+- effects: 5-substituted tryptamine — euphoric, tactile, mildly visual; lower doses are body-focused and empathogenic; 4–6 h duration
+- risks: Shulgin-documented classic that persists in the RC market 2022+; Often found as a component of counterfeit 'ecstasy' pills; Serotonin-syndrome risk when combined with other serotonergic drugs; MAOI interactions are dangerous with all 5-substituted tryptamines
+- overdoseSigns: Severe nausea + agitation; Tachycardia; Serotonin-syndrome features (clonus, hyperthermia) if combined
+- streetPrice: ~$50–120/gram; $5–12 per pellet
+- legalStatus: Several EU national controls; US analogue exposure
+- lastUpdated: 2026-10-17
+- sources: TripSit, Erowid, Shulgin
+
+## Etomidate
+- url: https://plugreports.com/drugs/etomidate/
+- aliases: Amidate, Hypnomidate, Etomidate-laced vapes
+- category: Sedatives & Hypnotics
+- schedule: Rx-only surgical agent (US); not a controlled substance — increasingly seized in street supply
+- appearance: Clear liquid ampoules (surgical); increasingly detected in vape carts and 'knockout' products 2024+
+- effects: Imidazole sedative-hypnotic — rapid unconsciousness, short duration; No analgesia; amnesia at sub-anaesthetic doses
+- risks: UNODC EWA flags the RISE OF ETOMIDATE ANALOGUES (metomidate, propoxate) in street vapes 2024+; Repeated use suppresses the adrenal glands — cortisol crisis risk; Extremely addictive in the vape format — short-acting hypnotics hook fast; Overdose = respiratory depression without opioid reversal tools
+- overdoseSigns: Unresponsiveness; Slowed breathing; Blue lips, hypotension
+- streetPrice: Surgical ampoule diversion; street vape carts ~$20–40
+- legalStatus: Not federally controlled (US) — prescription-only; analogue seizures rising 2025
+- lastUpdated: 2026-10-17
+- sources: UNODC EWA, Aegis, WHO
+
+## Diphenhydramine (DPH)
+- url: https://plugreports.com/drugs/diphenhydramine/
+- aliases: Benadryl, DPH, DMH (combo)
+- category: Sedatives & Hypnotics
+- schedule: OTC (US/EU) — not controlled; sale restrictions spreading UK/EU 2024+
+- appearance: Pink/white OTC tablets (25–50 mg), liquid caps, or powder
+- effects: First-generation antihistamine — sedation at 25–50 mg; At 300+ mg: deliriant hallucinations (full delirium, not tripping)
+- risks: 'Benadryl challenge' overdoses sent teens to ICUs; trend peaked on TikTok 2020+ and persists 2025; Anticholinergic toxicity: racing heart, urinary retention, hyperthermia, seizures; DPH delirium produces realistic hallucinations — users walk into traffic, forget they took anything; UK moved to restrict OTC sales after misuse deaths (2024+)
+- overdoseSigns: Flushed dry skin, dilated pupils; Tachycardia, hallucinations + confusion; Seizures, urinary retention
+- streetPrice: $5–15 per OTC pack; near-free per high
+- legalStatus: OTC everywhere; UK/EU pharmacists increasingly gate-keeping sales
+- lastUpdated: 2026-10-17
+- sources: FDA, NHS, Poison Control
+
+## Tadalafil (Cialis)
+- url: https://plugreports.com/drugs/tadalafil/
+- aliases: Cialis, Vidalista, Tadacip, Weekend pill
+- category: Sexual Health & ED Meds
+- schedule: Rx-only (US/EU); not controlled — heavily counterfeited
+- appearance: Yellow almond-shaped tablets (brand); grey-market generics in every color; also sold as 'Cialis soft tabs' and liquids
+- effects: PDE5 inhibitor — erection support for 24–36 h; Also prescribed for pulmonary hypertension and BPH
+- risks: #1 counterfeit-drug target alongside sildenafil — fake Cialis regularly contains unlisted sildenafil or nothing; DANGEROUS with nitrates (nitroglycerin, poppers): severe blood-pressure collapse; Grey-market 'super-strength' tablets (40–80 mg) cause prolonged erections requiring ER care; Heart patients self-medicating without screening risk cardiac events
+- overdoseSigns: Erection lasting >4 h (priapism — emergency); Sudden vision/hearing loss; Chest pain, fainting
+- streetPrice: ~$10–20/pill grey-market generic; brand far more
+- legalStatus: Rx-only; illegal to sell without prescription in US/EU; widely counterfeited
+- lastUpdated: 2026-10-17
+- sources: FDA, NABP, EMCDDA
+
+## Phenmetrazine (Preludin)
+- url: https://plugreports.com/drugs/phenmetrazine/
+- aliases: Preludin, PM, Phenmetrazine HCl
+- category: Stimulants
+- schedule: Schedule II (US); withdrawn from medicine; controlled EU/UK
+- appearance: White powder or replicated 'Preludin' tablets in grey-market listings
+- effects: Morpholine-class stimulant — smoother, less jittery than amphetamine; strong appetite suppression; Popularized the 'housewife diet pill' era of the 1950s–70s
+- risks: WITHDRAWN globally for dependence — now reappearing in grey-market 'vintage stimulant' listings 2022+; Cardiovascular strain: tachycardia, hypertension, vasoconstriction; Psychosis and compulsive use at binge doses; Frequently mislabeled or adulterated in grey-market supply
+- overdoseSigns: Chest pain, arrhythmia; Severe agitation; Hypertensive crisis
+- streetPrice: Grey-market: ~$2–5 per tablet equivalent
+- legalStatus: Schedule II (US); controlled virtually everywhere listed
+- lastUpdated: 2026-10-17
+- sources: DEA, EUDA, EMCDDA
+
+## Ostarine (MK-2866 / Enobosarm)
+- url: https://plugreports.com/drugs/ostarine/
+- aliases: MK-2866, Enobosarm, GTx-024, Osta
+- category: Performance & Grey-Market Pharma
+- schedule: Not approved for human use; WADA-prohibited; not a controlled drug (US) — seized at borders
+- appearance: White/off-white powder, liquid dropper bottles, or capsules from grey-market vendors
+- effects: SARM — selective androgen receptor modulator; muscle and bone anabolism at lower androgenic cost than steroids; Studied (legitimately) for muscle wasting — that's the extent of the human data
+- risks: The #1-selling SARM worldwide — sold as 'not for human use' with zero finished-product quality control; Suppresses natural testosterone — PCT debates rage because nobody has real data; Lipid suppression (HDL crash) and liver enzyme elevations documented in case series; WADA-banned: athletes have lost medals over ostarine supplements
+- overdoseSigns: Not an acute-overdose drug — chronic: jaundice, severe acne, mood changes; Chest symptoms from lipid/cardiovascular strain; Testosterone-crash symptoms on cessation
+- streetPrice: ~$30–60 per 30 mL liquid bottle (grey market)
+- legalStatus: Not a controlled substance (US) but illegal to sell as a supplement; FDA warning letters issued; seized by customs
+- lastUpdated: 2026-10-17
+- sources: FDA, WADA, TripSit
+
+## LGD-4033 (Ligandrol)
+- url: https://plugreports.com/drugs/lgd-4033/
+- aliases: Ligandrol, VK5211, LGD
+- category: Performance & Grey-Market Pharma
+- schedule: Not approved; WADA-prohibited; unscheduled (US) — border seizures common
+- appearance: Liquid dropper bottles, capsules, raw powder from grey-market peptide/SARM vendors
+- effects: SARM — strong muscle-building androgen-receptor agonism; Human Phase-1 data only (dose-finding for muscle wasting)
+- risks: #2-selling SARM; case reports of drug-induced liver injury and cholestasis at grey-market doses; Testosterone suppression stronger than ostarine; HDL suppression + cardiovascular strain unknown long-term; Products routinely underdosed, overdosed, or contain different SARMs than labeled
+- overdoseSigns: Jaundice, dark urine (liver); Severe lethargy (suppression); BP elevation
+- streetPrice: ~$40–70 per bottle grey market
+- legalStatus: Unscheduled (US) — not legal to sell for consumption; WADA-banned in sport
+- lastUpdated: 2026-10-17
+- sources: FDA, WADA, JAMA-case-reports
+
+## RAD-140 (Testolone)
+- url: https://plugreports.com/drugs/rad-140/
+- aliases: Testolone, RAD140
+- category: Performance & Grey-Market Pharma
+- schedule: Not approved; WADA-prohibited; unscheduled (US)
+- appearance: Liquid bottles, capsules, raw powder; often stacked with other SARMs
+- effects: SARM — aggressively anabolic in animal data; 'dry' gains claimed by users; Neuro-protective claims are animal-study only
+- risks: Case reports of severe liver injury (including a bodybuilder with liver failure requiring transplant work-up) and of drug-induced seizure; Testosterone suppression — users report shutdown-level symptoms; Cardiovascular strain: HDL crashes documented in user bloodwork; Zero quality control: bottles have been found containing ostarine, prohormones, or nothing
+- overdoseSigns: Jaundice, abdominal pain; Seizure (case report); Chest pain from lipid strain
+- streetPrice: ~$40–80 per bottle grey market
+- legalStatus: Unscheduled (US) — not legal to sell for human use; WADA-banned
+- lastUpdated: 2026-10-17
+- sources: FDA, WADA, Case-report-literature
+
+## YK-11
+- url: https://plugreports.com/drugs/yk-11/
+- aliases: YK11, Myostine
+- category: Performance & Grey-Market Pharma
+- schedule: Not approved; WADA-prohibited; unscheduled (US) — controlled in some EU states
+- appearance: Liquid or capsule grey-market products; often stacked in 'SARM blends'
+- effects: Steroidal SARM / DHT-derivative — marketed with claimed myostatin-inhibition for extreme muscle gain; Androgenic effects closer to steroids than to ostarine
+- risks: Chemically closer to a steroid than a SARM — full androgenic side-effect profile; Liver strain class risk; zero human safety data; Suppression significant; 'SARM blends' stack 3–4 suppressive compounds; Most counterfeited SARM: lab tests find other compounds in most YK-11 bottles
+- overdoseSigns: Jaundice; Androgenic effects: acne, hair shedding, mood aggression; BP/lipid deterioration
+- streetPrice: ~$50–90 per bottle grey market
+- legalStatus: Unscheduled (US); some EU national controls; WADA-banned
+- lastUpdated: 2026-10-17
+- sources: WADA, FDA, Independent-lab-analyses
+
+## GW501516 (Cardarine)
+- url: https://plugreports.com/drugs/gw501516/
+- aliases: Cardarine, GW-1516, Endurobol
+- category: Performance & Grey-Market Pharma
+- schedule: Not approved; WADA-prohibited; unscheduled (US) — abandoned drug
+- appearance: White powder, liquid bottles, capsules from grey-market 'endurance' vendors
+- effects: PPARδ agonist (NOT a SARM, despite being sold with them) — shifts metabolism toward fat oxidation; famous for endurance claims; Never approved: development was ABANDONED after rodent studies showed rapid cancer growth at multiple sites
+- risks: The cancer signal ended formal development — users are self-experimenting with an abandoned drug; Sold alongside SARMs in stacks, multiplying unknowns; Reported liver enzyme elevations and headache at grey-market doses; WADA-banned since 2009; routinely detected in tested athletes
+- overdoseSigns: No classic acute overdose — chronic concerns dominate; Headache, BP changes; Liver enzyme elevation
+- streetPrice: ~$30–60 per bottle grey market
+- legalStatus: Unscheduled (US) — not legal for human consumption; abandoned by pharma; WADA-banned
+- lastUpdated: 2026-10-17
+- sources: WADA, FDA, Drug-development-records
+
+## MK-677 (Ibutamoren)
+- url: https://plugreports.com/drugs/mk-677/
+- aliases: Ibutamoren, Nutrobal, MK677
+- category: Peptides & Research Chemicals
+- schedule: Not approved; WADA-prohibited; unscheduled (US)
+- appearance: White powder, capsules, liquid bottles — sold as a 'research chemical' or longevity supplement
+- effects: Ghrelin-receptor agonist — spikes growth hormone and IGF-1, mimics hunger hormone; Studied for GH deficiency and muscle wasting (formal trials stalled)
+- risks: Sold in the 'longevity' and bodybuilding grey markets 2022+ with zero post-marketing safety data; Insulin resistance and elevated blood sugar documented — diabetics risk real harm; Extreme hunger, water retention, joint pain common; Unknown cancer-risk interaction with elevated IGF-1 — the reason GH-boosting is medically gate-kept
+- overdoseSigns: Blood-sugar crisis symptoms in predisposed users; Severe edema; Lethargy, numbness
+- streetPrice: ~$40–80 per bottle grey market
+- legalStatus: Unscheduled (US) — not legal to sell as a supplement; WADA-banned
+- lastUpdated: 2026-10-17
+- sources: FDA, WADA, Clinical-trial-records
+
+## 1cP-LSD
+- url: https://plugreports.com/drugs/1cp-lsd/
+- aliases: 1-cyclopropionyl-LSD, 1cP
+- category: Psychedelics
+- schedule: Not scheduled federally (US) — Federal Analogue Act exposure; controlled Germany (NpSG 2022+), several EU
+- appearance: Blotter art paper; micro-pellets; liquid
+- effects: LSD prodrug — hydrolyzes to LSD in the body; effects indistinguishable from LSD; 8–12 h classic psychedelic
+- risks: Sold openly in Germany 2021+ as a 'legal LSD' until NpSG scheduling caught up; Legality is a moving target: several EU states scheduled it 2022–24 — possession can be illegal depending on country; Same psychological risks as LSD: panic, bad trips, dangerous behavior; Standard reagents confirm indole presence, not which indole
+- overdoseSigns: No physical overdose range — psychological crisis ('bad trip'); Dangerous behavior under impairment; Rare HPPD with heavy use
+- streetPrice: ~$5–12 per blotter tab
+- legalStatus: Germany/NL/EU controls 2022+; US analogue exposure (treated as LSD in prosecutions)
+- lastUpdated: 2026-10-17
+- sources: EUDA, TripSit, Erowid
+
+## 1D-LSD
+- url: https://plugreports.com/drugs/1d-lsd/
+- aliases: 1-(1,2-dimethylcyclobutane-1-carbonyl)-LSD, 1D
+- category: Psychedelics
+- schedule: Not scheduled federally (US) — analogue exposure; Germany NpSG-monitored
+- appearance: Blotter, pellets, liquid — the current German/EU legal-loophole LSD prodrug
+- effects: LSD prodrug — metabolizes to LSD; same effects and duration; Designed as the successor when 1V-LSD was scheduled
+- risks: The 2023+ successor in the rotating prodrug market: each ban spawns a new acyl group; Grey-market blotter dosing is uneven — tabs vary in actual content; Same risks as LSD plus zero product regulation; 'Legal' status changes country by country and year by year — verify locally
+- overdoseSigns: Psychological crisis; Impairment-related accidents; No known physical lethal dose
+- streetPrice: ~$6–14 per blotter tab
+- legalStatus: Grey zone in Germany (NpSG-monitored); other EU states moving to control; US analogue exposure
+- lastUpdated: 2026-10-17
+- sources: EUDA, TripSit

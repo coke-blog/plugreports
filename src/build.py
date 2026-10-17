@@ -127,7 +127,7 @@ def help_links(drugs=None, extra=None, related=None):
 def resolve_slug(s):
     if ":" in s:
         t, sl = s.split(":", 1)
-        if t in ("drugs","busts","news","topics","quit","categories","hotlines","pharmacies","rehabs","sentencing","mix","vs"):
+        if t in ("drugs","busts","news","topics","quit","categories","hotlines","pharmacies","rehabs","sentencing","mix","vs","data"):
             return f"{t}/{sl}"
         return s
     if s in DRUG_BY_SLUG: return f"drugs/{s}"
@@ -1160,7 +1160,7 @@ def build_hotlines(es=False):
         return
     body = f"""<div class="wrap"><div style="padding-top:26px">
 <span class="kicker">Help directory</span><h1 style="font-size:clamp(28px,4vw,42px);margin-top:10px">Hotlines — help anywhere</h1>
-<p class="lede" style="color:#667085;max-width:64ch">Verified overdose, crisis and treatment helplines across the USA, Canada, Europe, Australia and Africa. Numbers verified against official sources; always re-verify before relying on a listing.</p>
+<p class="lede" style="color:#667085;max-width:64ch">Verified overdose, crisis and treatment helplines across the USA, Canada, Europe, Australia, Africa, Asia, Latin America and the Middle East. Numbers verified against official sources; always re-verify before relying on a listing.</p>
 {''.join(secs)}
 <div class="callout red"><b>Overdose right now?</b>Call your local emergency number FIRST. Then naloxone if you have it. Then rescue breathing. Order matters.</div>
 {help_links(["fentanyl", "xylazine", "heroin", "cocaine"], [("Sentencing explained", "/sentencing/", "#111827")])}
@@ -1171,8 +1171,8 @@ def build_hotlines(es=False):
          "acceptedAnswer":{"@type":"Answer","text":"Call 911 immediately. If naloxone is available, administer it while waiting for help."}},
         {"@type":"Question","name":"Is there a 24/7 drug helpline?",
          "acceptedAnswer":{"@type":"Answer","text":"Yes — SAMHSA's National Helpline (1-800-662-4357) is free, confidential and open 24/7 in the US."}}]}
-    w("hotlines/index.html", shell("hotlines/index.html", "Drug Overdose & Addiction Hotlines — USA, Canada, Europe, Australia, Africa | plugreports",
-      clip("Verified 24/7 hotlines: emergency numbers, overdose help, suicide crisis (988/112), treatment referral (SAMHSA, FRANK, Lifeline) for all five regions."),
+    w("hotlines/index.html", shell("hotlines/index.html", "Drug Overdose & Addiction Hotlines — USA, Canada, Europe, Australia, Africa, Middle East | plugreports",
+      clip("Verified 24/7 hotlines: emergency numbers, overdose help, suicide crisis (988/112), treatment referral (SAMHSA, FRANK, Lifeline, UAE Hisn 80044) for all regions."),
       body, jsonld=faq, alts=hotline_alts()))
 
 
@@ -1489,6 +1489,9 @@ def build_data_hub():
       '<a class="card" href="/data/meth-cities-canada/"><h3>Meth Cities: Canada</h3>'
       '<p>Why Winnipeg, Edmonton and the prairies lead Canada&rsquo;s meth map.</p>'
       '<div class="foot">Open the ranking &rarr;</div></a>'
+      '<a class="card" href="/data/middle-east-gulf/"><h3>Drugs in the Gulf States, 2026</h3>'
+      '<p>The captagon-to-shabu shift in plain numbers: 177M tablets seized, meth now a top-3 drug in Saudi Arabia, and where production moved after Assad.</p>'
+      '<div class="foot">Open the tracker &rarr;</div></a>'
       '<a class="card" href="/data/meth-cities-middle-east/"><h3>Meth Cities: Middle East</h3>'
       '<p>Iran and Israel&rsquo;s meth markets, and the Afghan pipeline flooding east.</p>'
       '<div class="foot">Open the ranking &rarr;</div></a>'
@@ -1650,6 +1653,105 @@ def build_meth_cities():
         w(f"data/{pg['slug']}/index.html", shell(
           f"data/{pg['slug']}/", f"{pg['title']} | plugreports Data",
           clip(pg["desc"]), body, jsonld=jsonld, ogimage=pg.get("image")))
+
+
+def build_gulf_data():
+    """Citable data asset: Gulf states drug market 2026 — captagon disruption,
+    meth ('shabu') surge, country-by-country picture. Built for citation."""
+    country_rows = [
+        ("Saudi Arabia", "Meth now among the 3 most-used drugs (with cannabis & captagon)",
+         "World's most active executioner for drug offences — record 239 executions by Aug 2025; death penalty for trafficking",
+         "Primary captagon destination (~two-thirds of regional seizures) and the region's largest ATS consumer market"),
+        ("UAE", "Transit hub: record meth seizures at ports/airports; a hidden but real consumer market",
+         "Hisn 80044 helpline gives legal exemption for voluntary treatment; trafficking = severe prison terms",
+         "One of the most-cited transit countries for meth into Saudi Arabia — Al Baha border crossing, vehicle-part concealment"),
+        ("Kuwait", "4 meth labs identified 2020–2024, incl. a six-brothers syndicate making meth AND trafficking captagon/heroin/hashish (Mar 2023)",
+         "Expanded capital punishment for drug offences (Dec 2025); trace amounts in the body can count as 'possession'",
+         "Production node, not just destination — 3 labs seized in 2024 alone"),
+        ("Qatar", "Small consumer market; Naufar Center treats addiction as a disease (Emiri decree)",
+         "Severe prison terms for trafficking; treatment-first approach for users",
+         "Monitored as a transit corridor between Iran and the wider Gulf"),
+        ("Bahrain", "Stimulant pills circulate via the Oman corridor",
+         "Harsh trafficking sentences; drug offences tried under strict anti-narcotics law",
+         "Linked to the Omani smuggling route into Saudi Arabia and Yemen"),
+        ("Oman", "Corridor country: smuggling route to Bahrain, Saudi Arabia and Yemen",
+         "Expanded capital punishment framework (Sept 2026)",
+         "Long coastline makes it a maritime transit point for Gulf-bound meth"),
+    ]
+    trs = "".join(
+        f'<tr><td style="white-space:nowrap"><b>{esc(c)}</b></td><td>{esc(u)}</td><td>{esc(p)}</td><td>{esc(r)}</td></tr>'
+        for c, u, p, r in country_rows)
+    body = (
+      '<div class="wrap"><div style="max-width:960px;padding:26px 0">'
+      '<span class="kicker">Data &middot; updated October 2026</span>'
+      '<h1 style="font-size:clamp(28px,4vw,42px);margin-top:10px">Drugs in the Gulf States, 2026: the captagon-to-shabu shift</h1>'
+      '<p class="lede" style="color:#667085">The Middle East stimulant market transformed after the Assad regime fell in December 2024. '
+      'This tracker compiles what is publicly documented: seizure volumes, the meth surge, where production moved, and what each Gulf state faces. '
+      'Every figure is sourced and dated. Free to cite; please link back.</p>'
+      '<div class="callout red"><b>If you or someone you know needs help in the Gulf</b>'
+      'UAE: call Hisn/Mukafih <b>800 44</b> (24/7, confidential, legal exemption for voluntary treatment). Qatar: Naufar <b>+974 4494 6000</b>. '
+      'Kuwait: MoH mental-health line <b>+965 2462 1770</b>. Full directory: <a href="/hotlines/">plugreports.com/hotlines/</a>.</div>'
+      '<div class="stat-grid">'
+      '<div class="stat red"><b>177M+</b><span>captagon tablets intercepted across the Arab region, Dec 2024 – Dec 2025 (UNODC minimum)</span></div>'
+      '<div class="stat"><b>3,663 kg</b><span>methamphetamine intercepted by Iran in Q1 2026, bound for Europe &amp; the Gulf (UN News)</span></div>'
+      '<div class="stat"><b>2×</b><span>rise in captagon tablet street price after the Syrian disruption (WDR 2026)</span></div>'
+      '<div class="stat"><b>3 labs</b><span>captagon production sites seized in Kuwait in 2024 alone (EUDA/EU-ACT)</span></div>'
+      '</div>'
+      '<h2>What happened: the 2024–2026 shift</h2>'
+      '<p>For a decade, the Levant&rsquo;s stimulant of choice was <b>captagon</b> — the amphetamine-family pill industrialized in Syria under the Assad '
+      'regime, with Saudi Arabia as its biggest market. When the regime fell in December 2024, that industrial base scattered rather than vanished. '
+      'UNODC counts a <b>minimum of 177 million tablets intercepted across the Arab region in the twelve months to December 2025</b> — Syria alone '
+      'reported seizing over 500 million, Lebanon 78 million. The EU Drugs Agency&rsquo;s 2026 strategic assessment (with EU-ACT) documents production '
+      're-forming in <b>Lebanon, Iraq, Sudan, Yemen, Türkiye, Egypt and Kuwait</b>, with European manufacturers (Netherlands, Germany) entering the supply chain.</p>'
+      '<p>The second-order effect matters more for users: <b>captagon tablet prices roughly doubled</b>, and UNODC&rsquo;s World Drug Report 2026 '
+      'assesses that displaced users shifted to <b>methamphetamine — &ldquo;shabu&rdquo;</b> — which is now among the three most-used drugs in Saudi Arabia '
+      'alongside cannabis and captagon. Iran intercepted <b>3,663 kg of meth</b> bound for Europe and the Persian Gulf in the first quarter of 2026 alone. '
+      'The Gulf states — long treated as destinations — are now production and transit nodes in their own right.</p>'
+      '<div class="callout amber"><b>Harm-reduction note</b>'
+      'Meth and captagon are both stimulants, but they are not interchangeable: meth is longer-acting, more neurotoxic with repeated use, '
+      'and its market is less predictable. Heat, sleep deprivation and mixing with other stimulants compound the cardiovascular risk. '
+      'See the <a href="/drugs/methamphetamine/">methamphetamine profile</a> and <a href="/drugs/captagon/">captagon profile</a>.</div>'
+      '<h2>Country-by-country picture</h2>'
+      '<div class="figure"><table class="tbl"><thead><tr><th>Country</th><th>Drug situation 2026</th><th>Legal exposure</th><th>Role in the market</th></tr></thead>'
+      f'<tbody>{trs}</tbody></table></div>'
+      '<h2>The bigger regional picture</h2>'
+      '<ul class="ticks">'
+      '<li><b>Cocaine is arriving too:</b> Gulf ports (Jebel Ali, Jeddah) appear repeatedly in European and Latin American cocaine corridor reporting — the region&rsquo;s cocaine market is small but growing fast off the same logistics.</li>'
+      '<li><b>Pregabalin on illicit markets:</b> UNODC has flagged pregabalin&rsquo;s growing presence in Middle East illicit drug markets — a prescription gabapentinoid with its own dependence and withdrawal risks. Profile: <a href="/drugs/pregabalin/">pregabalin</a>.</li>'
+      '<li><b>Khat remains regional baseline:</b> the oldest stimulant economy in the region (Yemen, Somalia, Ethiopia corridor) — profile: <a href="/drugs/khat/">khat</a>.</li>'
+      '<li><b>Penalty escalation:</b> Kuwait expanded capital punishment for drug offences in December 2025 and Oman in September 2026 — part of a region-wide hardening even as the UAE builds treatment-first pathways (Hisn 80044).</li>'
+      '</ul>'
+      '<h2>Sources</h2><ul class="ticks">'
+      '<li>UNODC — World Drug Report 2026 (press release &amp; highlights; methamphetamine assessment for Saudi Arabia)</li>'
+      '<li>UNODC — synthetic drug market evolution in the Near and Middle East (177M+ tablets, Dec 2024–Dec 2025)</li>'
+      '<li>UN News — Iran methamphetamine interceptions, August 2026</li>'
+      '<li>EUDA / EU-ACT — strategic assessment: captagon &amp; methamphetamine 2026 (production fragmentation, Kuwait labs)</li>'
+      '<li>UNODC — World Drug Report regional annexes (khat, pregabalin, cocaine corridors)</li>'
+      '<li>Gulf News / The National / Khaleej Times — UAE Hisn &amp; Mukafih 80044 service (July 2026); naufar.com — Qatar Naufar Center contact</li>'
+      '</ul>'
+      '<div class="callout gray"><b>How to cite this page</b>'
+      'plugreports.com — &ldquo;Drugs in the Gulf States, 2026: the captagon-to-shabu shift&rdquo;, updated October 2026. '
+      'Primary sources: UNODC WDR 2026, UNODC regional synthetic-drug reporting, EUDA/EU-ACT 2026 assessment, UN News Aug 2026. '
+      'URL: https://plugreports.com/data/middle-east-gulf/</div>'
+      '<p style="margin-top:18px">Related: <a href="/data/meth-cities-middle-east/">Meth cities: Middle East</a> &middot; '
+      '<a href="/data/cocaine-cities-middle-east/">Cocaine cities: Middle East</a> &middot; '
+      '<a href="/topics/captagon-to-shabu-gulf/">Topic: from captagon to shabu</a> &middot; '
+      '<a href="/drugs/captagon/">Captagon profile</a> &middot; <a href="/drugs/methamphetamine/">Methamphetamine profile</a> &middot; '
+      '<a href="/sentencing/">Sentencing by region</a> &middot; <a href="/hotlines/">Hotlines by region</a></p>'
+      '</div></div>')
+    jsonld = {
+      "@context": "https://schema.org", "@type": "Dataset",
+      "name": "Drugs in the Gulf States 2026 — captagon disruption and the methamphetamine surge",
+      "description": "Sourced tracker of the 2024–2026 transformation of the Gulf drug market: captagon production fragmentation, 177M+ tablets seized, methamphetamine ('shabu') entering the top-3 most-used drugs in Saudi Arabia, and country-by-country legal exposure.",
+      "creator": {"@type": "Organization", "name": "plugreports", "url": SITE},
+      "dateModified": TODAY, "license": f"{SITE}/about/", "isAccessibleForFree": True,
+      "temporalCoverage": "2024/2026",
+      "spatialCoverage": {"@type": "Place", "name": "Middle East"},
+    }
+    w("data/middle-east-gulf/index.html", shell(
+      "data/middle-east-gulf/", "Drugs in the Gulf States 2026 — captagon-to-shabu shift: UNODC & EUDA data | plugreports",
+      "Sourced data page: 177M+ captagon tablets seized in the Arab region, meth now a top-3 drug in Saudi Arabia, Kuwait labs, UAE transit — with UNODC WDR 2026 and EUDA sources, updated October 2026.",
+      body, jsonld=jsonld))
 
 
 # ------------------------------------------------------------- watch pages ----
@@ -2099,7 +2201,7 @@ def main():
     build_drugs(es=True); build_hotlines(es=True); build_index(es=True)
     for _ln in LANG_LIST:
         build_lang_drug_pages(_ln); build_lang_hotlines(_ln); build_lang_home(_ln); build_lang_categories(_ln)
-    build_about(); build_suggest(); build_data(); build_data_top(); build_data_hub(); build_meth_cities(); build_watch(); build_meta()
+    build_about(); build_suggest(); build_data(); build_data_top(); build_data_hub(); build_gulf_data(); build_meth_cities(); build_watch(); build_meta()
     manifest = {"drugs":[d["slug"] for d in DRUGS], "news":[n["slug"] for n in NEWS],
                 "busts":[b["slug"] for b in BUSTS], "topics":[t["slug"] for t in TOPICS],
                 "categories":[k for k in CATEGORIES],
