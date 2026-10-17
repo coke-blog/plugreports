@@ -160,7 +160,7 @@ plugreports.com is a multilingual harm-reduction library (563 drug profiles, 31 
 - PUSH GOTCHA: push2.py EXCLUDES image extensions (.png/.jpg/...) from its walk — new images never reach GitHub through it. Push binaries separately via blobs API (base64) + tree + commit + PATCH ref (done in e1595e2644).
 - KV seeded: topics (28 items), news (7 items) via seed.py merge.
 
-## Homepage region-count fix (2026-10-17, deploy 655fb750, push PENDING)
+## Homepage region-count fix (2026-10-17, deploy 655fb750, push b01068c412)
 - User flagged stale homepage data after the Middle East launch. News cards + breaking slider were already updating automatically (verified live), but the hero/kickers were hardcoded: EN kicker said "5 regions" (now computed: main regions = HOTLINES sections minus "Europe (more)" and "New Zealand" = 8), hotlines section lede omitted Asia/Latin America/Middle East, hl-grid showed the old first-4 regions (now first 3 + Middle East — surfaces Hisn 800 44 on the homepage).
 - **All 9 language homepages had stale kickers:** ES said "92 sustancias · 5 regiones" (very old), the 7 i18n langs said "100+ substances · 9 regions". All now read 600 substances / 8 regions in-language. About page "Five regions" → "Seven regions" (about counts world regions differently — fine, it names them). ES hotlines lede/meta updated (ocho regiones).
 - **Gotcha:** `len(HOTLINES)` counts subsections too ("Europe (more)", "New Zealand") → returned 10. Don't use raw len for marketing counts.
