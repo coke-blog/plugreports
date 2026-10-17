@@ -603,7 +603,7 @@ function initBreaking() {
       var catMap = {};
       cats.forEach(function (c) { if (c.slug) catMap[c.slug] = c; });
       var hlCount = hotlines.reduce(function (n, r) { return n + ((r.items || []).length); }, 0);
-      var regions = hotlines.filter(function (r) { return r.region; }).length;
+      var regions = hotlines.filter(function (r) { return r.region && r.region.indexOf('(more)') === -1 && r.region !== 'New Zealand'; }).length;
       var kick = document.querySelector('.hero .kicker');
       if (kick) kick.textContent = 'Harm-reduction library · ' + drugs.length + ' substances · ' + regions + ' regions';
       var settings = (res[7] && res[7].items && res[7].items[0]) || {};
