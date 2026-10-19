@@ -1477,6 +1477,15 @@ def build_data_hub():
       '<a class="card" href="/data/top-substances-2025/"><h3>Top 15 Substances, 2025</h3>'
       '<p>The 15 most-identified substances in US forensic laboratories last year, with share-of-total and plain-English context for each.</p>'
       '<div class="foot">Open the ranking &rarr;</div></a>'
+      '<a class="card" href="/data/cocaine-price-canada-2026/"><h3>Cocaine Prices: Canada 2026</h3>'
+      '<p>What a gram actually costs, city by city — from Vancouver&rsquo;s port-city lows to northern premiums — plus the annual cost math of a weekly habit.</p>'
+      '<div class="foot">Open the data &rarr;</div></a>'
+      '<a class="card" href="/data/meth-price-canada-2026/"><h3>Meth Prices: Canada 2026</h3>'
+      '<p>The cheapest hard drug in the country: why a point costs less than a coffee in the Prairies, and why cheap is the dangerous part.</p>'
+      '<div class="foot">Open the data &rarr;</div></a>'
+      '<a class="card" href="/data/cocaine-price-europe-2026/"><h3>Cocaine Prices: Europe 2026</h3>'
+      '<p>From &euro;35 in Lisbon to &euro;105 in Zurich — the price map, the record purity behind it, and why seizures never raised prices.</p>'
+      '<div class="foot">Open the data &rarr;</div></a>'
       '<a class="card" href="/data/meth-cities-usa/"><h3>Meth Cities: USA</h3>'
       '<p>The 10 US cities with the most methamphetamine use — Phoenix to Nashville — from NFLIS, treatment and HIDTA data.</p>'
       '<div class="foot">Open the ranking &rarr;</div></a>'
@@ -1605,14 +1614,19 @@ def build_meth_cities():
     from data_crack_cities import CRACK_CITY_PAGES
     from data_weed_cities import WEED_CITY_PAGES
     from data_vape_cities import VAPE_CITY_PAGES
+    from data_price_pages import PRICE_PAGES
     groups = [(METH_CITY_PAGES, "methamphetamine", "Methamphetamine profile — effects, overdose signs & street price"),
               (COCAINE_CITY_PAGES, "cocaine", "Cocaine profile — effects, overdose signs & street price"),
               (MDMA_CITY_PAGES, "mdma", "MDMA profile — effects, overdose signs & street price"),
               (CRACK_CITY_PAGES, "crack", "Crack cocaine profile — effects, overdose signs & street price"),
               (WEED_CITY_PAGES, "weed", "Weed profile — effects, risks & street price"),
-              (VAPE_CITY_PAGES, "nicotine-vapes", "Nicotine vapes profile — effects, risks & quitting")]
+              (VAPE_CITY_PAGES, "nicotine-vapes", "Nicotine vapes profile — effects, risks & quitting"),
+              (PRICE_PAGES, "cocaine", "Cocaine profile — effects, overdose signs & street price")]
     for PAGES, DRUG, DRUG_LABEL in groups:
      for pg in PAGES:
+        pg_drug = pg.get("drug", DRUG)
+        pg_label = pg.get("drug_label", DRUG_LABEL if pg_drug == DRUG else f"{pg_drug.replace('-', ' ').title()} profile — effects, risks & street price")
+        th = pg.get("table_head", ("#", "City", "Why it ranks here"))
         stat_html = "".join(f'<div class="stat"><b>{esc(n)}</b><span>{esc(l)}</span></div>' for n, l in pg["stats"])
         rows = "".join(
             f'<tr><td style="white-space:nowrap"><b>{esc(rank)}</b></td><td><b>{esc(city)}</b></td><td>{note}</td></tr>'
@@ -1627,12 +1641,13 @@ def build_meth_cities():
           f'<p class="lede" style="color:#667085">{esc(pg["desc"])}</p>'
           + (f'<img class="detail-img" src="{esc(pg["image"])}" alt="" loading="lazy">' if pg.get("image") else "")
           + f'<div class="stat-grid">{stat_html}</div>'
-          f'<h2>How this ranking works</h2><p>{esc(pg["intro"])}</p>'
-          f'<div class="callout amber"><b>Read this first</b>No country anywhere measures {"meth" if DRUG == "methamphetamine" else ("vaping" if DRUG == "nicotine-vapes" else DRUG)} use per city directly. '
+          f'<h2>{"How this page works" if pg.get("callout") else "How this ranking works"}</h2><p>{esc(pg["intro"])}</p>'
+          + (f'<div class="callout amber"><b>Read this first</b>{esc(pg["callout"])}</div>' if pg.get("callout") else
+          f'<div class="callout amber"><b>Read this first</b>No country anywhere measures {"meth" if pg_drug == "methamphetamine" else ("vaping" if pg_drug == "nicotine-vapes" else pg_drug)} use per city directly. '
           'This ranking combines the strongest available proxies — wastewater analysis, forensic-lab reporting, '
           'treatment admissions and police seizures — and is directional, not a precise league table. '
-          'Positions in the middle of each list should be read as a band.</div>'
-          f'<div class="figure"><table class="tbl"><thead><tr><th>#</th><th>City</th><th>Why it ranks here</th></tr></thead><tbody>{rows}</tbody></table></div>'
+          'Positions in the middle of each list should be read as a band.</div>')
+          + f'<div class="figure"><table class="tbl"><thead><tr><th>{esc(th[0])}</th><th>{esc(th[1])}</th><th>{esc(th[2])}</th></tr></thead><tbody>{rows}</tbody></table></div>'
           f'<h2>Also worth knowing</h2><p>{esc(pg["notes"])}</p>'
           f'<h2>Methodology</h2><p>{esc(pg["method"])}</p>'
           '<h2>Sources</h2><ul class="ticks">'
@@ -1641,9 +1656,9 @@ def build_meth_cities():
           f'plugreports.com — &ldquo;{esc(pg["title"])}&rdquo;, updated {esc(pg["updated"])}. '
           f'Sources: {esc("; ".join(pg["sources"][:3]))}. '
           f'URL: https://plugreports.com/data/{pg["slug"]}/</div>'
-          f'<p style="margin-top:18px">Related: <a href="/drugs/{DRUG}/">{DRUG_LABEL}</a> &middot; '
+          f'<p style="margin-top:18px">Related: <a href="/drugs/{pg_drug}/">{pg_label}</a> &middot; '
           '<a href="/data/">All plugreports data pages</a> &middot; <a href="/hotlines/">Help lines by region</a></p>'
-          f'<h2 style="margin-top:26px">The other regional rankings</h2><div class="cards">{others}</div>'
+          f'<h2 style="margin-top:26px">{esc(pg.get("others_head", "The other regional rankings"))}</h2><div class="cards">{others}</div>'
           '</div></div>')
         jsonld = {"@context":"https://schema.org","@type":"Dataset",
           "name":pg["title"],"description":pg["desc"],
@@ -1841,7 +1856,8 @@ def build_meta():
             ("data/weed-cities-usa/", B), ("data/weed-cities-canada/", B), ("data/weed-cities-europe/", B),
             ("data/weed-cities-australia/", B), ("data/weed-cities-middle-east/", B), ("data/weed-cities-africa/", B),
             ("data/vape-cities-usa/", B), ("data/vape-cities-canada/", B), ("data/vape-cities-europe/", B),
-            ("data/vape-cities-australia/", B), ("data/vape-cities-middle-east/", B), ("data/vape-cities-africa/", B)]
+            ("data/vape-cities-australia/", B), ("data/vape-cities-middle-east/", B), ("data/vape-cities-africa/", B),
+            ("data/cocaine-price-canada-2026/", B), ("data/meth-price-canada-2026/", B), ("data/cocaine-price-europe-2026/", B)]
     urls += [(f"categories/{k}/", B) for k in CATEGORIES]
     urls += [("es/", B), ("es/hotlines/", B), ("es/categories/", B)]
     urls += [(f"es/drugs/{sl}/", DRUG_BY_SLUG[sl].get("lastUpdated", B)) for sl in ES_DRUG_KEYS if sl in DRUG_BY_SLUG]

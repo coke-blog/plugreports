@@ -57,6 +57,7 @@ if __name__ == "__main__":
     from data_crack_cities import CRACK_CITY_PAGES
     from data_weed_cities import WEED_CITY_PAGES
     from data_vape_cities import VAPE_CITY_PAGES
+    from data_price_pages import PRICE_PAGES
     try:
         from data_mix import MIX
     except Exception:
@@ -114,7 +115,12 @@ if __name__ == "__main__":
                       region=pg["region"], date=pg["updated"], read=pg["read"],
                       desc=pg["desc"], markdown=data_markdown(pg, "nicotine-vapes"),
                       sources=pg["sources"], related=["nicotine-vapes"])
-                 for pg in VAPE_CITY_PAGES],
+                 for pg in VAPE_CITY_PAGES]
+              + [dict(slug=pg["slug"], title=pg["title"], image=pg.get("image"),
+                      region=pg["region"], date=pg["updated"], read=pg["read"],
+                      desc=pg["desc"], markdown=data_markdown(pg, pg.get("drug", "cocaine")),
+                      sources=pg["sources"], related=[pg.get("drug", "cocaine")])
+                 for pg in PRICE_PAGES],
         "vs": VS,
     }
     types = sys.argv[1:] or list(seeds.keys())

@@ -4,10 +4,13 @@ def data_markdown(pg, drug="methamphetamine"):
     drug_label = {"methamphetamine": "Methamphetamine", "nicotine-vapes": "Nicotine vapes",
                   "weed": "Weed (cannabis)"}.get(drug, drug.capitalize())
     L = []
-    L.append(f"> **Read this first** — no country anywhere measures {drug_word} use per city directly. "
-             "This ranking combines the strongest available proxies — wastewater analysis, forensic-lab reporting, "
-             "treatment admissions and police seizures — and is directional, not a precise league table. "
-             "Positions in the middle of the list should be read as a band.")
+    if pg.get("callout"):
+        L.append(f"> **Read this first** — {pg['callout']}")
+    else:
+        L.append(f"> **Read this first** — no country anywhere measures {drug_word} use per city directly. "
+                 "This ranking combines the strongest available proxies — wastewater analysis, forensic-lab reporting, "
+                 "treatment admissions and police seizures — and is directional, not a precise league table. "
+                 "Positions in the middle of the list should be read as a band.")
     L.append("")
     L.append("## Headline numbers")
     for n, l in pg["stats"]:
@@ -18,7 +21,8 @@ def data_markdown(pg, drug="methamphetamine"):
     L.append("")
     L.append("## The ranking")
     L.append("")
-    L.append("| # | City | Why it ranks here |")
+    th = pg.get("table_head", ("#", "City", "Why it ranks here"))
+    L.append(f"| {th[0]} | {th[1]} | {th[2]} |")
     L.append("|---|------|-------------------|")
     for r, c, note in pg["cities"]:
         L.append(f"| {r} | **{c}** | {note} |")

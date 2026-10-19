@@ -1792,3 +1792,573 @@ Related: [Buying cocaine online in Canada](/topics/buying-cocaine-online-canada/
   drugsInvolved=["cocaine","methamphetamine","fentanyl"],
   related=["cocaine","methamphetamine","fentanyl","topics:buying-cocaine-online-canada","topics:buying-meth-online-canada","quit:cocaine","quit:meth"]),
 ]
+
+
+# ── Canada interception pages (Tier 2 — legal confusion) ─────────────────────
+TOPICS += [
+ dict(slug="is-cocaine-legal-canada", tag="Canada", title="Is cocaine legal in Canada? No — and it never was", date="2026-10-20", read="6 min",
+  image="https://plugreports.com/media/drugs/cocaine.jpeg",
+  desc="The BC decriminalization pilot expired on January 31, 2026 and was not renewed. Cocaine possession is a criminal offence in every Canadian province and territory. Here's what the law actually says now — and the one legal protection every user should know.",
+  markdown="""If you searched **"is cocaine legal in Canada"** or **"did Canada legalize cocaine"**, you are not alone — millions of people still believe British Columbia legalized it. The short answer: **no**. Cocaine has been illegal in Canada continuously since 1911, it was never legalized in BC or anywhere else, and the one limited experiment that existed **expired on January 31, 2026**.
+
+:::warning In crisis right now?
+Overdose or emergency: **911**. Suicidal crisis, call or text **9-8-8**. Using alone: National Overdose Response Service **1-888-688-6677** — someone stays on the line.
+
+:::
+
+## What the BC pilot actually was
+
+Between January 31, 2023 and January 31, 2026, British Columbia ran a **decriminalization pilot** under a federal exemption (Controlled Drugs and Substances Act, s.56). It allowed adults in BC to possess up to **2.5 grams total** of cocaine, methamphetamine, MDMA or opioids for personal use **without criminal charges** — though police could still seize the drugs.
+
+Two things most people missed:
+
+1. **It was decriminalization, not legalization.** No store, website or dealer could ever legally sell cocaine. Every sale, everywhere, remained a crime.
+2. **It shrank and then ended.** In May 2024 the exemption was restricted to private homes, shelters and clinics — possession in public places was re-criminalized mid-pilot. When the exemption expired on January 31, 2026, Ottawa did not renew it.
+
+**As of today, possessing any amount of cocaine is a criminal offence in every province and territory, including BC.**
+
+## The "Health Canada licensed cocaine companies" myth
+
+In 2023, headlines claimed Health Canada had "approved cocaine sales" after companies including Adastra Labs received Controlled Substances Dealer's Licences. Those licences allow limited work with cocaine for **research, analytical testing and pharmaceutical purposes** — they never permitted retail sale to the public, and no recreational cocaine store has ever been licensed in Canada. Adastra itself issued a correction after the premier of BC publicly pushed back.
+
+## What the law says now
+
+- **Possession (CDSA s.4(1))**: illegal everywhere in Canada. For cocaine (Schedule I), maximum penalties run to 7 years on indictment; first-offence summary conviction can mean up to 6 months and/or a $1,000 fine. In practice, many simple-possession first offences end in diversion or discharge — see [Cocaine charges in Canada](/topics/cocaine-charges-canada/).
+- **Trafficking and possession for the purpose (s.5)**: up to life imprisonment.
+- **Importing (s.6)**: up to life imprisonment — and this includes ordering by mail from a website. See [Buying cocaine online in Canada](/topics/buying-cocaine-online-canada/).
+- **Mandatory minimums for drug offences were repealed** by Bill C-5 in November 2022 — sentences are now judge-discretion, but a trafficking conviction still typically means prison.
+
+## The one protection worth memorizing
+
+Canada's **Good Samaritan Drug Overdose Act** protects you from simple-possession charges when you call 911 — or stay at the scene — during an overdose, yours or someone else's. It does not protect against trafficking, outstanding warrants or other crimes, but **nobody should ever hesitate to call 911 over a possession charge**.
+
+## If the question behind the question is "how do I stop"
+
+Searches about legality spike when people are worried — about themselves or someone else. If that's you:
+
+- **BC:** Alcohol & Drug Information Referral **1-800-663-1441**
+- **Alberta:** Addiction Helpline **1-866-332-2322**
+- **Ontario:** ConnexOntario **1-866-531-2600**
+- **Quebec:** Drogues : aide et référence **1-800-265-2626** (French, 24/7)
+- **Anywhere:** dial **811** for local services · [Full Canada help page](/topics/cocaine-help-canada/)
+
+*Sources: Health Canada (BC exemption terms and expiry); Controlled Drugs and Substances Act ss.4–6; Government of BC decriminalization updates (2023–2026); Good Samaritan Drug Overdose Act; Bill C-5 (2022).*
+
+Related: [Cocaine charges and penalties in Canada](/topics/cocaine-charges-canada/) · [Crack](/drugs/crack/) · [Cocaine profile](/drugs/cocaine/) · [Sentencing by region](/sentencing/) · [Quit cocaine: the day-by-day timeline](/quit/cocaine/) · [Help lines](/hotlines/)""",
+  drugsInvolved=["cocaine","crack"],
+  related=["cocaine","crack","topics:cocaine-charges-canada","topics:cocaine-help-canada","topics:buying-cocaine-online-canada","quit:cocaine"]),
+
+ dict(slug="cocaine-charges-canada", tag="Canada", title="Cocaine charges in Canada: possession vs trafficking, first offences, and what a record costs", date="2026-10-20", read="8 min",
+  image="https://plugreports.com/media/drugs/cocaine-purity-and-cuts.jpeg",
+  desc="What actually happens after a cocaine possession charge in Canada — CDSA s.4(1) vs s.5 trafficking, how first offences usually end, what a criminal record costs you, and the Good Samaritan protection for overdose calls.",
+  markdown="""This page is general information, not legal advice — if you are facing charges, talk to a lawyer (every province has legal aid or duty counsel). But here is the honest lay of the land in 2026.
+
+:::warning Overdose situation right now?
+Call **911** first, worry about charges never — the Good Samaritan Drug Overdose Act protects you from simple-possession charges at an overdose scene. Details below.
+
+:::
+
+## The three charges that matter
+
+Cocaine is a **Schedule I** substance under the Controlled Drugs and Substances Act (CDSA). There are three distinct ways a cocaine case is charged:
+
+| Charge | Section | What it means | Maximum |
+|---|---|---|---|
+| **Possession** | s.4(1) | Having cocaine on you, in your car, in your home | 7 years (indictment); up to 6 months and/or $1,000 fine (summary, first offence) |
+| **Possession for the purpose of trafficking (PPT)** | s.5(2) | Possession + intent to sell/share — inferred from quantity, baggies, scales, texts, cash | Life imprisonment |
+| **Importing / exporting** | s.6(1) | Bringing cocaine across the border — **including by mail** | Life imprisonment |
+
+Key trap: **there is no legal "personal use" quantity.** A few grams in one baggie looks like possession; the same grams split into ten baggies, or found beside a scale and a debt list, can be charged as PPT. Since Bill C-5 (2022) repealed mandatory minimums, sentencing is up to the judge — but trafficking convictions still normally mean prison.
+
+## What usually happens on a first possession offence
+
+Canadian courts treat simple possession — especially a first offence with no other charges — very differently from trafficking:
+
+- **Diversion** is common: community service, a substance-use program or counselling in exchange for charges being withdrawn. No conviction.
+- **Discharges**: a judge can grant an absolute or conditional discharge — you are found guilty but **not convicted**, so no criminal record results (the discharge itself shows on some background checks for 1–3 years).
+- **Peace bonds and withdrawals** happen where the evidence is thin or Charter issues exist (unlawful search is the most common).
+
+None of this is guaranteed — outcomes depend on the province, the Crown, the facts and your lawyer. But "first offence, small amount, no trafficking indicators" rarely ends in jail in 2026.
+
+## What a record actually costs
+
+A trafficking or importation conviction is the life-changer:
+
+- **Jobs**: most employers run criminal-record checks; a drug-trafficking record closes licensed professions, government work, and much of finance, health and education.
+- **Travel**: the US can refuse entry for any drug conviction; many other countries ask on visa forms.
+- **Immigration**: permanent residents convicted of serious drug offences can lose status and face removal. Foreign nationals caught smuggling face removal and bans on returning.
+- **Record suspensions** (pardons) exist but take years and cost money — and are unavailable while any sentence component is unfinished.
+
+## The Good Samaritan Drug Overdose Act
+
+If you call 911 — or stay at the scene — because someone is overdosing, the Act protects you (and the person overdosing) from **charges for simple possession** and from breach charges related to possession conditions. It does **not** shield trafficking, outstanding warrants, or other offences. It exists because fear of arrest kills people who would otherwise survive: **make the call**.
+
+## If this page found you for a different reason
+
+People often read sentencing pages while deciding whether their own use has gone too far. If that's the real question, two better reads:
+
+- [Quit cocaine: what actually happens, day by day](/quit/cocaine/) — the withdrawal timeline is measured in days, not months.
+- [Cocaine help in Canada: every free line, by province](/topics/cocaine-help-canada/) — public treatment is free, and the first call is anonymous.
+
+*Sources: Controlled Drugs and Substances Act ss.4–6; Department of Justice Canada (Bill C-5, mandatory minimum repeal, 2022); Good Samaritan Drug Overdose Act; provincial legal aid guidance.*
+
+Related: [Is cocaine legal in Canada?](/topics/is-cocaine-legal-canada/) · [Buying cocaine online in Canada](/topics/buying-cocaine-online-canada/) · [Sentencing by region](/sentencing/) · [Cocaine profile](/drugs/cocaine/) · [Help lines](/hotlines/)""",
+  drugsInvolved=["cocaine","crack"],
+  related=["cocaine","crack","topics:is-cocaine-legal-canada","topics:cocaine-help-canada","quit:cocaine"]),
+]
+
+
+# ── Canada interception pages (Tier 4 — wastewater/news explainers) ──────────
+TOPICS += [
+ dict(slug="meth-prairies-wastewater", tag="Canada", title="Why the Prairies lead Canada's meth map: what the wastewater data shows", date="2026-10-20", read="7 min",
+  image="https://plugreports.com/media/drugs/methamphetamine.jpeg",
+  desc="Statistics Canada's wastewater survey found Prince Albert, Saskatchewan carrying the country's highest meth load — roughly nine times Toronto's per person. What the numbers mean, why the Prairies, and what help exists locally.",
+  markdown="""Statistics Canada's Canadian Wastewater Survey doesn't ask anyone anything — it measures what entire cities flush. Methamphetamine consumed in a city shows up in its sewage within hours, which makes wastewater the most honest drug-use data Canada publishes. The September 2026 release made one finding impossible to ignore: **Prince Albert, Saskatchewan — a city of about 38,000 — posts the highest per-capita meth load in the country, roughly nine times Toronto's.**
+
+:::warning Using meth and worried — or watching someone who is?
+Emergency: **911**. Saskatchewan: **811** or **1-877-800-0002** · Manitoba AFM: **1-855-662-6605** · Alberta: **1-866-332-2322**. Using alone: National Overdose Response Service **1-888-688-6677**.
+
+:::
+
+## What the survey found
+
+The survey samples treatment plants serving millions of Canadians and reports drug loads per 1,000 people per day:
+
+- **Prince Albert, SK: ~2,003 mg of meth per 1,000 people per day** — the highest in Canada, about 9× Toronto's load.
+- **Saskatoon and Edmonton** also sit far above the big-metro average, and **Moncton** leads the eastern cities in the survey.
+- Prince Albert also posted the survey's highest **cocaine metabolite** levels — nearly 3× Moncton's — though across Canada the meth signal in smaller Prairie cities dwarfs everything else.
+
+See the full picture in our [Canadian meth city ranking](/data/meth-cities-canada/) and [cocaine ranking](/data/cocaine-cities-canada/).
+
+## Why the Prairies?
+
+Researchers and front-line workers point to a combination rather than a single cause:
+
+1. **Supply.** Prairie provinces sit at the end of west-coast and US-border superlab supply lines — and Alberta border crossings have become major interdiction points (CBSA seized 300 kg of meth in a single truck at Coutts in July 2026). When supply is abundant, price falls and use spreads.
+2. **Price.** Superlab meth is extraordinarily cheap — a point (0.1 g) can cost less than a fast-food meal in smaller centres — which removes the last brake on daily use.
+3. **Treatment deserts.** Rural and northern communities have the longest distances to detox, the fewest prescribers, and the shortest supply of everything from housing to mental-health care. Meth fills the gap.
+4. **Stimulant supply meets an opioid-poisoned market.** Stimulant toxicity deaths in Canada more than doubled between 2018 and 2024, and street stimulants increasingly cross-contaminate with fentanyl — deadly for users with no opioid tolerance.
+
+## What help actually exists locally
+
+Prairie services are stretched, but they exist and the first call is free and confidential:
+
+- **Saskatchewan:** HealthLine **811** (24/7) · addictions line **1-877-800-0002**
+- **Manitoba:** Addictions Foundation of Manitoba **1-855-662-6605**
+- **Alberta:** Addiction Helpline **1-866-332-2322** (24/7)
+- **Everywhere:** **811** connects to local services · Hope for Wellness (Indigenous-led, 24/7): **1-855-242-3310**
+
+Meth withdrawal is brutal but not usually medically dangerous — the crash (days of sleep, hunger, depression) peaks in the first week. The dangerous moment is psychosis during use, and relapse into a contaminated supply. [What quitting stimulants actually looks like, day by day](/quit/meth/).
+
+*Sources: Statistics Canada, Canadian Wastewater Survey (September 2026 release); CBSA seizure reporting (Coutts, July 2026); Public Health Agency of Canada stimulant-harms data; Health Canada Canadian Substance Use Survey.*
+
+Related: [Methamphetamine profile](/drugs/methamphetamine/) · [Buying meth online in Canada](/topics/buying-meth-online-canada/) · [Meth cities: Canada](/data/meth-cities-canada/) · [Meth prices in Canada](/data/meth-price-canada-2026/) · [Quit meth](/quit/meth/) · [Help lines](/hotlines/)""",
+  drugsInvolved=["methamphetamine","cocaine","fentanyl"],
+  related=["methamphetamine","cocaine","fentanyl","topics:buying-meth-online-canada","topics:cocaine-help-canada","quit:meth"]),
+
+ dict(slug="cocaine-atlantic-canada", tag="Canada", title="Cocaine in Atlantic Canada: the Halifax pipeline, the wastewater signal, and the quietest surge in the country", date="2026-10-20", read="6 min",
+  image="https://plugreports.com/media/drugs/cocaine.jpeg",
+  desc="Halifax and Moncton post some of Canada's strongest per-capita cocaine signals, the Port of Halifax is a documented entry point, and New Brunswick's stimulant deaths are rising. What's driving Atlantic Canada's cocaine market — and where to get help in each province.",
+  markdown="""Canada's cocaine story is usually told as a Toronto–Montreal–Vancouver story. The wastewater data tells a quieter one: **Atlantic Canada has one of the strongest per-capita cocaine signals in the country**, and it has been building for years.
+
+:::warning Worried about your own use, or someone else's?
+Emergency: **911** · Crisis line: **9-8-8** · Nova Scotia: **1-888-429-8167** · New Brunswick: **1-866-355-5550** · PEI: **1-833-553-6983** · Newfoundland & Labrador: **1-877-999-7589**.
+
+:::
+
+## The signal in the sewage
+
+Statistics Canada's Canadian Wastewater Survey consistently places **Halifax among the highest cocaine-metabolite loads of the big cities it samples**, with **Moncton** elevated among mid-sized centres. Police and health data point the same direction:
+
+- **The Port of Halifax** is a documented cocaine entry point — multi-hundred-kilogram seizures have been made from marine containers, and Halifax anchors our [Canadian cocaine city ranking](/data/cocaine-cities-canada/) as Atlantic Canada's gateway.
+- **New Brunswick** reported that methamphetamine was involved in roughly **63% of stimulant toxicity deaths** in 2024 — a reminder that the region's stimulant problem runs on more than cocaine, and that the two markets overlap.
+- **Enforcement keeps surfacing the trade**: in September 2026, Nova Scotia RCMP charged four people after seizing more than two kilograms of cocaine in Jordantown, and on October 1 an RCMP Joint Enforcement Team operation in PEI seized cocaine, cash and paraphernalia.
+
+## Why the east?
+
+- **Geography.** Halifax is Canada's closest major port to Europe — the same route that made Montreal and Antwerp cocaine gateways.
+- **Income pockets.** Offshore energy, shipbuilding and construction money create classic weekend-market demand.
+- **Thin services.** Like the Prairies, Atlantic provinces have long waits for publicly funded treatment — which is exactly when a manageable habit becomes an emergency.
+
+## The cost math nobody does
+
+At Atlantic Canadian street prices, a gram-a-week habit runs to roughly **C$6,000–10,000 a year** — before the debt, the missed work, and the 3 a.m. searches that probably led to this page. Full breakdown: [Cocaine prices in Canada, 2026](/data/cocaine-price-canada-2026/).
+
+## Free help, province by province
+
+- **Nova Scotia:** Mental Health & Addictions **1-888-429-8167**
+- **New Brunswick:** Addiction services **1-866-355-5550**
+- **Prince Edward Island:** **1-833-553-6983**
+- **Newfoundland & Labrador:** **1-877-999-7589**
+- **National:** Overdose response (using alone) **1-888-688-6677** · [Every Canadian help line](/topics/cocaine-help-canada/)
+
+*Sources: Statistics Canada, Canadian Wastewater Survey; New Brunswick Public Health stimulant toxicity reporting (2024); RCMP Nova Scotia and PEI releases (Sept–Oct 2026); CBSA port seizure reporting.*
+
+Related: [Cocaine cities: Canada](/data/cocaine-cities-canada/) · [Cocaine profile](/drugs/cocaine/) · [Methamphetamine profile](/drugs/methamphetamine/) · [Quit cocaine](/quit/cocaine/) · [Help lines](/hotlines/)""",
+  drugsInvolved=["cocaine","methamphetamine"],
+  related=["cocaine","methamphetamine","topics:cocaine-help-canada","topics:meth-prairies-wastewater","quit:cocaine"]),
+]
+
+
+# ── Canada interception pages (Tier 5 — help capture) ────────────────────────
+TOPICS += [
+ dict(slug="cocaine-help-canada", tag="Canada", title="Cocaine help in Canada: every free helpline, what treatment costs, and what to say when you call", date="2026-10-20", read="8 min",
+  image="https://plugreports.com/media/drugs/cocaine-purity-and-cuts.jpeg",
+  desc="Free, confidential cocaine addiction help in every Canadian province and territory — the exact numbers, what publicly funded treatment actually costs (usually nothing), and what happens when you call.",
+  markdown="""If you're searching for cocaine help in Canada, here is the most important fact first: **publicly funded addiction treatment in Canada is free**. The rehabs that advertise $20,000-a-month programs exist — but every province also runs no-cost assessment, counselling, day programs and residential treatment, reachable through a single provincial phone line. This page lists every one.
+
+:::warning In crisis right now?
+Overdose or medical emergency: **911** · Suicidal crisis, call or text **9-8-8** · Using alone and want someone on the line: National Overdose Response Service **1-888-688-6677** (24/7, confidential, non-judgmental).
+
+:::
+
+## The free lines, province by province
+
+All numbers below are free and confidential. Most run 24/7; all can refer you to local assessment and treatment.
+
+| Province / Territory | Service | Number |
+|---|---|---|
+| British Columbia | Alcohol & Drug Information Referral | **1-800-663-1441** |
+| Alberta | Addiction Helpline | **1-866-332-2322** |
+| Saskatchewan | HealthLine | **811** or **1-877-800-0002** |
+| Manitoba | Addictions Foundation of Manitoba | **1-855-662-6605** |
+| Ontario | ConnexOntario | **1-866-531-2600** (text CONNEX to 247247) |
+| Quebec | Drogues : aide et référence | **1-800-265-2626** (French, 24/7) |
+| New Brunswick | Addiction & Mental Health | **1-866-355-5550** |
+| Nova Scotia | Mental Health & Addictions | **1-888-429-8167** |
+| Prince Edward Island | Addiction services | **1-833-553-6983** |
+| Newfoundland & Labrador | Provincial helpline | **1-877-999-7589** |
+| Yukon / NWT / Nunavut | Territorial line | **1-866-456-3838** |
+| First Nations & Inuit | Hope for Wellness (24/7, Cree/Ojibway/Inuktitut available) | **1-855-242-3310** |
+
+## Peer support (free, everywhere)
+
+- **Narcotics Anonymous** — meetings in every province: **1-855-562-2262**
+- **Crystal Meth Anonymous** and **Cocaine Anonymous** — in-person and online meetings
+- **SMART Recovery** — evidence-based, non-12-step, online meetings daily
+- **For families:** FAR (Families for Addiction Recovery) **1-855-377-6677**
+
+## What "treatment" actually means — and costs
+
+Cocaine has no substitution medication like methadone, so treatment is behavioural — and the public system covers it:
+
+1. **Assessment** (free, via the lines above or a walk-in clinic) — a counsellor maps your use and options.
+2. **Outpatient counselling or day programs** (free, public; waits vary from days to weeks).
+3. **Residential treatment** (publicly funded beds exist in every province — free, but waits can be longer; private beds cost money and are *not* required to recover).
+4. **Withdrawal**: cocaine withdrawal is not usually medically dangerous — no seizures like alcohol/benzos — but the crash (exhaustion, low mood, cravings) peaks in the first week. [The day-by-day quitting timeline](/quit/cocaine/).
+
+## What to say when you call
+
+You need exactly one sentence: **"I use cocaine and I want to talk about my options."** You don't need a diagnosis, a referral, a health card story or a clean day count. The person answering has heard it thousands of times; the call is confidential; and asking questions commits you to nothing.
+
+*Sources: Government of Canada (canada.ca) mental-health and substance-use support directory; Canadian Centre on Substance Use and Addiction; provincial health authorities.*
+
+Related: [Quit cocaine: day by day](/quit/cocaine/) · [Is cocaine legal in Canada?](/topics/is-cocaine-legal-canada/) · [Cocaine profile](/drugs/cocaine/) · [Help lines by region](/hotlines/) · [Verified rehab directory](/rehabs/)""",
+  drugsInvolved=["cocaine","crack"],
+  related=["cocaine","crack","quit:cocaine","topics:is-cocaine-legal-canada","topics:free-naloxone-canada","topics:drug-checking-canada"]),
+
+ dict(slug="free-naloxone-canada", tag="Canada", title="Free naloxone in Canada: where to get a kit in every province, who should carry one, and how to use it", date="2026-10-20", read="6 min",
+  desc="Naloxone kits are free at pharmacies across Canada — no prescription, no health card in most provinces, no questions. Who should carry one (anyone who uses street drugs), how the kits work, and how to use one in an overdose.",
+  markdown="""**Naloxone (Narcan) is free in Canada.** Every province and territory runs a take-home naloxone program, and in most of the country you can walk into a pharmacy and leave with a kit in minutes — no prescription, no appointment, and usually no health card or payment. This page is the how and the why.
+
+:::warning Someone unresponsive right now?
+Call **911** first, then give naloxone if you have it. Not using alone next time: National Overdose Response Service **1-888-688-6677**.
+
+:::
+
+## Where to get a free kit
+
+- **Pharmacies**: most chain and independent pharmacies in every province stock free take-home kits (nasal spray and/or injectable). Ask the pharmacist: *"Can I get a take-home naloxone kit?"* — that's the whole script.
+- **Supervised consumption sites, needle programs and public-health units**: free kits, plus training on the spot.
+- **Community organizations**: shelters, drop-ins and outreach teams distribute kits in every major city.
+- If a pharmacy is ever out of stock or charges you, try another one — stock and practice vary by store, but the program is national.
+
+## Who should carry naloxone
+
+The honest answer: **anyone who uses street drugs, and anyone who loves someone who does.** Canada's street supply is contaminated with fentanyl far beyond the opioid market — stimulant toxicity deaths more than doubled between 2018 and 2024, and cocaine and meth samples increasingly test positive for fentanyl. If you or someone around you uses cocaine, crack or meth, a naloxone kit is as basic as a smoke detector. Naloxone does nothing harmful if the person didn't take opioids — **when in doubt, give it**.
+
+## How to use it (nasal spray — the common kit)
+
+1. **Call 911** (or send someone) — naloxone wears off in 30–90 minutes, often before the opioid does.
+2. Check response: shout, shake shoulders, rub knuckles on the breastbone.
+3. **Spray**: peel back the package, place the nozzle in one nostril, press the plunger firmly.
+4. **If no response in 2–3 minutes, give a second dose** in the other nostril.
+5. **Recovery position**: roll them on their side; stay until paramedics arrive.
+
+The pharmacist will show you all of this when you pick up the kit — the training takes about five minutes and you can ask for it.
+
+## The legal layer
+
+Canada's **Good Samaritan Drug Overdose Act** protects people at an overdose scene from simple-possession charges. Calling 911 for an overdose should never cost anyone a possession charge.
+
+*Sources: Health Canada take-home naloxone program guidance; provincial naloxone program pages (BC Toward the Heart, Alberta Community-Based Naloxone Program, Ontario Naloxone Program for Pharmacies, and equivalents); Good Samaritan Drug Overdose Act.*
+
+Related: [Naloxone profile](/drugs/naloxone/) · [Fentanyl](/drugs/fentanyl/) · [Spotting pressed pills](/topics/spot-pressed-pills/) · [Drug checking in Canada](/topics/drug-checking-canada/) · [Help lines](/hotlines/)""",
+  drugsInvolved=["naloxone","fentanyl","cocaine","methamphetamine"],
+  related=["naloxone","fentanyl","topics:drug-checking-canada","topics:cocaine-help-canada"]),
+
+ dict(slug="drug-checking-canada", tag="Canada", title="Drug checking in Canada: where to get drugs tested free, what strips can and can't tell you", date="2026-10-20", read="6 min",
+  image="https://plugreports.com/media/drugs/fentanyl.webp",
+  desc="Free drug-checking services operate in cities across Canada — full lab-grade analysis in Toronto, Vancouver, Montreal and beyond, plus fentanyl test strips almost everywhere. What each method catches, what it misses, and why 'my guy is reliable' fails.",
+  markdown="""Canada has one of the world's most developed **drug-checking** networks: services where you can bring a sample of a street drug and find out what's actually in it — free, anonymous, and legal. In a supply where [fentanyl](/drugs/fentanyl/) shows up in cocaine, meth and counterfeit pills, checking is the single highest-value harm-reduction step available.
+
+:::warning Emergency now?
+**911** · Using alone: National Overdose Response Service **1-888-688-6677** · Carry naloxone — [free at Canadian pharmacies](/topics/free-naloxone-canada/).
+
+:::
+
+## The two levels of checking
+
+**1. Full lab-style analysis (FTIR spectrometers).** Machines the size of a printer identify the main ingredients and many cuts in minutes. Services operate in:
+
+- **Toronto** — the city's drug-checking service accepts samples at multiple supervised consumption sites and publishes its results publicly.
+- **British Columbia** — the most extensive network: drug checking at overdose-prevention sites across Vancouver and in many regional centres (BCCSU-coordinated).
+- **Montreal** — GRIP and partner sites offer analysis.
+- **Ottawa, and other cities** — public-health and community organizations run or host services; the national picture expands year by year.
+
+Bring a match-head-sized sample. It's anonymous, it's free, and staff will tell you what the result means for your actual risk.
+
+**2. Fentanyl test strips.** Cheap paper strips that detect fentanyl (and some analogues) in a dissolved sample. Available free from needle programs, public-health units and many pharmacies; also sold online. Strips are **legal in Canada**.
+
+## What checking can't do
+
+- **Strips say yes/no, not how much.** A positive strip means fentanyl is present — it can't tell you whether the dose is survivable.
+- **Not every analogue shows up.** Some fentanyl relatives and non-opioid sedatives (xylazine, medetomidine, nitazenes) can be missed by strips — a negative result is reassurance, not a guarantee. See our [fentanyl adulterant tracker](/data/fentanyl-adulterants/) for what's circulating.
+- **The "chocolate chip cookie" problem.** Fentanyl isn't mixed evenly through a batch. Testing one corner of a baggie doesn't certify the rest.
+
+## Why "my guy is reliable" fails
+
+Contamination almost never happens at the dealer's kitchen table on purpose — it happens **up the chain**: shared scales, shared surfaces, cross-contaminated bulk product. The dealer often doesn't know. People who have used the same source for years have been poisoned by the same source. Checking isn't about distrust; it's about a supply chain nobody controls.
+
+If you do use: test what you can, start with a fraction of your usual amount with any new supply, never use alone (or use with [NORS 1-888-688-6677](/topics/free-naloxone-canada/) on the line), and keep naloxone within reach.
+
+*Sources: Health Canada drug-checking program guidance; Toronto's drug checking service public reports; BC Centre on Substance Use; GRIP Montréal; Public Health Agency of Canada.*
+
+Related: [Fentanyl](/drugs/fentanyl/) · [Xylazine](/drugs/xylazine/) · [Free naloxone in Canada](/topics/free-naloxone-canada/) · [Fentanyl adulterant tracker](/data/fentanyl-adulterants/) · [Drug checking in Europe](/topics/europe-drug-checking/) · [Help lines](/hotlines/)""",
+  drugsInvolved=["fentanyl","xylazine","cocaine","methamphetamine","naloxone"],
+  related=["fentanyl","naloxone","topics:free-naloxone-canada","topics:europe-drug-checking","topics:cocaine-help-canada"]),
+]
+
+
+# ── Europe pack (mirrors the Canada interception strategy) ───────────────────
+TOPICS += [
+ dict(slug="buying-cocaine-online-europe", tag="Europe", title="Buying cocaine online in the UK & Europe: what the ads and apps don't tell you", date="2026-10-20", read="7 min",
+  image="https://plugreports.com/media/drugs/cocaine.jpeg",
+  desc="Cocaine is sold openly on Telegram, Instagram and the dark web across the UK and Europe — police describe ordering it as 'as simple as ordering a takeaway'. Here's what the sellers leave out: the scams, the record purity, the violence behind the supply chain, and the exits that actually work.",
+  markdown="""Across the UK and Europe, buying cocaine has never looked easier. British police have described ordering cocaine in some cities as **"as simple as ordering a takeaway"** — Telegram and Instagram accounts advertise menus, dark-web markets promise reviews and escrow, and delivery can be faster than the pizza. Europe seized a record **330 tonnes of cocaine in 2024**, and supply has never been deeper.
+
+If you're weighing up one of these channels right now, this page lays out what the listings don't.
+
+:::warning In crisis right now?
+Emergency (all EU + UK): **112** · UK: **999** · FRANK (UK drug advice): **0300 123 6600** · France: Drogues Info Service **0 800 23 13 13** · Germany: Sucht- und Drogenhotline **0180 5 31 30 31**.
+
+:::
+
+## The product has changed — in a dangerous direction
+
+European cocaine is **stronger than it has ever been**. The EU Drugs Agency reports average purity up around **44% since 2014** while prices stayed flat or fell — and in 2025 drug-checking services found **purity above 80% in nearly two-thirds of tested samples**. Wholesale prices have collapsed (Albanian-led networks sell kilos in the UK for a fraction of the 2010s price), so dealers no longer need to cut heavily to profit.
+
+That sounds like a consumer win. It isn't:
+
+- **Higher purity = sharper dependence curve.** The habit escalates faster, and the comedowns get darker.
+- **The dosing math breaks.** Lines that were "normal" in 2015 are now effectively double-strength. Stimulant overdoses — chest pain, seizures, hyperthermia — hit people who thought they knew their limits.
+- **Contamination hasn't vanished.** Levamisole (a veterinary dewormer linked to immune-system damage) remains a standard bulk cut, and fentanyl has appeared in isolated European stimulant samples.
+
+## What the apps don't tell you
+
+| The pitch | The reality |
+|---|---|
+| "Rated vendor, escrow protected" | Markets and channels exit-scam routinely; escrow is only as real as the anonymous admin holding it. When it vanishes, there is no complaint desk. |
+| "Discreet stealth shipping" | Postal and parcel interception is a core police tactic across Europe; intercepted packages can mean a knock, a controlled delivery, or a charge — not a refund. |
+| "No trail" | Telegram and Insta deals leave bank-transfer, e-wallet and phone trails. The EncroChat and Sky ECC hacks gave European police **years of dealers' and buyers' messages** — prosecutions are still running. |
+| "Just a bit of weekend fun" | The money behind a gram is not festive: European cocaine runs on port corruption, and the UK and Dutch markets are soaked in the violence of the groups running them. |
+
+## The legal reality in one line
+
+**Cocaine is illegal in every European country — including Portugal, Spain and the Netherlands.** What varies is the penalty for small-scale possession (from an administrative fine to prison). Details country by country: [Is cocaine legal in Europe?](/topics/is-cocaine-legal-europe/).
+
+## If the search was really about needing something
+
+Late-night "buy cocaine online" searches are often, underneath, "I need to not feel like this." That feeling has better exits:
+
+- [Cocaine help in Europe — free, confidential lines by country](/topics/cocaine-help-europe/)
+- [What quitting cocaine actually looks like, day by day](/quit/cocaine/)
+- [Drug checking in Europe](/topics/europe-drug-checking/) — free lab analysis in a growing number of cities
+
+*Sources: EU Drugs Agency (EUDA), European Drug Report 2026; SCORE wastewater network 2025; UK National Crime Agency reporting on Albanian-led supply networks; Europol EncroChat/Sky ECC case reporting.*
+
+Related: [Is cocaine legal in Europe?](/topics/is-cocaine-legal-europe/) · [Cocaine prices in Europe, 2026](/data/cocaine-price-europe-2026/) · [Cocaine](/drugs/cocaine/) · [Europe's cocaine capitals](/topics/cocaine-capitals-europe-wastewater/) · [Quit cocaine](/quit/cocaine/) · [Help lines](/hotlines/)""",
+  drugsInvolved=["cocaine","crack"],
+  related=["cocaine","crack","topics:is-cocaine-legal-europe","topics:cocaine-help-europe","topics:europe-drug-checking","quit:cocaine"]),
+
+ dict(slug="is-cocaine-legal-europe", tag="Europe", title="Is cocaine legal in Europe? Portugal, Spain, the Netherlands and the decriminalization myth", date="2026-10-20", read="7 min",
+  image="https://plugreports.com/media/drugs/cocaine-purity-and-cuts.jpeg",
+  desc="No European country has legal cocaine — not Portugal, not the Netherlands, not Spain. What actually differs is the penalty for small-scale possession. A country-by-country reality check, and what 'decriminalized' really means.",
+  markdown="""**"Is cocaine legal in Portugal?" "Is cocaine legal in Amsterdam?" "Did Europe decriminalize drugs?"** — variations of these searches run into the hundreds of thousands, and the answers circulating online are mostly wrong. Here is the correct version.
+
+:::warning Emergency in Europe: **112** (all EU states) · UK: **999** · Crisis lines by country: [Cocaine help in Europe](/topics/cocaine-help-europe/).
+
+:::
+
+## The one-sentence answer
+
+**Cocaine is illegal to buy, sell, produce and possess in every country in Europe.** No European state has legalized it. What a handful of countries have done is **decriminalize small-scale possession** — which is not the same thing at all:
+
+- **Legal** = a lawful market exists: licensed sellers, quality control, no offence at all. (Cannabis in Canada works this way.)
+- **Decriminalized** = still illegal, but small amounts for personal use are treated as an **administrative offence** (like a parking ticket) rather than a crime. Police can still confiscate the drugs, and you can still be fined or ordered to counselling.
+
+## Country by country, the honest version
+
+| Country | What people think | What the law actually says |
+|---|---|---|
+| **Portugal** | "Everything is legal there" | Decriminalized since 2001: possession of up to a **10-day personal supply** is an administrative offence — confiscation plus a fine or a referral to a "Dissuasion Commission". Larger amounts, and all sales, are crimes. |
+| **Netherlands** | "Drugs are legal in Amsterdam" | Only **cannabis in licensed coffeeshops** is tolerated (gedoogbeleid). Cocaine is fully illegal — possession is a criminal offence, and Amsterdam's council is actively campaigning against cocaine tourism. |
+| **Spain** | "Legal at home" | Private consumption and possession in **private spaces** are decriminalized; possession or use **in public** brings an administrative fine (typically €601+). All sales and cultivation-for-sale are crimes. |
+| **Czechia** | "Small amounts are legal" | Possession of small amounts is a **misdemeanour** (fine) since 2010 — illegal, just not criminal. |
+| **Germany** | Confusion from the 2024 cannabis law | The 2024 reform covered **cannabis only**. Cocaine possession remains a criminal offence; first-time small-amount cases are often dropped by prosecutors, but that is discretion, not law. |
+| **UK** | — | Class A: possession up to **7 years**, supply up to **life**. Police can issue out-of-court disposals for small first offences, but the record risk is real. |
+| **France** | — | Possession is a criminal offence; since 2020 police can issue an on-the-spot **€200 fine** for personal-use amounts instead of prosecution. |
+
+## The traps that catch travellers
+
+- **"Decriminalized" does not protect tourists.** A Portuguese Dissuasion Commission can still fine you, and the drugs are still seized.
+- **Buying is never decriminalized anywhere.** Every purchase is a criminal transaction even where possession is an administrative matter.
+- **Ordering online is worse, not safer**: importing drugs by post is a trafficking-grade offence across Europe. See [Buying cocaine online in Europe](/topics/buying-cocaine-online-europe/).
+
+## If you're asking because you're worried about yourself
+
+That worry deserves a better answer than a legal table. [Cocaine help in Europe](/topics/cocaine-help-europe/) lists the free, confidential line in your country — most of them answer in English as well as the local language.
+
+*Sources: EUDA penalties-at-a-glance and European Drug Report 2026; Portuguese Law 30/2000; Spanish Ley Orgánica 4/2015 art. 36; Dutch Opium Act; UK Misuse of Drugs Act 1971; French Code de la santé publique.*
+
+Related: [Buying cocaine online in Europe](/topics/buying-cocaine-online-europe/) · [Cocaine help in Europe](/topics/cocaine-help-europe/) · [Sentencing by region](/sentencing/) · [Cocaine](/drugs/cocaine/) · [Help lines](/hotlines/)""",
+  drugsInvolved=["cocaine","crack"],
+  related=["cocaine","crack","topics:buying-cocaine-online-europe","topics:cocaine-help-europe","quit:cocaine"]),
+
+ dict(slug="cocaine-capitals-europe-wastewater", tag="Europe", title="Europe's cocaine capitals, measured in sewage: what the 2025 wastewater study found", date="2026-10-20", read="6 min",
+  image="https://plugreports.com/media/drugs/cocaine-purity-and-cuts.jpeg",
+  desc="The SCORE network measures cocaine metabolite in the sewage of over 100 European cities. The latest results: Lleida, Antwerp and Granada on top, cocaine loads up 22% in a year — and ketamine surging even faster.",
+  markdown="""Once a year, scientists across Europe sample the sewage of more than 100 cities and measure **benzoylecgonine** — the metabolite every human body produces after cocaine. It is the most objective drug-consumption data on Earth: nobody can lie to a sewer. The SCORE network's latest round (2025 sampling, published through the EU Drugs Agency) landed on a record market.
+
+## The top of the table
+
+Milligrams of benzoylecgonine per 1,000 people per day:
+
+| City | Load |
+|---|---|
+| Lleida, Spain | **1,405** |
+| Antwerp, Belgium | **1,382** |
+| Granada, Spain | **1,238** |
+| Amsterdam, Netherlands | **1,172** |
+| Liège, Belgium | **1,039** |
+| Brussels, Belgium | **1,020** |
+
+Three patterns stand out:
+
+1. **Spain has arrived at the top.** Lleida and Granada out-sewage the traditional Belgian and Dutch capitals — Spain is both Europe's biggest cocaine seizure country (**124 tonnes in 2024**, an EU record) and now its heaviest per-capita consumer in the wastewater table.
+2. **Antwerp stays elite.** Down from its all-time 2023 record (1,722 mg) but still near the top — and its port seized another **44.6 tonnes** in 2024.
+3. **The whole continent is rising.** Average cocaine loads across measured cities rose about **22% in a single year**. Cocaine is no longer a western-Europe-only story: cities in the east and north are climbing from a low base.
+
+Full rankings and per-city context: [Cocaine cities: Europe](/data/cocaine-cities-europe/).
+
+## The sleeper finding: ketamine
+
+Cocaine's 22% jump was outpaced by **ketamine — up 41%** across measured cities, the fastest-growing signal in the whole study. MDMA loads **fell 16%** in the same period. Analysts read it as a price-and-availability shift: cocaine and ketamine are cheap and everywhere; MDMA supply tightened.
+
+## What this means in practice
+
+- **Record supply = record purity.** Europe seized 330 tonnes in 2024 and checking services report the purest street cocaine ever measured. Stronger product hooks faster and hits the heart harder.
+- **Weekend spikes** in three-quarters of cities confirm the pattern: this is a payday-and-nightlife drug — which is exactly why "only on weekends" habits quietly become weekday ones.
+- **The help is free.** Every country in the table runs confidential addiction lines: [Cocaine help in Europe](/topics/cocaine-help-europe/).
+
+*Sources: SCORE wastewater network / EU Drugs Agency wastewater analysis (2025 sampling round); EUDA European Drug Report 2026 (seizure statistics).*
+
+Related: [Cocaine cities: Europe — full ranking](/data/cocaine-cities-europe/) · [Cocaine prices in Europe](/data/cocaine-price-europe-2026/) · [Ketamine profile](/drugs/ketamine/) · [Cocaine](/drugs/cocaine/) · [Quit cocaine](/quit/cocaine/) · [Help lines](/hotlines/)""",
+  drugsInvolved=["cocaine","ketamine","mdma"],
+  related=["cocaine","ketamine","mdma","topics:cocaine-help-europe","topics:buying-cocaine-online-europe","quit:cocaine"]),
+
+ dict(slug="cocaine-help-europe", tag="Europe", title="Cocaine help in Europe: the free, confidential line in your country — and what happens when you call", date="2026-10-20", read="7 min",
+  image="https://plugreports.com/media/drugs/cocaine-purity-and-cuts.jpeg",
+  desc="Free cocaine addiction help across Europe: the national drug helplines for the UK, France, Germany, Spain, the Netherlands, Norway and Sweden, what treatment costs (usually nothing), and what to say when you call.",
+  markdown="""Every country in Europe runs a **free, confidential drug helpline**, and most of Europe's public health systems treat cocaine addiction at no cost to the patient. You don't need insurance paperwork, a referral, or a crisis to call. Here are the lines.
+
+:::warning Emergency anywhere in the EU: **112** · UK: **999**. Chest pain, seizures, or someone unresponsive after using — call first, ask questions later.
+
+:::
+
+## The national lines
+
+| Country | Service | Number |
+|---|---|---|
+| **European Union (all states)** | Emergency | **112** |
+| **United Kingdom** | FRANK — drug information & advice (24/7) | **0300 123 6600** |
+| **France** | Drogues Info Service (free, anonymous) | **0 800 23 13 13** |
+| **Germany** | Sucht- und Drogenhotline (federal) | **0180 5 31 30 31** |
+| **Netherlands** | Jellinek Advieslijn (addiction care) | **088 505 1220** |
+| **Spain** | Drogas y Alcohol (government line, free) | **900 16 15 15** |
+| **Norway** | RUS-telefonen (free, anonymous) | **08595** |
+| **Sweden** | CAN Helpline (Council on Alcohol and Other Drugs) | **020-44 00 20** |
+
+If your country isn't listed: the EU Drugs Agency maintains a directory of national focal points and helplines, and any GP can refer you into the public system. **112** works everywhere in the EU for emergencies.
+
+## What treatment costs (spoiler: usually nothing)
+
+- **UK**: community drug services are free through the NHS — self-refer, no GP letter needed.
+- **France, Spain, Portugal, Italy**: public addiction clinics (CSAPA, centros de atención, SerD) treat cocaine dependence free or near-free under the public system.
+- **Germany, Netherlands, Nordics**: treatment is covered by statutory health insurance — your only job is the first appointment.
+
+Cocaine has no substitution medication, so treatment is behavioural: counselling, CBT, contingency management (the best-evidenced approach), and peer groups. **NA and Cocaine Anonymous hold meetings in every major European city**, in English as well as local languages; SMART Recovery runs online meetings across European time zones.
+
+## The withdrawal truth
+
+Cocaine withdrawal is not the movie version: no dangerous seizures, usually no medication needed. What it is: a **crash** — deep fatigue, sleep that doesn't refresh, flat or dark mood, and cravings that ambush you at exactly the time of day you used to use. It peaks in week one and fades over 2–4 weeks. The full map: [What happens when you quit cocaine, day by day](/quit/cocaine/).
+
+## If you keep using for now
+
+- **Test what's in front of you** — free lab checking exists in a growing list of European cities: [Drug checking in Europe](/topics/europe-drug-checking/).
+- **Don't mix** — cocaine + alcohol forms cocaethylene, measurably harder on the heart; cocaine + opioids (a "speedball") is the deadliest combination on this site: [Mixing dangers](/mix/).
+- **Street purity is at record highs** — treat every new batch as stronger than you expect.
+
+*Sources: EUDA European Drug Report 2026 and national focal points; NHS; Drogues Info Service; Trimbos Institute/Jellinek; national public-health directories.*
+
+Related: [Quit cocaine: day by day](/quit/cocaine/) · [Is cocaine legal in Europe?](/topics/is-cocaine-legal-europe/) · [Drug checking in Europe](/topics/europe-drug-checking/) · [Cocaine](/drugs/cocaine/) · [Help lines by region](/hotlines/)""",
+  drugsInvolved=["cocaine","crack"],
+  related=["cocaine","crack","quit:cocaine","topics:is-cocaine-legal-europe","topics:europe-drug-checking","mix:cocaine-alcohol"]),
+]
+
+
+# ── Canada busts cadence (2026 border interdictions) ─────────────────────────
+BUSTS += [
+ dict(slug="bust-ambassador-bridge-cocaine-127kg", tag="Bust", country="Canada",
+  title="CBSA seizes 127 kg of cocaine in a truck at the Ambassador Bridge; two Mississauga men charged",
+  date="2026-10-20", confirmed=True, views=180,
+  image="https://plugreports.com/media/drugs/cocaine.jpeg",
+  location="Ambassador Bridge port of entry, Windsor, Ontario, Canada",
+  agency="Canada Border Services Agency / RCMP",
+  sourceUrl="https://www.canada.ca/en/border-services-agency/news/2026/10/cbsa-seizure-of-127-kg-of-cocaine-at-ambassador-bridge-results-in-rcmp-charges.html",
+  summary="CBSA officers at the Ambassador Bridge — the busiest commercial border crossing in North America — referred a truck arriving from the United States for secondary examination on September 11, 2026. A detector dog found 127 kg of suspected cocaine in the trailer. Two Mississauga men, 61 and 41, were arrested and charged by the RCMP with importation of cocaine and possession for the purpose of trafficking; the case is before the Ontario Court of Justice in Windsor. The CBSA notes its Southern Ontario Region has seized 1.67 tonnes of cocaine so far in 2026.",
+  sentencing="Canada: importation of cocaine (CDSA s.6(1)) and possession for the purpose of trafficking (s.5(2)) — both carry a maximum of life imprisonment; commercial-quantity importation cases typically draw double-digit federal sentences on conviction.",
+  drugsInvolved=["cocaine"]),
+
+ dict(slug="bust-blue-water-bridge-cocaine-385kg", tag="Bust", country="Canada",
+  title="385 kg of cocaine found in a commercial truck at the Blue Water Bridge",
+  date="2026-08-25", confirmed=True, views=150,
+  image="https://plugreports.com/media/drugs/cocaine.jpeg",
+  location="Blue Water Bridge port of entry, Point Edward, Ontario, Canada",
+  agency="Canada Border Services Agency / RCMP",
+  sourceUrl="https://www.canada.ca/en/border-services-agency/news/2026/08/cbsa-seizes-385-kg-of-cocaine-at-blue-water-bridge.html",
+  summary="CBSA officers at the Blue Water Bridge port of entry in Point Edward, Ontario seized approximately 385 kg of suspected cocaine from a commercial truck on August 13, 2026, after the truck was referred for secondary examination. The driver was arrested and charged by the RCMP with importing a controlled substance (CDSA s.6(1)) and possession for the purpose of trafficking (s.5(2)). The seizure is one of the largest single truck interdictions at the crossing and part of a record year for cocaine seizures at Southern Ontario ports of entry.",
+  sentencing="Canada: importation (CDSA s.6(1)) and possession for the purpose of trafficking (s.5(2)) — maximum life imprisonment; a 385 kg importation sits in the most serious sentencing band.",
+  drugsInvolved=["cocaine"]),
+
+ dict(slug="bust-coutts-meth-cocaine-380kg", tag="Bust", country="Canada",
+  title="Coutts border officers find 300 kg of meth and 80 kg of cocaine hidden in a load of bath tissue",
+  date="2026-07-29", confirmed=True, views=160,
+  image="https://plugreports.com/media/drugs/methamphetamine.jpeg",
+  location="Coutts port of entry, Alberta, Canada",
+  agency="Canada Border Services Agency / RCMP Federal Policing Northwest Region",
+  sourceUrl="https://www.canada.ca/en/border-services-agency/news/2026/07/cbsa-officers-seize-380-kg-of-methamphetamine-and-cocaine-at-coutts-port-of-entry-in-alberta.html",
+  summary="CBSA officers at the Coutts port of entry in southern Alberta seized 300 kg of suspected methamphetamine and 80 kg of suspected cocaine from a commercial truck on July 2, 2026. The truck, arriving from California and destined for Vilna, Alberta, had declared a load of bath tissue; officers noticed abnormalities and found the drugs in 12 moving boxes, a smaller box and a duffle bag. The driver was arrested and transferred to RCMP Federal Policing. The CBSA notes Alberta officers made 1,292 narcotics seizures in 2025, including 1,054 kg of cocaine and 279 kg of methamphetamine.",
+  sentencing="Canada: importation and possession for the purpose of trafficking of methamphetamine and cocaine (CDSA ss.5–6) — maximum life imprisonment per count.",
+  drugsInvolved=["methamphetamine","cocaine"]),
+]

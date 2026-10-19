@@ -674,6 +674,17 @@ Complete machine-readable drug records: [llms-full.txt](https://plugreports.com/
 - [/topics/buying-meth-online-canada/](https://plugreports.com/topics/buying-meth-online-canada/) Buying meth online in Canada: what the ads don't tell you
 - [/topics/cocaine-ads-instagram-facebook/](https://plugreports.com/topics/cocaine-ads-instagram-facebook/) 'Cocaine for sale' ads on Instagram and Facebook: what's really going on
 - [/topics/dark-web-drugs-canada-risks/](https://plugreports.com/topics/dark-web-drugs-canada-risks/) Buying drugs on the dark web from Canada: the risks nobody lists
+- [/topics/is-cocaine-legal-canada/](https://plugreports.com/topics/is-cocaine-legal-canada/) Is cocaine legal in Canada? No — and it never was
+- [/topics/cocaine-charges-canada/](https://plugreports.com/topics/cocaine-charges-canada/) Cocaine charges in Canada: possession vs trafficking, first offences, and what a record costs
+- [/topics/meth-prairies-wastewater/](https://plugreports.com/topics/meth-prairies-wastewater/) Why the Prairies lead Canada's meth map: what the wastewater data shows
+- [/topics/cocaine-atlantic-canada/](https://plugreports.com/topics/cocaine-atlantic-canada/) Cocaine in Atlantic Canada: the Halifax pipeline, the wastewater signal, and the quietest surge in the country
+- [/topics/cocaine-help-canada/](https://plugreports.com/topics/cocaine-help-canada/) Cocaine help in Canada: every free helpline, what treatment costs, and what to say when you call
+- [/topics/free-naloxone-canada/](https://plugreports.com/topics/free-naloxone-canada/) Free naloxone in Canada: where to get a kit in every province, who should carry one, and how to use it
+- [/topics/drug-checking-canada/](https://plugreports.com/topics/drug-checking-canada/) Drug checking in Canada: where to get drugs tested free, what strips can and can't tell you
+- [/topics/buying-cocaine-online-europe/](https://plugreports.com/topics/buying-cocaine-online-europe/) Buying cocaine online in the UK & Europe: what the ads and apps don't tell you
+- [/topics/is-cocaine-legal-europe/](https://plugreports.com/topics/is-cocaine-legal-europe/) Is cocaine legal in Europe? Portugal, Spain, the Netherlands and the decriminalization myth
+- [/topics/cocaine-capitals-europe-wastewater/](https://plugreports.com/topics/cocaine-capitals-europe-wastewater/) Europe's cocaine capitals, measured in sewage: what the 2025 wastewater study found
+- [/topics/cocaine-help-europe/](https://plugreports.com/topics/cocaine-help-europe/) Cocaine help in Europe: the free, confidential line in your country — and what happens when you call
 
 ## Quitting, day by day
 - [/quit/heroin/](https://plugreports.com/quit/heroin/) Quitting Heroin — day-by-day withdrawal timeline
@@ -744,6 +755,9 @@ Complete machine-readable drug records: [llms-full.txt](https://plugreports.com/
 - [/busts/bust-texas-cabbage-meth/](https://plugreports.com/busts/bust-texas-cabbage-meth/) 2,000+ lbs of meth found packed inside cabbage shipment in South Texas
 - [/busts/bust-spain-banana-cocaine-13t/](https://plugreports.com/busts/bust-spain-banana-cocaine-13t/) 13-ton cocaine haul disguised as banana shipment exposes international network
 - [/busts/bust-australia-sydney-cocaine-record/](https://plugreports.com/busts/bust-australia-sydney-cocaine-record/) Largest drug bust in Australian history: nearly $1B cocaine at rural Sydney property
+- [/busts/bust-ambassador-bridge-cocaine-127kg/](https://plugreports.com/busts/bust-ambassador-bridge-cocaine-127kg/) CBSA seizes 127 kg of cocaine in a truck at the Ambassador Bridge; two Mississauga men charged
+- [/busts/bust-blue-water-bridge-cocaine-385kg/](https://plugreports.com/busts/bust-blue-water-bridge-cocaine-385kg/) 385 kg of cocaine found in a commercial truck at the Blue Water Bridge
+- [/busts/bust-coutts-meth-cocaine-380kg/](https://plugreports.com/busts/bust-coutts-meth-cocaine-380kg/) Coutts border officers find 300 kg of meth and 80 kg of cocaine hidden in a load of bath tissue
 
 ## Mixing dangers
 - [/mix/](https://plugreports.com/mix/) Hub — 61 drug-combination guides ranked by danger

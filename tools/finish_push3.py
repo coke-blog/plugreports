@@ -11,7 +11,9 @@ REPO = "coke-blog/plugreports"
 TOKEN = os.environ["GH_TOKEN"]
 HDR = {"Authorization": f"token {TOKEN}", "Accept": "application/vnd.github+json",
        "User-Agent": "plugreports-push"}
-SKIP = (".git", "node_modules", "__pycache__", ".wrangler")
+SKIP = (".git", "node_modules", "__pycache__", ".wrangler",
+        # sandbox-only dirs — never part of the repo
+        "backup", "temp", "output", "upload", "wr", "site-main", ".tmp")
 
 def api(method, path, payload=None, retries=6):
     url = f"https://api.github.com/repos/{REPO}{path}"
