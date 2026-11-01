@@ -8,7 +8,7 @@ ES_CATS = {
  "performance":"Rendimiento y farmacia gris","hazardous":"Sustancias peligrosas"}
 
 ES_HOME = {
- "kicker":"Biblioteca de reducción de riesgos · 600 sustancias · 8 regiones",
+ "kicker":"Biblioteca de reducción de riesgos · 650 sustancias · 8 regiones",
  "h1":"Conoce la droga.<br>Conoce el <span class=\"mark\">riesgo</span>.<br>Conoce la salida.",
  "lede":"plugreports es un directorio visual de drogas de calle, adulterantes, líneas de ayuda, incautaciones y ayuda verificada — para que cualquier persona encuentre información clara, rápida y que salva vidas.",
  "btn1":"Ayuda ahora","btn2":"Explorar la biblioteca","btn3":"Dejarlo, día a día",
@@ -257,4 +257,11 @@ try:
     from data_i18n_expansion5 import ES_DRUGS_MT5
     ES_DRUGS.update(ES_DRUGS_MT5)
 except Exception:
+    pass
+
+# 650 pass (2026-11-01): 50% of the 650-expansion profiles, machine-translated
+try:
+    from data_i18n_expansion6 import ES_DRUGS_MT6
+    ES_DRUGS.update(ES_DRUGS_MT6)
+except ImportError:
     pass

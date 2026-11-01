@@ -3697,3 +3697,10 @@ for _d in DRUGS:
 # 2026-10-17 expansion: 37 profiles to reach 600 (2022+ UNODC EWA / EUDA / WDR-2026 sourced)
 from data_drugs_600 import DRUGS_600
 DRUGS += DRUGS_600
+
+# 650 expansion (club/street/party/weight-loss/weight-gain, 2026-10-21)
+try:
+    from data_drugs_650 import DRUGS_650
+    DRUGS += DRUGS_650
+except ImportError:
+    pass
